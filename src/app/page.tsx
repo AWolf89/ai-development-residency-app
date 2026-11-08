@@ -18,7 +18,11 @@ export default function Home() {
     >
       <Container maxWidth="md">
         <Stack spacing={3} sx={{ alignItems: "flex-start" }}>
-          <Chip label="MVP #1 · In development" color="secondary" variant="outlined" />
+          <Chip
+            label="MVP #1 · In development"
+            color="secondary"
+            variant="outlined"
+          />
           <Typography variant="h2" component="h1">
             Career Evidence Agent
           </Typography>

@@ -1,0 +1,20 @@
+# Build output and caches
+.next/
+out/
+build/
+coverage/
+
+# Dependencies and lockfiles (managed by npm)
+node_modules/
+package-lock.json
+
+# Supabase local state
+supabase/.temp/
+supabase/.branches/
+
+# Markdown is authored by hand and kept verbatim — do not reformat.
+# This protects the guardrail specs in .claude/rules/ and the ADRs in docs/adr/.
+*.md
+
+# Generated
+next-env.d.ts
