@@ -1,6 +1,12 @@
 # CI: quality gates that run on every push and pull request.
 # Flow: get code -> set up Node -> install from lockfile -> lint -> format check
-#       -> type-check -> dependency scan (production deps, fails on any vulnerability).
+#       -> build (compiles + type-checks) -> dependency scan (production deps,
+#       fails on any vulnerability).
+#
+# We build with `next build` rather than a bare `tsc --noEmit`: Next.js 16
+# generates route types (e.g. LayoutProps/PageProps) into .next/types during the
+# build, and `next build` type-checks against them. A standalone tsc on a clean
+# checkout has no generated types and fails.
 #
 # NOTE: the automated-test + 80% coverage gate is intentionally deferred (see
 # docs/adr/0005 and CLAUDE.md). When app logic lands (Weeks 4+), add a
@@ -38,8 +44,8 @@ jobs:
       - name: Format check (Prettier)
         run: npm run format:check
 
-      - name: Type-check (tsc --noEmit)
-        run: npm run type-check
+      - name: Build (compile + type-check)
+        run: npm run build
 
       - name: Dependency scan (production deps; fails on any vulnerability)
         run: npm audit --omit=dev --audit-level=low
