@@ -4,6 +4,9 @@ Entity-Relationship Diagram (ERD) of the Supabase Postgres schema created in E3
 (Foundation). It is generated from the migration files in
 [`supabase/migrations/`](../../supabase/migrations) and renders automatically on GitHub.
 
+The same schema, exported live from the **Supabase Schema Visualizer**, is saved
+alongside it as [`schema-supabase.svg`](schema-supabase.svg).
+
 **Two things to know when reading it:**
 
 - `auth_users` is Supabase's built-in authentication table (`auth.users`). The app does
