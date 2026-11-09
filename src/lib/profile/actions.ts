@@ -10,8 +10,12 @@ export type ProfileState = {
 };
 
 /**
- * Updates the signed-in user's own display name on their `profiles` row.
- * Row-Level Security guarantees a user can only ever update their own row.
+ * Saves the signed-in user's own display name to their `profiles` row.
+ *
+ * Uses upsert (insert-or-update keyed on the user id) so it works whether or
+ * not the auto-create-profile trigger has already made the row — for example
+ * for accounts created before the trigger existed. Row-Level Security still
+ * guarantees a user can only ever write their own row.
  */
 export async function updateDisplayName(
   _prevState: ProfileState | undefined,
@@ -30,8 +34,10 @@ export async function updateDisplayName(
 
   const { error } = await supabase
     .from("profiles")
-    .update({ display_name: displayName === "" ? null : displayName })
-    .eq("id", user.id);
+    .upsert(
+      { id: user.id, display_name: displayName === "" ? null : displayName },
+      { onConflict: "id" }
+    );
 
   if (error) {
     return { error: error.message };
