@@ -4,8 +4,15 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
+import { createClient } from "@/lib/supabase/server";
+import { logout } from "@/lib/auth/actions";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <Box
       component="main"
@@ -35,17 +42,32 @@ export default function Home() {
             questions, checks claims against real evidence, and builds a record
             you can stand behind.
           </Typography>
-          <Stack direction="row" spacing={2}>
-            <Button variant="contained" size="large" disabled>
-              Get started
-            </Button>
-            <Button variant="outlined" size="large" disabled>
-              Learn more
-            </Button>
-          </Stack>
+
+          {user ? (
+            <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
+              <Button href="/dashboard" variant="contained" size="large">
+                Go to your account
+              </Button>
+              <Box component="form" action={logout}>
+                <Button type="submit" variant="outlined" size="large">
+                  Log out
+                </Button>
+              </Box>
+            </Stack>
+          ) : (
+            <Stack direction="row" spacing={2}>
+              <Button href="/signup" variant="contained" size="large">
+                Get started
+              </Button>
+              <Button href="/login" variant="outlined" size="large">
+                Log in
+              </Button>
+            </Stack>
+          )}
+
           <Typography variant="caption" color="text.disabled">
-            Foundation scaffold (E1). Features arrive as the backlog is built
-            out.
+            Foundation scaffold with accounts (E1–E3). Features arrive as the
+            backlog is built out.
           </Typography>
         </Stack>
       </Container>
