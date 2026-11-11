@@ -26,7 +26,7 @@ import {
   type FrameworkManifest,
 } from "../src/lib/reference/framework";
 import {
-  parseOnetTsv,
+  parseOnetJson,
   mapOnetRow,
   ONET_TABLES,
 } from "../src/lib/reference/onet";
@@ -105,7 +105,7 @@ async function importOnet(db: SupabaseClient): Promise<void> {
       console.log(`  ${config.file}: not found — skipped`);
       continue;
     }
-    const rows = parseOnetTsv(readFileSync(file, "utf-8"));
+    const rows = parseOnetJson(readFileSync(file, "utf-8"));
     const items = rows.map((row) => mapOnetRow(config, row, release));
     const written = await upsertAll(db, items);
     console.log(`  ${config.entityType}: ${written}`);

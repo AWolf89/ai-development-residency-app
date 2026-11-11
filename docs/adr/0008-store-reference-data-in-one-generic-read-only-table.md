@@ -8,7 +8,7 @@ decision-makers: Amanda Wolf
 
 ## Context and Problem Statement
 
-E4 adds a reference-data layer so every future gap check has a defined target to compare a user's evidence against. The data comes from two external sources with very different shapes: the Tech Fleet Skills & Practices Framework (≈450 records across ~10 entity types, published as JSON, CC BY 4.0) and O\*NET (occupations plus rated skill/ability/knowledge/activity tables and tasks, distributed as tab-delimited text, under the O\*NET license). This is shared, read-only lookup data — the same for every user — not per-user state. We need to decide how to model it in Supabase, how to load it repeatably, and how to keep it read-only, without over-building for data no feature queries relationally yet (CLAUDE.md anti-cargo-cult clause).
+E4 adds a reference-data layer so every future gap check has a defined target to compare a user's evidence against. The data comes from two external sources with very different shapes: the Tech Fleet Skills & Practices Framework (≈450 records across ~10 entity types, published as JSON, CC BY 4.0) and O\*NET (occupations plus rated skill/ability/knowledge/activity tables and tasks, distributed as JSON in release 31.0, under the O\*NET license). This is shared, read-only lookup data — the same for every user — not per-user state. We need to decide how to model it in Supabase, how to load it repeatably, and how to keep it read-only, without over-building for data no feature queries relationally yet (CLAUDE.md anti-cargo-cult clause).
 
 ## Decision Drivers
 

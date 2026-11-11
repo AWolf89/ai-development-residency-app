@@ -1,10 +1,11 @@
 /**
  * Pure parser and mappers for the O*NET curated subset (E4c).
  *
- * O*NET publishes its database as tab-delimited text files, one per table, each
- * with a header row. These functions parse that text and map rows into validated
- * ReferenceItems. No file IO here — the boundary script reads the files the user
- * placed in the git-ignored data/reference/onet/ folder and calls these.
+ * O*NET 31.0 distributes its database as Excel, CSV, or JSON (the old
+ * tab-delimited text download is gone). We use the JSON files: each is an array
+ * of row objects keyed by column name. These functions parse that JSON and map
+ * rows into validated ReferenceItems. No file IO here — the boundary script reads
+ * the files the user placed in the git-ignored data/reference/onet/ folder.
  *
  * O*NET® is a trademark of the U.S. Department of Labor, Employment and Training
  * Administration. See docs/reference-data-attributions.md.
@@ -13,38 +14,34 @@ import { referenceItemSchema, type ReferenceItem } from "./types";
 
 export const ONET_SOURCE = "onet";
 
-/** Parse O*NET tab-delimited text into row objects keyed by header name. */
-export function parseOnetTsv(text: string): Record<string, string>[] {
-  const lines = text
-    .replace(/\r\n/g, "\n")
-    .replace(/\r/g, "\n")
-    .split("\n")
-    .filter((line) => line.length > 0);
+export type OnetRow = Record<string, unknown>;
 
-  if (lines.length < 2) return [];
+/** Coerce a (possibly missing or non-string) cell value to a trimmed string. */
+export function cell(row: OnetRow, key: string): string {
+  const value = row[key];
+  return value == null ? "" : String(value).trim();
+}
 
-  const headers = lines[0].split("\t").map((h) => h.trim());
-  return lines.slice(1).map((line) => {
-    const cells = line.split("\t");
-    const row: Record<string, string> = {};
-    headers.forEach((header, i) => {
-      row[header] = (cells[i] ?? "").trim();
-    });
-    return row;
-  });
+/** Parse an O*NET JSON file (an array of row objects). Throws if not an array. */
+export function parseOnetJson(text: string): OnetRow[] {
+  const data = JSON.parse(text);
+  if (!Array.isArray(data)) {
+    throw new Error("O*NET JSON file is not an array of rows");
+  }
+  return data as OnetRow[];
 }
 
 export interface OnetTableConfig {
-  /** File name as distributed by O*NET, e.g. "Occupation Data.txt". */
+  /** File name as distributed by O*NET 31.0, e.g. "Occupation Data.json". */
   file: string;
   /** entity_type written to reference_items, e.g. "occupation". */
   entityType: string;
   /** Build the row's external id (must be unique within the entity_type). */
-  externalId: (row: Record<string, string>) => string;
+  externalId: (row: OnetRow) => string;
   /** Build the display name. */
-  name: (row: Record<string, string>) => string;
+  name: (row: OnetRow) => string;
   /** Optional description. */
-  description?: (row: Record<string, string>) => string | null;
+  description?: (row: OnetRow) => string | null;
 }
 
 const SOC = "O*NET-SOC Code";
@@ -52,62 +49,55 @@ const ELEMENT_ID = "Element ID";
 const ELEMENT_NAME = "Element Name";
 const SCALE_ID = "Scale ID";
 
+/** A rated attribute row (SOC × element × scale) — shared id/name shape. */
+function ratingTable(file: string, entityType: string): OnetTableConfig {
+  return {
+    file,
+    entityType,
+    externalId: (r) =>
+      `${cell(r, SOC)}:${cell(r, ELEMENT_ID)}:${cell(r, SCALE_ID)}`,
+    name: (r) => cell(r, ELEMENT_NAME),
+  };
+}
+
 /**
- * The curated subset we load: occupations, the four rated attribute tables,
- * tasks, and the content-model reference so element codes resolve to names.
- * An occupation×element rating row is unique by SOC + element + scale.
+ * The curated subset we load from O*NET 31.0: occupations, the rated attribute
+ * tables (31.0 splits skills into Essential and Transferable), tasks, and the
+ * content-model reference so element codes resolve to names. Files absent from
+ * the download are skipped by the importer.
  */
 export const ONET_TABLES: OnetTableConfig[] = [
   {
-    file: "Occupation Data.txt",
+    file: "Occupation Data.json",
     entityType: "occupation",
-    externalId: (r) => r[SOC],
-    name: (r) => r["Title"],
-    description: (r) => r["Description"] || null,
+    externalId: (r) => cell(r, SOC),
+    name: (r) => cell(r, "Title"),
+    description: (r) => cell(r, "Description") || null,
   },
   {
-    file: "Content Model Reference.txt",
+    file: "Content Model Reference.json",
     entityType: "content_model_element",
-    externalId: (r) => r[ELEMENT_ID],
-    name: (r) => r[ELEMENT_NAME],
-    description: (r) => r["Description"] || null,
+    externalId: (r) => cell(r, ELEMENT_ID),
+    name: (r) => cell(r, ELEMENT_NAME),
+    description: (r) => cell(r, "Description") || null,
   },
+  ratingTable("Essential Skills.json", "occupation_skill"),
+  ratingTable("Transferable Skills.json", "occupation_transferable_skill"),
+  ratingTable("Abilities.json", "occupation_ability"),
+  ratingTable("Knowledge.json", "occupation_knowledge"),
+  ratingTable("Work Activities.json", "occupation_work_activity"),
   {
-    file: "Skills.txt",
-    entityType: "occupation_skill",
-    externalId: (r) => `${r[SOC]}:${r[ELEMENT_ID]}:${r[SCALE_ID]}`,
-    name: (r) => r[ELEMENT_NAME],
-  },
-  {
-    file: "Abilities.txt",
-    entityType: "occupation_ability",
-    externalId: (r) => `${r[SOC]}:${r[ELEMENT_ID]}:${r[SCALE_ID]}`,
-    name: (r) => r[ELEMENT_NAME],
-  },
-  {
-    file: "Knowledge.txt",
-    entityType: "occupation_knowledge",
-    externalId: (r) => `${r[SOC]}:${r[ELEMENT_ID]}:${r[SCALE_ID]}`,
-    name: (r) => r[ELEMENT_NAME],
-  },
-  {
-    file: "Work Activities.txt",
-    entityType: "occupation_work_activity",
-    externalId: (r) => `${r[SOC]}:${r[ELEMENT_ID]}:${r[SCALE_ID]}`,
-    name: (r) => r[ELEMENT_NAME],
-  },
-  {
-    file: "Task Statements.txt",
+    file: "Task Statements.json",
     entityType: "occupation_task",
-    externalId: (r) => r["Task ID"],
-    name: (r) => r["Task"],
+    externalId: (r) => cell(r, "Task ID"),
+    name: (r) => cell(r, "Task"),
   },
 ];
 
-/** Map one parsed O*NET row to a validated ReferenceItem. */
+/** Map one O*NET row to a validated ReferenceItem. */
 export function mapOnetRow(
   config: OnetTableConfig,
-  row: Record<string, string>,
+  row: OnetRow,
   sourceVersion: string | null
 ): ReferenceItem {
   const description = config.description ? config.description(row) : null;
