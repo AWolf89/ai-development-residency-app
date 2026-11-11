@@ -74,4 +74,9 @@ jobs:
 
       - name: Accessibility — axe + keyboard scans (public pages)
         # Builds and serves the app, then checks each public page with axe-core.
+        # Placeholder Supabase env so the pages render in CI (there is no .env here);
+        # the values are fake and the publishable key is public by design (ADR-0003).
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: placeholder-not-a-real-key
         run: npm run test:a11y
