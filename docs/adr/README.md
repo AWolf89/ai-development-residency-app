@@ -16,3 +16,4 @@ This folder records the important technical decisions for this project: what we 
 | [0004](0004-host-the-app-on-vercel.md) | Host the app on Vercel | proposed |
 | [0005](0005-defer-ai-agent-features-to-later-weeks-for-the-week-3-releas.md) | Defer AI agent features to later weeks for the Week 3 release | proposed |
 | [0006](0006-disable-cache-components-for-standard-supabase-authenticatio.md) | Disable Cache Components for standard Supabase authentication | proposed |
+| [0007](0007-handle-user-career-data-with-a-privacy-by-default-policy.md) | Handle user career data with a privacy-by-default policy | proposed |
