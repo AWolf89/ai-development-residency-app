@@ -1,19 +1,20 @@
 # CI: quality gates that run on every push and pull request.
 # Flow: get code (full history) -> set up Node -> install from lockfile -> lint ->
-#       format check -> build (compiles + type-checks) -> dependency scan (production
-#       deps, fails on any vulnerability) -> ADR checks (structure + architecture rules)
-#       -> secret scan (gitleaks, full history, fails on any finding) -> accessibility
-#       (contrast check + axe/keyboard scans, WCAG 2.2 AA, public pages).
+#       format check -> unit tests with coverage (80% floor) -> build (compiles +
+#       type-checks) -> dependency scan (production deps, fails on any vulnerability)
+#       -> ADR checks (structure + architecture rules) -> secret scan (gitleaks, full
+#       history, fails on any finding) -> accessibility (contrast check + axe/keyboard
+#       scans, WCAG 2.2 AA, public pages).
 #
 # We build with `next build` rather than a bare `tsc --noEmit`: Next.js 16
 # generates route types (e.g. LayoutProps/PageProps) into .next/types during the
 # build, and `next build` type-checks against them. A standalone tsc on a clean
 # checkout has no generated types and fails.
 #
-# NOTE: the automated-test + 80% coverage gate is intentionally deferred (see
-# docs/adr/0005 and CLAUDE.md). When app logic lands (Weeks 4+), add a
-# "Tests with coverage" step running `npm run test:coverage` with an 80% floor
-# configured in the test tool, and require it on main.
+# Tests: the 80% coverage gate (CLAUDE.md rule 5) is enforced by the "Tests with
+# coverage" step below, running `npm run test:coverage`. The 80% floor is
+# configured in vitest.config.ts, scoped to pure-logic modules (Humble Object):
+# boundary wrappers and UI are kept logic-free and excluded on purpose.
 name: CI
 
 on:
@@ -46,6 +47,11 @@ jobs:
 
       - name: Format check (Prettier)
         run: npm run format:check
+
+      - name: Tests with coverage (80% floor on pure-logic modules)
+        # Vitest; the 80% threshold is configured in vitest.config.ts and fails
+        # the step if coverage of the included set drops below it.
+        run: npm run test:coverage
 
       - name: Build (compile + type-check)
         run: npm run build

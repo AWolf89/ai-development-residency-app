@@ -39,6 +39,9 @@ Requires `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` i
 - `npm run build` — production build
 - `npm run start` — run the production build
 - `npm run lint` — lint with ESLint
+- `npm test` — run unit tests (Vitest)
+- `npm run test:watch` — run unit tests in watch mode
+- `npm run test:coverage` — unit tests with coverage (80% floor on pure-logic modules)
 
 ## Build plan (Foundation epics)
 
