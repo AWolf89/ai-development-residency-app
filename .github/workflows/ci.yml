@@ -2,7 +2,8 @@
 # Flow: get code (full history) -> set up Node -> install from lockfile -> lint ->
 #       format check -> build (compiles + type-checks) -> dependency scan (production
 #       deps, fails on any vulnerability) -> ADR checks (structure + architecture rules)
-#       -> secret scan (gitleaks, full history, fails on any finding).
+#       -> secret scan (gitleaks, full history, fails on any finding) -> accessibility
+#       (contrast check + axe/keyboard scans, WCAG 2.2 AA, public pages).
 #
 # We build with `next build` rather than a bare `tsc --noEmit`: Next.js 16
 # generates route types (e.g. LayoutProps/PageProps) into .next/types during the
@@ -25,7 +26,7 @@ permissions:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20 # Playwright install + a11y scan add a few minutes
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -64,3 +65,13 @@ jobs:
           curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz -o /tmp/gitleaks.tar.gz
           tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
           /tmp/gitleaks git --redact .
+
+      - name: Accessibility — contrast check (WCAG 2.2 AA color pairs)
+        run: python3 tools/a11y/check_contrast.py a11y-contrast.json
+
+      - name: Accessibility — install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Accessibility — axe + keyboard scans (public pages)
+        # Builds and serves the app, then checks each public page with axe-core.
+        run: npm run test:a11y

@@ -1,0 +1,56 @@
+[
+  {
+    "name": "body text (MUI default) on paper",
+    "fg": "#212121",
+    "bg": "#ffffff",
+    "use": "text"
+  },
+  {
+    "name": "body text (MUI default) on page background",
+    "fg": "#212121",
+    "bg": "#f7f8fc",
+    "use": "text"
+  },
+  {
+    "name": "secondary text (MUI default) on paper",
+    "fg": "#666666",
+    "bg": "#ffffff",
+    "use": "text"
+  },
+  {
+    "name": "primary button label",
+    "fg": "#ffffff",
+    "bg": "#3949ab",
+    "use": "text"
+  },
+  {
+    "name": "primary as link text",
+    "fg": "#3949ab",
+    "bg": "#ffffff",
+    "use": "text"
+  },
+  {
+    "name": "error text",
+    "fg": "#c62828",
+    "bg": "#ffffff",
+    "use": "text"
+  },
+  {
+    "name": "status chip label/border (dark teal) on page background",
+    "fg": "#00695c",
+    "bg": "#f7f8fc",
+    "use": "text"
+  },
+  {
+    "name": "focus ring (brand indigo)",
+    "fg": "#3949ab",
+    "bg": "#ffffff",
+    "use": "ui"
+  },
+  {
+    "name": "input outline (theme fix)",
+    "fg": "#767676",
+    "bg": "#ffffff",
+    "use": "ui"
+  }
+]
