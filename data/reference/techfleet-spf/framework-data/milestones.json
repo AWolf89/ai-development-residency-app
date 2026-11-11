@@ -1,0 +1,7150 @@
+[
+  {
+    "id": 1,
+    "slug": "continuous-discovery",
+    "Milestone Name": "Continuous Discovery",
+    "Data Type": [
+      {
+        "slug": "milestone",
+        "label": "Milestone"
+      }
+    ],
+    "Image": [
+      {
+        "name": "milestone.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/tbgPzzJBz6SplLInfnOkJp1JJKs38UFM_8e3edb79cff34fae8c133ae16f2a2b0bab9bba6e6f28d9bed090e345af327108.png"
+      }
+    ],
+    "Milestone Order": "2",
+    "Should Be Done Before": [
+      {
+        "slug": "vision",
+        "label": "Vision"
+      }
+    ],
+    "Should Be Done After": [
+      {
+        "slug": "intake",
+        "label": "Intake"
+      }
+    ],
+    "All Deliverables In the Milestone": [
+      {
+        "slug": "problem-statements",
+        "label": "Problem Statements"
+      },
+      {
+        "slug": "problem-checklists",
+        "label": "Problem Checklists"
+      },
+      {
+        "slug": "competitive-analysis",
+        "label": "Competitive Analysis"
+      },
+      {
+        "slug": "market-research-analysis",
+        "label": "Market Research Analysis"
+      },
+      {
+        "slug": "user-journey-map",
+        "label": "User Journey Map"
+      },
+      {
+        "slug": "user-personas",
+        "label": "User Personas"
+      },
+      {
+        "slug": "proto-personas",
+        "label": "Proto Personas"
+      },
+      {
+        "slug": "buyer-personas",
+        "label": "Buyer Personas"
+      },
+      {
+        "slug": "business-plan",
+        "label": "Business Plan"
+      },
+      {
+        "slug": "release-plan",
+        "label": "Release Plan"
+      },
+      {
+        "slug": "go-to-market-plan",
+        "label": "Go-To-Market Plan"
+      },
+      {
+        "slug": "how-might-we-hmw-statements",
+        "label": "How Might We (HMW) Statements"
+      },
+      {
+        "slug": "refined-backlog",
+        "label": "Refined Backlog"
+      },
+      {
+        "slug": "empathy-map",
+        "label": "Empathy Map"
+      },
+      {
+        "slug": "storyboard",
+        "label": "Storyboard"
+      },
+      {
+        "slug": "task-analysis",
+        "label": "Task Analysis"
+      },
+      {
+        "slug": "research-report",
+        "label": "Research Report"
+      },
+      {
+        "slug": "rainbow-table",
+        "label": "Rainbow Table"
+      },
+      {
+        "slug": "affinity-map",
+        "label": "Affinity Map"
+      },
+      {
+        "slug": "customer-experience-diagram",
+        "label": "Customer Experience Diagram"
+      },
+      {
+        "slug": "research-plan",
+        "label": "Research Plan"
+      },
+      {
+        "slug": "analytics-audit",
+        "label": "Analytics Audit"
+      },
+      {
+        "slug": "positioning-statement",
+        "label": "Positioning Statement"
+      },
+      {
+        "slug": "unique-value-proposition",
+        "label": "Unique Value Proposition"
+      },
+      {
+        "slug": "usability-test-report",
+        "label": "Usability Test Report"
+      },
+      {
+        "slug": "research-analysis",
+        "label": "Research Analysis"
+      },
+      {
+        "slug": "product-market-fit-analysis",
+        "label": "Product-Market Fit Analysis"
+      },
+      {
+        "slug": "stakeholder-feedback",
+        "label": "Stakeholder Feedback"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      }
+    ],
+    "UNIQUE Skills in the Milestone": [
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "survey-design",
+        "label": "Survey Design"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "research-facilitation",
+        "label": "Research Facilitation"
+      },
+      {
+        "slug": "experiment-design",
+        "label": "Experiment Design"
+      },
+      {
+        "slug": "research-analysis",
+        "label": "Research Analysis"
+      },
+      {
+        "slug": "affinity-mapping",
+        "label": "Affinity Mapping"
+      },
+      {
+        "slug": "problem-statements",
+        "label": "Problem Statements"
+      },
+      {
+        "slug": "vision-formation",
+        "label": "Vision Formation"
+      },
+      {
+        "slug": "backlog-management",
+        "label": "Backlog Management"
+      },
+      {
+        "slug": "kanban-board-management",
+        "label": "Kanban Board Management"
+      },
+      {
+        "slug": "requirements-management",
+        "label": "Requirements Management"
+      },
+      {
+        "slug": "user-stories",
+        "label": "User Stories"
+      },
+      {
+        "slug": "information-architecture",
+        "label": "Information Architecture"
+      },
+      {
+        "slug": "go-to-market-strategy",
+        "label": "Go-to-Market Strategy"
+      },
+      {
+        "slug": "customer-experience-strategy",
+        "label": "Customer Experience Strategy"
+      },
+      {
+        "slug": "motor-based-accessibility",
+        "label": "Motor-Based Accessibility"
+      },
+      {
+        "slug": "information-hierarchy",
+        "label": "Information Hierarchy"
+      },
+      {
+        "slug": "contextual-inquiries",
+        "label": "Contextual Inquiries"
+      },
+      {
+        "slug": "behavior-driven-development-bdd-scenarios",
+        "label": "Behavior Driven Development (BDD) Scenarios"
+      },
+      {
+        "slug": "mental-models",
+        "label": "Mental Models"
+      },
+      {
+        "slug": "storytelling",
+        "label": "Storytelling"
+      },
+      {
+        "slug": "epic-and-feature-management",
+        "label": "Epic and Feature Management"
+      },
+      {
+        "slug": "release-management",
+        "label": "Release Management"
+      },
+      {
+        "slug": "velocity-measurement",
+        "label": "Velocity Measurement"
+      },
+      {
+        "slug": "ethnography",
+        "label": "Ethnography"
+      },
+      {
+        "slug": "public-speaking",
+        "label": "Public Speaking"
+      },
+      {
+        "slug": "prioritization",
+        "label": "Prioritization"
+      },
+      {
+        "slug": "click-testing",
+        "label": "Click Testing"
+      },
+      {
+        "slug": "tree-testing",
+        "label": "Tree Testing"
+      },
+      {
+        "slug": "ai-prompting",
+        "label": "AI Prompting"
+      },
+      {
+        "slug": "data-analysis",
+        "label": "Data Analysis"
+      },
+      {
+        "slug": "negotiation",
+        "label": "Negotiation"
+      },
+      {
+        "slug": "assumption-formation",
+        "label": "Assumption Formation"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "meeting-facilitation",
+        "label": "Meeting Facilitation"
+      },
+      {
+        "slug": "product-market-fit",
+        "label": "Product-Market Fit"
+      },
+      {
+        "slug": "ux-research-method-selection",
+        "label": "UX Research Method Selection"
+      },
+      {
+        "slug": "service-design",
+        "label": "Service Design"
+      },
+      {
+        "slug": "agile-ux",
+        "label": "Agile UX"
+      },
+      {
+        "slug": "perceptual-based-accessibility",
+        "label": "Perceptual-Based Accessibility"
+      },
+      {
+        "slug": "cognitive-based-accessibility",
+        "label": "Cognitive-Based Accessibility"
+      },
+      {
+        "slug": "statistics",
+        "label": "Statistics"
+      },
+      {
+        "slug": "acceptance-criteria-creation",
+        "label": "Acceptance Criteria Creation"
+      },
+      {
+        "slug": "use-case-scenarios",
+        "label": "Use Case Scenarios"
+      },
+      {
+        "slug": "design-thinking",
+        "label": "Design Thinking"
+      },
+      {
+        "slug": "presentation",
+        "label": "Presentation"
+      },
+      {
+        "slug": "a-b-prototype-testing",
+        "label": "A/B Prototype Testing"
+      },
+      {
+        "slug": "concept-testing",
+        "label": "Concept Testing"
+      },
+      {
+        "slug": "workshop-facilitation",
+        "label": "Workshop Facilitation"
+      },
+      {
+        "slug": "qa-test-plan-creation",
+        "label": "QA Test Plan Creation"
+      },
+      {
+        "slug": "scrum-management",
+        "label": "Scrum Management"
+      },
+      {
+        "slug": "advocacy",
+        "label": "Advocacy"
+      },
+      {
+        "slug": "building-influence",
+        "label": "Building Influence"
+      },
+      {
+        "slug": "business-acumen",
+        "label": "Business Acumen"
+      },
+      {
+        "slug": "buy-in-generation",
+        "label": "Buy-in Generation"
+      },
+      {
+        "slug": "attention-to-detail",
+        "label": "Attention to Detail"
+      },
+      {
+        "slug": "delivering-feedback",
+        "label": "Delivering Feedback"
+      },
+      {
+        "slug": "collaboration",
+        "label": "Collaboration"
+      },
+      {
+        "slug": "conflict-resolution",
+        "label": "Conflict Resolution"
+      },
+      {
+        "slug": "creativity",
+        "label": "Creativity"
+      },
+      {
+        "slug": "critical-thinking",
+        "label": "Critical Thinking"
+      },
+      {
+        "slug": "receiving-feedback",
+        "label": "Receiving Feedback"
+      },
+      {
+        "slug": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "slug": "logical-thinking",
+        "label": "Logical Thinking"
+      },
+      {
+        "slug": "stakeholder-management",
+        "label": "Stakeholder Management"
+      },
+      {
+        "slug": "written-communication",
+        "label": "Written Communication"
+      },
+      {
+        "slug": "organization",
+        "label": "Organization"
+      },
+      {
+        "slug": "perserverence",
+        "label": "Perserverence"
+      },
+      {
+        "slug": "problem-solving",
+        "label": "Problem-Solving"
+      },
+      {
+        "slug": "strategic-thinking",
+        "label": "Strategic Thinking"
+      },
+      {
+        "slug": "systems-thinking",
+        "label": "Systems Thinking"
+      },
+      {
+        "slug": "time-management",
+        "label": "Time Management"
+      },
+      {
+        "slug": "verbal-communication",
+        "label": "Verbal Communication"
+      },
+      {
+        "slug": "teamwork",
+        "label": "Teamwork"
+      },
+      {
+        "slug": "expectation-setting",
+        "label": "Expectation Setting"
+      },
+      {
+        "slug": "commitment",
+        "label": "Commitment"
+      },
+      {
+        "slug": "decision-making",
+        "label": "Decision-Making"
+      }
+    ],
+    "UNIQUE Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "UNIQUE Activities": [
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      },
+      {
+        "slug": "requirements-gathering",
+        "label": "Requirements Gathering"
+      },
+      {
+        "slug": "requirements-refinement",
+        "label": "Requirements Refinement"
+      },
+      {
+        "slug": "generating-problem-statements",
+        "label": "Generating Problem Statements"
+      },
+      {
+        "slug": "analyzing-research-findings",
+        "label": "Analyzing Research Findings"
+      },
+      {
+        "slug": "strategy-definition",
+        "label": "Strategy Definition"
+      },
+      {
+        "slug": "level-of-effort-estimation",
+        "label": "Level of Effort Estimation"
+      },
+      {
+        "slug": "identifying-priorities",
+        "label": "Identifying Priorities"
+      },
+      {
+        "slug": "presenting-research-results",
+        "label": "Presenting Research Results"
+      },
+      {
+        "slug": "moderating-ux-research",
+        "label": "Moderating UX Research"
+      },
+      {
+        "slug": "secondary-research",
+        "label": "Secondary Research"
+      },
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "surveys",
+        "label": "Surveys"
+      },
+      {
+        "slug": "storyboarding",
+        "label": "Storyboarding"
+      },
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "diary-studies",
+        "label": "Diary Studies"
+      },
+      {
+        "slug": "contextual-inquiries",
+        "label": "Contextual Inquiries"
+      },
+      {
+        "slug": "observing-ethnography",
+        "label": "Observing (Ethnography)"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "market-research",
+        "label": "Market Research"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "facilitating-agile-workshops",
+        "label": "Facilitating Agile Workshops"
+      },
+      {
+        "slug": "identifying-research-patterns",
+        "label": "Identifying Research Patterns"
+      },
+      {
+        "slug": "experiment-design",
+        "label": "Experiment Design"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "price-testing",
+        "label": "Price Testing"
+      },
+      {
+        "slug": "customer-experience-mapping",
+        "label": "Customer Experience Mapping"
+      },
+      {
+        "slug": "creating-research-plans",
+        "label": "Creating Research Plans"
+      },
+      {
+        "slug": "calculating-statistics",
+        "label": "Calculating Statistics"
+      },
+      {
+        "slug": "site-map-testing",
+        "label": "Site Map Testing"
+      },
+      {
+        "slug": "collecting-analytics",
+        "label": "Collecting Analytics"
+      },
+      {
+        "slug": "primary-research",
+        "label": "Primary Research"
+      },
+      {
+        "slug": "choosing-research-methods",
+        "label": "Choosing Research Methods"
+      },
+      {
+        "slug": "product-backlog-maintenance",
+        "label": "Product Backlog Maintenance"
+      },
+      {
+        "slug": "release-vision-definition",
+        "label": "Release Vision Definition"
+      },
+      {
+        "slug": "investigating-competitors",
+        "label": "Investigating Competitors"
+      }
+    ],
+    "UNIQUE Who's Responsible?": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Responsible in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Who's Accountable?": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Accountable to the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Who's Consulted?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Who's Informed?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Consulted": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Functions Who Are Informed in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "Project Types": [
+      {
+        "slug": "website-project",
+        "label": "Website Project"
+      },
+      {
+        "slug": "web-application-project",
+        "label": "Web Application Project"
+      },
+      {
+        "slug": "mobile-app-project",
+        "label": "Mobile App Project"
+      },
+      {
+        "slug": "service-design-project",
+        "label": "Service Design Project"
+      },
+      {
+        "slug": "discovery-project",
+        "label": "Discovery Project"
+      }
+    ],
+    "Activities": [
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      },
+      {
+        "slug": "requirements-gathering",
+        "label": "Requirements Gathering"
+      },
+      {
+        "slug": "requirements-refinement",
+        "label": "Requirements Refinement"
+      },
+      {
+        "slug": "generating-problem-statements",
+        "label": "Generating Problem Statements"
+      },
+      {
+        "slug": "analyzing-research-findings",
+        "label": "Analyzing Research Findings"
+      },
+      {
+        "slug": "strategy-definition",
+        "label": "Strategy Definition"
+      },
+      {
+        "slug": "level-of-effort-estimation",
+        "label": "Level of Effort Estimation"
+      },
+      {
+        "slug": "identifying-priorities",
+        "label": "Identifying Priorities"
+      },
+      {
+        "slug": "presenting-research-results",
+        "label": "Presenting Research Results"
+      },
+      {
+        "slug": "moderating-ux-research",
+        "label": "Moderating UX Research"
+      },
+      {
+        "slug": "secondary-research",
+        "label": "Secondary Research"
+      },
+      {
+        "slug": "card-sorting",
+        "label": "Card Sorting "
+      },
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "surveys",
+        "label": "Surveys"
+      },
+      {
+        "slug": "storyboarding",
+        "label": "Storyboarding"
+      },
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "diary-studies",
+        "label": "Diary Studies"
+      },
+      {
+        "slug": "contextual-inquiries",
+        "label": "Contextual Inquiries"
+      },
+      {
+        "slug": "observing-ethnography",
+        "label": "Observing (Ethnography)"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "prototype-concept-testing",
+        "label": "Prototype Concept Testing "
+      },
+      {
+        "slug": "market-research",
+        "label": "Market Research"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "facilitating-agile-workshops",
+        "label": "Facilitating Agile Workshops"
+      },
+      {
+        "slug": "identifying-research-patterns",
+        "label": "Identifying Research Patterns"
+      },
+      {
+        "slug": "experiment-design",
+        "label": "Experiment Design"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "price-testing",
+        "label": "Price Testing"
+      },
+      {
+        "slug": "customer-experience-mapping",
+        "label": "Customer Experience Mapping"
+      },
+      {
+        "slug": "creating-research-plans",
+        "label": "Creating Research Plans"
+      },
+      {
+        "slug": "calculating-statistics",
+        "label": "Calculating Statistics"
+      },
+      {
+        "slug": "site-map-testing",
+        "label": "Site Map Testing"
+      },
+      {
+        "slug": "collecting-analytics",
+        "label": "Collecting Analytics"
+      },
+      {
+        "slug": "primary-research",
+        "label": "Primary Research"
+      },
+      {
+        "slug": "choosing-research-methods",
+        "label": "Choosing Research Methods"
+      },
+      {
+        "slug": "product-backlog-maintenance",
+        "label": "Product Backlog Maintenance"
+      },
+      {
+        "slug": "release-vision-definition",
+        "label": "Release Vision Definition"
+      },
+      {
+        "slug": "investigating-competitors",
+        "label": "Investigating Competitors"
+      }
+    ],
+    "Workshops": [
+      {
+        "slug": "working-agreements-workshop-template",
+        "label": "Working Agreements Workshop Template"
+      },
+      {
+        "slug": "scenario-based-problem-statement-generation-workshop-template",
+        "label": "Scenario-Based Problem Statement Generation Workshop Template"
+      },
+      {
+        "slug": "research-plan-workshop-template",
+        "label": "Research Plan Workshop Template"
+      },
+      {
+        "slug": "storyboarding-workshop-template",
+        "label": "Storyboarding Workshop Template"
+      },
+      {
+        "slug": "audience-segmentation-goals-motivations-and-use-cases-workshop-template",
+        "label": "Audience Segmentation, Goals, Motivations, and Use Cases Workshop Template"
+      },
+      {
+        "slug": "ux-research-analysis-workshop-template",
+        "label": "UX Research Analysis Workshop Template"
+      },
+      {
+        "slug": "market-research-and-competitive-analysis-workshop-template",
+        "label": "Market Research and Competitive Analysis Workshop Template"
+      },
+      {
+        "slug": "customer-experience-map-workshop-template",
+        "label": "Customer Experience Map Workshop Template"
+      },
+      {
+        "slug": "user-journey-map-workshop-template",
+        "label": "User Journey Map Workshop Template"
+      },
+      {
+        "slug": "discovery-backlog-workshop-template",
+        "label": "Discovery Backlog Workshop Template"
+      },
+      {
+        "slug": "audience-persona-definition-workshop-template",
+        "label": "Audience Persona Definition Workshop Template"
+      },
+      {
+        "slug": "empathy-map-workshop-template",
+        "label": "Empathy Map Workshop Template"
+      },
+      {
+        "slug": "research-analysis-presentation-slide-template",
+        "label": "Research Analysis Presentation Slide Template"
+      },
+      {
+        "slug": "customer-experience-strategy-workshop-template",
+        "label": "Customer Experience Strategy Workshop Template"
+      }
+    ],
+    "Project Phases - New Milestones In This Phase": [
+      {
+        "slug": "phase-1",
+        "label": "Phase 1"
+      }
+    ],
+    "Milestone Description": "Continuous Discovery is the practice of staying connected to the people a team is building for, instead of guessing what they need. Throughout a project the team keeps interviewing users, digging into problems, and testing its assumptions, and it turns what it hears into clear problem statements and a read on the competition. The name says it plainly: this is continuous. You learn a little at a time, all the way through, so the team is never designing in the dark.",
+    "Why Is This Milestone Important?": "When teams stop listening, they start guessing, and guesses are expensive to build. Ongoing discovery helps the team rule out weak ideas early and lean into the strong ones, so the work stays pointed at problems that genuinely matter to the people using the product.",
+    "When Should You Do This Milestone In Projects?": "Discovery does not wait its turn and it never really ends. Teams run it while they are building and even after a launch, and they lean on it hardest whenever they hit a question only a user can answer. Like every milestone here, it is not a step in a line. It runs alongside the others and comes back around many times.",
+    "Where Can I Learn More?": "Atlassian Agile Coach, with guides on agile, Scrum, and Kanban: https://www.atlassian.com/agile"
+  },
+  {
+    "id": 2,
+    "slug": "requirements",
+    "Milestone Name": "Requirements",
+    "Data Type": [
+      {
+        "slug": "milestone",
+        "label": "Milestone"
+      }
+    ],
+    "Image": [
+      {
+        "name": "milestone.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/tbgPzzJBz6SplLInfnOkJp1JJKs38UFM_8e3edb79cff34fae8c133ae16f2a2b0bab9bba6e6f28d9bed090e345af327108.png"
+      }
+    ],
+    "Milestone Order": "4",
+    "Should Be Done Before": [
+      {
+        "slug": "implement",
+        "label": "Implement"
+      }
+    ],
+    "Should Be Done After": [
+      {
+        "slug": "scope",
+        "label": "Scope"
+      }
+    ],
+    "All Deliverables In the Milestone": [
+      {
+        "slug": "problem-statements",
+        "label": "Problem Statements"
+      },
+      {
+        "slug": "problem-checklists",
+        "label": "Problem Checklists"
+      },
+      {
+        "slug": "epics-and-features",
+        "label": "Epics and Features"
+      },
+      {
+        "slug": "acceptance-criteria",
+        "label": "Acceptance Criteria"
+      },
+      {
+        "slug": "user-story-statements",
+        "label": "User Story Statements"
+      },
+      {
+        "slug": "behavior-driven-development-scenarios",
+        "label": "Behavior-Driven Development Scenarios"
+      },
+      {
+        "slug": "system-architecture-diagram",
+        "label": "System Architecture Diagram"
+      },
+      {
+        "slug": "task-flows",
+        "label": "Task Flows"
+      },
+      {
+        "slug": "use-case-scenarios",
+        "label": "Use Case Scenarios"
+      },
+      {
+        "slug": "use-case-diagrams",
+        "label": "Use Case Diagrams"
+      },
+      {
+        "slug": "prioritized-backlog-tasks",
+        "label": "Prioritized Backlog Tasks"
+      },
+      {
+        "slug": "refined-backlog",
+        "label": "Refined Backlog"
+      },
+      {
+        "slug": "ux-audit-report",
+        "label": "UX Audit Report"
+      },
+      {
+        "slug": "technical-architecture-specifications",
+        "label": "Technical Architecture Specifications"
+      },
+      {
+        "slug": "task-level-scope",
+        "label": "Task-Level Scope"
+      },
+      {
+        "slug": "entity-relationship-diagrams",
+        "label": "Entity Relationship Diagrams"
+      }
+    ],
+    "UNIQUE Skills in the Milestone": [
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "problem-statements",
+        "label": "Problem Statements"
+      },
+      {
+        "slug": "vision-formation",
+        "label": "Vision Formation"
+      },
+      {
+        "slug": "backlog-management",
+        "label": "Backlog Management"
+      },
+      {
+        "slug": "kanban-board-management",
+        "label": "Kanban Board Management"
+      },
+      {
+        "slug": "requirements-management",
+        "label": "Requirements Management"
+      },
+      {
+        "slug": "user-stories",
+        "label": "User Stories"
+      },
+      {
+        "slug": "motor-based-accessibility",
+        "label": "Motor-Based Accessibility"
+      },
+      {
+        "slug": "behavior-driven-development-bdd-scenarios",
+        "label": "Behavior Driven Development (BDD) Scenarios"
+      },
+      {
+        "slug": "epic-and-feature-management",
+        "label": "Epic and Feature Management"
+      },
+      {
+        "slug": "release-management",
+        "label": "Release Management"
+      },
+      {
+        "slug": "velocity-measurement",
+        "label": "Velocity Measurement"
+      },
+      {
+        "slug": "prioritization",
+        "label": "Prioritization"
+      },
+      {
+        "slug": "heuristics",
+        "label": "Heuristics"
+      },
+      {
+        "slug": "ai-prompting",
+        "label": "AI Prompting"
+      },
+      {
+        "slug": "data-analysis",
+        "label": "Data Analysis"
+      },
+      {
+        "slug": "negotiation",
+        "label": "Negotiation"
+      },
+      {
+        "slug": "assumption-formation",
+        "label": "Assumption Formation"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "meeting-facilitation",
+        "label": "Meeting Facilitation"
+      },
+      {
+        "slug": "database-architecture",
+        "label": "Database Architecture"
+      },
+      {
+        "slug": "database-management",
+        "label": "Database Management"
+      },
+      {
+        "slug": "perceptual-based-accessibility",
+        "label": "Perceptual-Based Accessibility"
+      },
+      {
+        "slug": "cognitive-based-accessibility",
+        "label": "Cognitive-Based Accessibility"
+      },
+      {
+        "slug": "database-queries",
+        "label": "Database Queries"
+      },
+      {
+        "slug": "statistics",
+        "label": "Statistics"
+      },
+      {
+        "slug": "acceptance-criteria-creation",
+        "label": "Acceptance Criteria Creation"
+      },
+      {
+        "slug": "use-case-scenarios",
+        "label": "Use Case Scenarios"
+      },
+      {
+        "slug": "accessibility",
+        "label": "Accessibility"
+      },
+      {
+        "slug": "scrum-management",
+        "label": "Scrum Management"
+      },
+      {
+        "slug": "advocacy",
+        "label": "Advocacy"
+      },
+      {
+        "slug": "building-influence",
+        "label": "Building Influence"
+      },
+      {
+        "slug": "business-acumen",
+        "label": "Business Acumen"
+      },
+      {
+        "slug": "buy-in-generation",
+        "label": "Buy-in Generation"
+      },
+      {
+        "slug": "attention-to-detail",
+        "label": "Attention to Detail"
+      },
+      {
+        "slug": "delivering-feedback",
+        "label": "Delivering Feedback"
+      },
+      {
+        "slug": "collaboration",
+        "label": "Collaboration"
+      },
+      {
+        "slug": "critical-thinking",
+        "label": "Critical Thinking"
+      },
+      {
+        "slug": "receiving-feedback",
+        "label": "Receiving Feedback"
+      },
+      {
+        "slug": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "slug": "logical-thinking",
+        "label": "Logical Thinking"
+      },
+      {
+        "slug": "stakeholder-management",
+        "label": "Stakeholder Management"
+      },
+      {
+        "slug": "written-communication",
+        "label": "Written Communication"
+      },
+      {
+        "slug": "organization",
+        "label": "Organization"
+      },
+      {
+        "slug": "perserverence",
+        "label": "Perserverence"
+      },
+      {
+        "slug": "problem-solving",
+        "label": "Problem-Solving"
+      },
+      {
+        "slug": "strategic-thinking",
+        "label": "Strategic Thinking"
+      },
+      {
+        "slug": "time-management",
+        "label": "Time Management"
+      },
+      {
+        "slug": "verbal-communication",
+        "label": "Verbal Communication"
+      },
+      {
+        "slug": "teamwork",
+        "label": "Teamwork"
+      },
+      {
+        "slug": "expectation-setting",
+        "label": "Expectation Setting"
+      },
+      {
+        "slug": "commitment",
+        "label": "Commitment"
+      },
+      {
+        "slug": "decision-making",
+        "label": "Decision-Making"
+      }
+    ],
+    "UNIQUE Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "UNIQUE Activities": [
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      },
+      {
+        "slug": "requirements-gathering",
+        "label": "Requirements Gathering"
+      },
+      {
+        "slug": "requirements-refinement",
+        "label": "Requirements Refinement"
+      },
+      {
+        "slug": "writing-requirements",
+        "label": "Writing Requirements"
+      },
+      {
+        "slug": "feature-vision-definition",
+        "label": "Feature Vision Definition"
+      },
+      {
+        "slug": "feature-scope-definition",
+        "label": "Feature Scope Definition"
+      },
+      {
+        "slug": "generating-problem-statements",
+        "label": "Generating Problem Statements"
+      },
+      {
+        "slug": "level-of-effort-estimation",
+        "label": "Level of Effort Estimation"
+      },
+      {
+        "slug": "identifying-priorities",
+        "label": "Identifying Priorities"
+      },
+      {
+        "slug": "ux-heuristics-analysis",
+        "label": "UX Heuristics Analysis"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "technical-architecture-creation",
+        "label": "Technical Architecture Creation"
+      },
+      {
+        "slug": "user-story-generation",
+        "label": "User Story Generation"
+      },
+      {
+        "slug": "database-creation",
+        "label": "Database Creation"
+      },
+      {
+        "slug": "collecting-analytics",
+        "label": "Collecting Analytics"
+      },
+      {
+        "slug": "product-backlog-maintenance",
+        "label": "Product Backlog Maintenance"
+      },
+      {
+        "slug": "creating-acceptance-criteria",
+        "label": "Creating Acceptance Criteria"
+      }
+    ],
+    "UNIQUE Who's Responsible?": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Responsible in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Who's Accountable?": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Accountable to the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Who's Consulted?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Who's Informed?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Consulted": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Functions Who Are Informed in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "Project Types": [
+      {
+        "slug": "website-project",
+        "label": "Website Project"
+      },
+      {
+        "slug": "web-application-project",
+        "label": "Web Application Project"
+      },
+      {
+        "slug": "mobile-app-project",
+        "label": "Mobile App Project"
+      }
+    ],
+    "Activities": [
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      },
+      {
+        "slug": "requirements-gathering",
+        "label": "Requirements Gathering"
+      },
+      {
+        "slug": "requirements-refinement",
+        "label": "Requirements Refinement"
+      },
+      {
+        "slug": "writing-requirements",
+        "label": "Writing Requirements"
+      },
+      {
+        "slug": "feature-vision-definition",
+        "label": "Feature Vision Definition"
+      },
+      {
+        "slug": "feature-scope-definition",
+        "label": "Feature Scope Definition"
+      },
+      {
+        "slug": "generating-problem-statements",
+        "label": "Generating Problem Statements"
+      },
+      {
+        "slug": "level-of-effort-estimation",
+        "label": "Level of Effort Estimation"
+      },
+      {
+        "slug": "identifying-priorities",
+        "label": "Identifying Priorities"
+      },
+      {
+        "slug": "ux-heuristics-analysis",
+        "label": "UX Heuristics Analysis"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "technical-architecture-creation",
+        "label": "Technical Architecture Creation"
+      },
+      {
+        "slug": "user-story-generation",
+        "label": "User Story Generation"
+      },
+      {
+        "slug": "database-creation",
+        "label": "Database Creation"
+      },
+      {
+        "slug": "collecting-analytics",
+        "label": "Collecting Analytics"
+      },
+      {
+        "slug": "product-backlog-maintenance",
+        "label": "Product Backlog Maintenance"
+      },
+      {
+        "slug": "creating-acceptance-criteria",
+        "label": "Creating Acceptance Criteria"
+      }
+    ],
+    "Project Phases - New Milestones In This Phase": [
+      {
+        "slug": "phase-2",
+        "label": "Phase 2"
+      }
+    ],
+    "Milestone Description": "Requirements is the work of turning a rough idea into a shared picture of what to build. The team writes what it has learned as user stories and acceptance criteria, plain statements of what needs to happen and how everyone will know it is finished. In agile work you write just enough to get moving and keep refining as you learn, rather than trying to spell out every detail before anyone starts.",
+    "Why Is This Milestone Important?": "Vague requirements are one of the most common places projects quietly go wrong. When the team shares a picture of what 'done' looks like, designers, developers, and clients stop working from different assumptions, and a lot of expensive rework simply never happens.",
+    "When Should You Do This Milestone In Projects?": "Requirements tend to sharpen right before a piece of work gets built, but they are never a one-time step. The team keeps rewriting them as it learns, so one part of a product can be in requirements while another is already being built and a third is being tested.",
+    "Where Can I Learn More?": "Atlassian Agile Coach, with guides on agile, Scrum, and Kanban: https://www.atlassian.com/agile"
+  },
+  {
+    "id": 3,
+    "slug": "scope",
+    "Milestone Name": "Scope",
+    "Data Type": [
+      {
+        "slug": "milestone",
+        "label": "Milestone"
+      }
+    ],
+    "Image": [
+      {
+        "name": "milestone.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/tbgPzzJBz6SplLInfnOkJp1JJKs38UFM_8e3edb79cff34fae8c133ae16f2a2b0bab9bba6e6f28d9bed090e345af327108.png"
+      }
+    ],
+    "Milestone Order": "3",
+    "Should Be Done Before": [
+      {
+        "slug": "requirements",
+        "label": "Requirements"
+      }
+    ],
+    "Should Be Done After": [
+      {
+        "slug": "vision",
+        "label": "Vision"
+      }
+    ],
+    "All Deliverables In the Milestone": [
+      {
+        "slug": "epics-and-features",
+        "label": "Epics and Features"
+      },
+      {
+        "slug": "release-level-scope",
+        "label": "Release-level Scope"
+      }
+    ],
+    "UNIQUE Skills in the Milestone": [
+      {
+        "slug": "epic-and-feature-management",
+        "label": "Epic and Feature Management"
+      },
+      {
+        "slug": "release-management",
+        "label": "Release Management"
+      },
+      {
+        "slug": "negotiation",
+        "label": "Negotiation"
+      },
+      {
+        "slug": "advocacy",
+        "label": "Advocacy"
+      },
+      {
+        "slug": "building-influence",
+        "label": "Building Influence"
+      },
+      {
+        "slug": "business-acumen",
+        "label": "Business Acumen"
+      },
+      {
+        "slug": "buy-in-generation",
+        "label": "Buy-in Generation"
+      },
+      {
+        "slug": "attention-to-detail",
+        "label": "Attention to Detail"
+      },
+      {
+        "slug": "collaboration",
+        "label": "Collaboration"
+      },
+      {
+        "slug": "critical-thinking",
+        "label": "Critical Thinking"
+      },
+      {
+        "slug": "receiving-feedback",
+        "label": "Receiving Feedback"
+      },
+      {
+        "slug": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "slug": "logical-thinking",
+        "label": "Logical Thinking"
+      },
+      {
+        "slug": "written-communication",
+        "label": "Written Communication"
+      },
+      {
+        "slug": "organization",
+        "label": "Organization"
+      },
+      {
+        "slug": "perserverence",
+        "label": "Perserverence"
+      },
+      {
+        "slug": "problem-solving",
+        "label": "Problem-Solving"
+      },
+      {
+        "slug": "strategic-thinking",
+        "label": "Strategic Thinking"
+      },
+      {
+        "slug": "time-management",
+        "label": "Time Management"
+      },
+      {
+        "slug": "verbal-communication",
+        "label": "Verbal Communication"
+      },
+      {
+        "slug": "teamwork",
+        "label": "Teamwork"
+      },
+      {
+        "slug": "commitment",
+        "label": "Commitment"
+      },
+      {
+        "slug": "decision-making",
+        "label": "Decision-Making"
+      }
+    ],
+    "UNIQUE Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "UNIQUE Activities": [
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      }
+    ],
+    "UNIQUE Who's Responsible?": [
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Responsible in the Milestone": [
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Who's Accountable?": [
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Accountable to the Milestone": [
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Who's Consulted?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      }
+    ],
+    "UNIQUE Who's Informed?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Consulted": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Functions Who Are Informed in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "Project Types": [
+      {
+        "slug": "website-project",
+        "label": "Website Project"
+      },
+      {
+        "slug": "web-application-project",
+        "label": "Web Application Project"
+      },
+      {
+        "slug": "mobile-app-project",
+        "label": "Mobile App Project"
+      },
+      {
+        "slug": "service-design-project",
+        "label": "Service Design Project"
+      },
+      {
+        "slug": "discovery-project",
+        "label": "Discovery Project"
+      }
+    ],
+    "Activities": [
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      }
+    ],
+    "Workshops": [
+      {
+        "slug": "vision-and-scope-workshop-template",
+        "label": "Vision and Scope Workshop Template"
+      }
+    ],
+    "Project Phases - New Milestones In This Phase": [
+      {
+        "slug": "phase-1",
+        "label": "Phase 1"
+      }
+    ],
+    "Milestone Description": "Scope is where a team decides what to take on now and what can wait. There are always more ideas than time, so the team chooses which pieces of work, the epics and features, to commit to and which to set aside for later. The goal is not to do everything, but to pick the right things to do first, and to keep adjusting that choice as the work teaches the team more.",
+    "Why Is This Milestone Important?": "A project with no edges struggles to ship. Agreeing on scope keeps the team focused, sets honest expectations with clients, and protects everyone from the slow creep of 'just one more thing.'",
+    "When Should You Do This Milestone In Projects?": "Scope gets attention early, but in agile work it is rarely set once and left alone. The team defines scope as it goes, shifting what is in and out as it learns, so scoping happens again and again, often while other parts of the product are being built or tested.",
+    "Where Can I Learn More?": "Atlassian Agile Coach, with guides on agile, Scrum, and Kanban: https://www.atlassian.com/agile"
+  },
+  {
+    "id": 4,
+    "slug": "implement",
+    "Milestone Name": "Implement",
+    "Data Type": [
+      {
+        "slug": "milestone",
+        "label": "Milestone"
+      }
+    ],
+    "Image": [
+      {
+        "name": "milestone.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/tbgPzzJBz6SplLInfnOkJp1JJKs38UFM_8e3edb79cff34fae8c133ae16f2a2b0bab9bba6e6f28d9bed090e345af327108.png"
+      }
+    ],
+    "Milestone Order": "6",
+    "Should Be Done Before": [
+      {
+        "slug": "acceptance-testing",
+        "label": "Acceptance Testing"
+      }
+    ],
+    "Should Be Done After": [
+      {
+        "slug": "requirements",
+        "label": "Requirements"
+      }
+    ],
+    "All Deliverables In the Milestone": [
+      {
+        "slug": "editorial-style-guide",
+        "label": "Editorial Style Guide"
+      },
+      {
+        "slug": "brand-identity",
+        "label": "Brand Identity"
+      },
+      {
+        "slug": "wireframes",
+        "label": "Wireframes"
+      },
+      {
+        "slug": "low-fidelity-prototypes",
+        "label": "Low-Fidelity Prototypes"
+      },
+      {
+        "slug": "high-fidelity-prototypes",
+        "label": "High-Fidelity Prototypes"
+      },
+      {
+        "slug": "ui-development-specifications",
+        "label": "UI Development Specifications"
+      },
+      {
+        "slug": "design-annotation",
+        "label": "Design Annotation"
+      },
+      {
+        "slug": "ux-audit-report",
+        "label": "UX Audit Report"
+      },
+      {
+        "slug": "sketches",
+        "label": "Sketches"
+      },
+      {
+        "slug": "customer-experience-diagram",
+        "label": "Customer Experience Diagram"
+      },
+      {
+        "slug": "design-system",
+        "label": "Design System"
+      },
+      {
+        "slug": "sitemap",
+        "label": "Sitemap"
+      },
+      {
+        "slug": "copywriting-document",
+        "label": "Copywriting Document"
+      },
+      {
+        "slug": "taxonomy",
+        "label": "Taxonomy"
+      },
+      {
+        "slug": "microcopy",
+        "label": "Microcopy"
+      },
+      {
+        "slug": "microservices-architecture",
+        "label": "Microservices Architecture"
+      },
+      {
+        "slug": "network-architecture",
+        "label": "Network Architecture"
+      },
+      {
+        "slug": "component-library",
+        "label": "Component Library"
+      },
+      {
+        "slug": "architecture-diagrams",
+        "label": "Architecture Diagrams"
+      },
+      {
+        "slug": "brand-archetypes",
+        "label": "Brand Archetypes"
+      },
+      {
+        "slug": "code",
+        "label": "Code"
+      },
+      {
+        "slug": "hosting-infrastructure",
+        "label": "Hosting Infrastructure"
+      },
+      {
+        "slug": "stakeholder-feedback",
+        "label": "Stakeholder Feedback"
+      },
+      {
+        "slug": "content-inventory",
+        "label": "Content Inventory"
+      },
+      {
+        "slug": "coding-documentation",
+        "label": "Coding Documentation"
+      },
+      {
+        "slug": "database-architecture",
+        "label": "Database Architecture"
+      },
+      {
+        "slug": "content-outline",
+        "label": "Content Outline"
+      },
+      {
+        "slug": "api-library",
+        "label": "API LIbrary"
+      },
+      {
+        "slug": "logo-and-brand-assets",
+        "label": "Logo and Brand Assets"
+      },
+      {
+        "slug": "accessibility-analysis",
+        "label": "Accessibility Analysis"
+      },
+      {
+        "slug": "smart-contracts",
+        "label": "Smart Contracts"
+      },
+      {
+        "slug": "seo-strategy",
+        "label": "SEO Strategy"
+      }
+    ],
+    "UNIQUE Skills in the Milestone": [
+      {
+        "slug": "branding",
+        "label": "Branding"
+      },
+      {
+        "slug": "interaction-design",
+        "label": "Interaction Design"
+      },
+      {
+        "slug": "information-architecture",
+        "label": "Information Architecture"
+      },
+      {
+        "slug": "customer-experience-strategy",
+        "label": "Customer Experience Strategy"
+      },
+      {
+        "slug": "motor-based-accessibility",
+        "label": "Motor-Based Accessibility"
+      },
+      {
+        "slug": "gestalt-principles",
+        "label": "Gestalt Principles"
+      },
+      {
+        "slug": "design-patterns",
+        "label": "Design Patterns"
+      },
+      {
+        "slug": "prototyping",
+        "label": "Prototyping"
+      },
+      {
+        "slug": "information-hierarchy",
+        "label": "Information Hierarchy"
+      },
+      {
+        "slug": "typography",
+        "label": "Typography"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "contextual-inquiries",
+        "label": "Contextual Inquiries"
+      },
+      {
+        "slug": "behavior-driven-development-bdd-scenarios",
+        "label": "Behavior Driven Development (BDD) Scenarios"
+      },
+      {
+        "slug": "information-visualization",
+        "label": "Information Visualization"
+      },
+      {
+        "slug": "mental-models",
+        "label": "Mental Models"
+      },
+      {
+        "slug": "visual-signifiers",
+        "label": "Visual Signifiers"
+      },
+      {
+        "slug": "storytelling",
+        "label": "Storytelling"
+      },
+      {
+        "slug": "icon-design",
+        "label": "Icon Design"
+      },
+      {
+        "slug": "design-systems-management",
+        "label": "Design Systems Management"
+      },
+      {
+        "slug": "heuristics",
+        "label": "Heuristics"
+      },
+      {
+        "slug": "ai-prompting",
+        "label": "AI Prompting"
+      },
+      {
+        "slug": "data-analysis",
+        "label": "Data Analysis"
+      },
+      {
+        "slug": "negotiation",
+        "label": "Negotiation"
+      },
+      {
+        "slug": "meeting-facilitation",
+        "label": "Meeting Facilitation"
+      },
+      {
+        "slug": "network-architecture",
+        "label": "Network Architecture"
+      },
+      {
+        "slug": "service-design",
+        "label": "Service Design"
+      },
+      {
+        "slug": "user-interface-design",
+        "label": "User Interface Design"
+      },
+      {
+        "slug": "perceptual-based-accessibility",
+        "label": "Perceptual-Based Accessibility"
+      },
+      {
+        "slug": "cognitive-based-accessibility",
+        "label": "Cognitive-Based Accessibility"
+      },
+      {
+        "slug": "statistics",
+        "label": "Statistics"
+      },
+      {
+        "slug": "ui-specifications-for-development",
+        "label": "UI Specifications for Development"
+      },
+      {
+        "slug": "use-case-scenarios",
+        "label": "Use Case Scenarios"
+      },
+      {
+        "slug": "executive-summaries",
+        "label": "Executive Summaries"
+      },
+      {
+        "slug": "accessibility",
+        "label": "Accessibility"
+      },
+      {
+        "slug": "signifiers",
+        "label": "Signifiers"
+      },
+      {
+        "slug": "design-thinking",
+        "label": "Design Thinking"
+      },
+      {
+        "slug": "making-wireframes",
+        "label": "Making Wireframes"
+      },
+      {
+        "slug": "a-b-prototype-testing",
+        "label": "A/B Prototype Testing"
+      },
+      {
+        "slug": "concept-testing",
+        "label": "Concept Testing"
+      },
+      {
+        "slug": "responsive-design",
+        "label": "Responsive Design"
+      },
+      {
+        "slug": "workshop-facilitation",
+        "label": "Workshop Facilitation"
+      },
+      {
+        "slug": "qa-test-plan-creation",
+        "label": "QA Test Plan Creation"
+      },
+      {
+        "slug": "advocacy",
+        "label": "Advocacy"
+      },
+      {
+        "slug": "building-influence",
+        "label": "Building Influence"
+      },
+      {
+        "slug": "business-acumen",
+        "label": "Business Acumen"
+      },
+      {
+        "slug": "buy-in-generation",
+        "label": "Buy-in Generation"
+      },
+      {
+        "slug": "attention-to-detail",
+        "label": "Attention to Detail"
+      },
+      {
+        "slug": "delivering-feedback",
+        "label": "Delivering Feedback"
+      },
+      {
+        "slug": "collaboration",
+        "label": "Collaboration"
+      },
+      {
+        "slug": "conflict-resolution",
+        "label": "Conflict Resolution"
+      },
+      {
+        "slug": "creativity",
+        "label": "Creativity"
+      },
+      {
+        "slug": "critical-thinking",
+        "label": "Critical Thinking"
+      },
+      {
+        "slug": "receiving-feedback",
+        "label": "Receiving Feedback"
+      },
+      {
+        "slug": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "slug": "logical-thinking",
+        "label": "Logical Thinking"
+      },
+      {
+        "slug": "written-communication",
+        "label": "Written Communication"
+      },
+      {
+        "slug": "organization",
+        "label": "Organization"
+      },
+      {
+        "slug": "perserverence",
+        "label": "Perserverence"
+      },
+      {
+        "slug": "problem-solving",
+        "label": "Problem-Solving"
+      },
+      {
+        "slug": "strategic-thinking",
+        "label": "Strategic Thinking"
+      },
+      {
+        "slug": "systems-thinking",
+        "label": "Systems Thinking"
+      },
+      {
+        "slug": "time-management",
+        "label": "Time Management"
+      },
+      {
+        "slug": "verbal-communication",
+        "label": "Verbal Communication"
+      },
+      {
+        "slug": "teamwork",
+        "label": "Teamwork"
+      },
+      {
+        "slug": "expectation-setting",
+        "label": "Expectation Setting"
+      },
+      {
+        "slug": "commitment",
+        "label": "Commitment"
+      },
+      {
+        "slug": "decision-making",
+        "label": "Decision-Making"
+      }
+    ],
+    "UNIQUE Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "UNIQUE Activities": [
+      {
+        "slug": "wireframing",
+        "label": "Wireframing"
+      },
+      {
+        "slug": "design-component-creation",
+        "label": "Design Component Creation"
+      },
+      {
+        "slug": "brand-identity-formation",
+        "label": "Brand Identity Formation"
+      },
+      {
+        "slug": "icon-and-logo-creation",
+        "label": "Icon and Logo Creation"
+      },
+      {
+        "slug": "a-b-prototype-test-creation",
+        "label": "A/B Prototype Test Creation"
+      },
+      {
+        "slug": "ui-kit-creation",
+        "label": "UI Kit Creation"
+      },
+      {
+        "slug": "developing-information-architecture",
+        "label": "Developing Information Architecture"
+      },
+      {
+        "slug": "prototype-creation",
+        "label": "Prototype Creation"
+      },
+      {
+        "slug": "ux-heuristics-analysis",
+        "label": "UX Heuristics Analysis"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "facilitating-agile-workshops",
+        "label": "Facilitating Agile Workshops"
+      },
+      {
+        "slug": "clickable-prototype-creation",
+        "label": "Clickable Prototype Creation"
+      },
+      {
+        "slug": "inventorying-content",
+        "label": "Inventorying Content"
+      },
+      {
+        "slug": "customer-experience-mapping",
+        "label": "Customer Experience Mapping"
+      },
+      {
+        "slug": "search-engine-optimization-seo-design",
+        "label": "Search Engine Optimization (SEO) Design"
+      },
+      {
+        "slug": "rapid-ideation",
+        "label": "Rapid Ideation"
+      },
+      {
+        "slug": "measuring-accessibility",
+        "label": "Measuring Accessibility"
+      },
+      {
+        "slug": "site-map-testing",
+        "label": "Site Map Testing"
+      },
+      {
+        "slug": "copywriting",
+        "label": "Copywriting"
+      },
+      {
+        "slug": "creating-illustrations",
+        "label": "Creating Illustrations"
+      },
+      {
+        "slug": "collecting-analytics",
+        "label": "Collecting Analytics"
+      },
+      {
+        "slug": "optimizing-seo",
+        "label": "Optimizing SEO"
+      },
+      {
+        "slug": "creating-annotations",
+        "label": "Creating Annotations"
+      }
+    ],
+    "UNIQUE Who's Responsible?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Responsible in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      }
+    ],
+    "UNIQUE Who's Accountable?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Accountable to the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Who's Consulted?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Who's Informed?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Consulted": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Functions Who Are Informed in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "Project Phases": "PILR Training Phase 2, Mindful Digits Phase 3, Baddies in Tech Phase 2",
+    "Project Types": [
+      {
+        "slug": "website-project",
+        "label": "Website Project"
+      },
+      {
+        "slug": "web-application-project",
+        "label": "Web Application Project"
+      },
+      {
+        "slug": "mobile-app-project",
+        "label": "Mobile App Project"
+      }
+    ],
+    "Activities": [
+      {
+        "slug": "wireframing",
+        "label": "Wireframing"
+      },
+      {
+        "slug": "design-component-creation",
+        "label": "Design Component Creation"
+      },
+      {
+        "slug": "brand-identity-formation",
+        "label": "Brand Identity Formation"
+      },
+      {
+        "slug": "icon-and-logo-creation",
+        "label": "Icon and Logo Creation"
+      },
+      {
+        "slug": "a-b-prototype-test-creation",
+        "label": "A/B Prototype Test Creation"
+      },
+      {
+        "slug": "ui-kit-creation",
+        "label": "UI Kit Creation"
+      },
+      {
+        "slug": "developing-information-architecture",
+        "label": "Developing Information Architecture"
+      },
+      {
+        "slug": "prototype-creation",
+        "label": "Prototype Creation"
+      },
+      {
+        "slug": "ux-heuristics-analysis",
+        "label": "UX Heuristics Analysis"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "facilitating-agile-workshops",
+        "label": "Facilitating Agile Workshops"
+      },
+      {
+        "slug": "clickable-prototype-creation",
+        "label": "Clickable Prototype Creation"
+      },
+      {
+        "slug": "inventorying-content",
+        "label": "Inventorying Content"
+      },
+      {
+        "slug": "customer-experience-mapping",
+        "label": "Customer Experience Mapping"
+      },
+      {
+        "slug": "search-engine-optimization-seo-design",
+        "label": "Search Engine Optimization (SEO) Design"
+      },
+      {
+        "slug": "measuring-accessibility",
+        "label": "Measuring Accessibility"
+      },
+      {
+        "slug": "site-map-testing",
+        "label": "Site Map Testing"
+      },
+      {
+        "slug": "copywriting",
+        "label": "Copywriting"
+      },
+      {
+        "slug": "creating-illustrations",
+        "label": "Creating Illustrations"
+      },
+      {
+        "slug": "collecting-analytics",
+        "label": "Collecting Analytics"
+      },
+      {
+        "slug": "optimizing-seo",
+        "label": "Optimizing SEO"
+      },
+      {
+        "slug": "creating-annotations",
+        "label": "Creating Annotations"
+      }
+    ],
+    "Workshops": [
+      {
+        "slug": "rapid-ideation-workshop-template",
+        "label": "Rapid Ideation Workshop Template"
+      },
+      {
+        "slug": "brand-strategy-and-identity-workshop-template",
+        "label": "Brand Strategy and Identity Workshop Template"
+      }
+    ],
+    "Project Phases - New Milestones In This Phase": [
+      {
+        "slug": "phase-2",
+        "label": "Phase 2"
+      }
+    ],
+    "Milestone Description": "Implement is where the building happens and plans become real. Wireframes turn into working screens, and the product's components and brand come together. It is the hands-on, make-it-real work, and it usually takes the most time and energy, done in short repeating cycles rather than one long push.",
+    "Why Is This Milestone Important?": "This is where the product's value actually gets made. Everything before it was preparation; this is the part users will see and touch, so the care the team puts in here shows up directly in the finished product.",
+    "When Should You Do This Milestone In Projects?": "Building does not wait for everything else to be figured out. One feature can be under construction while another is still being scoped and a third is already live. Expect implementation to run in parallel with almost every other milestone, in small cycles the team repeats as it learns.",
+    "Where Can I Learn More?": "Atlassian Agile Coach, with guides on agile, Scrum, and Kanban: https://www.atlassian.com/agile"
+  },
+  {
+    "id": 6,
+    "slug": "launch",
+    "Milestone Name": "Launch",
+    "Data Type": [
+      {
+        "slug": "milestone",
+        "label": "Milestone"
+      }
+    ],
+    "Image": [
+      {
+        "name": "milestone.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/tbgPzzJBz6SplLInfnOkJp1JJKs38UFM_8e3edb79cff34fae8c133ae16f2a2b0bab9bba6e6f28d9bed090e345af327108.png"
+      }
+    ],
+    "Milestone Order": "8",
+    "Should Be Done After": [
+      {
+        "slug": "acceptance-testing",
+        "label": "Acceptance Testing"
+      }
+    ],
+    "All Deliverables In the Milestone": [
+      {
+        "slug": "behavior-driven-development-scenarios",
+        "label": "Behavior-Driven Development Scenarios"
+      },
+      {
+        "slug": "qa-test-plan",
+        "label": "QA Test Plan"
+      },
+      {
+        "slug": "release-plan",
+        "label": "Release Plan"
+      },
+      {
+        "slug": "project-hand-off",
+        "label": "Project Hand-off"
+      },
+      {
+        "slug": "qa-test-cases",
+        "label": "QA Test Cases"
+      },
+      {
+        "slug": "stakeholder-feedback",
+        "label": "Stakeholder Feedback"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "accessibility-analysis",
+        "label": "Accessibility Analysis"
+      }
+    ],
+    "UNIQUE Skills in the Milestone": [
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "vision-formation",
+        "label": "Vision Formation"
+      },
+      {
+        "slug": "requirements-management",
+        "label": "Requirements Management"
+      },
+      {
+        "slug": "user-stories",
+        "label": "User Stories"
+      },
+      {
+        "slug": "go-to-market-strategy",
+        "label": "Go-to-Market Strategy"
+      },
+      {
+        "slug": "behavior-driven-development-bdd-scenarios",
+        "label": "Behavior Driven Development (BDD) Scenarios"
+      },
+      {
+        "slug": "epic-and-feature-management",
+        "label": "Epic and Feature Management"
+      },
+      {
+        "slug": "release-management",
+        "label": "Release Management"
+      },
+      {
+        "slug": "public-speaking",
+        "label": "Public Speaking"
+      },
+      {
+        "slug": "ai-prompting",
+        "label": "AI Prompting"
+      },
+      {
+        "slug": "data-analysis",
+        "label": "Data Analysis"
+      },
+      {
+        "slug": "negotiation",
+        "label": "Negotiation"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "meeting-facilitation",
+        "label": "Meeting Facilitation"
+      },
+      {
+        "slug": "product-market-fit",
+        "label": "Product-Market Fit"
+      },
+      {
+        "slug": "acceptance-criteria-creation",
+        "label": "Acceptance Criteria Creation"
+      },
+      {
+        "slug": "use-case-scenarios",
+        "label": "Use Case Scenarios"
+      },
+      {
+        "slug": "executive-summaries",
+        "label": "Executive Summaries"
+      },
+      {
+        "slug": "qa-test-plan-creation",
+        "label": "QA Test Plan Creation"
+      },
+      {
+        "slug": "advocacy",
+        "label": "Advocacy"
+      },
+      {
+        "slug": "building-influence",
+        "label": "Building Influence"
+      },
+      {
+        "slug": "business-acumen",
+        "label": "Business Acumen"
+      },
+      {
+        "slug": "buy-in-generation",
+        "label": "Buy-in Generation"
+      },
+      {
+        "slug": "attention-to-detail",
+        "label": "Attention to Detail"
+      },
+      {
+        "slug": "collaboration",
+        "label": "Collaboration"
+      },
+      {
+        "slug": "critical-thinking",
+        "label": "Critical Thinking"
+      },
+      {
+        "slug": "receiving-feedback",
+        "label": "Receiving Feedback"
+      },
+      {
+        "slug": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "slug": "logical-thinking",
+        "label": "Logical Thinking"
+      },
+      {
+        "slug": "stakeholder-management",
+        "label": "Stakeholder Management"
+      },
+      {
+        "slug": "written-communication",
+        "label": "Written Communication"
+      },
+      {
+        "slug": "organization",
+        "label": "Organization"
+      },
+      {
+        "slug": "perserverence",
+        "label": "Perserverence"
+      },
+      {
+        "slug": "problem-solving",
+        "label": "Problem-Solving"
+      },
+      {
+        "slug": "strategic-thinking",
+        "label": "Strategic Thinking"
+      },
+      {
+        "slug": "time-management",
+        "label": "Time Management"
+      },
+      {
+        "slug": "verbal-communication",
+        "label": "Verbal Communication"
+      },
+      {
+        "slug": "teamwork",
+        "label": "Teamwork"
+      },
+      {
+        "slug": "expectation-setting",
+        "label": "Expectation Setting"
+      },
+      {
+        "slug": "commitment",
+        "label": "Commitment"
+      },
+      {
+        "slug": "decision-making",
+        "label": "Decision-Making"
+      }
+    ],
+    "UNIQUE Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "UNIQUE Activities": [
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      },
+      {
+        "slug": "writing-requirements",
+        "label": "Writing Requirements"
+      },
+      {
+        "slug": "kickoff-intake",
+        "label": "Kickoff / Intake"
+      },
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "market-research",
+        "label": "Market Research"
+      },
+      {
+        "slug": "qa-testing",
+        "label": "QA Testing"
+      },
+      {
+        "slug": "autotest-creation",
+        "label": "Autotest Creation"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "measuring-accessibility",
+        "label": "Measuring Accessibility"
+      },
+      {
+        "slug": "release-vision-definition",
+        "label": "Release Vision Definition"
+      }
+    ],
+    "UNIQUE Who's Responsible?": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Responsible in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Who's Accountable?": [
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Accountable to the Milestone": [
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Who's Consulted?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Who's Informed?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Consulted": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Functions Who Are Informed in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "Project Types": [
+      {
+        "slug": "website-project",
+        "label": "Website Project"
+      },
+      {
+        "slug": "web-application-project",
+        "label": "Web Application Project"
+      },
+      {
+        "slug": "mobile-app-project",
+        "label": "Mobile App Project"
+      },
+      {
+        "slug": "service-design-project",
+        "label": "Service Design Project"
+      },
+      {
+        "slug": "discovery-project",
+        "label": "Discovery Project"
+      }
+    ],
+    "Activities": [
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      },
+      {
+        "slug": "writing-requirements",
+        "label": "Writing Requirements"
+      },
+      {
+        "slug": "kickoff-intake",
+        "label": "Kickoff / Intake"
+      },
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "market-research",
+        "label": "Market Research"
+      },
+      {
+        "slug": "qa-testing",
+        "label": "QA Testing"
+      },
+      {
+        "slug": "autotest-creation",
+        "label": "Autotest Creation"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "measuring-accessibility",
+        "label": "Measuring Accessibility"
+      },
+      {
+        "slug": "release-vision-definition",
+        "label": "Release Vision Definition"
+      }
+    ],
+    "Project Phases - New Milestones In This Phase": [
+      {
+        "slug": "phase-3",
+        "label": "Phase 3"
+      },
+      {
+        "slug": "phase-n-1",
+        "label": "Phase N + 1"
+      }
+    ],
+    "Milestone Description": "Launch is the point where the work reaches real users. The team ties up the final details, plans how the release will roll out, and gets everything ready for the people who will use it. It is part careful checklist and part milestone worth celebrating, the payoff for the work that came before.",
+    "Why Is This Milestone Important?": "A strong product nobody can get to helps no one. A clear launch plan means the work actually reaches people, so the team ships with confidence instead of uncertainty.",
+    "When Should You Do This Milestone In Projects?": "Launch is often pictured as the finish line, but products rarely launch just once. A team might release a small version early, then keep discovering, testing, and building well after. It helps to see a launch as one of many moments a product meets its users, not the end of the road.",
+    "Where Can I Learn More?": "Atlassian Agile Coach, with guides on agile, Scrum, and Kanban: https://www.atlassian.com/agile"
+  },
+  {
+    "id": 7,
+    "slug": "vision",
+    "Milestone Name": "Vision",
+    "Data Type": [
+      {
+        "slug": "milestone",
+        "label": "Milestone"
+      }
+    ],
+    "Image": [
+      {
+        "name": "milestone.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/tbgPzzJBz6SplLInfnOkJp1JJKs38UFM_8e3edb79cff34fae8c133ae16f2a2b0bab9bba6e6f28d9bed090e345af327108.png"
+      }
+    ],
+    "Milestone Order": "3",
+    "Should Be Done Before": [
+      {
+        "slug": "requirements",
+        "label": "Requirements"
+      }
+    ],
+    "Should Be Done After": [
+      {
+        "slug": "continuous-discovery",
+        "label": "Continuous Discovery"
+      }
+    ],
+    "All Deliverables In the Milestone": [
+      {
+        "slug": "vision-boards",
+        "label": "Vision Boards"
+      },
+      {
+        "slug": "roadmap",
+        "label": "Roadmap"
+      },
+      {
+        "slug": "pitch-deck",
+        "label": "Pitch Deck"
+      },
+      {
+        "slug": "strategy-definition",
+        "label": "Strategy Definition"
+      },
+      {
+        "slug": "mission-statement",
+        "label": "Mission Statement"
+      },
+      {
+        "slug": "vision-statement",
+        "label": "Vision Statement"
+      },
+      {
+        "slug": "organizational-values",
+        "label": "Organizational Values"
+      },
+      {
+        "slug": "commitment-statement",
+        "label": "Commitment Statement"
+      }
+    ],
+    "UNIQUE Skills in the Milestone": [
+      {
+        "slug": "vision-formation",
+        "label": "Vision Formation"
+      },
+      {
+        "slug": "backlog-management",
+        "label": "Backlog Management"
+      },
+      {
+        "slug": "go-to-market-strategy",
+        "label": "Go-to-Market Strategy"
+      },
+      {
+        "slug": "epic-and-feature-management",
+        "label": "Epic and Feature Management"
+      },
+      {
+        "slug": "release-management",
+        "label": "Release Management"
+      },
+      {
+        "slug": "ai-prompting",
+        "label": "AI Prompting"
+      },
+      {
+        "slug": "data-analysis",
+        "label": "Data Analysis"
+      },
+      {
+        "slug": "negotiation",
+        "label": "Negotiation"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "product-market-fit",
+        "label": "Product-Market Fit"
+      },
+      {
+        "slug": "advocacy",
+        "label": "Advocacy"
+      },
+      {
+        "slug": "building-influence",
+        "label": "Building Influence"
+      },
+      {
+        "slug": "business-acumen",
+        "label": "Business Acumen"
+      },
+      {
+        "slug": "buy-in-generation",
+        "label": "Buy-in Generation"
+      },
+      {
+        "slug": "attention-to-detail",
+        "label": "Attention to Detail"
+      },
+      {
+        "slug": "collaboration",
+        "label": "Collaboration"
+      },
+      {
+        "slug": "critical-thinking",
+        "label": "Critical Thinking"
+      },
+      {
+        "slug": "receiving-feedback",
+        "label": "Receiving Feedback"
+      },
+      {
+        "slug": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "slug": "logical-thinking",
+        "label": "Logical Thinking"
+      },
+      {
+        "slug": "written-communication",
+        "label": "Written Communication"
+      },
+      {
+        "slug": "organization",
+        "label": "Organization"
+      },
+      {
+        "slug": "perserverence",
+        "label": "Perserverence"
+      },
+      {
+        "slug": "problem-solving",
+        "label": "Problem-Solving"
+      },
+      {
+        "slug": "relationship-building",
+        "label": "Relationship Building"
+      },
+      {
+        "slug": "strategic-thinking",
+        "label": "Strategic Thinking"
+      },
+      {
+        "slug": "time-management",
+        "label": "Time Management"
+      },
+      {
+        "slug": "verbal-communication",
+        "label": "Verbal Communication"
+      },
+      {
+        "slug": "teamwork",
+        "label": "Teamwork"
+      },
+      {
+        "slug": "commitment",
+        "label": "Commitment"
+      },
+      {
+        "slug": "decision-making",
+        "label": "Decision-Making"
+      }
+    ],
+    "UNIQUE Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "UNIQUE Activities": [
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "tracking-milestone-progress",
+        "label": "Tracking Milestone Progress"
+      },
+      {
+        "slug": "tracking-epic-progress",
+        "label": "Tracking Epic Progress"
+      },
+      {
+        "slug": "product-roadmap-maintenance",
+        "label": "Product Roadmap Maintenance"
+      },
+      {
+        "slug": "market-research",
+        "label": "Market Research"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "release-vision-definition",
+        "label": "Release Vision Definition"
+      }
+    ],
+    "UNIQUE Who's Responsible?": [
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Responsible in the Milestone": [
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Who's Accountable?": [
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Accountable to the Milestone": [
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Who's Consulted?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Who's Informed?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Consulted": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Functions Who Are Informed in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "Project Phases": "PILR Training Phase 2, Mindful Digits Phase 3, Baddies in Tech Phase 2",
+    "Project Types": [
+      {
+        "slug": "website-project",
+        "label": "Website Project"
+      },
+      {
+        "slug": "web-application-project",
+        "label": "Web Application Project"
+      },
+      {
+        "slug": "mobile-app-project",
+        "label": "Mobile App Project"
+      },
+      {
+        "slug": "service-design-project",
+        "label": "Service Design Project"
+      },
+      {
+        "slug": "discovery-project",
+        "label": "Discovery Project"
+      }
+    ],
+    "Activities": [
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "tracking-milestone-progress",
+        "label": "Tracking Milestone Progress"
+      },
+      {
+        "slug": "tracking-epic-progress",
+        "label": "Tracking Epic Progress"
+      },
+      {
+        "slug": "product-roadmap-maintenance",
+        "label": "Product Roadmap Maintenance"
+      },
+      {
+        "slug": "market-research",
+        "label": "Market Research"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "release-vision-definition",
+        "label": "Release Vision Definition"
+      }
+    ],
+    "Workshops": [
+      {
+        "slug": "vision-and-scope-workshop-template",
+        "label": "Vision and Scope Workshop Template"
+      },
+      {
+        "slug": "nonprofit-strategy-definition-workshop",
+        "label": "Nonprofit Strategy Definition Workshop"
+      }
+    ],
+    "Project Phases - New Milestones In This Phase": [
+      {
+        "slug": "phase-1",
+        "label": "Phase 1"
+      }
+    ],
+    "Milestone Description": "Vision is where a team decides where it is headed and why the trip is worth taking. Before working through the details, the team steps back to describe the bigger picture: who it is serving, what success looks like, and a rough roadmap to get there. This becomes the reference point people line their work up against.",
+    "Why Is This Milestone Important?": "Without a shared vision, teams drift and small decisions turn into debates. A clear vision gives people a standard to measure their choices against, which makes day-to-day decisions faster and more consistent.",
+    "When Should You Do This Milestone In Projects?": "Vision usually takes shape early, but it is worth returning to. As the team learns, the picture can change, so revisiting the vision partway through, even after a launch, is a healthy part of iterating rather than a sign that something went wrong.",
+    "Where Can I Learn More?": "Atlassian Agile Coach, with guides on agile, Scrum, and Kanban: https://www.atlassian.com/agile"
+  },
+  {
+    "id": 10,
+    "slug": "acceptance-testing",
+    "Milestone Name": "Acceptance Testing",
+    "Data Type": [
+      {
+        "slug": "milestone",
+        "label": "Milestone"
+      }
+    ],
+    "Image": [
+      {
+        "name": "milestone.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/tbgPzzJBz6SplLInfnOkJp1JJKs38UFM_8e3edb79cff34fae8c133ae16f2a2b0bab9bba6e6f28d9bed090e345af327108.png"
+      }
+    ],
+    "Milestone Order": "7",
+    "Should Be Done Before": [
+      {
+        "slug": "launch",
+        "label": "Launch"
+      }
+    ],
+    "Should Be Done After": [
+      {
+        "slug": "implement",
+        "label": "Implement"
+      }
+    ],
+    "All Deliverables In the Milestone": [
+      {
+        "slug": "analytics-audit",
+        "label": "Analytics Audit"
+      },
+      {
+        "slug": "research-analysis",
+        "label": "Research Analysis"
+      },
+      {
+        "slug": "stakeholder-feedback",
+        "label": "Stakeholder Feedback"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "accessibility-analysis",
+        "label": "Accessibility Analysis"
+      }
+    ],
+    "UNIQUE Skills in the Milestone": [
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "research-facilitation",
+        "label": "Research Facilitation"
+      },
+      {
+        "slug": "research-analysis",
+        "label": "Research Analysis"
+      },
+      {
+        "slug": "affinity-mapping",
+        "label": "Affinity Mapping"
+      },
+      {
+        "slug": "information-architecture",
+        "label": "Information Architecture"
+      },
+      {
+        "slug": "motor-based-accessibility",
+        "label": "Motor-Based Accessibility"
+      },
+      {
+        "slug": "information-hierarchy",
+        "label": "Information Hierarchy"
+      },
+      {
+        "slug": "behavior-driven-development-bdd-scenarios",
+        "label": "Behavior Driven Development (BDD) Scenarios"
+      },
+      {
+        "slug": "mental-models",
+        "label": "Mental Models"
+      },
+      {
+        "slug": "ethnography",
+        "label": "Ethnography"
+      },
+      {
+        "slug": "tree-testing",
+        "label": "Tree Testing"
+      },
+      {
+        "slug": "ai-prompting",
+        "label": "AI Prompting"
+      },
+      {
+        "slug": "data-analysis",
+        "label": "Data Analysis"
+      },
+      {
+        "slug": "agile-ux",
+        "label": "Agile UX"
+      },
+      {
+        "slug": "perceptual-based-accessibility",
+        "label": "Perceptual-Based Accessibility"
+      },
+      {
+        "slug": "cognitive-based-accessibility",
+        "label": "Cognitive-Based Accessibility"
+      },
+      {
+        "slug": "statistics",
+        "label": "Statistics"
+      },
+      {
+        "slug": "use-case-scenarios",
+        "label": "Use Case Scenarios"
+      },
+      {
+        "slug": "qa-test-plan-creation",
+        "label": "QA Test Plan Creation"
+      },
+      {
+        "slug": "attention-to-detail",
+        "label": "Attention to Detail"
+      },
+      {
+        "slug": "collaboration",
+        "label": "Collaboration"
+      },
+      {
+        "slug": "critical-thinking",
+        "label": "Critical Thinking"
+      },
+      {
+        "slug": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "slug": "logical-thinking",
+        "label": "Logical Thinking"
+      },
+      {
+        "slug": "written-communication",
+        "label": "Written Communication"
+      },
+      {
+        "slug": "organization",
+        "label": "Organization"
+      },
+      {
+        "slug": "perserverence",
+        "label": "Perserverence"
+      },
+      {
+        "slug": "problem-solving",
+        "label": "Problem-Solving"
+      },
+      {
+        "slug": "time-management",
+        "label": "Time Management"
+      },
+      {
+        "slug": "verbal-communication",
+        "label": "Verbal Communication"
+      },
+      {
+        "slug": "teamwork",
+        "label": "Teamwork"
+      },
+      {
+        "slug": "commitment",
+        "label": "Commitment"
+      },
+      {
+        "slug": "decision-making",
+        "label": "Decision-Making"
+      }
+    ],
+    "UNIQUE Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "UNIQUE Activities": [
+      {
+        "slug": "analyzing-research-findings",
+        "label": "Analyzing Research Findings"
+      },
+      {
+        "slug": "moderating-ux-research",
+        "label": "Moderating UX Research"
+      },
+      {
+        "slug": "secondary-research",
+        "label": "Secondary Research"
+      },
+      {
+        "slug": "surveys",
+        "label": "Surveys"
+      },
+      {
+        "slug": "observing-ethnography",
+        "label": "Observing (Ethnography)"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "qa-testing",
+        "label": "QA Testing"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "identifying-research-patterns",
+        "label": "Identifying Research Patterns"
+      },
+      {
+        "slug": "calculating-statistics",
+        "label": "Calculating Statistics"
+      },
+      {
+        "slug": "measuring-accessibility",
+        "label": "Measuring Accessibility"
+      },
+      {
+        "slug": "site-map-testing",
+        "label": "Site Map Testing"
+      },
+      {
+        "slug": "collecting-analytics",
+        "label": "Collecting Analytics"
+      },
+      {
+        "slug": "primary-research",
+        "label": "Primary Research"
+      }
+    ],
+    "UNIQUE Who's Responsible?": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Responsible in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      }
+    ],
+    "UNIQUE Who's Accountable?": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Accountable to the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Who's Consulted?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      }
+    ],
+    "UNIQUE Who's Informed?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Consulted": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Functions Who Are Informed in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "Project Types": [
+      {
+        "slug": "website-project",
+        "label": "Website Project"
+      },
+      {
+        "slug": "web-application-project",
+        "label": "Web Application Project"
+      },
+      {
+        "slug": "mobile-app-project",
+        "label": "Mobile App Project"
+      },
+      {
+        "slug": "service-design-project",
+        "label": "Service Design Project"
+      },
+      {
+        "slug": "discovery-project",
+        "label": "Discovery Project"
+      }
+    ],
+    "Activities": [
+      {
+        "slug": "analyzing-research-findings",
+        "label": "Analyzing Research Findings"
+      },
+      {
+        "slug": "moderating-ux-research",
+        "label": "Moderating UX Research"
+      },
+      {
+        "slug": "secondary-research",
+        "label": "Secondary Research"
+      },
+      {
+        "slug": "card-sorting",
+        "label": "Card Sorting "
+      },
+      {
+        "slug": "surveys",
+        "label": "Surveys"
+      },
+      {
+        "slug": "observing-ethnography",
+        "label": "Observing (Ethnography)"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "prototype-concept-testing",
+        "label": "Prototype Concept Testing "
+      },
+      {
+        "slug": "qa-testing",
+        "label": "QA Testing"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "identifying-research-patterns",
+        "label": "Identifying Research Patterns"
+      },
+      {
+        "slug": "calculating-statistics",
+        "label": "Calculating Statistics"
+      },
+      {
+        "slug": "measuring-accessibility",
+        "label": "Measuring Accessibility"
+      },
+      {
+        "slug": "site-map-testing",
+        "label": "Site Map Testing"
+      },
+      {
+        "slug": "collecting-analytics",
+        "label": "Collecting Analytics"
+      },
+      {
+        "slug": "primary-research",
+        "label": "Primary Research"
+      }
+    ],
+    "Project Phases - New Milestones In This Phase": [
+      {
+        "slug": "phase-2",
+        "label": "Phase 2"
+      }
+    ],
+    "Milestone Description": "Acceptance Testing is the team's reality check on whether the work truly does what it should. The team puts the work in front of users and against its own quality standards, and this is where problems like a confusing screen or a broken flow show up while they are still cheap to fix.",
+    "Why Is This Milestone Important?": "Shipping something flawed costs far more than catching the flaw early, in both money and user trust. Testing against real people and clear criteria is how a team earns the confidence that the work is genuinely ready.",
+    "When Should You Do This Milestone In Projects?": "Testing naturally follows building, but it is not a single gate at the end. Teams often test one piece while building another, and it is common to run acceptance testing after a launch, checking how real use goes and feeding what they learn straight back into the work.",
+    "Where Can I Learn More?": "Atlassian Agile Coach, with guides on agile, Scrum, and Kanban: https://www.atlassian.com/agile"
+  },
+  {
+    "id": 11,
+    "slug": "intake",
+    "Milestone Name": "Intake",
+    "Data Type": [
+      {
+        "slug": "milestone",
+        "label": "Milestone"
+      }
+    ],
+    "Image": [
+      {
+        "name": "milestone.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/tbgPzzJBz6SplLInfnOkJp1JJKs38UFM_8e3edb79cff34fae8c133ae16f2a2b0bab9bba6e6f28d9bed090e345af327108.png"
+      }
+    ],
+    "Milestone Order": "1",
+    "Should Be Done Before": [
+      {
+        "slug": "all-milestones",
+        "label": "All Milestones"
+      }
+    ],
+    "All Deliverables In the Milestone": [
+      {
+        "slug": "statement-of-work",
+        "label": "Statement of Work"
+      },
+      {
+        "slug": "key-performance-indicators-kpis",
+        "label": "Key Performance Indicators (KPI's)"
+      },
+      {
+        "slug": "objectives-and-key-results-okrs",
+        "label": "Objectives and Key Results (OKR's)"
+      },
+      {
+        "slug": "gantt-chart",
+        "label": "Gantt Chart"
+      },
+      {
+        "slug": "sprint-plan",
+        "label": "Sprint Plan"
+      },
+      {
+        "slug": "working-agreements",
+        "label": "Working Agreements"
+      },
+      {
+        "slug": "raci-charts",
+        "label": "RACI Charts"
+      },
+      {
+        "slug": "project-plan",
+        "label": "Project Plan"
+      },
+      {
+        "slug": "personal-growth-roadmap",
+        "label": "Personal Growth Roadmap"
+      },
+      {
+        "slug": "project-goals-definition",
+        "label": "Project Goals Definition"
+      },
+      {
+        "slug": "kanban-board-statuses",
+        "label": "Kanban Board Statuses"
+      },
+      {
+        "slug": "team-process-map",
+        "label": "Team Process Map"
+      },
+      {
+        "slug": "psychological-safety-plan",
+        "label": "Psychological Safety Plan"
+      },
+      {
+        "slug": "agile-method",
+        "label": "Agile Method"
+      },
+      {
+        "slug": "team-charter",
+        "label": "Team Charter"
+      }
+    ],
+    "UNIQUE Skills in the Milestone": [
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "backlog-management",
+        "label": "Backlog Management"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "public-speaking",
+        "label": "Public Speaking"
+      },
+      {
+        "slug": "prioritization",
+        "label": "Prioritization"
+      },
+      {
+        "slug": "ai-prompting",
+        "label": "AI Prompting"
+      },
+      {
+        "slug": "negotiation",
+        "label": "Negotiation"
+      },
+      {
+        "slug": "agile-method-selection",
+        "label": "Agile Method Selection"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "meeting-facilitation",
+        "label": "Meeting Facilitation"
+      },
+      {
+        "slug": "executive-summaries",
+        "label": "Executive Summaries"
+      },
+      {
+        "slug": "process-management",
+        "label": "Process Management"
+      },
+      {
+        "slug": "scrum-management",
+        "label": "Scrum Management"
+      },
+      {
+        "slug": "working-agreements",
+        "label": "Working Agreements"
+      },
+      {
+        "slug": "advocacy",
+        "label": "Advocacy"
+      },
+      {
+        "slug": "building-influence",
+        "label": "Building Influence"
+      },
+      {
+        "slug": "business-acumen",
+        "label": "Business Acumen"
+      },
+      {
+        "slug": "buy-in-generation",
+        "label": "Buy-in Generation"
+      },
+      {
+        "slug": "attention-to-detail",
+        "label": "Attention to Detail"
+      },
+      {
+        "slug": "coaching",
+        "label": "Coaching"
+      },
+      {
+        "slug": "collaboration",
+        "label": "Collaboration"
+      },
+      {
+        "slug": "conflict-resolution",
+        "label": "Conflict Resolution"
+      },
+      {
+        "slug": "critical-thinking",
+        "label": "Critical Thinking"
+      },
+      {
+        "slug": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "slug": "logical-thinking",
+        "label": "Logical Thinking"
+      },
+      {
+        "slug": "stakeholder-management",
+        "label": "Stakeholder Management"
+      },
+      {
+        "slug": "written-communication",
+        "label": "Written Communication"
+      },
+      {
+        "slug": "organization",
+        "label": "Organization"
+      },
+      {
+        "slug": "perserverence",
+        "label": "Perserverence"
+      },
+      {
+        "slug": "problem-solving",
+        "label": "Problem-Solving"
+      },
+      {
+        "slug": "time-management",
+        "label": "Time Management"
+      },
+      {
+        "slug": "verbal-communication",
+        "label": "Verbal Communication"
+      },
+      {
+        "slug": "teamwork",
+        "label": "Teamwork"
+      },
+      {
+        "slug": "expectation-setting",
+        "label": "Expectation Setting"
+      },
+      {
+        "slug": "commitment",
+        "label": "Commitment"
+      },
+      {
+        "slug": "decision-making",
+        "label": "Decision-Making"
+      }
+    ],
+    "UNIQUE Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "UNIQUE Activities": [
+      {
+        "slug": "sprint-planning",
+        "label": "Sprint Planning"
+      },
+      {
+        "slug": "velocity-calculation",
+        "label": "Velocity Calculation"
+      },
+      {
+        "slug": "kickoff-intake",
+        "label": "Kickoff / Intake"
+      },
+      {
+        "slug": "defining-team-working-agreements",
+        "label": "Defining Team Working Agreements"
+      },
+      {
+        "slug": "team-role-and-responsibility-definition",
+        "label": "Team Role and Responsibility Definition"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "coaching-team-mates",
+        "label": "Coaching Team Mates"
+      },
+      {
+        "slug": "defining-team-process",
+        "label": "Defining Team Process"
+      },
+      {
+        "slug": "analyzing-project-risk",
+        "label": "Analyzing Project Risk"
+      },
+      {
+        "slug": "choosing-an-agile-method",
+        "label": "Choosing an Agile Method"
+      },
+      {
+        "slug": "leading-agile-transformation",
+        "label": "Leading Agile Transformation"
+      },
+      {
+        "slug": "defining-research-operations",
+        "label": "Defining Research Operations"
+      },
+      {
+        "slug": "defining-ux-design-operations",
+        "label": "Defining UX Design Operations"
+      }
+    ],
+    "UNIQUE Who's Responsible?": [
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Responsible in the Milestone": [
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Who's Accountable?": [
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Accountable to the Milestone": [
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Who's Consulted?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Who's Informed?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Consulted": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Functions Who Are Informed in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "Project Types": [
+      {
+        "slug": "website-project",
+        "label": "Website Project"
+      },
+      {
+        "slug": "web-application-project",
+        "label": "Web Application Project"
+      },
+      {
+        "slug": "mobile-app-project",
+        "label": "Mobile App Project"
+      },
+      {
+        "slug": "service-design-project",
+        "label": "Service Design Project"
+      },
+      {
+        "slug": "discovery-project",
+        "label": "Discovery Project"
+      }
+    ],
+    "Activities": [
+      {
+        "slug": "sprint-planning",
+        "label": "Sprint Planning"
+      },
+      {
+        "slug": "velocity-calculation",
+        "label": "Velocity Calculation"
+      },
+      {
+        "slug": "kickoff-intake",
+        "label": "Kickoff / Intake"
+      },
+      {
+        "slug": "defining-team-working-agreements",
+        "label": "Defining Team Working Agreements"
+      },
+      {
+        "slug": "team-role-and-responsibility-definition",
+        "label": "Team Role and Responsibility Definition"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "coaching-team-mates",
+        "label": "Coaching Team Mates"
+      },
+      {
+        "slug": "defining-team-process",
+        "label": "Defining Team Process"
+      },
+      {
+        "slug": "analyzing-project-risk",
+        "label": "Analyzing Project Risk"
+      },
+      {
+        "slug": "choosing-an-agile-method",
+        "label": "Choosing an Agile Method"
+      },
+      {
+        "slug": "leading-agile-transformation",
+        "label": "Leading Agile Transformation"
+      },
+      {
+        "slug": "defining-research-operations",
+        "label": "Defining Research Operations"
+      },
+      {
+        "slug": "defining-ux-design-operations",
+        "label": "Defining UX Design Operations"
+      }
+    ],
+    "Workshops": [
+      {
+        "slug": "team-ice-breakers-workshop-template",
+        "label": "Team Ice Breakers Workshop Template"
+      },
+      {
+        "slug": "agile-and-service-leadership-workshop-template",
+        "label": "Agile and Service Leadership Workshop Template"
+      },
+      {
+        "slug": "conflict-resolution-workshop-template",
+        "label": "Conflict Resolution Workshop Template"
+      },
+      {
+        "slug": "client-kickoff-workshop-template",
+        "label": "Client Kickoff Workshop Template"
+      },
+      {
+        "slug": "raci-hats-workshop-template",
+        "label": "RACI Hats Workshop Template"
+      },
+      {
+        "slug": "project-plan-workshop-template",
+        "label": "Project Plan Workshop Template"
+      },
+      {
+        "slug": "team-process-mapping-workshop-template",
+        "label": "Team Process Mapping Workshop Template"
+      },
+      {
+        "slug": "backlog-management-workshop-template",
+        "label": "Backlog Management Workshop Template"
+      },
+      {
+        "slug": "case-study-creation-workshop-template",
+        "label": "Case Study Creation Workshop Template"
+      },
+      {
+        "slug": "kpi-success-measurements-definition-workshop-template",
+        "label": "KPI Success Measurements Definition Workshop Template"
+      },
+      {
+        "slug": "product-and-service-development-milestones-for-different-types-of-projects-works",
+        "label": "Product and Service Development Milestones for Different Types of Projects Workshop Template"
+      },
+      {
+        "slug": "personal-growth-vision-scope-and-roadmap-workshop-template",
+        "label": "Personal Growth Vision, Scope, and Roadmap Workshop Template"
+      },
+      {
+        "slug": "agile-team-maturity-measurements-workshop-template",
+        "label": "Agile Team Maturity Measurements Workshop Template"
+      }
+    ],
+    "Project Phases - New Milestones In This Phase": [
+      {
+        "slug": "phase-1",
+        "label": "Phase 1"
+      }
+    ],
+    "Milestone Description": "Intake is the first real handshake of a project, where the team and the client get on the same page before the work begins. Together they sort out what the project is, what success means, and how they will work together, and they capture it in things like a statement of work and a set of shared agreements. It is short, but it sets the tone for everything after.",
+    "Why Is This Milestone Important?": "Projects that start fuzzy tend to stay fuzzy. A good intake means the team is not guessing about goals or stepping on each other later, because the important questions got asked right at the start.",
+    "When Should You Do This Milestone In Projects?": "Intake usually opens a project or a new phase, but it can come back around. A new client, a fresh goal, or a big change can call for another intake partway through, so it is less a one-time start and more a reset the team returns to whenever the direction shifts.",
+    "Where Can I Learn More?": "Atlassian Agile Coach, with guides on agile, Scrum, and Kanban: https://www.atlassian.com/agile"
+  },
+  {
+    "id": 12,
+    "slug": "all-milestones",
+    "Milestone Name": "All Milestones",
+    "Data Type": [
+      {
+        "slug": "milestone",
+        "label": "Milestone"
+      }
+    ],
+    "Image": [
+      {
+        "name": "milestone.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/tbgPzzJBz6SplLInfnOkJp1JJKs38UFM_8e3edb79cff34fae8c133ae16f2a2b0bab9bba6e6f28d9bed090e345af327108.png"
+      }
+    ],
+    "Milestone Order": "0",
+    "Should Be Done After": [
+      {
+        "slug": "intake",
+        "label": "Intake"
+      }
+    ],
+    "All Deliverables In the Milestone": [
+      {
+        "slug": "marketing-plan",
+        "label": "Marketing Plan"
+      },
+      {
+        "slug": "burn-down-chart",
+        "label": "Burn Down Chart"
+      },
+      {
+        "slug": "sprint-demo-presentation",
+        "label": "Sprint Demo Presentation"
+      },
+      {
+        "slug": "sprint-retro-action-items",
+        "label": "Sprint Retro Action Items"
+      },
+      {
+        "slug": "sprint-goals",
+        "label": "Sprint Goals"
+      },
+      {
+        "slug": "ai-prompt",
+        "label": "AI Prompt"
+      },
+      {
+        "slug": "risk-analysis",
+        "label": "Risk Analysis"
+      },
+      {
+        "slug": "agile-maturity-measurements",
+        "label": "Agile Maturity Measurements"
+      },
+      {
+        "slug": "meeting-agendas",
+        "label": "Meeting Agendas"
+      }
+    ],
+    "UNIQUE Skills in the Milestone": [
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "backlog-management",
+        "label": "Backlog Management"
+      },
+      {
+        "slug": "go-to-market-strategy",
+        "label": "Go-to-Market Strategy"
+      },
+      {
+        "slug": "storytelling",
+        "label": "Storytelling"
+      },
+      {
+        "slug": "velocity-measurement",
+        "label": "Velocity Measurement"
+      },
+      {
+        "slug": "public-speaking",
+        "label": "Public Speaking"
+      },
+      {
+        "slug": "prioritization",
+        "label": "Prioritization"
+      },
+      {
+        "slug": "ai-prompting",
+        "label": "AI Prompting"
+      },
+      {
+        "slug": "data-analysis",
+        "label": "Data Analysis"
+      },
+      {
+        "slug": "negotiation",
+        "label": "Negotiation"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "meeting-facilitation",
+        "label": "Meeting Facilitation"
+      },
+      {
+        "slug": "product-market-fit",
+        "label": "Product-Market Fit"
+      },
+      {
+        "slug": "agile-ux",
+        "label": "Agile UX"
+      },
+      {
+        "slug": "executive-summaries",
+        "label": "Executive Summaries"
+      },
+      {
+        "slug": "presentation",
+        "label": "Presentation"
+      },
+      {
+        "slug": "scrum-management",
+        "label": "Scrum Management"
+      },
+      {
+        "slug": "advocacy",
+        "label": "Advocacy"
+      },
+      {
+        "slug": "building-influence",
+        "label": "Building Influence"
+      },
+      {
+        "slug": "business-acumen",
+        "label": "Business Acumen"
+      },
+      {
+        "slug": "buy-in-generation",
+        "label": "Buy-in Generation"
+      },
+      {
+        "slug": "attention-to-detail",
+        "label": "Attention to Detail"
+      },
+      {
+        "slug": "delivering-feedback",
+        "label": "Delivering Feedback"
+      },
+      {
+        "slug": "collaboration",
+        "label": "Collaboration"
+      },
+      {
+        "slug": "conflict-resolution",
+        "label": "Conflict Resolution"
+      },
+      {
+        "slug": "critical-thinking",
+        "label": "Critical Thinking"
+      },
+      {
+        "slug": "receiving-feedback",
+        "label": "Receiving Feedback"
+      },
+      {
+        "slug": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "slug": "logical-thinking",
+        "label": "Logical Thinking"
+      },
+      {
+        "slug": "stakeholder-management",
+        "label": "Stakeholder Management"
+      },
+      {
+        "slug": "written-communication",
+        "label": "Written Communication"
+      },
+      {
+        "slug": "organization",
+        "label": "Organization"
+      },
+      {
+        "slug": "perserverence",
+        "label": "Perserverence"
+      },
+      {
+        "slug": "problem-solving",
+        "label": "Problem-Solving"
+      },
+      {
+        "slug": "strategic-thinking",
+        "label": "Strategic Thinking"
+      },
+      {
+        "slug": "time-management",
+        "label": "Time Management"
+      },
+      {
+        "slug": "verbal-communication",
+        "label": "Verbal Communication"
+      },
+      {
+        "slug": "teamwork",
+        "label": "Teamwork"
+      },
+      {
+        "slug": "expectation-setting",
+        "label": "Expectation Setting"
+      },
+      {
+        "slug": "commitment",
+        "label": "Commitment"
+      },
+      {
+        "slug": "decision-making",
+        "label": "Decision-Making"
+      }
+    ],
+    "UNIQUE Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "UNIQUE Activities": [
+      {
+        "slug": "sprint-planning",
+        "label": "Sprint Planning"
+      },
+      {
+        "slug": "level-of-effort-estimation",
+        "label": "Level of Effort Estimation"
+      },
+      {
+        "slug": "velocity-calculation",
+        "label": "Velocity Calculation"
+      },
+      {
+        "slug": "kickoff-intake",
+        "label": "Kickoff / Intake"
+      },
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "tracking-milestone-progress",
+        "label": "Tracking Milestone Progress"
+      },
+      {
+        "slug": "market-research",
+        "label": "Market Research"
+      },
+      {
+        "slug": "scheduling-meetings",
+        "label": "Scheduling Meetings"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "sprint-retrospective-facilitation",
+        "label": "Sprint Retrospective Facilitation"
+      },
+      {
+        "slug": "sprint-demo-facilitation",
+        "label": "Sprint Demo Facilitation"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "creating-presentations",
+        "label": "Creating Presentations"
+      },
+      {
+        "slug": "creating-ai-prompts",
+        "label": "Creating AI Prompts"
+      },
+      {
+        "slug": "analyzing-project-risk",
+        "label": "Analyzing Project Risk"
+      }
+    ],
+    "UNIQUE Who's Responsible?": [
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Responsible in the Milestone": [
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      }
+    ],
+    "UNIQUE Who's Accountable?": [
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Accountable to the Milestone": [
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Who's Consulted?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Who's Informed?": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "UNIQUE Team Functions Who Are Consulted": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "UNIQUE Functions Who Are Informed in the Milestone": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ],
+    "Activities": [
+      {
+        "slug": "sprint-planning",
+        "label": "Sprint Planning"
+      },
+      {
+        "slug": "level-of-effort-estimation",
+        "label": "Level of Effort Estimation"
+      },
+      {
+        "slug": "velocity-calculation",
+        "label": "Velocity Calculation"
+      },
+      {
+        "slug": "kickoff-intake",
+        "label": "Kickoff / Intake"
+      },
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "tracking-milestone-progress",
+        "label": "Tracking Milestone Progress"
+      },
+      {
+        "slug": "market-research",
+        "label": "Market Research"
+      },
+      {
+        "slug": "scheduling-meetings",
+        "label": "Scheduling Meetings"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "sprint-retrospective-facilitation",
+        "label": "Sprint Retrospective Facilitation"
+      },
+      {
+        "slug": "sprint-demo-facilitation",
+        "label": "Sprint Demo Facilitation"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "creating-presentations",
+        "label": "Creating Presentations"
+      },
+      {
+        "slug": "creating-ai-prompts",
+        "label": "Creating AI Prompts"
+      },
+      {
+        "slug": "analyzing-project-risk",
+        "label": "Analyzing Project Risk"
+      }
+    ],
+    "Workshops": [
+      {
+        "slug": "sprint-goals-workshop-template",
+        "label": "Sprint Goals Workshop Template"
+      },
+      {
+        "slug": "sprint-retro-workshop-template",
+        "label": "Sprint Retro Workshop Template"
+      },
+      {
+        "slug": "team-agile-workshops-template",
+        "label": "Team Agile Workshops Template"
+      },
+      {
+        "slug": "tech-fleet-sprint-demo-slide-deck-template",
+        "label": "Tech Fleet Sprint Demo Slide Deck Template"
+      }
+    ],
+    "Milestone Description": "This is not a single stage but a catch-all for the work and habits that show up across the whole project. Some skills and ways of working are not tied to one moment; they run through everything a team does, from kickoff to launch. Think of it as the connective tissue of a project rather than a step along the way.",
+    "Why Is This Milestone Important?": "It is a reminder that not everything fits neatly into a phase. Collaboration, learning, and steady improvement do not clock out after one milestone, and treating them as ongoing is part of what keeps a team healthy the whole way through.",
+    "When Should You Do This Milestone In Projects?": "There is no single time for this one. It applies at every milestone, start to finish, and that fits how these milestones really work: not as steps in a line, but as pieces of work that run in parallel, repeat, and overlap as the team learns and adjusts.",
+    "Where Can I Learn More?": "Atlassian Agile Coach, with guides on agile, Scrum, and Kanban: https://www.atlassian.com/agile"
+  }
+]

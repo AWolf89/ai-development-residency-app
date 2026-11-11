@@ -1,0 +1,878 @@
+[
+  {
+    "id": 1,
+    "slug": "humility",
+    "Component Name": "Humility",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": "I do not judge myself or others, I operate without dominance or arrogance",
+    "Component Description": "Humility means treating yourself and everyone around you as equals, with no need to dominate or prove you are the smartest in the room. On a team it frees you to admit you do not have all the answers and to stay open to being wrong, which is exactly what lets a group share ownership and take turns leading. It is quiet, but it is the ground that Shared Ownership and Shared Leadership grow in.",
+    "Associated Mindsets of the Component": "You believe your way is not the only right way, and that every person, no matter how new, has something to teach you. Being wrong is not a threat; it is a chance to learn.",
+    "Associated Habits of the Component": "You hold back quick judgment, own your mistakes out loud, and give credit to others instead of taking it for yourself.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 2,
+    "slug": "honesty-in-self",
+    "Component Name": "Honesty In Self",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": "I seek to discover ways I am lying to myself.",
+    "Component Description": "Honesty in self is the inner work of catching the small ways we all fool ourselves, the hidden biases and the convenient excuses. It is not comfortable, but it keeps you self-aware and growing, and it is what makes you trustworthy enough to share ownership and help lead a team.",
+    "Associated Mindsets of the Component": "You believe self-deception is a normal human habit worth catching, and that facing your blind spots honestly is what makes you better over time.",
+    "Associated Habits of the Component": "You question your own assumptions, check your real motives, and reflect honestly on where you fell short instead of explaining it away.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 3,
+    "slug": "honesty-towards-others",
+    "Component Name": "Honesty Towards Others",
+    "Associated Practices": [
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": "I operate without deception or hiding.",
+    "Component Description": "Honesty toward others means being straight with your teammates, without spin and without quietly sitting on the truth. It can feel risky in the moment, but it is what builds the trust a team leans on to make good decisions and share leadership.",
+    "Associated Mindsets of the Component": "You believe people deserve the truth, and that hiding it, even to be nice, does more harm than good in the long run.",
+    "Associated Habits of the Component": "You say what you really think, give feedback that is direct but kind, and do not withhold information the team needs.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 4,
+    "slug": "acknowledgement",
+    "Component Name": "Acknowledgement",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": "I acknowledge the truth in others' words often, even when I think they could be wrong or have a different perspective",
+    "Component Description": "Acknowledgement is recognizing the truth in what someone says, even when you do not fully agree. It shows people they were actually heard, which keeps conversations open and helps a team share ownership, empower each other, and lead together instead of talking past one another.",
+    "Associated Mindsets of the Component": "You believe there is usually something valid in another person's view, even when it is incomplete.",
+    "Associated Habits of the Component": "You name what is right in someone's point before you respond, rather than jumping straight to disagreement.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 5,
+    "slug": "adaptability",
+    "Component Name": "Adaptability",
+    "Associated Practices": [
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "Assessment Question": "When events don't turn out how I expected, I am quick to adjust the path I am taking, and I encourage others to do so too",
+    "Component Description": "Adaptability is changing course quickly when the situation shifts, and helping your teammates do the same. It is at the core of working in an agile way, where plans are expected to change as the team learns, and it feeds the practices of Agility, Collective Decision Making, and Continuous Improvement.",
+    "Associated Mindsets of the Component": "You believe plans are really just guesses that should change as you learn, not promises set in stone.",
+    "Associated Habits of the Component": "You adjust your approach as soon as new information arrives, and you help teammates let go of plans that no longer fit.",
+    "Where Can I Learn More?": "The Agile Manifesto, the founding values of agile work: https://agilemanifesto.org/"
+  },
+  {
+    "id": 6,
+    "slug": "interactions-with-individuals",
+    "Component Name": "Interactions with Individuals",
+    "Associated Practices": [
+      {
+        "slug": "agility",
+        "label": "Agility"
+      }
+    ],
+    "Assessment Question": "I prioritize figuring out decisions with my teammates instead of developing perfect plans before I act.",
+    "Component Description": "This is the agile habit of solving problems together with people rather than perfecting a plan alone up front. It comes straight from the Agile Manifesto value of individuals and interactions over processes and tools, and it is a building block of the Agility practice.",
+    "Associated Mindsets of the Component": "You believe the best decisions come from working things out with people, not from planning in isolation.",
+    "Associated Habits of the Component": "You bring questions to your teammates early and decide together instead of finishing a plan first and handing it over.",
+    "Where Can I Learn More?": "The Agile Manifesto, the founding values of agile work: https://agilemanifesto.org/"
+  },
+  {
+    "id": 7,
+    "slug": "delivering-working-results",
+    "Component Name": "Delivering Working Results",
+    "Associated Practices": [
+      {
+        "slug": "agility",
+        "label": "Agility"
+      }
+    ],
+    "Assessment Question": "I prioritize getting the results into the hands of users and customers so that I can get feedback before I adjust.",
+    "Component Description": "This is the agile focus on shipping something real and usable so you can learn from real feedback, rather than waiting for everything to be perfect. It reflects the Agile value of working software over comprehensive documentation, and it is one of the habits that make the Agility practice real.",
+    "Associated Mindsets of the Component": "You believe honest feedback on something real beats endless planning every time.",
+    "Associated Habits of the Component": "You get small, working results in front of users quickly and use what you learn to steer the next step.",
+    "Where Can I Learn More?": "The Agile Manifesto, the founding values of agile work: https://agilemanifesto.org/"
+  },
+  {
+    "id": 8,
+    "slug": "customer-collaboration",
+    "Component Name": "Customer Collaboration",
+    "Associated Practices": [
+      {
+        "slug": "agility",
+        "label": "Agility"
+      }
+    ],
+    "Assessment Question": "I work with and talk to customers in order to determine the direction, rather than try to answer all questions up front.",
+    "Component Description": "Customer collaboration means working shoulder to shoulder with customers to shape the direction, instead of trying to lock down every answer at the start. It comes from the Agile value of customer collaboration over contract negotiation, and it keeps the Agility practice pointed at what people really need.",
+    "Associated Mindsets of the Component": "You believe the customer is a partner in figuring out what to build, not just someone you deliver to at the end.",
+    "Associated Habits of the Component": "You talk with customers regularly and let what you hear steer the work as it unfolds.",
+    "Where Can I Learn More?": "The Agile Manifesto, the founding values of agile work: https://agilemanifesto.org/"
+  },
+  {
+    "id": 9,
+    "slug": "inclusive-safety",
+    "Component Name": "Inclusive Safety",
+    "Associated Practices": [
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      }
+    ],
+    "Assessment Question": "I believe that everyone on the team, even the interns, have valuable perspective and decision-making abilities.",
+    "Component Description": "Inclusive safety is the first stage of psychological safety in Timothy Clark's model: everyone is accepted and belongs, so they can bring their whole self to work. It is the base layer the whole Psychological Safety practice is built on, and research from Amy Edmondson and Google's Project Aristotle ties it directly to how well teams perform.",
+    "Associated Mindsets of the Component": "You believe every person on the team, whatever their role or experience, belongs and has real value.",
+    "Associated Habits of the Component": "You include everyone in the group, welcome newcomers warmly, and make room for every voice.",
+    "Where Can I Learn More?": "Timothy Clark's 4 Stages of Psychological Safety (LeaderFactor): https://www.leaderfactor.com/learn/psychological-safety-timothy-clark/"
+  },
+  {
+    "id": 10,
+    "slug": "learner-safety",
+    "Component Name": "Learner Safety",
+    "Associated Practices": [
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      }
+    ],
+    "Assessment Question": "I believe that everyone should learn by doing and failing",
+    "Component Description": "Learner safety is Clark's second stage of psychological safety: people feel safe to ask questions, try things, and make mistakes while they learn. It is what turns a team into a place where people grow instead of hiding what they do not know, and it strengthens the Psychological Safety practice.",
+    "Associated Mindsets of the Component": "You believe mistakes are part of learning, not something to be punished.",
+    "Associated Habits of the Component": "You ask questions openly, admit what you do not know, and treat failures as lessons rather than embarrassments.",
+    "Where Can I Learn More?": "Timothy Clark's 4 Stages of Psychological Safety (LeaderFactor): https://www.leaderfactor.com/learn/psychological-safety-timothy-clark/"
+  },
+  {
+    "id": 11,
+    "slug": "contributor-safety",
+    "Component Name": "Contributor Safety",
+    "Associated Practices": [
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      }
+    ],
+    "Assessment Question": "I believe that everyone has something valuable to contribute on teams, even if they have little to no experience.",
+    "Component Description": "Contributor safety is Clark's third stage: people feel safe to take part as full members and use their skills to make a real difference. It moves someone from watching to genuinely contributing, and it is a key part of building Psychological Safety on a team.",
+    "Associated Mindsets of the Component": "You believe people do their best work when they are trusted to contribute, no matter their experience level.",
+    "Associated Habits of the Component": "You hand people real work and real autonomy, and you actively invite their contributions.",
+    "Where Can I Learn More?": "Timothy Clark's 4 Stages of Psychological Safety (LeaderFactor): https://www.leaderfactor.com/learn/psychological-safety-timothy-clark/"
+  },
+  {
+    "id": 12,
+    "slug": "challenger-safety",
+    "Component Name": "Challenger Safety",
+    "Associated Practices": [
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      }
+    ],
+    "Assessment Question": "I believe in the power of people challenging the current ways that things work, or challenging current decisions, for the benefit of finding new ways to move forward.",
+    "Component Description": "Challenger safety is Clark's fourth and hardest stage: people feel safe to question the status quo and float new ideas without fear of being punished. It is the precondition for innovation and risk-taking, and it is the top layer of the Psychological Safety practice.",
+    "Associated Mindsets of the Component": "You believe respectfully challenging ideas makes the work better, and that healthy dissent is a sign of a strong team.",
+    "Associated Habits of the Component": "You speak up with different views, invite pushback on your own ideas, and never punish someone for disagreeing.",
+    "Where Can I Learn More?": "Timothy Clark's 4 Stages of Psychological Safety (LeaderFactor): https://www.leaderfactor.com/learn/psychological-safety-timothy-clark/"
+  },
+  {
+    "id": 13,
+    "slug": "consensus",
+    "Component Name": "Consensus",
+    "Associated Practices": [
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      }
+    ],
+    "Assessment Question": " I rely on the voice of the team to build a consensus based on knowledge they have at the moment",
+    "Component Description": "Consensus is building a decision from the shared knowledge of the whole team, so people actually support the outcome. It sits at the heart of the Collective Decision Making practice, where a choice the group shaped together tends to stick far better than one handed down.",
+    "Associated Mindsets of the Component": "You believe the team's combined judgment is usually better than any single person's.",
+    "Associated Habits of the Component": "You gather input from the group and steer toward a decision people can genuinely get behind.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 14,
+    "slug": "delegation",
+    "Component Name": "Delegation",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      }
+    ],
+    "Assessment Question": "I ask others and let others take lead on things that I could own.",
+    "Component Description": "Delegation is handing real ownership to someone else, even for work you could do well yourself. It spreads responsibility and gives people room to grow, which is exactly how the Shared Ownership practice takes hold on a team.",
+    "Associated Mindsets of the Component": "You believe letting others carry meaningful work builds a stronger team than doing it all yourself.",
+    "Associated Habits of the Component": "You hand off real work, set clear expectations, and then let people run with it.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 15,
+    "slug": "growth-mindset",
+    "Component Name": "Growth Mindset",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": "I focus myself and others on progressively learning lessons after failure and actions; I recognize the “power of yet” trusting that there’s always opportunities to improve (“I don’t get this...yet” “I can’t do this...yet.”)",
+    "Component Description": "A growth mindset, a term from psychologist Carol Dweck, is the belief that abilities grow with effort and practice, captured in the little word 'yet.' It turns setbacks into fuel instead of verdicts, and it underpins both Shared Ownership and Shared Leadership by keeping people willing to stretch.",
+    "Associated Mindsets of the Component": "You believe skills are built, not fixed, so 'I can't do this' becomes 'I can't do this yet.'",
+    "Associated Habits of the Component": "You take on challenges, learn from what goes wrong, and encourage others to keep growing too.",
+    "Where Can I Learn More?": "Carol Dweck's growth mindset (Stanford Center for Teaching and Learning): https://ctl.stanford.edu/students/growth-mindset"
+  },
+  {
+    "id": 16,
+    "slug": "willingness",
+    "Component Name": "Willingness",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      }
+    ],
+    "Assessment Question": "I purposefully want to provide space for others to own things",
+    "Component Description": "Willingness is genuinely wanting to make room for others to take ownership, not just tolerating it. It is the open, generous spirit behind the Shared Ownership practice, and it shows up as looking for chances to step back rather than hold on.",
+    "Associated Mindsets of the Component": "You believe the team gets stronger the more people truly own the work.",
+    "Associated Habits of the Component": "You look for openings to step back and let someone else take the lead.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 17,
+    "slug": "letting-go-of-control",
+    "Component Name": "Letting Go of Control",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      }
+    ],
+    "Assessment Question": "I prioritize letting events play out over trying to take control over outcomes",
+    "Component Description": "Letting go of control means resisting the urge to manage every outcome and trusting both the process and the people. It can feel uncomfortable, but it is what empowers others and lets a team share ownership instead of funneling everything through one person.",
+    "Associated Mindsets of the Component": "You believe you do not need to control everything for things to turn out well.",
+    "Associated Habits of the Component": "You step back, avoid micromanaging, and let people and situations play out.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 18,
+    "slug": "expectation-setting",
+    "Component Name": "Expectation Setting",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      }
+    ],
+    "Assessment Question": "I work to build a shared understanding of outcomes so that people can own work",
+    "Component Description": "Expectation setting is making the goal clear and shared, so everyone knows what success looks like and can own their part. In agile work the picture keeps sharpening as you go, so this is less a one-time briefing and more an ongoing habit that makes Shared Ownership and Collective Decision Making possible.",
+    "Associated Mindsets of the Component": "You believe people can only own work well when the goal is clear and genuinely shared.",
+    "Associated Habits of the Component": "You align on what 'done' looks like early, and you keep checking that everyone still shares the same picture.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 19,
+    "slug": "esteem",
+    "Component Name": "Esteem",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "Assessment Question": "I encourage myself and others to see my abilities as a meaningful contribution to the team; I believe people bring value no matter what their skill level is, including myself",
+    "Component Description": "Esteem is valuing your own contributions and everyone else's, whatever the experience level. It builds the confidence people need to speak up and take part, feeding the practices of Shared Ownership, Empowerment, and Continuous Improvement.",
+    "Associated Mindsets of the Component": "You believe everyone brings value, including yourself, no matter their skill level.",
+    "Associated Habits of the Component": "You affirm people's contributions and help them see their own worth on the team.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 20,
+    "slug": "commitment",
+    "Component Name": "Commitment",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      }
+    ],
+    "Assessment Question": "I do what I said I would do by the time agreed upon. If something will prevent me from doing what I said, I make a new agreement. I only agree to things when I can commit to doing them.",
+    "Component Description": "Commitment is reliably doing what you said you would, and renegotiating openly and early when you truly can't. It is the backbone of trust, and it is what lets a team share ownership, share leadership, and make decisions together knowing people will follow through.",
+    "Associated Mindsets of the Component": "You believe your word is a promise, so you only agree to what you can genuinely deliver.",
+    "Associated Habits of the Component": "You follow through on what you commit to, and you raise a new agreement early the moment something changes.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 21,
+    "slug": "active-listening",
+    "Component Name": "Active Listening",
+    "Associated Practices": [
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "Assessment Question": "I repeat back what people have shared and acknowledge their views before responding",
+    "Component Description": "Active listening means fully taking in what someone says and reflecting it back before you respond. It makes people feel heard and heads off misunderstandings, which is why it shows up across so many practices, from Empowerment and Shared Leadership to Psychological Safety, Collective Decision Making, and Continuous Improvement.",
+    "Associated Mindsets of the Component": "You believe understanding someone comes before being understood.",
+    "Associated Habits of the Component": "You paraphrase what people said and acknowledge their view before adding your own.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 22,
+    "slug": "care",
+    "Component Name": "Care",
+    "Associated Practices": [
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": "I seek to understand and meet the needs of others",
+    "Component Description": "Care is genuinely seeking to understand and meet the needs of the people you work with. It is the heart of service leadership and a core part of the Shared Leadership practice, where leading means helping others succeed.",
+    "Associated Mindsets of the Component": "You believe part of your job is to help your teammates do their best work.",
+    "Associated Habits of the Component": "You ask about others' needs and take real action to support them.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 23,
+    "slug": "empathy",
+    "Component Name": "Empathy",
+    "Associated Practices": [
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": "I consistently seek to understand other perspectives before judging or concluding in interactions with others.",
+    "Component Description": "Empathy is understanding another person's perspective before you judge or conclude. It builds real connection and leads to better decisions, and it is one of the qualities that makes Shared Leadership work.",
+    "Associated Mindsets of the Component": "You believe everyone has reasons behind their actions that are worth understanding.",
+    "Associated Habits of the Component": "You put yourself in others' shoes and ask about their perspective before you react.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 24,
+    "slug": "kindness",
+    "Component Name": "Kindness",
+    "Associated Practices": [
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": "I get satisfaction from regularly offering attention, appreciation, and encouragement",
+    "Component Description": "Kindness is regularly offering attention, appreciation, and encouragement to the people around you. Small acts add up to a warmer, safer team, which is why kindness is woven through the Shared Leadership practice rather than treated as a soft extra.",
+    "Associated Mindsets of the Component": "You believe kindness is a real strength that makes teams work better, not a nice-to-have.",
+    "Associated Habits of the Component": "You notice and appreciate people often, and you offer encouragement freely.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 25,
+    "slug": "removing-ego",
+    "Component Name": "Removing Ego",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      }
+    ],
+    "Assessment Question": "I prioritize the mindset that I do not have all of the right answers in teamwork, and tell myself that others can produce great things, even when they don’t have experience",
+    "Component Description": "Removing ego is setting aside the need to be right or the smartest in the room, so the team's best ideas can win. It clears space for real collaboration and shows up across Shared Ownership, Empowerment, Shared Leadership, and Psychological Safety.",
+    "Associated Mindsets of the Component": "You believe you do not have all the answers, and that others are fully capable of producing great things.",
+    "Associated Habits of the Component": "You let go of being right, invite better ideas, and share the credit.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 26,
+    "slug": "encouragement",
+    "Component Name": "Encouragement",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      }
+    ],
+    "Assessment Question": "I provide positive reinforcement to others, even when they have tried and failed",
+    "Component Description": "Encouragement is giving people positive reinforcement, including, and especially, when they try and fall short. It keeps people motivated to keep learning and taking risks, which is how Shared Ownership and Empowerment take root.",
+    "Associated Mindsets of the Component": "You believe effort deserves recognition even when the result is not there yet.",
+    "Associated Habits of the Component": "You cheer people on, especially after a setback, and you point out what they did well.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 27,
+    "slug": "participation",
+    "Component Name": "Participation",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": "I participate in discussions and decisions. I don’t go along with things just to avoid conflict. I am a valuable contributor to the team.",
+    "Component Description": "Participation means genuinely taking part in discussions and decisions instead of staying quiet to dodge conflict. Your voice is part of the team's strength, and speaking up is how Shared Ownership and Shared Leadership actually happen day to day.",
+    "Associated Mindsets of the Component": "You believe your input matters, and that going silent to avoid friction quietly hurts the team.",
+    "Associated Habits of the Component": "You speak up in discussions and share your real view rather than just going along.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 28,
+    "slug": "patience",
+    "Component Name": "Patience",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "Assessment Question": "I have the ability to pause, wait for alignment, exercise self-control",
+    "Component Description": "Patience is the ability to pause, wait for alignment, and hold your own reactions in check. It gives the team space to catch up and contribute, and it steadies the practices of Shared Ownership, Empowerment, Shared Leadership, and Continuous Improvement.",
+    "Associated Mindsets of the Component": "You believe good outcomes are worth waiting for, and that rushing usually backfires.",
+    "Associated Habits of the Component": "You slow down, wait for others to align, and manage your own impulses.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 29,
+    "slug": "responding",
+    "Component Name": "Responding",
+    "Associated Practices": [
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": " I do not interrupt or dismiss others when they share their views",
+    "Component Description": "Responding well means letting people finish and taking their views seriously, instead of interrupting or brushing them off. It protects the open, safe conversation that Shared Leadership depends on.",
+    "Associated Mindsets of the Component": "You believe every person deserves the space to be heard fully.",
+    "Associated Habits of the Component": "You wait for people to finish, and you respond to their actual point instead of dismissing it.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 30,
+    "slug": "respect",
+    "Component Name": "Respect",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": "I recognize the wisdom of others. I acknowledge the ways other people are right even when there's disagreement.",
+    "Component Description": "Respect is recognizing the wisdom in others and where they are right, even when you disagree. It keeps disagreement healthy rather than personal, and it runs through Shared Ownership, Empowerment, and Shared Leadership.",
+    "Associated Mindsets of the Component": "You believe others hold wisdom worth honoring, even when you see things differently.",
+    "Associated Habits of the Component": "You acknowledge where others are right and treat them well straight through a disagreement.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 31,
+    "slug": "consistency",
+    "Component Name": "Consistency",
+    "Associated Practices": [
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      }
+    ],
+    "Assessment Question": " I consistently shows up as myself. I am not different on my team as I am with other people. I can accept who I am and not try to seem more competent, knowledgeable, or skilled than I actually am.",
+    "Component Description": "Consistency is showing up as your genuine self, the same with your team as anywhere else, without pretending to be more than you are. That steadiness builds trust over time and is part of what makes Shared Leadership believable.",
+    "Associated Mindsets of the Component": "You believe being real and steady matters more than looking impressive.",
+    "Associated Habits of the Component": "You act the same across settings and never put on a front to seem more skilled than you are.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 32,
+    "slug": "celebration",
+    "Component Name": "Celebration",
+    "Associated Practices": [
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      }
+    ],
+    "Assessment Question": "I recognize efforts in others on the team out loud and in public, even when they didn’t do something perfectly, or failed in something",
+    "Component Description": "Celebration is recognizing people's efforts out loud and in the open, even when the work was not perfect. It reinforces the behaviors a team wants more of, and it is one of the ways the Empowerment practice comes alive.",
+    "Associated Mindsets of the Component": "You believe recognizing effort openly builds a stronger, more motivated team.",
+    "Associated Habits of the Component": "You call out and celebrate good efforts publicly, including honest attempts that came up short.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 33,
+    "slug": "autonomy",
+    "Component Name": "Autonomy",
+    "Associated Practices": [
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      }
+    ],
+    "Assessment Question": "I want people to figure things out on their own, and believe in their capabilities to do so without my intervention, and tell them so",
+    "Component Description": "Autonomy is trusting people to figure things out for themselves, and telling them plainly that you believe in them. It is central to the Empowerment practice, where people grow fastest when they are given room to run.",
+    "Associated Mindsets of the Component": "You believe people grow and do their best work when they are trusted with real independence.",
+    "Associated Habits of the Component": "You give people space to solve problems on their own and you tell them you trust them to.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 34,
+    "slug": "judgment-formation",
+    "Component Name": "Judgment Formation",
+    "Associated Practices": [
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      }
+    ],
+    "Assessment Question": "I am able to change my decisions in the context of situations that change, and operate with flexibility in the decisions I make based on judgment calls",
+    "Component Description": "Judgment formation is making decisions with flexibility, adjusting them as the situation changes instead of clinging to your first call. It keeps the Collective Decision Making practice grounded in reality rather than in yesterday's assumptions.",
+    "Associated Mindsets of the Component": "You believe good judgment means adapting a decision to the moment, not being rigid for its own sake.",
+    "Associated Habits of the Component": "You revisit and update decisions as new information and situations come to light.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 35,
+    "slug": "buy-in",
+    "Component Name": "Buy-In",
+    "Associated Practices": [
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      }
+    ],
+    "Assessment Question": " I check my assumptions when in the process of making decisions to give people time to reflect and respond whenever possible",
+    "Component Description": "Buy-in is checking your assumptions and giving people real time to reflect and respond, so a decision has genuine support behind it. It prevents the false agreement that quietly sinks projects, and it makes Collective Decision Making actually work.",
+    "Associated Mindsets of the Component": "You believe decisions only stick when people have had a genuine say in them.",
+    "Associated Habits of the Component": "You test your assumptions and build in time for others to weigh in before anything is locked.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 36,
+    "slug": "failing-fast",
+    "Component Name": "Failing Fast",
+    "Associated Practices": [
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "Assessment Question": "I rely on failing as the opportunity to learn what I can do differently in the future",
+    "Component Description": "Failing fast is treating failure as a quick, cheap way to learn what to do differently, rather than a disaster to avoid. It is core to working in an agile way and drives both the Agility and Continuous Improvement practices.",
+    "Associated Mindsets of the Component": "You believe a fast failure is a lesson, not a defeat.",
+    "Associated Habits of the Component": "You try things quickly, learn from what does not work, and adjust without dwelling on it.",
+    "Where Can I Learn More?": "The Agile Manifesto, the founding values of agile work: https://agilemanifesto.org/"
+  },
+  {
+    "id": 37,
+    "slug": "self-awareness",
+    "Component Name": "Self-Awareness",
+    "Associated Practices": [
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "Assessment Question": " I actively pay attention to how my behaviors affect others so that I can reflect on how to work on changing my own behaviors",
+    "Component Description": "Self-awareness is paying attention to how your behavior lands on others, so you can reflect on it and change. It is the starting point for personal growth and a key part of Shared Leadership and Continuous Improvement.",
+    "Associated Mindsets of the Component": "You believe your impact on others is worth watching and worth improving.",
+    "Associated Habits of the Component": "You notice the effect you have on people and reflect on how to adjust your own behavior.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 38,
+    "slug": "feedback",
+    "Component Name": "Feedback",
+    "Associated Practices": [
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "Assessment Question": "I rely on user-centered and team-centered feedback on a continuous basis to learn how I need to improve",
+    "Component Description": "Feedback is leaning on regular input from users and teammates to learn how to get better. It is the engine of Continuous Improvement, and it also feeds Shared Leadership and Collective Decision Making by keeping the team honest about how things are really going.",
+    "Associated Mindsets of the Component": "You believe feedback is a gift that shows you exactly where to grow.",
+    "Associated Habits of the Component": "You seek out feedback often and act on it instead of getting defensive.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 39,
+    "slug": "reflection",
+    "Component Name": "Reflection",
+    "Associated Practices": [
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "Assessment Question": "I constantly look inwards and evaluate my emotions and how I showed up, making a note about where / how I could improve.",
+    "Component Description": "Reflection is regularly looking inward at how you felt and how you showed up, and noting where you want to improve. It turns raw experience into real growth, which is why it anchors the Continuous Improvement practice.",
+    "Associated Mindsets of the Component": "You believe growth comes from honestly reviewing how you did, not just moving on.",
+    "Associated Habits of the Component": "You take time to reflect on your emotions and actions and write down what to change next time.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 40,
+    "slug": "transferring-power",
+    "Component Name": "Transferring Power",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      }
+    ],
+    "Assessment Question": "I believe that everyone has the ability to make decisions and want them to decide rather than make the decisions myself",
+    "Component Description": "Transferring power is believing everyone can make decisions and actively wanting them to, rather than keeping the calls to yourself. It spreads leadership across the team and supports Shared Ownership, Shared Leadership, and Psychological Safety.",
+    "Associated Mindsets of the Component": "You believe decision-making should be shared, not hoarded by one person.",
+    "Associated Habits of the Component": "You hand real decisions to others and encourage them to decide rather than deciding for them.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 41,
+    "slug": "pause",
+    "Component Name": "Pause",
+    "Associated Practices": [
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      }
+    ],
+    "Assessment Question": "I actively prioritize pausing in conversations to ensure that people in the room are able to provide input and voice",
+    "Component Description": "Pause is deliberately stopping in a conversation so everyone in the room gets a chance to speak. It is a small habit with a big payoff, protecting the Psychological Safety that lets Empowerment, Shared Leadership, and Collective Decision Making thrive.",
+    "Associated Mindsets of the Component": "You believe the quietest voices often hold the input most worth waiting for.",
+    "Associated Habits of the Component": "You pause in discussions and directly invite people who have not spoken to share.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 42,
+    "slug": "vulnerability",
+    "Component Name": "Vulnerability",
+    "Associated Practices": [
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      }
+    ],
+    "Assessment Question": "I prioritize sharing my true feelings and my mistakes, fears, and struggles to others for the benefit of building teammate confidence.",
+    "Component Description": "Vulnerability is openly sharing your feelings, mistakes, and struggles to build trust and give others permission to do the same. Timothy Clark describes psychological safety as a culture of rewarded vulnerability, so this is a cornerstone of the Psychological Safety and Shared Leadership practices.",
+    "Associated Mindsets of the Component": "You believe showing your real self, struggles included, makes the whole team stronger.",
+    "Associated Habits of the Component": "You admit mistakes and share your worries openly, which makes it safe for others to do the same.",
+    "Where Can I Learn More?": "Timothy Clark's 4 Stages of Psychological Safety (LeaderFactor): https://www.leaderfactor.com/learn/psychological-safety-timothy-clark/"
+  },
+  {
+    "id": 43,
+    "slug": "approach",
+    "Component Name": "Approach",
+    "Associated Practices": [
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      }
+    ],
+    "Assessment Question": "I ask others how they want to be served and supported instead of supporting them in the way I want to be supported.",
+    "Component Description": "Approach is asking people how they actually want to be supported, instead of helping them the way you would want to be helped. That small shift makes support genuinely useful and is part of Empowerment, Shared Leadership, and Psychological Safety.",
+    "Associated Mindsets of the Component": "You believe support works best when it fits the other person, not you.",
+    "Associated Habits of the Component": "You ask how someone wants to be helped before you jump in.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  },
+  {
+    "id": 44,
+    "slug": "trust",
+    "Component Name": "Trust",
+    "Associated Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "Assessment Question": "I value trust in myself and trust in others to carry out work.",
+    "Component Description": "Trust is believing in yourself and others to carry the work, and then acting on that belief. It is the foundation that lets a team share ownership and take risks together, and researchers like Patrick Lencioni and Amy Edmondson put it at the root of nearly every strong team, which is why it touches so many practices here.",
+    "Associated Mindsets of the Component": "You believe people are capable and will follow through, and you are willing to extend trust first.",
+    "Associated Habits of the Component": "You rely on others to do their part without hovering, and you prove trustworthy yourself.",
+    "Where Can I Learn More?": "Atlassian Team Playbook, practical plays for healthy teamwork: https://www.atlassian.com/team-playbook"
+  }
+]

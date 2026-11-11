@@ -1,0 +1,189 @@
+{
+  "framework": "Skills & Practices Framework",
+  "version": "v1",
+  "generatedFromBaserow": 287350,
+  "entities": [
+    {
+      "entity": "data-types",
+      "file": "framework-data/data-types.json",
+      "count": 18,
+      "primaryField": "Data Type Name"
+    },
+    {
+      "entity": "skills",
+      "file": "framework-data/skills.json",
+      "count": 115,
+      "primaryField": "Skill Name"
+    },
+    {
+      "entity": "practices",
+      "file": "framework-data/practices.json",
+      "count": 7,
+      "primaryField": "Practice Name"
+    },
+    {
+      "entity": "practice-components",
+      "file": "framework-data/practice-components.json",
+      "count": 44,
+      "primaryField": "Component Name"
+    },
+    {
+      "entity": "activities",
+      "file": "framework-data/activities.json",
+      "count": 100,
+      "primaryField": "Activity Name"
+    },
+    {
+      "entity": "duties",
+      "file": "framework-data/duties.json",
+      "count": 18,
+      "primaryField": "Duty Name"
+    },
+    {
+      "entity": "job-functions",
+      "file": "framework-data/job-functions.json",
+      "count": 11,
+      "primaryField": "Job Function"
+    },
+    {
+      "entity": "deliverables",
+      "file": "framework-data/deliverables.json",
+      "count": 108,
+      "primaryField": "Deliverable Name"
+    },
+    {
+      "entity": "milestones",
+      "file": "framework-data/milestones.json",
+      "count": 9,
+      "primaryField": "Milestone Name"
+    },
+    {
+      "entity": "specializations",
+      "file": "framework-data/specializations.json",
+      "count": 23,
+      "primaryField": "Specialization Name"
+    },
+    {
+      "entity": "methodologies",
+      "file": "framework-data/methodologies.json",
+      "count": 6,
+      "primaryField": "Agile Method Name"
+    },
+    {
+      "entity": "tools",
+      "file": "framework-data/tools.json",
+      "count": 17,
+      "primaryField": "Tool Name"
+    },
+    {
+      "entity": "company-types",
+      "file": "framework-data/company-types.json",
+      "count": 4,
+      "primaryField": "Name"
+    },
+    {
+      "entity": "stakeholders",
+      "file": "framework-data/stakeholders.json",
+      "count": 5,
+      "primaryField": "Name"
+    },
+    {
+      "entity": "job-industries",
+      "file": "framework-data/job-industries.json",
+      "count": 29,
+      "primaryField": "Job Industry Name"
+    },
+    {
+      "entity": "project-types",
+      "file": "framework-data/project-types.json",
+      "count": 5,
+      "primaryField": "Project Type"
+    },
+    {
+      "entity": "workshops",
+      "file": "framework-data/workshops.json",
+      "count": 35,
+      "primaryField": "Workshop Name"
+    },
+    {
+      "entity": "workshop-steps",
+      "file": "framework-data/workshop-steps.json",
+      "count": 183,
+      "primaryField": "Workshop Step Unique ID"
+    },
+    {
+      "entity": "workshop-template-sections",
+      "file": "framework-data/workshop-template-sections.json",
+      "count": 191,
+      "primaryField": "Unique ID"
+    },
+    {
+      "entity": "handoff-deliverables-map",
+      "file": "framework-data/handoff-deliverables-map.json",
+      "count": 26,
+      "primaryField": "Hand-Off Story Arc"
+    },
+    {
+      "entity": "project-phases",
+      "file": "framework-data/project-phases.json",
+      "count": 4,
+      "primaryField": "Name"
+    },
+    {
+      "entity": "career-transitioning/Transitioning_into_UX_Design",
+      "file": "career-transitioning/Transitioning_into_UX_Design.json",
+      "count": 28,
+      "primaryField": "slug",
+      "targetField": "UX Design"
+    },
+    {
+      "entity": "career-transitioning/Transitioning_into_UX_Writing",
+      "file": "career-transitioning/Transitioning_into_UX_Writing.json",
+      "count": 28,
+      "primaryField": "slug",
+      "targetField": "UX Writing"
+    },
+    {
+      "entity": "career-transitioning/Transitioning_into_Business_Analysis",
+      "file": "career-transitioning/Transitioning_into_Business_Analysis.json",
+      "count": 29,
+      "primaryField": "slug",
+      "targetField": "Business Analysis"
+    },
+    {
+      "entity": "career-transitioning/Transitioning_into_Product_Ownership",
+      "file": "career-transitioning/Transitioning_into_Product_Ownership.json",
+      "count": 29,
+      "primaryField": "slug",
+      "targetField": "Product Ownership"
+    },
+    {
+      "entity": "career-transitioning/Transitioning_into_Product_Management",
+      "file": "career-transitioning/Transitioning_into_Product_Management.json",
+      "count": 29,
+      "primaryField": "slug",
+      "targetField": "Product Management"
+    },
+    {
+      "entity": "career-transitioning/Transitioning_into_UX_Research",
+      "file": "career-transitioning/Transitioning_into_UX_Research.json",
+      "count": 29,
+      "primaryField": "slug",
+      "targetField": "UX Research"
+    },
+    {
+      "entity": "career-transitioning/Transitioning_into_Agile_Coaching",
+      "file": "career-transitioning/Transitioning_into_Agile_Coaching.json",
+      "count": 29,
+      "primaryField": "slug",
+      "targetField": "Agile Coaching"
+    },
+    {
+      "entity": "career-transitioning/Transitioning_into_Software_Engineering",
+      "file": "career-transitioning/Transitioning_into_Software_Engineering.json",
+      "count": 28,
+      "primaryField": "slug",
+      "targetField": "Software Engineering"
+    }
+  ]
+}
