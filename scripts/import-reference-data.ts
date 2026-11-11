@@ -18,6 +18,20 @@
  */
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+
+/** Find a file by name anywhere under `dir` (the O*NET zip extracts to a subfolder). */
+function findFile(dir: string, name: string): string | null {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      const hit = findFile(full, name);
+      if (hit) return hit;
+    } else if (entry.name === name) {
+      return full;
+    }
+  }
+  return null;
+}
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import {
   FRAMEWORK_ENTITIES,
@@ -26,7 +40,7 @@ import {
   type FrameworkManifest,
 } from "../src/lib/reference/framework";
 import {
-  parseOnetTsv,
+  parseOnetJson,
   mapOnetRow,
   ONET_TABLES,
 } from "../src/lib/reference/onet";
@@ -55,6 +69,32 @@ function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf-8")) as T;
 }
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** Upsert one batch, retrying transient network errors with backoff. */
+async function upsertBatch(
+  db: SupabaseClient,
+  batch: ReferenceItem[],
+  attempts = 4
+): Promise<void> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const { error } = await db
+        .from("reference_items")
+        .upsert(batch, { onConflict: CONFLICT_TARGET });
+      if (error) throw new Error(error.message);
+      return;
+    } catch (err) {
+      if (attempt >= attempts) {
+        throw new Error(
+          `upsert failed after ${attempts} attempts: ${err instanceof Error ? err.message : err}`
+        );
+      }
+      await sleep(1000 * attempt); // 1s, 2s, 3s backoff
+    }
+  }
+}
+
 async function upsertAll(
   db: SupabaseClient,
   items: ReferenceItem[]
@@ -62,10 +102,7 @@ async function upsertAll(
   let written = 0;
   for (let i = 0; i < items.length; i += UPSERT_BATCH) {
     const batch = items.slice(i, i + UPSERT_BATCH);
-    const { error } = await db
-      .from("reference_items")
-      .upsert(batch, { onConflict: CONFLICT_TARGET });
-    if (error) throw new Error(`upsert failed: ${error.message}`);
+    await upsertBatch(db, batch);
     written += batch.length;
   }
   return written;
@@ -100,12 +137,12 @@ async function importOnet(db: SupabaseClient): Promise<void> {
   console.log(`O*NET${release ? ` ${release}` : ""}: importing curated subset`);
 
   for (const config of ONET_TABLES) {
-    const file = join(ONET_DIR, config.file);
-    if (!existsSync(file)) {
+    const file = findFile(ONET_DIR, config.file);
+    if (!file) {
       console.log(`  ${config.file}: not found — skipped`);
       continue;
     }
-    const rows = parseOnetTsv(readFileSync(file, "utf-8"));
+    const rows = parseOnetJson(readFileSync(file, "utf-8"));
     const items = rows.map((row) => mapOnetRow(config, row, release));
     const written = await upsertAll(db, items);
     console.log(`  ${config.entityType}: ${written}`);
