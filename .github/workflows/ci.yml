@@ -1,7 +1,8 @@
 # CI: quality gates that run on every push and pull request.
-# Flow: get code -> set up Node -> install from lockfile -> lint -> format check
-#       -> build (compiles + type-checks) -> dependency scan (production deps,
-#       fails on any vulnerability).
+# Flow: get code (full history) -> set up Node -> install from lockfile -> lint ->
+#       format check -> build (compiles + type-checks) -> dependency scan (production
+#       deps, fails on any vulnerability) -> ADR checks (structure + architecture rules)
+#       -> secret scan (gitleaks, full history, fails on any finding).
 #
 # We build with `next build` rather than a bare `tsc --noEmit`: Next.js 16
 # generates route types (e.g. LayoutProps/PageProps) into .next/types during the
@@ -29,6 +30,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0 # full history so the gitleaks secret scan can check every commit
 
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
@@ -49,3 +51,16 @@ jobs:
 
       - name: Dependency scan (production deps; fails on any vulnerability)
         run: npm audit --omit=dev --audit-level=low
+
+      - name: ADR checks (structure + architecture rules from accepted ADRs)
+        # Runner's built-in python3; the scripts are standard-library only.
+        run: |
+          python3 tools/adr/check_adr.py --dir docs/adr
+          python3 tools/adr/check_adr_rules.py --dir docs/adr --root .
+
+      - name: Secret scan (gitleaks, full history; fails on any finding)
+        # Pinned gitleaks release binary; scans all commits (fetch-depth 0 above).
+        run: |
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz -o /tmp/gitleaks.tar.gz
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+          /tmp/gitleaks git --redact .
