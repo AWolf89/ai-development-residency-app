@@ -13,6 +13,11 @@
 # testing
 /coverage
 
+# accessibility scans (generated)
+/test-results
+/playwright-report
+/a11y-results
+
 # next.js
 /.next/
 /out/

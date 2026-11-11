@@ -27,8 +27,10 @@ export default async function Home() {
         <Stack spacing={3} sx={{ alignItems: "flex-start" }}>
           <Chip
             label="MVP #1 · In development"
-            color="secondary"
             variant="outlined"
+            // secondary.main (#00897b) is only 4.06:1 on the page background;
+            // #00695c reaches 5.8:1 (WCAG 1.4.3 Contrast).
+            sx={{ color: "#00695c", borderColor: "#00695c" }}
           />
           <Typography variant="h2" component="h1">
             Career Evidence Agent
