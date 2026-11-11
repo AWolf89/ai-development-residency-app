@@ -16,7 +16,12 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "text-summary"],
       all: true, // count included files even when a test file does not import them
-      include: ["src/lib/**/validation.ts"],
+      include: [
+        "src/lib/**/validation.ts",
+        "src/lib/reference/types.ts",
+        "src/lib/reference/framework.ts",
+        "src/lib/reference/onet.ts",
+      ],
       thresholds: {
         lines: 80,
         functions: 80,

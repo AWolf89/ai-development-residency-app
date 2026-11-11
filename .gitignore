@@ -13,6 +13,11 @@
 # testing
 /coverage
 
+# O*NET source files (large, licensed) — provided locally by the developer,
+# never committed. The Skills & Practices Framework data IS committed (CC BY 4.0).
+/data/reference/onet/*
+!/data/reference/onet/README.md
+
 # accessibility scans (generated)
 /test-results
 /playwright-report

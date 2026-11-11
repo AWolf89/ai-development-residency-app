@@ -12,6 +12,9 @@ package-lock.json
 supabase/.temp/
 supabase/.branches/
 
+# Vendored third-party reference data (kept verbatim from source — do not reformat).
+data/reference/
+
 # Markdown is authored by hand and kept verbatim — do not reformat.
 # This protects the guardrail specs in .claude/rules/ and the ADRs in docs/adr/.
 *.md

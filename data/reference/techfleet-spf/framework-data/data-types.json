@@ -1,0 +1,2378 @@
+[
+  {
+    "id": 1,
+    "slug": "skills",
+    "Data Type Name": "Skills",
+    "Data Type Description": "A competency in an area of expertise.",
+    "Relationship to Skills": "Skills and other Skills are related in the following ways:\n1. Some skills are prerequisites that people build before they can pick up more advanced skills.\n2. Growing one skill often strengthens the related skills a person already has.",
+    "Relationship to Practices": "Skills and Practices are related in the following ways:\n1. People need practices like shared ownership and psychological safety to use their skills well on a team.\n2. Practices shape how a person applies a skill with others, so the same skill lands differently depending on the practices behind it.",
+    "Relationship to Projects": "Skills and Projects are related in the following ways:\n1. People use their skills to move a project forward and get the work done.\n2. Projects give people a real place to apply and prove their skills.",
+    "Relationship to Duties": "Skills and Duties are related in the following ways:\n1. People need certain skills to take on a duty and handle its responsibilities.\n2. A duty defines which skills a person is expected to bring and keep growing.",
+    "Relationship to Stakeholders": "Skills and Stakeholders are related in the following ways:\n1. People use their skills to understand and meet what stakeholders need.\n2. Stakeholders drive the demand for specific skills by shaping what the work requires.",
+    "Relationship to Milestones": "Skills and Milestones are related in the following ways:\n1. People must have the right skills to reach a milestone in the work.\n2. Each milestone calls for a particular set of skills before a team can complete it.",
+    "Relationship to Tools": "Skills and Tools are related in the following ways:\n1. People rely on their skills to use tools effectively.\n2. Tools extend a person's skills and usually take skill to operate well.",
+    "Relationship to Activities": "Skills and Activities are related in the following ways:\n1. People apply their skills to carry out the day-to-day activities of the work.\n2. Doing activities over and over is how people build and sharpen their skills.",
+    "Relationship to Deliverables": "Skills and Deliverables are related in the following ways:\n1. People use their skills to create the deliverables a team produces.\n2. Each deliverable calls for specific skills to make it well.",
+    "Relationship to Job Functions": "Skills and Job Functions are related in the following ways:\n1. People qualify for a job function by having the skills it calls for.\n2. A job function points to the skills a person is expected to have.",
+    "Relationship to Job Specializations": "Skills and Job Specializations are related in the following ways:\n1. A specialization is built on a focused set of skills a person grows deep in.\n2. The skills you choose to sharpen point you toward a specialization.",
+    "Relationship to Company Types": "Skills and Company Types are related in the following ways:\n1. The skills a person has help them fit the way different company types work.\n2. Different company types lean on different skills, so the setting shapes which skills matter most.",
+    "Relationship to Methodologies": "Skills and Methodologies are related in the following ways:\n1. People apply their skills within a methodology to guide how the work flows.\n2. A methodology calls for certain skills, like facilitation or planning, to run it well.",
+    "Relationship to Workshops": "Skills and Workshops are related in the following ways:\n1. People bring and use their skills to take part in workshops.\n2. Workshops are a hands-on way for people to build and practice skills together.",
+    "Examples of Skills": [
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "survey-design",
+        "label": "Survey Design"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "research-facilitation",
+        "label": "Research Facilitation"
+      },
+      {
+        "slug": "experiment-design",
+        "label": "Experiment Design"
+      },
+      {
+        "slug": "research-analysis",
+        "label": "Research Analysis"
+      },
+      {
+        "slug": "affinity-mapping",
+        "label": "Affinity Mapping"
+      },
+      {
+        "slug": "problem-statements",
+        "label": "Problem Statements"
+      },
+      {
+        "slug": "vision-formation",
+        "label": "Vision Formation"
+      },
+      {
+        "slug": "backlog-management",
+        "label": "Backlog Management"
+      },
+      {
+        "slug": "kanban-board-management",
+        "label": "Kanban Board Management"
+      },
+      {
+        "slug": "requirements-management",
+        "label": "Requirements Management"
+      },
+      {
+        "slug": "user-stories",
+        "label": "User Stories"
+      },
+      {
+        "slug": "branding",
+        "label": "Branding"
+      },
+      {
+        "slug": "interaction-design",
+        "label": "Interaction Design"
+      },
+      {
+        "slug": "information-architecture",
+        "label": "Information Architecture"
+      },
+      {
+        "slug": "go-to-market-strategy",
+        "label": "Go-to-Market Strategy"
+      },
+      {
+        "slug": "customer-experience-strategy",
+        "label": "Customer Experience Strategy"
+      },
+      {
+        "slug": "motor-based-accessibility",
+        "label": "Motor-Based Accessibility"
+      },
+      {
+        "slug": "gestalt-principles",
+        "label": "Gestalt Principles"
+      },
+      {
+        "slug": "design-patterns",
+        "label": "Design Patterns"
+      },
+      {
+        "slug": "prototyping",
+        "label": "Prototyping"
+      },
+      {
+        "slug": "information-hierarchy",
+        "label": "Information Hierarchy"
+      },
+      {
+        "slug": "typography",
+        "label": "Typography"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "contextual-inquiries",
+        "label": "Contextual Inquiries"
+      },
+      {
+        "slug": "behavior-driven-development-bdd-scenarios",
+        "label": "Behavior Driven Development (BDD) Scenarios"
+      },
+      {
+        "slug": "information-visualization",
+        "label": "Information Visualization"
+      },
+      {
+        "slug": "mental-models",
+        "label": "Mental Models"
+      },
+      {
+        "slug": "visual-signifiers",
+        "label": "Visual Signifiers"
+      },
+      {
+        "slug": "storytelling",
+        "label": "Storytelling"
+      },
+      {
+        "slug": "epic-and-feature-management",
+        "label": "Epic and Feature Management"
+      },
+      {
+        "slug": "release-management",
+        "label": "Release Management"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "velocity-measurement",
+        "label": "Velocity Measurement"
+      },
+      {
+        "slug": "ethnography",
+        "label": "Ethnography"
+      },
+      {
+        "slug": "public-speaking",
+        "label": "Public Speaking"
+      },
+      {
+        "slug": "prioritization",
+        "label": "Prioritization"
+      },
+      {
+        "slug": "click-testing",
+        "label": "Click Testing"
+      },
+      {
+        "slug": "tree-testing",
+        "label": "Tree Testing"
+      },
+      {
+        "slug": "icon-design",
+        "label": "Icon Design"
+      },
+      {
+        "slug": "design-systems-management",
+        "label": "Design Systems Management"
+      },
+      {
+        "slug": "heuristics",
+        "label": "Heuristics"
+      },
+      {
+        "slug": "ai-prompting",
+        "label": "AI Prompting"
+      },
+      {
+        "slug": "data-analysis",
+        "label": "Data Analysis"
+      },
+      {
+        "slug": "negotiation",
+        "label": "Negotiation"
+      },
+      {
+        "slug": "agile-method-selection",
+        "label": "Agile Method Selection"
+      },
+      {
+        "slug": "assumption-formation",
+        "label": "Assumption Formation"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "meeting-facilitation",
+        "label": "Meeting Facilitation"
+      },
+      {
+        "slug": "object-oriented-programming-languages",
+        "label": "Object-oriented Programming Languages"
+      },
+      {
+        "slug": "algorithm-design",
+        "label": "Algorithm Design"
+      },
+      {
+        "slug": "command-line-scripting-languages",
+        "label": "Command Line Scripting Languages"
+      },
+      {
+        "slug": "product-market-fit",
+        "label": "Product-Market Fit"
+      },
+      {
+        "slug": "network-architecture",
+        "label": "Network Architecture"
+      },
+      {
+        "slug": "information-security",
+        "label": "Information Security"
+      },
+      {
+        "slug": "ux-research-method-selection",
+        "label": "UX Research Method Selection"
+      },
+      {
+        "slug": "database-architecture",
+        "label": "Database Architecture"
+      },
+      {
+        "slug": "service-design",
+        "label": "Service Design"
+      },
+      {
+        "slug": "database-management",
+        "label": "Database Management"
+      },
+      {
+        "slug": "user-interface-design",
+        "label": "User Interface Design"
+      },
+      {
+        "slug": "apis",
+        "label": "API's"
+      },
+      {
+        "slug": "agile-ux",
+        "label": "Agile UX"
+      },
+      {
+        "slug": "perceptual-based-accessibility",
+        "label": "Perceptual-Based Accessibility"
+      },
+      {
+        "slug": "cognitive-based-accessibility",
+        "label": "Cognitive-Based Accessibility"
+      },
+      {
+        "slug": "blockchain-programming-languages",
+        "label": "Blockchain Programming Languages"
+      },
+      {
+        "slug": "server-side-scripting-languages",
+        "label": "Server-Side Scripting Languages"
+      },
+      {
+        "slug": "database-queries",
+        "label": "Database Queries"
+      },
+      {
+        "slug": "web-scripting-languages",
+        "label": "Web Scripting Languages"
+      },
+      {
+        "slug": "statistics",
+        "label": "Statistics"
+      },
+      {
+        "slug": "ui-specifications-for-development",
+        "label": "UI Specifications for Development"
+      },
+      {
+        "slug": "acceptance-criteria-creation",
+        "label": "Acceptance Criteria Creation"
+      },
+      {
+        "slug": "use-case-scenarios",
+        "label": "Use Case Scenarios"
+      },
+      {
+        "slug": "executive-summaries",
+        "label": "Executive Summaries"
+      },
+      {
+        "slug": "accessibility",
+        "label": "Accessibility"
+      },
+      {
+        "slug": "signifiers",
+        "label": "Signifiers"
+      },
+      {
+        "slug": "design-thinking",
+        "label": "Design Thinking"
+      },
+      {
+        "slug": "making-wireframes",
+        "label": "Making Wireframes"
+      },
+      {
+        "slug": "presentation",
+        "label": "Presentation"
+      },
+      {
+        "slug": "a-b-prototype-testing",
+        "label": "A/B Prototype Testing"
+      },
+      {
+        "slug": "concept-testing",
+        "label": "Concept Testing"
+      },
+      {
+        "slug": "responsive-design",
+        "label": "Responsive Design"
+      },
+      {
+        "slug": "workshop-facilitation",
+        "label": "Workshop Facilitation"
+      },
+      {
+        "slug": "process-management",
+        "label": "Process Management"
+      },
+      {
+        "slug": "qa-test-plan-creation",
+        "label": "QA Test Plan Creation"
+      },
+      {
+        "slug": "scrum-management",
+        "label": "Scrum Management"
+      },
+      {
+        "slug": "working-agreements",
+        "label": "Working Agreements"
+      },
+      {
+        "slug": "advocacy",
+        "label": "Advocacy"
+      },
+      {
+        "slug": "building-influence",
+        "label": "Building Influence"
+      },
+      {
+        "slug": "business-acumen",
+        "label": "Business Acumen"
+      },
+      {
+        "slug": "buy-in-generation",
+        "label": "Buy-in Generation"
+      },
+      {
+        "slug": "attention-to-detail",
+        "label": "Attention to Detail"
+      },
+      {
+        "slug": "delivering-feedback",
+        "label": "Delivering Feedback"
+      },
+      {
+        "slug": "coaching",
+        "label": "Coaching"
+      },
+      {
+        "slug": "collaboration",
+        "label": "Collaboration"
+      },
+      {
+        "slug": "conflict-resolution",
+        "label": "Conflict Resolution"
+      },
+      {
+        "slug": "creativity",
+        "label": "Creativity"
+      },
+      {
+        "slug": "critical-thinking",
+        "label": "Critical Thinking"
+      },
+      {
+        "slug": "receiving-feedback",
+        "label": "Receiving Feedback"
+      },
+      {
+        "slug": "initiative",
+        "label": "Initiative"
+      },
+      {
+        "slug": "logical-thinking",
+        "label": "Logical Thinking"
+      },
+      {
+        "slug": "stakeholder-management",
+        "label": "Stakeholder Management"
+      },
+      {
+        "slug": "written-communication",
+        "label": "Written Communication"
+      },
+      {
+        "slug": "organization",
+        "label": "Organization"
+      },
+      {
+        "slug": "perserverence",
+        "label": "Perserverence"
+      },
+      {
+        "slug": "problem-solving",
+        "label": "Problem-Solving"
+      },
+      {
+        "slug": "relationship-building",
+        "label": "Relationship Building"
+      },
+      {
+        "slug": "strategic-thinking",
+        "label": "Strategic Thinking"
+      },
+      {
+        "slug": "systems-thinking",
+        "label": "Systems Thinking"
+      },
+      {
+        "slug": "time-management",
+        "label": "Time Management"
+      },
+      {
+        "slug": "verbal-communication",
+        "label": "Verbal Communication"
+      },
+      {
+        "slug": "teamwork",
+        "label": "Teamwork"
+      },
+      {
+        "slug": "expectation-setting",
+        "label": "Expectation Setting"
+      },
+      {
+        "slug": "commitment",
+        "label": "Commitment"
+      },
+      {
+        "slug": "decision-making",
+        "label": "Decision-Making"
+      }
+    ],
+    "Tech Job Categories": "User Experience, Product Management, Development, Operations, Information Technology",
+    "Relationship to Job Industries": "Skills and Job Industries are related in the following ways:\n1. People carry transferable skills with them from one industry into another.\n2. Each industry gives people a starting set of skills shaped by its everyday work.",
+    "Read Me File": [
+      {
+        "name": "skills.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/f5GlXHiCQYGNcA6mJJZ7AlSbcsPaDhQX_4b3aba1619f4006f83ffc31bc834f0cf52d63c6242ee8db17dea67db123b8947.md"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "slug": "job-function",
+    "Data Type Name": "Job Function",
+    "Data Type Description": "The label used to describe responsibilities at a company.",
+    "Relationship to Skills": "Job Functions and Skills are related in the following ways:\n1. A job function points to the skills a person is expected to have.\n2. People qualify for a job function by having the skills it calls for.",
+    "Relationship to Practices": "Job Functions and Practices are related in the following ways:\n1. A job function is done well when a person brings strong team practices to it.\n2. Practices define the human, behavioral side of doing a job function well.",
+    "Relationship to Projects": "Job Functions and Projects are related in the following ways:\n1. Job functions bring the different kinds of people a project needs.\n2. Projects bring together people from different job functions.",
+    "Relationship to Duties": "Job Functions and Duties are related in the following ways:\n1. A job function is made up of the duties a person is expected to own.\n2. A duty is a set of responsibilities that can sit within one or more job functions.",
+    "Relationship to Stakeholders": "Job Functions and Stakeholders are related in the following ways:\n1. Each job function interacts with stakeholders in its own way.\n2. Stakeholders interact with many different job functions on a team.",
+    "Relationship to Milestones": "Job Functions and Milestones are related in the following ways:\n1. Different job functions lead at different milestones.\n2. Milestones call on different job functions at different stages.",
+    "Relationship to Tools": "Job Functions and Tools are related in the following ways:\n1. Each job function tends to rely on its own set of tools.\n2. The tools a person uses are often tied to their job function.",
+    "Relationship to Activities": "Job Functions and Activities are related in the following ways:\n1. A job function is defined by the activities it is responsible for.\n2. Activities are divided among different job functions.",
+    "Relationship to Deliverables": "Job Functions and Deliverables are related in the following ways:\n1. Each job function is known for the deliverables it produces.\n2. Different job functions own different deliverables.",
+    "Relationship to Job Functions": "Job Functions and other Job Functions are related in the following ways:\n1. Job functions work alongside each other and often overlap on a team.\n2. One job function frequently depends on the work of another.",
+    "Relationship to Job Specializations": "Job Functions and Job Specializations are related in the following ways:\n1. A job function can deepen into one or more specializations.\n2. A specialization is a narrower focus that lives inside a broader job function.",
+    "Relationship to Company Types": "Job Functions and Company Types are related in the following ways:\n1. A job function adapts its focus to the company type it sits in.\n2. The same job function can look different across company types.",
+    "Relationship to Methodologies": "Job Functions and Methodologies are related in the following ways:\n1. Job functions take on specific roles within a methodology.\n2. A methodology assigns specific roles to different job functions.",
+    "Relationship to Workshops": "Job Functions and Workshops are related in the following ways:\n1. Different job functions lead or take part in different workshops.\n2. Workshops bring different job functions together to collaborate.",
+    "Relationship to Job Industries": "Job Functions and Job Industries are related in the following ways:\n1. Job functions exist across industries, often under different titles.\n2. Industries have their own job functions, often with different titles.",
+    "Read Me File": [
+      {
+        "name": "job-function.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/2fRa1iYMalRYy2WVWznLN1g7Rdf8Ooed_6020ccfdb2bd82b7664430bcd3242a9b24bce9ccea5b49642a17272d835e5f64.md"
+      }
+    ],
+    "Job Functions": [
+      {
+        "slug": "ux-designer",
+        "label": "UX Designer"
+      },
+      {
+        "slug": "ui-designer",
+        "label": "UI Designer"
+      },
+      {
+        "slug": "ux-researcher",
+        "label": "UX Researcher"
+      },
+      {
+        "slug": "product-designer",
+        "label": "Product Designer"
+      },
+      {
+        "slug": "ux-writer",
+        "label": "UX Writer"
+      },
+      {
+        "slug": "project-manager",
+        "label": "Project Manager"
+      },
+      {
+        "slug": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "slug": "product-owner",
+        "label": "Product Owner"
+      },
+      {
+        "slug": "product-manager",
+        "label": "Product Manager"
+      },
+      {
+        "slug": "business-analyst",
+        "label": "Business Analyst"
+      },
+      {
+        "slug": "agile-coach",
+        "label": "Agile Coach"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "slug": "job-specialization",
+    "Data Type Name": "Job Specialization",
+    "Data Type Description": "An subject matter area of expertise.",
+    "Relationship to Skills": "Specializations and Skills are related in the following ways:\n1. A specialization tells you which deeper skills a person has focused on.\n2. A person's cluster of related skills adds up to a specialization.",
+    "Relationship to Practices": "Specializations and Practices are related in the following ways:\n1. A specialist still depends on team practices to work well with others.\n2. Practices support any specialization by shaping how a specialist works with the rest of the team.",
+    "Relationship to Projects": "Specializations and Projects are related in the following ways:\n1. Specializations bring focused expertise to the parts of a project that need it.\n2. Projects draw on a range of specializations to cover all the work.",
+    "Relationship to Duties": "Specializations and Duties are related in the following ways:\n1. A specialization shapes which duties a person is best suited to own.\n2. A duty often calls for a certain specialization to do it well.",
+    "Relationship to Stakeholders": "Specializations and Stakeholders are related in the following ways:\n1. A specialization adds depth that helps meet specific stakeholder needs.\n2. Stakeholders benefit from the depth a specialization brings to the work.",
+    "Relationship to Milestones": "Specializations and Milestones are related in the following ways:\n1. Certain milestones lean on particular specializations.\n2. Milestones may need certain specializations at particular points in the work.",
+    "Relationship to Tools": "Specializations and Tools are related in the following ways:\n1. A specialization often comes with its own specialized tools.\n2. Some tools are specialized, mastered mainly by people in a given specialization.",
+    "Relationship to Activities": "Specializations and Activities are related in the following ways:\n1. A specialization focuses a person on a specific set of activities.\n2. Some activities call for a particular specialization.",
+    "Relationship to Deliverables": "Specializations and Deliverables are related in the following ways:\n1. A specialization is often recognized by the deliverables it produces.\n2. A specialization is often known for the deliverables it produces.",
+    "Relationship to Job Functions": "Specializations and Job Functions are related in the following ways:\n1. A specialization is a deeper focus within a broader job function.\n2. A job function can deepen into one or more specializations.",
+    "Relationship to Job Specializations": "Specializations and other Job Specializations are related in the following ways:\n1. Specializations sit near each other, and people often blend two into their own focus.\n2. Growing one specialization can open the door to a related one.",
+    "Relationship to Company Types": "Specializations and Company Types are related in the following ways:\n1. Some specializations are more in demand in certain company types.\n2. Some specializations are in higher demand in certain company types.",
+    "Relationship to Methodologies": "Specializations and Methodologies are related in the following ways:\n1. A specialization applies its expertise within the team's methodology.\n2. A methodology gives specialists a shared way to work together.",
+    "Relationship to Workshops": "Specializations and Workshops are related in the following ways:\n1. Specialists often lead the workshops tied to their area of focus.\n2. Workshops let specialists share their expertise with the team.",
+    "Specializations": [
+      {
+        "slug": "qualitative-ux-research",
+        "label": "Qualitative UX Research"
+      },
+      {
+        "slug": "interaction-design",
+        "label": "Interaction Design"
+      },
+      {
+        "slug": "information-architecture",
+        "label": "Information Architecture"
+      },
+      {
+        "slug": "content-strategy",
+        "label": "Content Strategy"
+      },
+      {
+        "slug": "service-design",
+        "label": "Service Design"
+      },
+      {
+        "slug": "customer-experience-design",
+        "label": "Customer Experience Design"
+      },
+      {
+        "slug": "quantitative-ux-research",
+        "label": "Quantitative UX Research"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "branding",
+        "label": "Branding"
+      },
+      {
+        "slug": "search-engine-optimization",
+        "label": "Search Engine Optimization"
+      },
+      {
+        "slug": "ux-strategy",
+        "label": "UX Strategy"
+      },
+      {
+        "slug": "ui-design",
+        "label": "UI Design"
+      },
+      {
+        "slug": "accessibility-specialist",
+        "label": "Accessibility Specialist"
+      },
+      {
+        "slug": "front-end-developer",
+        "label": "Front-End Developer"
+      },
+      {
+        "slug": "back-end-developer",
+        "label": "Back-end Developer"
+      },
+      {
+        "slug": "full-stack-developer",
+        "label": "Full Stack Developer"
+      },
+      {
+        "slug": "web3-developer",
+        "label": "Web3 Developer"
+      },
+      {
+        "slug": "information-security",
+        "label": "Information Security"
+      },
+      {
+        "slug": "ai-user-experience",
+        "label": "AI User Experience"
+      },
+      {
+        "slug": "growth-product-management",
+        "label": "Growth Product Management"
+      },
+      {
+        "slug": "mobile-native-development",
+        "label": "Mobile Native Development"
+      },
+      {
+        "slug": "devops",
+        "label": "DevOps"
+      },
+      {
+        "slug": "sprint-master",
+        "label": "Sprint Master"
+      }
+    ],
+    "Relationship to Job Industries": "Specializations and Job Industries are related in the following ways:\n1. Specializations can be shaped by the industry a person works in.\n2. An industry can steer people toward certain specializations.",
+    "Read Me File": [
+      {
+        "name": "job-specialization.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/iHOxJzWAUZV93wpxGure1qmdOc5ctJrM_f04528e6549c81373b04d87d131af4a11373415b2f3b5d70fa0f484bd3f2f901.md"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "slug": "practices",
+    "Data Type Name": "Practices",
+    "Data Type Description": "A set of beliefs and behaviors that drive successful teamwork.",
+    "Relationship to Skills": "Practices and Skills are related in the following ways:\n1. Practices shape how a person applies a skill with others, so the same skill lands differently depending on the practices behind it.\n2. People need practices like shared ownership and psychological safety to use their skills well on a team.",
+    "Relationship to Practices": "Practices and other Practices are related in the following ways:\n1. Practices reinforce one another, so growing one practice often lifts the others.\n2. A team's practices work as a set, and weakness in one can undercut the rest.",
+    "Relationship to Projects": "Practices and Projects are related in the following ways:\n1. Practices set the tone for how a team works together to deliver a project.\n2. Projects are where a team's practices get tested under real pressure.",
+    "Relationship to Duties": "Practices and Duties are related in the following ways:\n1. Practices guide how a person carries out a duty alongside teammates.\n2. A duty is carried out through practices that guide how a person works with others.",
+    "Relationship to Stakeholders": "Practices and Stakeholders are related in the following ways:\n1. Practices like humility and active listening shape how a team includes and serves its stakeholders.\n2. Stakeholders are served better when a team practices humility, listening, and inclusion.",
+    "Relationship to Milestones": "Practices and Milestones are related in the following ways:\n1. Practices help a team stay aligned and adaptable as they work toward a milestone.\n2. Reaching a milestone is smoother when the team leans on practices like adaptability and shared ownership.",
+    "Relationship to Tools": "Practices and Tools are related in the following ways:\n1. Practices influence how openly and collaboratively a team uses its tools.\n2. How openly a team uses its tools reflects its practices.",
+    "Relationship to Activities": "Practices and Activities are related in the following ways:\n1. Practices shape how people show up for shared activities, like listening and making space for others.\n2. Activities are where practices show up in how people work together.",
+    "Relationship to Deliverables": "Practices and Deliverables are related in the following ways:\n1. Practices affect the quality of deliverables by shaping how the team collaborates to make them.\n2. The quality of a deliverable reflects how well the team practiced collaboration to make it.",
+    "Relationship to Job Functions": "Practices and Job Functions are related in the following ways:\n1. Practices define the human, behavioral side of doing a job function well.\n2. A job function is done well when a person brings strong team practices to it.",
+    "Relationship to Job Specializations": "Practices and Job Specializations are related in the following ways:\n1. Practices are the team habits a person brings no matter which specialization they pick.\n2. Every specialization gets stronger when the person behind it works with healthy practices.",
+    "Relationship to Company Types": "Practices and Company Types are related in the following ways:\n1. Practices help a team stay healthy no matter which company type they work in.\n2. Every company type benefits from healthy team practices, whatever its structure.",
+    "Relationship to Methodologies": "Practices and Methodologies are related in the following ways:\n1. Practices are the mindset that makes a methodology actually work, not just its steps.\n2. A methodology only works when the team lives out the practices behind it.",
+    "Relationship to Workshops": "Practices and Workshops are related in the following ways:\n1. Practices are taught and strengthened through team workshops.\n2. Workshops are where teams learn and rehearse healthy practices.",
+    "Examples of Practices": [
+      {
+        "slug": "shared-ownership",
+        "label": "Shared Ownership"
+      },
+      {
+        "slug": "empowerment",
+        "label": "Empowerment"
+      },
+      {
+        "slug": "shared-leadership",
+        "label": "Shared Leadership"
+      },
+      {
+        "slug": "psychological-safety",
+        "label": "Psychological Safety"
+      },
+      {
+        "slug": "agility",
+        "label": "Agility"
+      },
+      {
+        "slug": "collective-decision-making",
+        "label": "Collective Decision Making"
+      },
+      {
+        "slug": "continuous-improvement",
+        "label": "Continuous Improvement"
+      }
+    ],
+    "Tech Job Categories": "User Experience, Product Management, Development, Operations, Information Technology",
+    "Relationship to Job Industries": "Practices and Job Industries are related in the following ways:\n1. Practices are transferable behaviors people can bring from any industry into tech work.\n2. People bring transferable practices, like collaboration, from any industry.",
+    "Read Me File": [
+      {
+        "name": "practices.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/2GsmdK1h0STKWBT4bYblAETzyS9wlKYn_fb4f2c7b35618e52aa7c8f99bff274689d24b5fd9bdc4110fc994d47b8cad6fc.md"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "slug": "duty",
+    "Data Type Name": "Duty",
+    "Data Type Description": "A set of expected duties.",
+    "Relationship to Skills": "Duties and Skills are related in the following ways:\n1. A duty defines which skills a person is expected to bring and keep growing.\n2. People need certain skills to take on a duty and handle its responsibilities.",
+    "Relationship to Practices": "Duties and Practices are related in the following ways:\n1. A duty is carried out through practices that guide how a person works with others.\n2. Practices guide how a person carries out a duty alongside teammates.",
+    "Relationship to Projects": "Duties and Projects are related in the following ways:\n1. Duties give a project clear ownership by setting who is responsible for what.\n2. Projects assign duties to people so the work has clear ownership.",
+    "Relationship to Duties": "Duties and other Duties are related in the following ways:\n1. Duties overlap, so one person's duty often depends on another's.\n2. Duties are shared and traded across a team as the work shifts.",
+    "Relationship to Stakeholders": "Duties and Stakeholders are related in the following ways:\n1. Duties include being accountable to the stakeholders the work serves.\n2. Stakeholders rely on people fulfilling their duties to get what they need.",
+    "Relationship to Milestones": "Duties and Milestones are related in the following ways:\n1. Duties determine who owns the work needed to reach each milestone.\n2. Milestones show which duties need to be active at each stage of the work.",
+    "Relationship to Tools": "Duties and Tools are related in the following ways:\n1. Each duty comes with the tools a person is expected to use.\n2. The tools a person reaches for are often set by the duty they hold.",
+    "Relationship to Activities": "Duties and Activities are related in the following ways:\n1. A duty is made up of the activities a person is responsible for.\n2. Activities are grouped into the duties people take responsibility for.",
+    "Relationship to Deliverables": "Duties and Deliverables are related in the following ways:\n1. A duty is measured by the deliverables the person is accountable for.\n2. Deliverables are what people are held accountable for within their duties.",
+    "Relationship to Job Functions": "Duties and Job Functions are related in the following ways:\n1. A duty is a set of responsibilities that can sit within one or more job functions.\n2. A job function is made up of the duties a person is expected to own.",
+    "Relationship to Job Specializations": "Duties and Job Specializations are related in the following ways:\n1. A specialization is a focused combination of the duties a person chooses to take on.\n2. The duties you own shape the specialization you grow into.",
+    "Relationship to Company Types": "Duties and Company Types are related in the following ways:\n1. How a duty is defined can shift depending on the company type.\n2. A company type shapes what a given duty involves day to day.",
+    "Relationship to Methodologies": "Duties and Methodologies are related in the following ways:\n1. Duties are shaped by the methodology the team follows.\n2. A methodology shapes the duties and roles people take on.",
+    "Relationship to Workshops": "Duties and Workshops are related in the following ways:\n1. Duties are clarified in workshops where teams agree on who owns what.\n2. Workshops help teams clarify who owns which duties.",
+    "Roles": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      },
+      {
+        "slug": "ux-user-experience-strategy",
+        "label": "UX (User Experience) Strategy"
+      },
+      {
+        "slug": "product-operations",
+        "label": "Product Operations"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      },
+      {
+        "slug": "everyone",
+        "label": "Everyone"
+      }
+    ],
+    "Tech Job Categories": "User Experience, Product Management, Development, Operations, Information Technology",
+    "Relationship to Job Industries": "Duties and Job Industries are related in the following ways:\n1. Duties carry across industries, even when the context changes.\n2. An industry gives a duty its real-world context and expectations.",
+    "Read Me File": [
+      {
+        "name": "duty.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/Iqk7xkK9ZExw6ZQqDWoO5xOzKdnqZXUz_9cfbc98d4a34a3a92c9cdbb791be29343d684a7469b9e87f3acc47da55ed659e.md"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "slug": "stakeholder",
+    "Data Type Name": "Stakeholder",
+    "Data Type Description": "A person who drives the needs of work.",
+    "Relationship to Skills": "Stakeholders and Skills are related in the following ways:\n1. Stakeholders drive the demand for specific skills by shaping what the work requires.\n2. People use their skills to understand and meet what stakeholders need.",
+    "Relationship to Practices": "Stakeholders and Practices are related in the following ways:\n1. Stakeholders are served better when a team practices humility, listening, and inclusion.\n2. Practices like humility and active listening shape how a team includes and serves its stakeholders.",
+    "Relationship to Projects": "Stakeholders and Projects are related in the following ways:\n1. Stakeholders set the direction and success measures for a project.\n2. Projects exist to deliver value to their stakeholders.",
+    "Relationship to Duties": "Stakeholders and Duties are related in the following ways:\n1. Stakeholders rely on people fulfilling their duties to get what they need.\n2. Duties include being accountable to the stakeholders the work serves.",
+    "Relationship to Stakeholders": "Stakeholders and other Stakeholders are related in the following ways:\n1. Different stakeholders often have needs that must be balanced against each other.\n2. Stakeholders influence one another in how they shape the work.",
+    "Relationship to Milestones": "Stakeholders and Milestones are related in the following ways:\n1. Stakeholders watch milestones as signs the work is progressing.\n2. Milestones give stakeholders clear signals of how the work is progressing.",
+    "Relationship to Tools": "Stakeholders and Tools are related in the following ways:\n1. Stakeholders may request certain tools or need access to the team's outputs.\n2. Tools help teams share progress and outputs with stakeholders.",
+    "Relationship to Activities": "Stakeholders and Activities are related in the following ways:\n1. Stakeholders shape which activities matter most by voicing their needs.\n2. Activities are chosen and prioritized based on stakeholder needs.",
+    "Relationship to Deliverables": "Stakeholders and Deliverables are related in the following ways:\n1. Stakeholders receive and judge the deliverables a team produces.\n2. Deliverables are handed to stakeholders as the value of the work.",
+    "Relationship to Job Functions": "Stakeholders and Job Functions are related in the following ways:\n1. Stakeholders interact with many different job functions on a team.\n2. Each job function interacts with stakeholders in its own way.",
+    "Relationship to Job Specializations": "Stakeholders and Job Specializations are related in the following ways:\n1. Different specializations serve different stakeholders and their needs.\n2. What a stakeholder needs can call for a specific specialization on the team.",
+    "Relationship to Company Types": "Stakeholders and Company Types are related in the following ways:\n1. Who the stakeholders are changes with the company type, such as clients at an agency.\n2. The company type determines who the stakeholders are, like clients at an agency.",
+    "Relationship to Methodologies": "Stakeholders and Methodologies are related in the following ways:\n1. Stakeholders are kept involved through methodologies that value collaboration.\n2. A methodology defines how and when stakeholders stay involved.",
+    "Relationship to Workshops": "Stakeholders and Workshops are related in the following ways:\n1. Stakeholders often join workshops to share their needs and build alignment.\n2. Workshops bring stakeholders in to share needs and build alignment.",
+    "Relationship to Job Industries": "Stakeholders and Job Industries are related in the following ways:\n1. Stakeholders come from the industry the work is being done for.\n2. The industry shapes who the stakeholders are and what they expect.",
+    "Read Me File": [
+      {
+        "name": "stakeholder.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/YQEBt3nTW1HEH0CZW9OO1iMfc3ucHULt_bacc24f2060a951dd7ec5c0aafb81798f8095fe5c149d724ba09e9ea1a2c75a8.md"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "slug": "milestone",
+    "Data Type Name": "Milestone",
+    "Data Type Description": "A measured outcome of work progress.",
+    "Relationship to Skills": "Milestones and Skills are related in the following ways:\n1. Each milestone calls for a particular set of skills before a team can complete it.\n2. People must have the right skills to reach a milestone in the work.",
+    "Relationship to Practices": "Milestones and Practices are related in the following ways:\n1. Reaching a milestone is smoother when the team leans on practices like adaptability and shared ownership.\n2. Practices help a team stay aligned and adaptable as they work toward a milestone.",
+    "Relationship to Projects": "Milestones and Projects are related in the following ways:\n1. Milestones break a project into clear stages of progress.\n2. Projects are broken into milestones that mark progress along the way.",
+    "Relationship to Duties": "Milestones and Duties are related in the following ways:\n1. Milestones show which duties need to be active at each stage of the work.\n2. Duties determine who owns the work needed to reach each milestone.",
+    "Relationship to Stakeholders": "Milestones and Stakeholders are related in the following ways:\n1. Milestones give stakeholders clear signals of how the work is progressing.\n2. Stakeholders watch milestones as signs the work is progressing.",
+    "Relationship to Milestones": "Milestones and other Milestones are related in the following ways:\n1. Milestones build on each other, so one usually must be reached before the next.\n2. Progress at one milestone sets up the work for the ones that follow.",
+    "Relationship to Tools": "Milestones and Tools are related in the following ways:\n1. Milestones often require specific tools to reach and to show progress.\n2. Tools help teams reach and track their milestones.",
+    "Relationship to Activities": "Milestones and Activities are related in the following ways:\n1. Milestones are reached by completing the right activities in sequence.\n2. Completing the right activities is how a team reaches a milestone.",
+    "Relationship to Deliverables": "Milestones and Deliverables are related in the following ways:\n1. Each milestone is marked by the deliverables the team produces at that stage.\n2. Deliverables mark when a milestone has been reached.",
+    "Relationship to Job Functions": "Milestones and Job Functions are related in the following ways:\n1. Milestones call on different job functions at different stages.\n2. Different job functions lead at different milestones.",
+    "Relationship to Job Specializations": "Milestones and Job Specializations are related in the following ways:\n1. Different milestones lean on different specializations to move the work forward.\n2. A specialization shows up most at the milestones where its focus matters.",
+    "Relationship to Company Types": "Milestones and Company Types are related in the following ways:\n1. Which milestones matter can vary by company type and project.\n2. The company type can change which milestones a project focuses on.",
+    "Relationship to Methodologies": "Milestones and Methodologies are related in the following ways:\n1. Milestones are organized by the methodology the team uses to plan work.\n2. A methodology organizes the work into milestones and cycles.",
+    "Relationship to Workshops": "Milestones and Workshops are related in the following ways:\n1. Milestones are often planned and reviewed in team workshops.\n2. Workshops help teams plan for and review their milestones.",
+    "Product Milestones": [
+      {
+        "slug": "continuous-discovery",
+        "label": "Continuous Discovery"
+      },
+      {
+        "slug": "requirements",
+        "label": "Requirements"
+      },
+      {
+        "slug": "scope",
+        "label": "Scope"
+      },
+      {
+        "slug": "implement",
+        "label": "Implement"
+      },
+      {
+        "slug": "launch",
+        "label": "Launch"
+      },
+      {
+        "slug": "vision",
+        "label": "Vision"
+      },
+      {
+        "slug": "acceptance-testing",
+        "label": "Acceptance Testing"
+      },
+      {
+        "slug": "intake",
+        "label": "Intake"
+      },
+      {
+        "slug": "all-milestones",
+        "label": "All Milestones"
+      }
+    ],
+    "Relationship to Job Industries": "Milestones and Job Industries are related in the following ways:\n1. Milestones adapt to the norms and expectations of the industry.\n2. Industry norms influence which milestones a project follows.",
+    "Read Me File": [
+      {
+        "name": "milestone.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/l4KumxC31ZaMuhPGO7sSxDNgivMtj7uC_3226ddd9e0aa7721dfef4809b5d858cdc0ae103e3f734d949d7ef77ecd7088c2.md"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "slug": "tool",
+    "Data Type Name": "Tool",
+    "Data Type Description": "An object (physical or digital) that’s used to complete work.",
+    "Relationship to Skills": "Tools and Skills are related in the following ways:\n1. Tools extend a person's skills and usually take skill to operate well.\n2. People rely on their skills to use tools effectively.",
+    "Relationship to Practices": "Tools and Practices are related in the following ways:\n1. How openly a team uses its tools reflects its practices.\n2. Practices influence how openly and collaboratively a team uses its tools.",
+    "Relationship to Projects": "Tools and Projects are related in the following ways:\n1. Tools support the work of a project and keep the team organized.\n2. Projects rely on a set of tools to get the work done and stay organized.",
+    "Relationship to Duties": "Tools and Duties are related in the following ways:\n1. The tools a person reaches for are often set by the duty they hold.\n2. Each duty comes with the tools a person is expected to use.",
+    "Relationship to Stakeholders": "Tools and Stakeholders are related in the following ways:\n1. Tools help teams share progress and outputs with stakeholders.\n2. Stakeholders may request certain tools or need access to the team's outputs.",
+    "Relationship to Milestones": "Tools and Milestones are related in the following ways:\n1. Tools help teams reach and track their milestones.\n2. Milestones often require specific tools to reach and to show progress.",
+    "Relationship to Tools": "Tools and other Tools are related in the following ways:\n1. Tools are often used together, with one tool feeding into another.\n2. Choosing one tool can shape which other tools a team needs.",
+    "Relationship to Activities": "Tools and Activities are related in the following ways:\n1. Tools are what people use to carry out many activities.\n2. Activities are carried out using the team's tools.",
+    "Relationship to Deliverables": "Tools and Deliverables are related in the following ways:\n1. Tools are used to build and refine deliverables.\n2. Deliverables are created and refined using the team's tools.",
+    "Relationship to Job Functions": "Tools and Job Functions are related in the following ways:\n1. The tools a person uses are often tied to their job function.\n2. Each job function tends to rely on its own set of tools.",
+    "Relationship to Job Specializations": "Tools and Job Specializations are related in the following ways:\n1. Each specialization leans on its own set of tools to do the work.\n2. Learning a specialization usually means learning the tools that come with it.",
+    "Relationship to Company Types": "Tools and Company Types are related in the following ways:\n1. A tool may be standard in one company type and rare in another.\n2. The tools a team uses can depend on the company type.",
+    "Relationship to Methodologies": "Tools and Methodologies are related in the following ways:\n1. Tools support the way a methodology asks a team to work.\n2. A methodology guides which tools a team reaches for.",
+    "Relationship to Workshops": "Tools and Workshops are related in the following ways:\n1. Tools like shared boards and templates are what make workshops run.\n2. Workshops make use of shared tools like boards and templates.",
+    "Tools": [
+      {
+        "slug": "figma",
+        "label": "Figma"
+      },
+      {
+        "slug": "notion",
+        "label": "Notion"
+      },
+      {
+        "slug": "figjam",
+        "label": "Figjam"
+      },
+      {
+        "slug": "zoom",
+        "label": "Zoom"
+      },
+      {
+        "slug": "dovetail",
+        "label": "Dovetail"
+      },
+      {
+        "slug": "trello",
+        "label": "Trello"
+      },
+      {
+        "slug": "chatgpt",
+        "label": "ChatGPT"
+      },
+      {
+        "slug": "maze-co",
+        "label": "Maze.co"
+      },
+      {
+        "slug": "optimal-workshop",
+        "label": "Optimal Workshop"
+      },
+      {
+        "slug": "lettucemeet",
+        "label": "Lettucemeet"
+      },
+      {
+        "slug": "spreadsheet-tools",
+        "label": "Spreadsheet Tools"
+      },
+      {
+        "slug": "presentation-tools",
+        "label": "Presentation Tools"
+      },
+      {
+        "slug": "integrated-development-environment-ide-tools",
+        "label": "Integrated Development Environment (IDE) Tools"
+      },
+      {
+        "slug": "github",
+        "label": "GitHub"
+      },
+      {
+        "slug": "ux-tweak",
+        "label": "UX Tweak"
+      },
+      {
+        "slug": "statistics-tools",
+        "label": "Statistics Tools"
+      },
+      {
+        "slug": "ai-model",
+        "label": "AI Model"
+      }
+    ],
+    "Relationship to Job Industries": "Tools and Job Industries are related in the following ways:\n1. Some tools carry over from other industries, while others are new to tech.\n2. Each industry brings its own familiar tools, some of which transfer to tech.",
+    "Read Me File": [
+      {
+        "name": "tool.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/w6kPRJjKrkJ7UfOGwEKMZTFhUeptUdIl_8c141859fc6e29225790083e8f32efbc87b5eb16e9a80bed7a79d2c1e8d7f947.md"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "slug": "activity",
+    "Data Type Name": "Activity",
+    "Data Type Description": "A routine that people do together.",
+    "Relationship to Skills": "Activities and Skills are related in the following ways:\n1. Doing activities over and over is how people build and sharpen their skills.\n2. People apply their skills to carry out the day-to-day activities of the work.",
+    "Relationship to Practices": "Activities and Practices are related in the following ways:\n1. Activities are where practices show up in how people work together.\n2. Practices shape how people show up for shared activities, like listening and making space for others.",
+    "Relationship to Projects": "Activities and Projects are related in the following ways:\n1. Activities are the day-to-day work that moves a project forward.\n2. Projects are made up of many activities the team carries out over time.",
+    "Relationship to Duties": "Activities and Duties are related in the following ways:\n1. Activities are grouped into the duties people take responsibility for.\n2. A duty is made up of the activities a person is responsible for.",
+    "Relationship to Stakeholders": "Activities and Stakeholders are related in the following ways:\n1. Activities are chosen and prioritized based on stakeholder needs.\n2. Stakeholders shape which activities matter most by voicing their needs.",
+    "Relationship to Milestones": "Activities and Milestones are related in the following ways:\n1. Completing the right activities is how a team reaches a milestone.\n2. Milestones are reached by completing the right activities in sequence.",
+    "Relationship to Tools": "Activities and Tools are related in the following ways:\n1. Activities are carried out using the team's tools.\n2. Tools are what people use to carry out many activities.",
+    "Relationship to Activities": "Activities and other Activities are related in the following ways:\n1. Activities build on one another, with one often setting up the next.\n2. Some activities repeat in cycles as the work continues.",
+    "Relationship to Deliverables": "Activities and Deliverables are related in the following ways:\n1. Activities are the steps that produce a deliverable.\n2. Deliverables are the result of completing a set of activities.",
+    "Relationship to Job Functions": "Activities and Job Functions are related in the following ways:\n1. Activities are divided among different job functions.\n2. A job function is defined by the activities it is responsible for.",
+    "Relationship to Job Specializations": "Activities and Job Specializations are related in the following ways:\n1. A specialization is known for the activities it carries out most.\n2. Doing the activities of a focus area over time is how a specialization grows.",
+    "Relationship to Company Types": "Activities and Company Types are related in the following ways:\n1. Which activities a team does can vary by company type.\n2. The company type influences which activities a team spends time on.",
+    "Relationship to Methodologies": "Activities and Methodologies are related in the following ways:\n1. Activities are organized and sequenced by the team's methodology.\n2. A methodology sequences the activities a team carries out.",
+    "Relationship to Workshops": "Activities and Workshops are related in the following ways:\n1. A workshop is a structured kind of activity a team does together.\n2. A workshop is a structured group activity with a shared goal.",
+    "Tasks": [
+      {
+        "slug": "wireframing",
+        "label": "Wireframing"
+      },
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      },
+      {
+        "slug": "requirements-gathering",
+        "label": "Requirements Gathering"
+      },
+      {
+        "slug": "requirements-refinement",
+        "label": "Requirements Refinement"
+      },
+      {
+        "slug": "design-component-creation",
+        "label": "Design Component Creation"
+      },
+      {
+        "slug": "brand-identity-formation",
+        "label": "Brand Identity Formation"
+      },
+      {
+        "slug": "writing-requirements",
+        "label": "Writing Requirements"
+      },
+      {
+        "slug": "icon-and-logo-creation",
+        "label": "Icon and Logo Creation"
+      },
+      {
+        "slug": "feature-vision-definition",
+        "label": "Feature Vision Definition"
+      },
+      {
+        "slug": "feature-scope-definition",
+        "label": "Feature Scope Definition"
+      },
+      {
+        "slug": "generating-problem-statements",
+        "label": "Generating Problem Statements"
+      },
+      {
+        "slug": "analyzing-research-findings",
+        "label": "Analyzing Research Findings"
+      },
+      {
+        "slug": "strategy-definition",
+        "label": "Strategy Definition"
+      },
+      {
+        "slug": "sprint-planning",
+        "label": "Sprint Planning"
+      },
+      {
+        "slug": "level-of-effort-estimation",
+        "label": "Level of Effort Estimation"
+      },
+      {
+        "slug": "velocity-calculation",
+        "label": "Velocity Calculation"
+      },
+      {
+        "slug": "identifying-priorities",
+        "label": "Identifying Priorities"
+      },
+      {
+        "slug": "presenting-research-results",
+        "label": "Presenting Research Results"
+      },
+      {
+        "slug": "kickoff-intake",
+        "label": "Kickoff / Intake"
+      },
+      {
+        "slug": "defining-team-working-agreements",
+        "label": "Defining Team Working Agreements"
+      },
+      {
+        "slug": "team-role-and-responsibility-definition",
+        "label": "Team Role and Responsibility Definition"
+      },
+      {
+        "slug": "moderating-ux-research",
+        "label": "Moderating UX Research"
+      },
+      {
+        "slug": "secondary-research",
+        "label": "Secondary Research"
+      },
+      {
+        "slug": "card-sorting",
+        "label": "Card Sorting "
+      },
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "surveys",
+        "label": "Surveys"
+      },
+      {
+        "slug": "storyboarding",
+        "label": "Storyboarding"
+      },
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "diary-studies",
+        "label": "Diary Studies"
+      },
+      {
+        "slug": "contextual-inquiries",
+        "label": "Contextual Inquiries"
+      },
+      {
+        "slug": "observing-ethnography",
+        "label": "Observing (Ethnography)"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "prototype-concept-testing",
+        "label": "Prototype Concept Testing "
+      },
+      {
+        "slug": "a-b-prototype-test-creation",
+        "label": "A/B Prototype Test Creation"
+      },
+      {
+        "slug": "ui-kit-creation",
+        "label": "UI Kit Creation"
+      },
+      {
+        "slug": "developing-information-architecture",
+        "label": "Developing Information Architecture"
+      },
+      {
+        "slug": "prototype-creation",
+        "label": "Prototype Creation"
+      },
+      {
+        "slug": "tracking-milestone-progress",
+        "label": "Tracking Milestone Progress"
+      },
+      {
+        "slug": "tracking-epic-progress",
+        "label": "Tracking Epic Progress"
+      },
+      {
+        "slug": "ux-heuristics-analysis",
+        "label": "UX Heuristics Analysis"
+      },
+      {
+        "slug": "product-roadmap-maintenance",
+        "label": "Product Roadmap Maintenance"
+      },
+      {
+        "slug": "market-research",
+        "label": "Market Research"
+      },
+      {
+        "slug": "scheduling-meetings",
+        "label": "Scheduling Meetings"
+      },
+      {
+        "slug": "qa-testing",
+        "label": "QA Testing"
+      },
+      {
+        "slug": "autotest-creation",
+        "label": "Autotest Creation"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "facilitating-agile-workshops",
+        "label": "Facilitating Agile Workshops"
+      },
+      {
+        "slug": "clickable-prototype-creation",
+        "label": "Clickable Prototype Creation"
+      },
+      {
+        "slug": "coaching-team-mates",
+        "label": "Coaching Team Mates"
+      },
+      {
+        "slug": "threat-modeling",
+        "label": "Threat Modeling"
+      },
+      {
+        "slug": "penetration-testing",
+        "label": "Penetration Testing"
+      },
+      {
+        "slug": "firewall-configuration",
+        "label": "Firewall Configuration"
+      },
+      {
+        "slug": "security-protocol-definition",
+        "label": "Security Protocol Definition"
+      },
+      {
+        "slug": "information-security-audit",
+        "label": "Information Security Audit"
+      },
+      {
+        "slug": "sprint-retrospective-facilitation",
+        "label": "Sprint Retrospective Facilitation"
+      },
+      {
+        "slug": "sprint-demo-facilitation",
+        "label": "Sprint Demo Facilitation"
+      },
+      {
+        "slug": "identifying-research-patterns",
+        "label": "Identifying Research Patterns"
+      },
+      {
+        "slug": "experiment-design",
+        "label": "Experiment Design"
+      },
+      {
+        "slug": "technical-architecture-creation",
+        "label": "Technical Architecture Creation"
+      },
+      {
+        "slug": "inventorying-content",
+        "label": "Inventorying Content"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "price-testing",
+        "label": "Price Testing"
+      },
+      {
+        "slug": "documenting-code",
+        "label": "Documenting Code"
+      },
+      {
+        "slug": "deploying-code",
+        "label": "Deploying Code"
+      },
+      {
+        "slug": "defining-team-process",
+        "label": "Defining Team Process"
+      },
+      {
+        "slug": "customer-experience-mapping",
+        "label": "Customer Experience Mapping"
+      },
+      {
+        "slug": "creating-presentations",
+        "label": "Creating Presentations"
+      },
+      {
+        "slug": "entity-relationship-creation",
+        "label": "Entity Relationship Creation"
+      },
+      {
+        "slug": "creating-ai-prompts",
+        "label": "Creating AI Prompts"
+      },
+      {
+        "slug": "creating-rest-apis",
+        "label": "Creating REST APIs"
+      },
+      {
+        "slug": "search-engine-optimization-seo-design",
+        "label": "Search Engine Optimization (SEO) Design"
+      },
+      {
+        "slug": "creating-research-plans",
+        "label": "Creating Research Plans"
+      },
+      {
+        "slug": "rapid-ideation",
+        "label": "Rapid Ideation"
+      },
+      {
+        "slug": "user-story-generation",
+        "label": "User Story Generation"
+      },
+      {
+        "slug": "calculating-statistics",
+        "label": "Calculating Statistics"
+      },
+      {
+        "slug": "measuring-accessibility",
+        "label": "Measuring Accessibility"
+      },
+      {
+        "slug": "site-map-testing",
+        "label": "Site Map Testing"
+      },
+      {
+        "slug": "copywriting",
+        "label": "Copywriting"
+      },
+      {
+        "slug": "server-side-coding",
+        "label": "Server-Side Coding"
+      },
+      {
+        "slug": "front-end-coding",
+        "label": "Front-End Coding"
+      },
+      {
+        "slug": "database-creation",
+        "label": "Database Creation"
+      },
+      {
+        "slug": "creating-illustrations",
+        "label": "Creating Illustrations"
+      },
+      {
+        "slug": "blockchain-coding",
+        "label": "Blockchain Coding"
+      },
+      {
+        "slug": "collecting-analytics",
+        "label": "Collecting Analytics"
+      },
+      {
+        "slug": "analyzing-project-risk",
+        "label": "Analyzing Project Risk"
+      },
+      {
+        "slug": "primary-research",
+        "label": "Primary Research"
+      },
+      {
+        "slug": "choosing-research-methods",
+        "label": "Choosing Research Methods"
+      },
+      {
+        "slug": "product-backlog-maintenance",
+        "label": "Product Backlog Maintenance"
+      },
+      {
+        "slug": "release-vision-definition",
+        "label": "Release Vision Definition"
+      },
+      {
+        "slug": "optimizing-seo",
+        "label": "Optimizing SEO"
+      },
+      {
+        "slug": "creating-annotations",
+        "label": "Creating Annotations"
+      },
+      {
+        "slug": "maintaining-the-client-relationship",
+        "label": "Maintaining the Client Relationship"
+      },
+      {
+        "slug": "creating-acceptance-criteria",
+        "label": "Creating Acceptance Criteria"
+      },
+      {
+        "slug": "investigating-competitors",
+        "label": "Investigating Competitors"
+      },
+      {
+        "slug": "choosing-an-agile-method",
+        "label": "Choosing an Agile Method"
+      },
+      {
+        "slug": "leading-agile-transformation",
+        "label": "Leading Agile Transformation"
+      },
+      {
+        "slug": "defining-research-operations",
+        "label": "Defining Research Operations"
+      },
+      {
+        "slug": "defining-ux-design-operations",
+        "label": "Defining UX Design Operations"
+      }
+    ],
+    "Relationship to Job Industries": "Activities and Job Industries are related in the following ways:\n1. Many activities are similar across industries, while some are specific to one.\n2. Everyday activities in an industry give people relevant experience.",
+    "Read Me File": [
+      {
+        "name": "activity.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/IzpzhqMtipyVh1cF3sKQJGvqXzAoS8Zd_d38c73c00a62791fede7aa21ae6037cef0fecf0ba1669d45242ed115dc01eafa.md"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "slug": "deliverable",
+    "Data Type Name": "Deliverable",
+    "Data Type Description": "Something provided as a result of a process.",
+    "Relationship to Skills": "Deliverables and Skills are related in the following ways:\n1. Each deliverable calls for specific skills to make it well.\n2. People use their skills to create the deliverables a team produces.",
+    "Relationship to Practices": "Deliverables and Practices are related in the following ways:\n1. The quality of a deliverable reflects how well the team practiced collaboration to make it.\n2. Practices affect the quality of deliverables by shaping how the team collaborates to make them.",
+    "Relationship to Projects": "Deliverables and Projects are related in the following ways:\n1. Deliverables are the concrete results a project is judged by.\n2. Projects produce deliverables as the concrete results of the work.",
+    "Relationship to Duties": "Deliverables and Duties are related in the following ways:\n1. Deliverables are what people are held accountable for within their duties.\n2. A duty is measured by the deliverables the person is accountable for.",
+    "Relationship to Stakeholders": "Deliverables and Stakeholders are related in the following ways:\n1. Deliverables are handed to stakeholders as the value of the work.\n2. Stakeholders receive and judge the deliverables a team produces.",
+    "Relationship to Milestones": "Deliverables and Milestones are related in the following ways:\n1. Deliverables mark when a milestone has been reached.\n2. Each milestone is marked by the deliverables the team produces at that stage.",
+    "Relationship to Tools": "Deliverables and Tools are related in the following ways:\n1. Deliverables are created and refined using the team's tools.\n2. Tools are used to build and refine deliverables.",
+    "Relationship to Activities": "Deliverables and Activities are related in the following ways:\n1. Deliverables are the result of completing a set of activities.\n2. Activities are the steps that produce a deliverable.",
+    "Relationship to Deliverables": "Deliverables and other Deliverables are related in the following ways:\n1. Deliverables build on one another, with one often feeding into the next.\n2. One deliverable can be a building block for a larger one.",
+    "Relationship to Job Functions": "Deliverables and Job Functions are related in the following ways:\n1. Different job functions own different deliverables.\n2. Each job function is known for the deliverables it produces.",
+    "Relationship to Job Specializations": "Deliverables and Job Specializations are related in the following ways:\n1. Each specialization tends to produce its own kinds of deliverables.\n2. The deliverables a person makes are proof of the specialization they are building.",
+    "Relationship to Company Types": "Deliverables and Company Types are related in the following ways:\n1. Some deliverables, like a statement of work, are tied to certain company types.\n2. Some deliverables are specific to a company type, like a pitch deck at a startup.",
+    "Relationship to Methodologies": "Deliverables and Methodologies are related in the following ways:\n1. Which deliverables a team makes is shaped by its methodology.\n2. A methodology shapes which deliverables a team creates and when.",
+    "Relationship to Workshops": "Deliverables and Workshops are related in the following ways:\n1. Many workshops are designed to produce a specific deliverable.\n2. A workshop often ends with a finished deliverable in hand.",
+    "Deliverables": [
+      {
+        "slug": "vision-boards",
+        "label": "Vision Boards"
+      },
+      {
+        "slug": "problem-statements",
+        "label": "Problem Statements"
+      },
+      {
+        "slug": "problem-checklists",
+        "label": "Problem Checklists"
+      },
+      {
+        "slug": "epics-and-features",
+        "label": "Epics and Features"
+      },
+      {
+        "slug": "release-level-scope",
+        "label": "Release-level Scope"
+      },
+      {
+        "slug": "acceptance-criteria",
+        "label": "Acceptance Criteria"
+      },
+      {
+        "slug": "user-story-statements",
+        "label": "User Story Statements"
+      },
+      {
+        "slug": "behavior-driven-development-scenarios",
+        "label": "Behavior-Driven Development Scenarios"
+      },
+      {
+        "slug": "qa-test-plan",
+        "label": "QA Test Plan"
+      },
+      {
+        "slug": "system-architecture-diagram",
+        "label": "System Architecture Diagram"
+      },
+      {
+        "slug": "task-flows",
+        "label": "Task Flows"
+      },
+      {
+        "slug": "use-case-scenarios",
+        "label": "Use Case Scenarios"
+      },
+      {
+        "slug": "use-case-diagrams",
+        "label": "Use Case Diagrams"
+      },
+      {
+        "slug": "competitive-analysis",
+        "label": "Competitive Analysis"
+      },
+      {
+        "slug": "market-research-analysis",
+        "label": "Market Research Analysis"
+      },
+      {
+        "slug": "editorial-style-guide",
+        "label": "Editorial Style Guide"
+      },
+      {
+        "slug": "brand-identity",
+        "label": "Brand Identity"
+      },
+      {
+        "slug": "user-journey-map",
+        "label": "User Journey Map"
+      },
+      {
+        "slug": "user-personas",
+        "label": "User Personas"
+      },
+      {
+        "slug": "proto-personas",
+        "label": "Proto Personas"
+      },
+      {
+        "slug": "buyer-personas",
+        "label": "Buyer Personas"
+      },
+      {
+        "slug": "business-plan",
+        "label": "Business Plan"
+      },
+      {
+        "slug": "marketing-plan",
+        "label": "Marketing Plan"
+      },
+      {
+        "slug": "release-plan",
+        "label": "Release Plan"
+      },
+      {
+        "slug": "go-to-market-plan",
+        "label": "Go-To-Market Plan"
+      },
+      {
+        "slug": "project-hand-off",
+        "label": "Project Hand-off"
+      },
+      {
+        "slug": "statement-of-work",
+        "label": "Statement of Work"
+      },
+      {
+        "slug": "prioritized-backlog-tasks",
+        "label": "Prioritized Backlog Tasks"
+      },
+      {
+        "slug": "how-might-we-hmw-statements",
+        "label": "How Might We (HMW) Statements"
+      },
+      {
+        "slug": "key-performance-indicators-kpis",
+        "label": "Key Performance Indicators (KPI's)"
+      },
+      {
+        "slug": "objectives-and-key-results-okrs",
+        "label": "Objectives and Key Results (OKR's)"
+      },
+      {
+        "slug": "gantt-chart",
+        "label": "Gantt Chart"
+      },
+      {
+        "slug": "burn-down-chart",
+        "label": "Burn Down Chart"
+      },
+      {
+        "slug": "roadmap",
+        "label": "Roadmap"
+      },
+      {
+        "slug": "refined-backlog",
+        "label": "Refined Backlog"
+      },
+      {
+        "slug": "sprint-plan",
+        "label": "Sprint Plan"
+      },
+      {
+        "slug": "wireframes",
+        "label": "Wireframes"
+      },
+      {
+        "slug": "low-fidelity-prototypes",
+        "label": "Low-Fidelity Prototypes"
+      },
+      {
+        "slug": "high-fidelity-prototypes",
+        "label": "High-Fidelity Prototypes"
+      },
+      {
+        "slug": "ui-development-specifications",
+        "label": "UI Development Specifications"
+      },
+      {
+        "slug": "design-annotation",
+        "label": "Design Annotation"
+      },
+      {
+        "slug": "ux-audit-report",
+        "label": "UX Audit Report"
+      },
+      {
+        "slug": "empathy-map",
+        "label": "Empathy Map"
+      },
+      {
+        "slug": "storyboard",
+        "label": "Storyboard"
+      },
+      {
+        "slug": "sketches",
+        "label": "Sketches"
+      },
+      {
+        "slug": "task-analysis",
+        "label": "Task Analysis"
+      },
+      {
+        "slug": "research-report",
+        "label": "Research Report"
+      },
+      {
+        "slug": "rainbow-table",
+        "label": "Rainbow Table"
+      },
+      {
+        "slug": "affinity-map",
+        "label": "Affinity Map"
+      },
+      {
+        "slug": "customer-experience-diagram",
+        "label": "Customer Experience Diagram"
+      },
+      {
+        "slug": "research-plan",
+        "label": "Research Plan"
+      },
+      {
+        "slug": "sprint-demo-presentation",
+        "label": "Sprint Demo Presentation"
+      },
+      {
+        "slug": "design-system",
+        "label": "Design System"
+      },
+      {
+        "slug": "sitemap",
+        "label": "Sitemap"
+      },
+      {
+        "slug": "copywriting-document",
+        "label": "Copywriting Document"
+      },
+      {
+        "slug": "analytics-audit",
+        "label": "Analytics Audit"
+      },
+      {
+        "slug": "taxonomy",
+        "label": "Taxonomy"
+      },
+      {
+        "slug": "positioning-statement",
+        "label": "Positioning Statement"
+      },
+      {
+        "slug": "unique-value-proposition",
+        "label": "Unique Value Proposition"
+      },
+      {
+        "slug": "microcopy",
+        "label": "Microcopy"
+      },
+      {
+        "slug": "usability-test-report",
+        "label": "Usability Test Report"
+      },
+      {
+        "slug": "microservices-architecture",
+        "label": "Microservices Architecture"
+      },
+      {
+        "slug": "network-architecture",
+        "label": "Network Architecture"
+      },
+      {
+        "slug": "qa-test-cases",
+        "label": "QA Test Cases"
+      },
+      {
+        "slug": "component-library",
+        "label": "Component Library"
+      },
+      {
+        "slug": "research-analysis",
+        "label": "Research Analysis"
+      },
+      {
+        "slug": "working-agreements",
+        "label": "Working Agreements"
+      },
+      {
+        "slug": "raci-charts",
+        "label": "RACI Charts"
+      },
+      {
+        "slug": "product-market-fit-analysis",
+        "label": "Product-Market Fit Analysis"
+      },
+      {
+        "slug": "technical-architecture-specifications",
+        "label": "Technical Architecture Specifications"
+      },
+      {
+        "slug": "architecture-diagrams",
+        "label": "Architecture Diagrams"
+      },
+      {
+        "slug": "sprint-retro-action-items",
+        "label": "Sprint Retro Action Items"
+      },
+      {
+        "slug": "brand-archetypes",
+        "label": "Brand Archetypes"
+      },
+      {
+        "slug": "task-level-scope",
+        "label": "Task-Level Scope"
+      },
+      {
+        "slug": "project-plan",
+        "label": "Project Plan"
+      },
+      {
+        "slug": "sprint-goals",
+        "label": "Sprint Goals"
+      },
+      {
+        "slug": "code",
+        "label": "Code"
+      },
+      {
+        "slug": "entity-relationship-diagrams",
+        "label": "Entity Relationship Diagrams"
+      },
+      {
+        "slug": "hosting-infrastructure",
+        "label": "Hosting Infrastructure"
+      },
+      {
+        "slug": "stakeholder-feedback",
+        "label": "Stakeholder Feedback"
+      },
+      {
+        "slug": "content-inventory",
+        "label": "Content Inventory"
+      },
+      {
+        "slug": "personal-growth-roadmap",
+        "label": "Personal Growth Roadmap"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "project-goals-definition",
+        "label": "Project Goals Definition"
+      },
+      {
+        "slug": "coding-documentation",
+        "label": "Coding Documentation"
+      },
+      {
+        "slug": "database-architecture",
+        "label": "Database Architecture"
+      },
+      {
+        "slug": "content-outline",
+        "label": "Content Outline"
+      },
+      {
+        "slug": "pitch-deck",
+        "label": "Pitch Deck"
+      },
+      {
+        "slug": "kanban-board-statuses",
+        "label": "Kanban Board Statuses"
+      },
+      {
+        "slug": "api-library",
+        "label": "API LIbrary"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "ai-prompt",
+        "label": "AI Prompt"
+      },
+      {
+        "slug": "logo-and-brand-assets",
+        "label": "Logo and Brand Assets"
+      },
+      {
+        "slug": "accessibility-analysis",
+        "label": "Accessibility Analysis"
+      },
+      {
+        "slug": "smart-contracts",
+        "label": "Smart Contracts"
+      },
+      {
+        "slug": "risk-analysis",
+        "label": "Risk Analysis"
+      },
+      {
+        "slug": "agile-maturity-measurements",
+        "label": "Agile Maturity Measurements"
+      },
+      {
+        "slug": "team-process-map",
+        "label": "Team Process Map"
+      },
+      {
+        "slug": "psychological-safety-plan",
+        "label": "Psychological Safety Plan"
+      },
+      {
+        "slug": "seo-strategy",
+        "label": "SEO Strategy"
+      },
+      {
+        "slug": "agile-method",
+        "label": "Agile Method"
+      },
+      {
+        "slug": "team-charter",
+        "label": "Team Charter"
+      },
+      {
+        "slug": "mission-statement",
+        "label": "Mission Statement"
+      },
+      {
+        "slug": "vision-statement",
+        "label": "Vision Statement"
+      },
+      {
+        "slug": "organizational-values",
+        "label": "Organizational Values"
+      },
+      {
+        "slug": "commitment-statement",
+        "label": "Commitment Statement"
+      }
+    ],
+    "Relationship to Job Industries": "Deliverables and Job Industries are related in the following ways:\n1. The deliverables that matter can shift with the industry.\n2. The industry shapes which deliverables carry the most weight.",
+    "Read Me File": [
+      {
+        "name": "deliverable.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/qpo55PRcPKVuoAs1pMGGe9uXN6Bw8MQY_48a7ddfc9c98614879995dbf0b29ab298e6d4e21c0a22e1962517fa6d3dd9aee.md"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "slug": "project",
+    "Data Type Name": "Project",
+    "Data Type Description": "A work outcome that meets agreed to goals.",
+    "Relationship to Skills": "Projects and Skills are related in the following ways:\n1. Projects give people a real place to apply and prove their skills.\n2. People use their skills to move a project forward and get the work done.",
+    "Relationship to Practices": "Projects and Practices are related in the following ways:\n1. Projects are where a team's practices get tested under real pressure.\n2. Practices set the tone for how a team works together to deliver a project.",
+    "Relationship to Projects": "Projects and other Projects are related in the following ways:\n1. A project can build on the lessons and outputs of earlier projects.\n2. Larger projects are often made up of smaller connected projects.",
+    "Relationship to Duties": "Projects and Duties are related in the following ways:\n1. Projects assign duties to people so the work has clear ownership.\n2. Duties give a project clear ownership by setting who is responsible for what.",
+    "Relationship to Stakeholders": "Projects and Stakeholders are related in the following ways:\n1. Projects exist to deliver value to their stakeholders.\n2. Stakeholders set the direction and success measures for a project.",
+    "Relationship to Milestones": "Projects and Milestones are related in the following ways:\n1. Projects are broken into milestones that mark progress along the way.\n2. Milestones break a project into clear stages of progress.",
+    "Relationship to Tools": "Projects and Tools are related in the following ways:\n1. Projects rely on a set of tools to get the work done and stay organized.\n2. Tools support the work of a project and keep the team organized.",
+    "Relationship to Activities": "Projects and Activities are related in the following ways:\n1. Projects are made up of many activities the team carries out over time.\n2. Activities are the day-to-day work that moves a project forward.",
+    "Relationship to Deliverables": "Projects and Deliverables are related in the following ways:\n1. Projects produce deliverables as the concrete results of the work.\n2. Deliverables are the concrete results a project is judged by.",
+    "Relationship to Job Functions": "Projects and Job Functions are related in the following ways:\n1. Projects bring together people from different job functions.\n2. Job functions bring the different kinds of people a project needs.",
+    "Relationship to Job Specializations": "Projects and Job Specializations are related in the following ways:\n1. A project brings together people from different specializations to get the work done.\n2. Projects give people a real place to apply and deepen a specialization.",
+    "Relationship to Company Types": "Projects and Company Types are related in the following ways:\n1. Projects look different depending on the company type running them.\n2. The company type shapes how a project is scoped and delivered.",
+    "Relationship to Methodologies": "Projects and Methodologies are related in the following ways:\n1. Projects are guided by a methodology that sets how the team works.\n2. A methodology sets how a team plans and runs a project.",
+    "Relationship to Workshops": "Projects and Workshops are related in the following ways:\n1. Projects use workshops to plan, align, and move the work forward.\n2. Workshops help a team plan, align, and move a project forward.",
+    "Tech Job Categories": "User Experience, Product Management, Development, Operations, Information Technology",
+    "Relationship to Job Industries": "Projects and Job Industries are related in the following ways:\n1. Projects can serve any industry, shaping the work to that industry's needs.\n2. The industry shapes what a project is trying to achieve.",
+    "Read Me File": [
+      {
+        "name": "project.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/SCyoWKcChlXi8x7ImG7zOQBtx8gvc7uj_dc42e78d0ca513ed20f302a76fbc5e372f6b2213507dfb8394ea6fce4371eec2.md"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "slug": "company-type",
+    "Data Type Name": "Company Type",
+    "Data Type Description": "The formation type for a company that dictates how work gets delivered",
+    "Relationship to Skills": "Company Types and Skills are related in the following ways:\n1. Different company types lean on different skills, so the setting shapes which skills matter most.\n2. The skills a person has help them fit the way different company types work.",
+    "Relationship to Practices": "Company Types and Practices are related in the following ways:\n1. Every company type benefits from healthy team practices, whatever its structure.\n2. Practices help a team stay healthy no matter which company type they work in.",
+    "Relationship to Projects": "Company Types and Projects are related in the following ways:\n1. The company type shapes how a project is scoped and delivered.\n2. Projects look different depending on the company type running them.",
+    "Relationship to Duties": "Company Types and Duties are related in the following ways:\n1. A company type shapes what a given duty involves day to day.\n2. How a duty is defined can shift depending on the company type.",
+    "Relationship to Stakeholders": "Company Types and Stakeholders are related in the following ways:\n1. The company type determines who the stakeholders are, like clients at an agency.\n2. Who the stakeholders are changes with the company type, such as clients at an agency.",
+    "Relationship to Milestones": "Company Types and Milestones are related in the following ways:\n1. The company type can change which milestones a project focuses on.\n2. Which milestones matter can vary by company type and project.",
+    "Relationship to Tools": "Company Types and Tools are related in the following ways:\n1. The tools a team uses can depend on the company type.\n2. A tool may be standard in one company type and rare in another.",
+    "Relationship to Activities": "Company Types and Activities are related in the following ways:\n1. The company type influences which activities a team spends time on.\n2. Which activities a team does can vary by company type.",
+    "Relationship to Deliverables": "Company Types and Deliverables are related in the following ways:\n1. Some deliverables are specific to a company type, like a pitch deck at a startup.\n2. Some deliverables, like a statement of work, are tied to certain company types.",
+    "Relationship to Job Functions": "Company Types and Job Functions are related in the following ways:\n1. The same job function can look different across company types.\n2. A job function adapts its focus to the company type it sits in.",
+    "Relationship to Job Specializations": "Company Types and Job Specializations are related in the following ways:\n1. Different company types call for different specializations.\n2. The same specialization can carry more or less weight depending on the company type.",
+    "Relationship to Company Types": "Company Types and other Company Types are related in the following ways:\n1. A person may move between company types and carry lessons across them.\n2. Company types can blend, as when a startup grows into an in-house team.",
+    "Relationship to Methodologies": "Company Types and Methodologies are related in the following ways:\n1. The company type can influence which methodology a team adopts.\n2. A methodology may fit some company types better than others.",
+    "Relationship to Workshops": "Company Types and Workshops are related in the following ways:\n1. The company type shapes which workshops a team runs and how.\n2. The company type shapes which workshops a team runs.",
+    "Work Type": [
+      {
+        "slug": "in-house-company",
+        "label": "In-house Company"
+      },
+      {
+        "slug": "agency",
+        "label": "Agency"
+      },
+      {
+        "slug": "freelance-and-consulting",
+        "label": "Freelance and Consulting"
+      },
+      {
+        "slug": "startup",
+        "label": "Startup"
+      }
+    ],
+    "Relationship to Job Industries": "Company Types and Job Industries are related in the following ways:\n1. A single company type can exist within many different industries.\n2. An industry contains many different company types.",
+    "Read Me File": [
+      {
+        "name": "company-type.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/G5KdmEkgT60Oo7wtotuRWp4oXm28oowC_860a62a9fa2dfa116cfd3a7ae26605d197182c3d85224bf0aac39c6dd81ddf9b.md"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "slug": "methodology",
+    "Data Type Name": "Methodology",
+    "Data Type Description": "A step-by-step process to carry out work.",
+    "Relationship to Skills": "Methodologies and Skills are related in the following ways:\n1. A methodology calls for certain skills, like facilitation or planning, to run it well.\n2. People apply their skills within a methodology to guide how the work flows.",
+    "Relationship to Practices": "Methodologies and Practices are related in the following ways:\n1. A methodology only works when the team lives out the practices behind it.\n2. Practices are the mindset that makes a methodology actually work, not just its steps.",
+    "Relationship to Projects": "Methodologies and Projects are related in the following ways:\n1. A methodology sets how a team plans and runs a project.\n2. Projects are guided by a methodology that sets how the team works.",
+    "Relationship to Duties": "Methodologies and Duties are related in the following ways:\n1. A methodology shapes the duties and roles people take on.\n2. Duties are shaped by the methodology the team follows.",
+    "Relationship to Stakeholders": "Methodologies and Stakeholders are related in the following ways:\n1. A methodology defines how and when stakeholders stay involved.\n2. Stakeholders are kept involved through methodologies that value collaboration.",
+    "Relationship to Milestones": "Methodologies and Milestones are related in the following ways:\n1. A methodology organizes the work into milestones and cycles.\n2. Milestones are organized by the methodology the team uses to plan work.",
+    "Relationship to Tools": "Methodologies and Tools are related in the following ways:\n1. A methodology guides which tools a team reaches for.\n2. Tools support the way a methodology asks a team to work.",
+    "Relationship to Activities": "Methodologies and Activities are related in the following ways:\n1. A methodology sequences the activities a team carries out.\n2. Activities are organized and sequenced by the team's methodology.",
+    "Relationship to Deliverables": "Methodologies and Deliverables are related in the following ways:\n1. A methodology shapes which deliverables a team creates and when.\n2. Which deliverables a team makes is shaped by its methodology.",
+    "Relationship to Job Functions": "Methodologies and Job Functions are related in the following ways:\n1. A methodology assigns specific roles to different job functions.\n2. Job functions take on specific roles within a methodology.",
+    "Relationship to Job Specializations": "Methodologies and Job Specializations are related in the following ways:\n1. A methodology shapes how a specialization does its day-to-day work.\n2. Some specializations lean on certain methodologies more than others.",
+    "Relationship to Company Types": "Methodologies and Company Types are related in the following ways:\n1. A methodology may fit some company types better than others.\n2. The company type can influence which methodology a team adopts.",
+    "Relationship to Methodologies": "Methodologies and other Methodologies are related in the following ways:\n1. Methodologies borrow from one another, and teams often blend them.\n2. A team may switch methodologies as its needs change.",
+    "Relationship to Workshops": "Methodologies and Workshops are related in the following ways:\n1. A methodology often comes with workshops that put it into practice.\n2. Workshops put a methodology into practice through guided sessions.",
+    "Agile Methodologies": [
+      {
+        "slug": "google-design-sprint-method",
+        "label": "Google Design Sprint Method"
+      },
+      {
+        "slug": "scrum-method",
+        "label": "Scrum Method"
+      },
+      {
+        "slug": "kanban-method",
+        "label": "Kanban Method"
+      },
+      {
+        "slug": "continuous-discovery-method",
+        "label": "Continuous Discovery Method"
+      },
+      {
+        "slug": "lean-ux-method",
+        "label": "Lean UX Method"
+      },
+      {
+        "slug": "scaled-agile-framework-method",
+        "label": "Scaled Agile Framework Method"
+      }
+    ],
+    "Relationship to Job Industries": "Methodologies and Job Industries are related in the following ways:\n1. A methodology can be applied across many industries.\n2. Some industries adopt certain methodologies more than others.",
+    "Read Me File": [
+      {
+        "name": "methodology.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/0HPamnwvsFKkibwgcjRcsjzHHdD9PbeS_aaa7837bae5f868a6a5073f25d1e88fe9608c29f0132c2dd87b025e5a52801c0.md"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "slug": "job-industry",
+    "Data Type Name": "Job Industry",
+    "Data Type Description": "A category for companies that perform a certain type of work.",
+    "Relationship to Skills": "Job Industries and Skills are related in the following ways:\n1. Each industry gives people a starting set of skills shaped by its everyday work.\n2. People carry transferable skills with them from one industry into another.",
+    "Relationship to Practices": "Job Industries and Practices are related in the following ways:\n1. People bring transferable practices, like collaboration, from any industry.\n2. Practices are transferable behaviors people can bring from any industry into tech work.",
+    "Relationship to Projects": "Job Industries and Projects are related in the following ways:\n1. The industry shapes what a project is trying to achieve.\n2. Projects can serve any industry, shaping the work to that industry's needs.",
+    "Relationship to Duties": "Job Industries and Duties are related in the following ways:\n1. An industry gives a duty its real-world context and expectations.\n2. Duties carry across industries, even when the context changes.",
+    "Relationship to Stakeholders": "Job Industries and Stakeholders are related in the following ways:\n1. The industry shapes who the stakeholders are and what they expect.\n2. Stakeholders come from the industry the work is being done for.",
+    "Relationship to Milestones": "Job Industries and Milestones are related in the following ways:\n1. Industry norms influence which milestones a project follows.\n2. Milestones adapt to the norms and expectations of the industry.",
+    "Relationship to Tools": "Job Industries and Tools are related in the following ways:\n1. Each industry brings its own familiar tools, some of which transfer to tech.\n2. Some tools carry over from other industries, while others are new to tech.",
+    "Relationship to Activities": "Job Industries and Activities are related in the following ways:\n1. Everyday activities in an industry give people relevant experience.\n2. Many activities are similar across industries, while some are specific to one.",
+    "Relationship to Deliverables": "Job Industries and Deliverables are related in the following ways:\n1. The industry shapes which deliverables carry the most weight.\n2. The deliverables that matter can shift with the industry.",
+    "Relationship to Job Functions": "Job Industries and Job Functions are related in the following ways:\n1. Industries have their own job functions, often with different titles.\n2. Job functions exist across industries, often under different titles.",
+    "Relationship to Job Specializations": "Job Industries and Job Specializations are related in the following ways:\n1. Industries ask for different specializations depending on the work they do.\n2. A specialization can move across industries, even when the work around it changes.",
+    "Relationship to Company Types": "Job Industries and Company Types are related in the following ways:\n1. An industry contains many different company types.\n2. A single company type can exist within many different industries.",
+    "Relationship to Methodologies": "Job Industries and Methodologies are related in the following ways:\n1. Some industries adopt certain methodologies more than others.\n2. A methodology can be applied across many industries.",
+    "Relationship to Workshops": "Job Industries and Workshops are related in the following ways:\n1. The industry someone comes from shapes what they bring to a workshop.\n2. People bring their industry background into the workshops they join.",
+    "Relationship to Job Industries": "Job Industries and other Job Industries are related in the following ways:\n1. People often move between industries, carrying their experience with them.\n2. Industries influence one another as ideas and people move across them.",
+    "Read Me File": [
+      {
+        "name": "job-industry.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/gGQ0JUjaOjPFSwnOffY2TnxlZNm8U4eA_63c644dc8bf2a710e523d2ef20ca68d638555cb694b479d94c05b4dcb7ccef8c.md"
+      }
+    ],
+    "Job Industry": [
+      {
+        "slug": "academia",
+        "label": "Academia"
+      },
+      {
+        "slug": "accounting",
+        "label": "Accounting"
+      },
+      {
+        "slug": "agriculture",
+        "label": "Agriculture"
+      },
+      {
+        "slug": "business",
+        "label": "Business"
+      },
+      {
+        "slug": "construction",
+        "label": "Construction"
+      },
+      {
+        "slug": "creative",
+        "label": "Creative"
+      },
+      {
+        "slug": "finance",
+        "label": "Finance"
+      },
+      {
+        "slug": "government",
+        "label": "Government"
+      },
+      {
+        "slug": "hospitality",
+        "label": "Hospitality"
+      },
+      {
+        "slug": "industrial-design",
+        "label": "Industrial Design"
+      },
+      {
+        "slug": "legal",
+        "label": "Legal"
+      },
+      {
+        "slug": "marketing",
+        "label": "Marketing"
+      },
+      {
+        "slug": "medical",
+        "label": "Medical"
+      },
+      {
+        "slug": "mental-health",
+        "label": "Mental Health"
+      },
+      {
+        "slug": "nonprofit",
+        "label": "Nonprofit"
+      },
+      {
+        "slug": "primary-and-secondary-education",
+        "label": "Primary and Secondary Education"
+      },
+      {
+        "slug": "program-management",
+        "label": "Program Management"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "real-estate",
+        "label": "Real Estate"
+      },
+      {
+        "slug": "retail",
+        "label": "Retail"
+      },
+      {
+        "slug": "sales",
+        "label": "Sales"
+      },
+      {
+        "slug": "tourism",
+        "label": "Tourism"
+      },
+      {
+        "slug": "transportation",
+        "label": "Transportation"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "user-experience-research",
+        "label": "User Experience Research"
+      },
+      {
+        "slug": "user-experience-design",
+        "label": "User Experience Design"
+      },
+      {
+        "slug": "film",
+        "label": "Film"
+      },
+      {
+        "slug": "theatre",
+        "label": "Theatre"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "slug": "workshop",
+    "Data Type Name": "Workshop",
+    "Data Type Description": "A facilitated group activity that accomplishes a shared goal.",
+    "Relationship to Skills": "Workshops and Skills are related in the following ways:\n1. Workshops are a hands-on way for people to build and practice skills together.\n2. People bring and use their skills to take part in workshops.",
+    "Relationship to Practices": "Workshops and Practices are related in the following ways:\n1. Workshops are where teams learn and rehearse healthy practices.\n2. Practices are taught and strengthened through team workshops.",
+    "Relationship to Projects": "Workshops and Projects are related in the following ways:\n1. Workshops help a team plan, align, and move a project forward.\n2. Projects use workshops to plan, align, and move the work forward.",
+    "Relationship to Duties": "Workshops and Duties are related in the following ways:\n1. Workshops help teams clarify who owns which duties.\n2. Duties are clarified in workshops where teams agree on who owns what.",
+    "Relationship to Stakeholders": "Workshops and Stakeholders are related in the following ways:\n1. Workshops bring stakeholders in to share needs and build alignment.\n2. Stakeholders often join workshops to share their needs and build alignment.",
+    "Relationship to Milestones": "Workshops and Milestones are related in the following ways:\n1. Workshops help teams plan for and review their milestones.\n2. Milestones are often planned and reviewed in team workshops.",
+    "Relationship to Tools": "Workshops and Tools are related in the following ways:\n1. Workshops make use of shared tools like boards and templates.\n2. Tools like shared boards and templates are what make workshops run.",
+    "Relationship to Activities": "Workshops and Activities are related in the following ways:\n1. A workshop is a structured group activity with a shared goal.\n2. A workshop is a structured kind of activity a team does together.",
+    "Relationship to Deliverables": "Workshops and Deliverables are related in the following ways:\n1. A workshop often ends with a finished deliverable in hand.\n2. Many workshops are designed to produce a specific deliverable.",
+    "Relationship to Job Functions": "Workshops and Job Functions are related in the following ways:\n1. Workshops bring different job functions together to collaborate.\n2. Different job functions lead or take part in different workshops.",
+    "Relationship to Job Specializations": "Workshops and Job Specializations are related in the following ways:\n1. Workshops bring different specializations together to solve a shared problem.\n2. A specialization often leads the workshops that sit closest to its focus.",
+    "Relationship to Company Types": "Workshops and Company Types are related in the following ways:\n1. The company type shapes which workshops a team runs.\n2. The company type shapes which workshops a team runs and how.",
+    "Relationship to Methodologies": "Workshops and Methodologies are related in the following ways:\n1. Workshops put a methodology into practice through guided sessions.\n2. A methodology often comes with workshops that put it into practice.",
+    "Relationship to Workshops": "Workshops and other Workshops are related in the following ways:\n1. Workshops build on one another, with earlier ones feeding later ones.\n2. The output of one workshop often becomes the input for the next.",
+    "Relationship to Job Industries": "Workshops and Job Industries are related in the following ways:\n1. People bring their industry background into the workshops they join.\n2. The industry someone comes from shapes what they bring to a workshop.",
+    "Read Me File": [
+      {
+        "name": "workshop.md",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/QecMLW8ARtD14uac2S6XkZE4Jk8aDb6a_5464aefbde1acb6c8439f7435db04c0bbc97443872c88513c6d19b649395a43e.md"
+      }
+    ],
+    "Workshops": [
+      {
+        "slug": "team-ice-breakers-workshop-template",
+        "label": "Team Ice Breakers Workshop Template"
+      },
+      {
+        "slug": "agile-and-service-leadership-workshop-template",
+        "label": "Agile and Service Leadership Workshop Template"
+      },
+      {
+        "slug": "conflict-resolution-workshop-template",
+        "label": "Conflict Resolution Workshop Template"
+      },
+      {
+        "slug": "client-kickoff-workshop-template",
+        "label": "Client Kickoff Workshop Template"
+      },
+      {
+        "slug": "raci-hats-workshop-template",
+        "label": "RACI Hats Workshop Template"
+      },
+      {
+        "slug": "project-plan-workshop-template",
+        "label": "Project Plan Workshop Template"
+      },
+      {
+        "slug": "vision-and-scope-workshop-template",
+        "label": "Vision and Scope Workshop Template"
+      },
+      {
+        "slug": "team-process-mapping-workshop-template",
+        "label": "Team Process Mapping Workshop Template"
+      },
+      {
+        "slug": "sprint-goals-workshop-template",
+        "label": "Sprint Goals Workshop Template"
+      },
+      {
+        "slug": "backlog-management-workshop-template",
+        "label": "Backlog Management Workshop Template"
+      },
+      {
+        "slug": "sprint-retro-workshop-template",
+        "label": "Sprint Retro Workshop Template"
+      },
+      {
+        "slug": "working-agreements-workshop-template",
+        "label": "Working Agreements Workshop Template"
+      },
+      {
+        "slug": "scenario-based-problem-statement-generation-workshop-template",
+        "label": "Scenario-Based Problem Statement Generation Workshop Template"
+      },
+      {
+        "slug": "research-plan-workshop-template",
+        "label": "Research Plan Workshop Template"
+      },
+      {
+        "slug": "rapid-ideation-workshop-template",
+        "label": "Rapid Ideation Workshop Template"
+      },
+      {
+        "slug": "storyboarding-workshop-template",
+        "label": "Storyboarding Workshop Template"
+      },
+      {
+        "slug": "audience-segmentation-goals-motivations-and-use-cases-workshop-template",
+        "label": "Audience Segmentation, Goals, Motivations, and Use Cases Workshop Template"
+      },
+      {
+        "slug": "case-study-creation-workshop-template",
+        "label": "Case Study Creation Workshop Template"
+      },
+      {
+        "slug": "ux-research-analysis-workshop-template",
+        "label": "UX Research Analysis Workshop Template"
+      },
+      {
+        "slug": "market-research-and-competitive-analysis-workshop-template",
+        "label": "Market Research and Competitive Analysis Workshop Template"
+      },
+      {
+        "slug": "customer-experience-map-workshop-template",
+        "label": "Customer Experience Map Workshop Template"
+      },
+      {
+        "slug": "user-journey-map-workshop-template",
+        "label": "User Journey Map Workshop Template"
+      },
+      {
+        "slug": "discovery-backlog-workshop-template",
+        "label": "Discovery Backlog Workshop Template"
+      },
+      {
+        "slug": "team-agile-workshops-template",
+        "label": "Team Agile Workshops Template"
+      },
+      {
+        "slug": "audience-persona-definition-workshop-template",
+        "label": "Audience Persona Definition Workshop Template"
+      },
+      {
+        "slug": "empathy-map-workshop-template",
+        "label": "Empathy Map Workshop Template"
+      },
+      {
+        "slug": "research-analysis-presentation-slide-template",
+        "label": "Research Analysis Presentation Slide Template"
+      },
+      {
+        "slug": "kpi-success-measurements-definition-workshop-template",
+        "label": "KPI Success Measurements Definition Workshop Template"
+      },
+      {
+        "slug": "product-and-service-development-milestones-for-different-types-of-projects-works",
+        "label": "Product and Service Development Milestones for Different Types of Projects Workshop Template"
+      },
+      {
+        "slug": "personal-growth-vision-scope-and-roadmap-workshop-template",
+        "label": "Personal Growth Vision, Scope, and Roadmap Workshop Template"
+      },
+      {
+        "slug": "agile-team-maturity-measurements-workshop-template",
+        "label": "Agile Team Maturity Measurements Workshop Template"
+      },
+      {
+        "slug": "tech-fleet-sprint-demo-slide-deck-template",
+        "label": "Tech Fleet Sprint Demo Slide Deck Template"
+      },
+      {
+        "slug": "customer-experience-strategy-workshop-template",
+        "label": "Customer Experience Strategy Workshop Template"
+      },
+      {
+        "slug": "brand-strategy-and-identity-workshop-template",
+        "label": "Brand Strategy and Identity Workshop Template"
+      },
+      {
+        "slug": "nonprofit-strategy-definition-workshop",
+        "label": "Nonprofit Strategy Definition Workshop"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "slug": "workshop-step",
+    "Data Type Name": "Workshop Step"
+  },
+  {
+    "id": 27,
+    "slug": "workshop-template-section",
+    "Data Type Name": "Workshop Template Section"
+  },
+  {
+    "id": 28,
+    "slug": "project-type",
+    "Data Type Name": "Project Type",
+    "Project Types": [
+      {
+        "slug": "website-project",
+        "label": "Website Project"
+      }
+    ]
+  }
+]
