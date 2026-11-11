@@ -2,10 +2,12 @@
  * Pure parser and mappers for the O*NET curated subset (E4c).
  *
  * O*NET 31.0 distributes its database as Excel, CSV, or JSON (the old
- * tab-delimited text download is gone). We use the JSON files: each is an array
- * of row objects keyed by column name. These functions parse that JSON and map
- * rows into validated ReferenceItems. No file IO here — the boundary script reads
- * the files the user placed in the git-ignored data/reference/onet/ folder.
+ * tab-delimited text download is gone). Each JSON file is an object of the form
+ * { table_id, title, description, column, row }, where `row` is an array of row
+ * objects keyed by snake_case column_id (e.g. "onetsoc_code", "element_id").
+ * These functions extract and map those rows into validated ReferenceItems. No
+ * file IO here — the boundary script reads the files the user unzipped into the
+ * git-ignored data/reference/onet/ folder.
  *
  * O*NET® is a trademark of the U.S. Department of Labor, Employment and Training
  * Administration. See docs/reference-data-attributions.md.
@@ -22,17 +24,21 @@ export function cell(row: OnetRow, key: string): string {
   return value == null ? "" : String(value).trim();
 }
 
-/** Parse an O*NET JSON file (an array of row objects). Throws if not an array. */
+/**
+ * Extract the row array from an O*NET JSON file. O*NET 31.0 wraps rows in a
+ * { column, row } object; a plain array is also accepted defensively.
+ */
 export function parseOnetJson(text: string): OnetRow[] {
   const data = JSON.parse(text);
-  if (!Array.isArray(data)) {
-    throw new Error("O*NET JSON file is not an array of rows");
+  if (Array.isArray(data)) return data as OnetRow[];
+  if (data && typeof data === "object" && Array.isArray(data.row)) {
+    return data.row as OnetRow[];
   }
-  return data as OnetRow[];
+  throw new Error("O*NET JSON file has no row array");
 }
 
 export interface OnetTableConfig {
-  /** File name as distributed by O*NET 31.0, e.g. "Occupation Data.json". */
+  /** File name as distributed by O*NET 31.0, e.g. "occupation_data.json". */
   file: string;
   /** entity_type written to reference_items, e.g. "occupation". */
   entityType: string;
@@ -44,12 +50,12 @@ export interface OnetTableConfig {
   description?: (row: OnetRow) => string | null;
 }
 
-const SOC = "O*NET-SOC Code";
-const ELEMENT_ID = "Element ID";
-const ELEMENT_NAME = "Element Name";
-const SCALE_ID = "Scale ID";
+const SOC = "onetsoc_code";
+const ELEMENT_ID = "element_id";
+const ELEMENT_NAME = "element_name";
+const SCALE_ID = "scale_id";
 
-/** A rated attribute row (SOC × element × scale) — shared id/name shape. */
+/** A rated attribute row (occupation × element × scale) — shared id/name shape. */
 function ratingTable(file: string, entityType: string): OnetTableConfig {
   return {
     file,
@@ -68,29 +74,29 @@ function ratingTable(file: string, entityType: string): OnetTableConfig {
  */
 export const ONET_TABLES: OnetTableConfig[] = [
   {
-    file: "Occupation Data.json",
+    file: "occupation_data.json",
     entityType: "occupation",
     externalId: (r) => cell(r, SOC),
-    name: (r) => cell(r, "Title"),
-    description: (r) => cell(r, "Description") || null,
+    name: (r) => cell(r, "title"),
+    description: (r) => cell(r, "description") || null,
   },
   {
-    file: "Content Model Reference.json",
+    file: "content_model_reference.json",
     entityType: "content_model_element",
     externalId: (r) => cell(r, ELEMENT_ID),
     name: (r) => cell(r, ELEMENT_NAME),
-    description: (r) => cell(r, "Description") || null,
+    description: (r) => cell(r, "description") || null,
   },
-  ratingTable("Essential Skills.json", "occupation_skill"),
-  ratingTable("Transferable Skills.json", "occupation_transferable_skill"),
-  ratingTable("Abilities.json", "occupation_ability"),
-  ratingTable("Knowledge.json", "occupation_knowledge"),
-  ratingTable("Work Activities.json", "occupation_work_activity"),
+  ratingTable("essential_skills.json", "occupation_skill"),
+  ratingTable("transferable_skills.json", "occupation_transferable_skill"),
+  ratingTable("abilities.json", "occupation_ability"),
+  ratingTable("knowledge.json", "occupation_knowledge"),
+  ratingTable("work_activities.json", "occupation_work_activity"),
   {
-    file: "Task Statements.json",
+    file: "task_statements.json",
     entityType: "occupation_task",
-    externalId: (r) => cell(r, "Task ID"),
-    name: (r) => cell(r, "Task"),
+    externalId: (r) => cell(r, "task_id"),
+    name: (r) => cell(r, "task"),
   },
 ];
 

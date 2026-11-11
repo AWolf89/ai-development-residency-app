@@ -14,28 +14,36 @@ const table = (file: string): OnetTableConfig => {
 };
 
 describe("parseOnetJson", () => {
-  it("parses an array of row objects", () => {
-    const text = JSON.stringify([
-      { "O*NET-SOC Code": "15-1252.00", Title: "Software Developers" },
-    ]);
+  it("extracts the row array from an O*NET { column, row } object", () => {
+    const text = JSON.stringify({
+      table_id: "occupation_data",
+      column: [{ column_id: "onetsoc_code" }],
+      row: [{ onetsoc_code: "15-1252.00", title: "Software Developers" }],
+    });
     expect(parseOnetJson(text)).toEqual([
-      { "O*NET-SOC Code": "15-1252.00", Title: "Software Developers" },
+      { onetsoc_code: "15-1252.00", title: "Software Developers" },
     ]);
   });
 
-  it("throws when the JSON is not an array", () => {
-    expect(() => parseOnetJson('{"not":"an array"}')).toThrow();
+  it("accepts a plain array defensively", () => {
+    expect(parseOnetJson('[{"onetsoc_code":"x"}]')).toEqual([
+      { onetsoc_code: "x" },
+    ]);
+  });
+
+  it("throws when there is no row array", () => {
+    expect(() => parseOnetJson('{"table_id":"x"}')).toThrow();
   });
 });
 
 describe("cell", () => {
   it("coerces numbers to strings and trims", () => {
-    expect(cell({ "Data Value": 4 }, "Data Value")).toBe("4");
-    expect(cell({ Title: "  X  " }, "Title")).toBe("X");
+    expect(cell({ data_value: 4 }, "data_value")).toBe("4");
+    expect(cell({ title: "  X  " }, "title")).toBe("X");
   });
 
   it("returns an empty string for missing or null values", () => {
-    expect(cell({}, "Missing")).toBe("");
+    expect(cell({}, "missing")).toBe("");
     expect(cell({ k: null }, "k")).toBe("");
   });
 });
@@ -43,11 +51,11 @@ describe("cell", () => {
 describe("mapOnetRow", () => {
   it("maps an occupation with its description", () => {
     const row = {
-      "O*NET-SOC Code": "15-1252.00",
-      Title: "Software Developers",
-      Description: "Develop software.",
+      onetsoc_code: "15-1252.00",
+      title: "Software Developers",
+      description: "Develop software.",
     };
-    const item = mapOnetRow(table("Occupation Data.json"), row, "31.0");
+    const item = mapOnetRow(table("occupation_data.json"), row, "31.0");
     expect(item).toMatchObject({
       source: "onet",
       entity_type: "occupation",
@@ -60,13 +68,13 @@ describe("mapOnetRow", () => {
 
   it("builds a composite external id for a rated attribute row", () => {
     const row = {
-      "O*NET-SOC Code": "15-1252.00",
-      "Element ID": "2.A.1.a",
-      "Element Name": "Reading Comprehension",
-      "Scale ID": "IM",
-      "Data Value": 4.12,
+      onetsoc_code: "15-1252.00",
+      element_id: "2.A.1.a",
+      element_name: "Reading Comprehension",
+      scale_id: "IM",
+      data_value: 4.12,
     };
-    const item = mapOnetRow(table("Essential Skills.json"), row, "31.0");
+    const item = mapOnetRow(table("essential_skills.json"), row, "31.0");
     expect(item.entity_type).toBe("occupation_skill");
     expect(item.external_id).toBe("15-1252.00:2.A.1.a:IM");
     expect(item.name).toBe("Reading Comprehension");
@@ -75,20 +83,20 @@ describe("mapOnetRow", () => {
 
   it("maps a task statement by task id", () => {
     const row = {
-      "O*NET-SOC Code": "15-1252.00",
-      "Task ID": 21857,
-      Task: "Write code.",
+      onetsoc_code: "15-1252.00",
+      task_id: 21857,
+      task: "Write code.",
     };
-    const item = mapOnetRow(table("Task Statements.json"), row, "31.0");
+    const item = mapOnetRow(table("task_statements.json"), row, "31.0");
     expect(item.entity_type).toBe("occupation_task");
     expect(item.external_id).toBe("21857");
     expect(item.name).toBe("Write code.");
   });
 
   it("throws when a required field is blank", () => {
-    const row = { "O*NET-SOC Code": "", Title: "", Description: "" };
+    const row = { onetsoc_code: "", title: "", description: "" };
     expect(() =>
-      mapOnetRow(table("Occupation Data.json"), row, "31.0")
+      mapOnetRow(table("occupation_data.json"), row, "31.0")
     ).toThrow();
   });
 });
@@ -109,14 +117,14 @@ describe("ONET_TABLES", () => {
 
   // A row carrying every column any table reads, so each config's accessors run.
   const fullRow = {
-    "O*NET-SOC Code": "15-1252.00",
-    "Element ID": "2.A.1.a",
-    "Element Name": "Reading Comprehension",
-    "Scale ID": "IM",
-    Title: "Software Developers",
-    Description: "Develop software.",
-    "Task ID": "21857",
-    Task: "Write code.",
+    onetsoc_code: "15-1252.00",
+    element_id: "2.A.1.a",
+    element_name: "Reading Comprehension",
+    scale_id: "IM",
+    title: "Software Developers",
+    description: "Develop software.",
+    task_id: "21857",
+    task: "Write code.",
   };
 
   it.each(ONET_TABLES)(
