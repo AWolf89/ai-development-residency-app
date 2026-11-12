@@ -3,7 +3,6 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import NextLink from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import {
   getDecisionRecordById,
@@ -41,9 +40,7 @@ export default async function EditDecisionRecordPage({
   return (
     <Container maxWidth="sm" sx={{ py: 8 }}>
       <Stack spacing={3}>
-        <Link component={NextLink} href="/dashboard">
-          ← Back to your account
-        </Link>
+        <Link href="/dashboard">← Back to your account</Link>
         <Typography variant="h4" component="h1">
           Edit decision record
         </Typography>

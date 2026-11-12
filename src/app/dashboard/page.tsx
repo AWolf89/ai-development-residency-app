@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import NextLink from "next/link";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -28,7 +27,6 @@ function RecordCard({ record }: { record: DecisionRecordListItem }) {
   return (
     <Card variant="outlined">
       <CardActionArea
-        component={NextLink}
         href={`/dashboard/decision-records/${record.id}`}
         aria-label={`Edit decision record: ${record.title}`}
       >
@@ -136,11 +134,7 @@ export default async function DashboardPage() {
             <Typography variant="h6" component="h2">
               Your decision records
             </Typography>
-            <Button
-              component={NextLink}
-              href="/dashboard/decision-records/new"
-              variant="contained"
-            >
+            <Button href="/dashboard/decision-records/new" variant="contained">
               Add a record
             </Button>
           </Stack>
