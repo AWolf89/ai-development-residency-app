@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   validateTargetRoleIntake,
+  validateTargetRoleFromTitle,
   validateJobDescription,
   MIN_JD_LENGTH,
 } from "./validation";
@@ -105,5 +106,57 @@ describe("validateTargetRoleIntake", () => {
       jobDescription: valid.jobDescription,
     });
     expect(result.ok).toBe(false);
+  });
+});
+
+describe("validateTargetRoleFromTitle", () => {
+  it("accepts a title with requirements and no job description", () => {
+    const result = validateTargetRoleFromTitle({
+      title: "Software Developer",
+      requirements: ["Programming", "Critical Thinking"],
+    });
+    expect(result).toEqual({
+      ok: true,
+      value: {
+        title: "Software Developer",
+        jobDescription: "",
+        requirements: ["Programming", "Critical Thinking"],
+      },
+    });
+  });
+
+  it("keeps a job description when one is supplied, without a length check", () => {
+    const result = validateTargetRoleFromTitle({
+      title: "Software Developer",
+      jobDescription: "short note",
+      requirements: ["Programming"],
+    });
+    expect(result).toEqual({
+      ok: true,
+      value: {
+        title: "Software Developer",
+        jobDescription: "short note",
+        requirements: ["Programming"],
+      },
+    });
+  });
+
+  it("still requires a title", () => {
+    const result = validateTargetRoleFromTitle({
+      title: "  ",
+      requirements: ["Programming"],
+    });
+    expect(result).toEqual({ ok: false, error: "Enter a role title." });
+  });
+
+  it("still requires at least one requirement", () => {
+    const result = validateTargetRoleFromTitle({
+      title: "Software Developer",
+      requirements: [],
+    });
+    expect(result).toEqual({
+      ok: false,
+      error: "Add at least one requirement before saving.",
+    });
   });
 });

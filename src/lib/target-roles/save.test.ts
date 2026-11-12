@@ -79,6 +79,47 @@ describe("saveTargetRole", () => {
     expect(repo.replaceRequirements).not.toHaveBeenCalled();
   });
 
+  it("saves a title-path role with no job description and records the occupation", async () => {
+    const repo = makeFakeRepo();
+    const result = await saveTargetRole(repo, {
+      userId,
+      requireJobDescription: false,
+      sourceOccupation: { title: "Software Developers", code: "15-1252.00" },
+      input: {
+        title: "Software Developer",
+        requirements: ["Programming", "Critical Thinking"],
+      },
+    });
+
+    expect(result).toEqual({ ok: true, recordId: "new-role-id" });
+    expect(repo.insertTargetRole).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: "Software Developer",
+        job_description: "",
+        source_occupation_title: "Software Developers",
+        source_occupation_code: "15-1252.00",
+      })
+    );
+    expect(repo.replaceRequirements).toHaveBeenCalledWith(
+      "new-role-id",
+      userId,
+      expect.arrayContaining([
+        expect.objectContaining({ requirement_text: "Programming" }),
+      ])
+    );
+  });
+
+  it("rejects a title-path save with no requirements", async () => {
+    const repo = makeFakeRepo();
+    const result = await saveTargetRole(repo, {
+      userId,
+      requireJobDescription: false,
+      input: { title: "Software Developer", requirements: [] },
+    });
+    expect(result.ok).toBe(false);
+    expect(repo.insertTargetRole).not.toHaveBeenCalled();
+  });
+
   it("updates an existing role and replaces its requirements (idempotent edit)", async () => {
     const repo = makeFakeRepo();
     const result = await saveTargetRole(repo, {

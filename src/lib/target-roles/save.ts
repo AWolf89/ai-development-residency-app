@@ -8,12 +8,16 @@
  * → replace the role's requirements idempotently (AC4/AC5/AC6/AC7/AC8). Only ever
  * reached from the explicit confirm step (AC3).
  */
-import { validateTargetRoleIntake } from "./validation";
+import {
+  validateTargetRoleIntake,
+  validateTargetRoleFromTitle,
+} from "./validation";
 import {
   mapTargetRoleRow,
   mapRequirementRow,
   type TargetRoleRow,
   type RoleRequirementRow,
+  type SourceOccupation,
 } from "./mappers";
 import { matchFramework, type FrameworkItem } from "./matching";
 import { resolveSource } from "./source";
@@ -36,6 +40,13 @@ export type SaveTargetRoleParams = {
   input: unknown;
   /** When present, update that existing target role instead of inserting (edit). */
   recordId?: string | null;
+  /**
+   * Paste path (default) requires a job description; the title path passes false,
+   * since its requirements come from the chosen occupation instead.
+   */
+  requireJobDescription?: boolean;
+  /** Title path only: the O*NET occupation the requirements were derived from. */
+  sourceOccupation?: SourceOccupation | null;
 };
 
 export type SaveResult =
@@ -45,12 +56,19 @@ export async function saveTargetRole(
   repo: TargetRoleRepository,
   params: SaveTargetRoleParams
 ): Promise<SaveResult> {
-  const validated = validateTargetRoleIntake(params.input);
+  const validated =
+    params.requireJobDescription === false
+      ? validateTargetRoleFromTitle(params.input)
+      : validateTargetRoleIntake(params.input);
   if (!validated.ok) {
     return { ok: false, error: validated.error };
   }
 
-  const roleRow = mapTargetRoleRow(validated.value, params.userId);
+  const roleRow = mapTargetRoleRow(
+    validated.value,
+    params.userId,
+    params.sourceOccupation ?? null
+  );
 
   let recordId: string;
   if (params.recordId) {

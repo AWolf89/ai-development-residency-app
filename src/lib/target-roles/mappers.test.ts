@@ -17,7 +17,18 @@ describe("mapTargetRoleRow", () => {
       title: "Data Engineer",
       company: null,
       job_description: intake.jobDescription,
+      source_occupation_title: null,
+      source_occupation_code: null,
     });
+  });
+
+  it("records the source occupation when the title path supplies one", () => {
+    const row = mapTargetRoleRow(intake, userId, {
+      title: "Software Developers",
+      code: "15-1252.00",
+    });
+    expect(row.source_occupation_title).toBe("Software Developers");
+    expect(row.source_occupation_code).toBe("15-1252.00");
   });
 });
 

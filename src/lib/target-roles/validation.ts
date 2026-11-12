@@ -39,10 +39,15 @@ export function validateJobDescription(text: unknown): JobDescriptionResult {
 }
 
 /**
- * Validate the full intake before saving: a title, a usable job description, and
- * at least one non-blank requirement.
+ * Shared core: a title and at least one non-blank requirement are always
+ * required. The job description is required on the paste path (`requireJobDescription`)
+ * and optional on the title path, where requirements come from the chosen
+ * occupation instead.
  */
-export function validateTargetRoleIntake(input: unknown): ValidationResult {
+function validateCore(
+  input: unknown,
+  requireJobDescription: boolean
+): ValidationResult {
   if (typeof input !== "object" || input === null) {
     return { ok: false, error: "Enter a role title." };
   }
@@ -53,9 +58,16 @@ export function validateTargetRoleIntake(input: unknown): ValidationResult {
     return { ok: false, error: "Enter a role title." };
   }
 
-  const jd = validateJobDescription(obj.jobDescription);
-  if (!jd.ok) {
-    return { ok: false, error: jd.error };
+  let jobDescription: string;
+  if (requireJobDescription) {
+    const jd = validateJobDescription(obj.jobDescription);
+    if (!jd.ok) {
+      return { ok: false, error: jd.error };
+    }
+    jobDescription = jd.value;
+  } else {
+    jobDescription =
+      typeof obj.jobDescription === "string" ? obj.jobDescription.trim() : "";
   }
 
   const rawRequirements = Array.isArray(obj.requirements)
@@ -69,5 +81,21 @@ export function validateTargetRoleIntake(input: unknown): ValidationResult {
     return { ok: false, error: "Add at least one requirement before saving." };
   }
 
-  return { ok: true, value: { title, jobDescription: jd.value, requirements } };
+  return { ok: true, value: { title, jobDescription, requirements } };
+}
+
+/**
+ * Validate the paste path before saving: a title, a usable job description, and
+ * at least one non-blank requirement.
+ */
+export function validateTargetRoleIntake(input: unknown): ValidationResult {
+  return validateCore(input, true);
+}
+
+/**
+ * Validate the title path before saving: a title and at least one requirement
+ * (derived from the chosen occupation). The job description is optional here.
+ */
+export function validateTargetRoleFromTitle(input: unknown): ValidationResult {
+  return validateCore(input, false);
 }
