@@ -13,7 +13,13 @@ export type TargetRoleRow = {
   title: string;
   company: string | null;
   job_description: string;
+  /** O*NET occupation this role was derived from (title path), else null. */
+  source_occupation_title: string | null;
+  source_occupation_code: string | null;
 };
+
+/** Where a title-path role's requirements were derived from. */
+export type SourceOccupation = { title: string; code: string };
 
 export type RoleRequirementRow = {
   user_id: string;
@@ -25,13 +31,16 @@ export type RoleRequirementRow = {
 
 export function mapTargetRoleRow(
   intake: TargetRoleIntakeInput,
-  userId: string
+  userId: string,
+  sourceOccupation?: SourceOccupation | null
 ): TargetRoleRow {
   return {
     user_id: userId,
     title: intake.title,
     company: null,
     job_description: intake.jobDescription,
+    source_occupation_title: sourceOccupation?.title ?? null,
+    source_occupation_code: sourceOccupation?.code ?? null,
   };
 }
 

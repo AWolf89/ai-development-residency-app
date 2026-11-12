@@ -4,7 +4,15 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { saveTargetRole } from "./save";
-import { createSupabaseTargetRoleRepository } from "./repository";
+import {
+  createSupabaseTargetRoleRepository,
+  searchOccupations,
+  getOccupationAttributes,
+} from "./repository";
+import {
+  buildRequirementsFromOccupation,
+  type OccupationSuggestion,
+} from "./occupation";
 
 /**
  * Result shape returned to the form via `useActionState`.
@@ -49,6 +57,18 @@ export async function saveTargetRoleAction(
   };
   const recordId = field(formData, "record_id") || null;
 
+  // The title path saves without requiring a job description and records which
+  // O*NET occupation the requirements were derived from.
+  const isTitlePath = field(formData, "mode") === "title";
+  const occupationCode = field(formData, "source_occupation_code");
+  const sourceOccupation =
+    isTitlePath && occupationCode
+      ? {
+          title: field(formData, "source_occupation_title"),
+          code: occupationCode,
+        }
+      : null;
+
   const repo = createSupabaseTargetRoleRepository(supabase);
 
   let result;
@@ -57,6 +77,8 @@ export async function saveTargetRoleAction(
       userId: user.id,
       input,
       recordId,
+      requireJobDescription: !isTitlePath,
+      sourceOccupation,
     });
   } catch {
     return { error: "Could not save your target role. Please try again." };
@@ -68,4 +90,40 @@ export async function saveTargetRoleAction(
 
   revalidatePath("/dashboard");
   return { notice: "Saved." };
+}
+
+/**
+ * Title-path autosuggest: return ranked O*NET occupation suggestions for a typed
+ * prefix. Called from the client typeahead as the user types. Returns [] when
+ * signed out or the prefix is too short (the page itself guards the route).
+ */
+export async function suggestOccupationsAction(
+  prefix: string
+): Promise<OccupationSuggestion[]> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return [];
+  }
+  return searchOccupations(supabase, prefix);
+}
+
+/**
+ * Title-path derivation: turn a chosen occupation (by SOC code) into a starter
+ * requirement list the user then edits. Pure ranking lives in `occupation.ts`.
+ */
+export async function deriveOccupationRequirementsAction(
+  code: string
+): Promise<{ requirements: string[] }> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    redirect("/login");
+  }
+  const attributes = await getOccupationAttributes(supabase, code);
+  return { requirements: buildRequirementsFromOccupation(attributes) };
 }

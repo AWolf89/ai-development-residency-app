@@ -24,6 +24,7 @@ export default defineConfig({
         "src/lib/decision-records/save.ts",
         "src/lib/target-roles/extract.ts",
         "src/lib/target-roles/matching.ts",
+        "src/lib/target-roles/occupation.ts",
         "src/lib/target-roles/source.ts",
         "src/lib/target-roles/mappers.ts",
         "src/lib/target-roles/save.ts",
