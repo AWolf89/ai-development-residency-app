@@ -8,8 +8,8 @@
  * client check is never the only line of defence.
  */
 
-/** Largest file we accept, in bytes (10 MB). */
-export const MAX_FILE_BYTES = 10 * 1024 * 1024;
+/** Largest file we accept, in bytes (25 MB). */
+export const MAX_FILE_BYTES = 25 * 1024 * 1024;
 
 /** A file name longer than this is rejected (keeps storage keys sane). */
 export const MAX_FILE_NAME_LENGTH = 200;
