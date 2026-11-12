@@ -50,3 +50,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Supabase local tooling state (per-machine migration lock)
+supabase/.migration-lock.json
