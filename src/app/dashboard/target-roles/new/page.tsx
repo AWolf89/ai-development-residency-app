@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -17,7 +17,7 @@ export default async function NewTargetRolePage() {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ py: 8 }}>
+    <Box sx={{ px: { xs: 2, md: 7 }, py: { xs: 4, md: 6 }, maxWidth: 820 }}>
       <Stack spacing={3}>
         <Link href="/dashboard">← Back to your account</Link>
         <Typography variant="h4" component="h1">
@@ -29,6 +29,6 @@ export default async function NewTargetRolePage() {
         </Typography>
         <TargetRoleForm />
       </Stack>
-    </Container>
+    </Box>
   );
 }
