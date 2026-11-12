@@ -2,7 +2,7 @@
 
 Date: 2026-11-12
 Mode: Task
-Scope: src/lib/files/{validation,mappers,record,repository,queries,actions}.ts; src/app/dashboard/files/{page.tsx,FilesManager.tsx}; src/components/Sidebar.tsx; vitest.config.ts. (No migration in this slice; relies on the existing `files` table RLS and `user-files` storage policies from E3.)
+Scope: src/lib/files/{validation,mappers,record,repository,queries,actions}.ts; src/app/dashboard/files/{page.tsx,FilesManager.tsx}; src/components/Sidebar.tsx; vitest.config.ts; supabase/migrations/20261112110000_set_user_files_bucket_limits.sql. (Relies on the existing `files` table RLS and `user-files` storage policies from E3; the new migration hardens the bucket's limits.)
 Tools: npm audit (prod + full), manual review
 
 ## Summary
@@ -11,16 +11,17 @@ Tools: npm audit (prod + full), manual review
 | Critical | 0 | 0 | 0 |
 | High | 0 | 0 | 0 |
 | Medium | 0 | 0 | 0 |
-| Low | 3 | 0 | 0 |
+| Low | 2 | 1 | 0 |
 
-No Critical or High findings: the release gate is not blocked. The Low findings below
-either need a decision (F1) or are pre-existing/tooling (F3).
+No Critical or High findings: the release gate is not blocked. F1 is fixed by the new
+bucket-limits migration; the remaining Low findings are cosmetic/self-only (F2) and
+pre-existing tooling (F3).
 
 ## Findings
 
 ### F1: Upload limits enforced only in the app, not on the bucket
 - Severity: Low
-- Status: Open (needs your decision — adds a migration, which is outside the approved "no migration" scope)
+- Status: Fixed — `supabase/migrations/20261112110000_set_user_files_bucket_limits.sql` sets `file_size_limit` (10&nbsp;MB) and `allowed_mime_types` on the `user-files` bucket, so Storage itself now rejects oversized/other-typed objects even on a direct API upload. Takes effect on hosted once the migration is pushed (`supabase db push`, dry-run first).
 - Location: `supabase/migrations/20261107202128_create_storage_bucket.sql` (bucket created without `file_size_limit` / `allowed_mime_types`); app-layer gate in `src/lib/files/validation.ts` + re-check in `src/lib/files/record.ts`.
 - Risk: The 10&nbsp;MB cap and the mime allow-list live in our code. The browser uploads bytes straight to Storage, and a determined signed-in user could call the Storage API directly (bypassing our UI) to put an oversized or other-typed object **in their own folder**. Row-Level Security still stops them touching anyone else's files, so the blast radius is their own storage quota and project storage cost — not other users' data.
 - How an attacker could use it: An authenticated user scripts large uploads to their own `user-files/<their-id>/` folder, running up the project's storage bill. They cannot reach another user's folder (storage RLS checks `foldername[1] = auth.uid()`).
