@@ -12,7 +12,6 @@ import Select from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import NextLink from "next/link";
 import { saveDecisionRecordAction } from "@/lib/decision-records/actions";
 import {
   validateDecisionRecord,
@@ -103,9 +102,7 @@ export default function DecisionRecordForm({
         <Alert severity="success" role="status">
           {state.notice} Your record is saved to your profile.
         </Alert>
-        <Link component={NextLink} href="/dashboard">
-          Back to your records
-        </Link>
+        <Link href="/dashboard">Back to your records</Link>
       </Stack>
     );
   }

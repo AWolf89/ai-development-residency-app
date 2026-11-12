@@ -1,6 +1,7 @@
 "use client";
 
 import { createTheme } from "@mui/material/styles";
+import LinkBehaviour from "@/components/LinkBehaviour";
 
 // Career Evidence Agent base theme.
 // Keep design tokens here so components stay consistent across the app.
@@ -33,8 +34,14 @@ const theme = createTheme({
     h2: { fontWeight: 700 },
   },
   components: {
+    // Route MUI links/buttons through the Next.js router (see LinkBehaviour).
+    // This lets Server Components pass only a string `href` while keeping SPA nav.
+    MuiLink: {
+      defaultProps: { component: LinkBehaviour },
+    },
     // MUI's default keyboard focus is a faint ripple; add a clear outline (WCAG 2.4.7).
     MuiButtonBase: {
+      defaultProps: { LinkComponent: LinkBehaviour },
       styleOverrides: { root: { "&.Mui-focusVisible": focusRing } },
     },
     // MUI's default outlined-input border (~1.7:1 on white) is too faint; UI parts need 3:1 (WCAG 1.4.11).
