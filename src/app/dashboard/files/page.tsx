@@ -38,7 +38,7 @@ export default async function FilesPage() {
           </Typography>
           <Typography color="text.secondary">
             Upload documents and images you want to cite as evidence — PDFs,
-            images, text, or Word documents, up to 10&nbsp;MB each. Only you can
+            images, text, or Word documents, up to 25&nbsp;MB each. Only you can
             see your files.
           </Typography>
         </Stack>
