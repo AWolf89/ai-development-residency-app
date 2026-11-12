@@ -4,8 +4,6 @@ import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
-import Chip from "@mui/material/Chip";
-import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -21,18 +19,26 @@ import {
   type TargetRoleListItem,
   type RoleRequirementItem,
 } from "@/lib/target-roles/queries";
+import StatusChip from "@/components/StatusChip";
+import type { TagTone } from "@/theme-tokens";
 import ProfileForm from "./ProfileForm";
 
-const SOURCE_CHIP: Record<string, string> = {
-  artifact: "Artifact",
-  self_reported: "Self-reported",
+const DECISION_SOURCE: Record<string, { label: string; tone: TagTone }> = {
+  artifact: { label: "Artifact", tone: "green" },
+  self_reported: { label: "Self-reported", tone: "orange" },
 };
 
-const REQUIREMENT_SOURCE_CHIP: Record<string, string> = {
-  framework: "Framework",
-  onet: "O*NET",
-  job_description: "Job description",
+const REQUIREMENT_SOURCE: Record<string, { label: string; tone: TagTone }> = {
+  framework: { label: "Framework", tone: "green" },
+  onet: { label: "O*NET", tone: "blue" },
+  job_description: { label: "Job description", tone: "gray" },
 };
+
+const PAGE_SX = {
+  px: { xs: 2, md: 7 },
+  py: { xs: 4, md: 6 },
+  maxWidth: 1180,
+} as const;
 
 function TargetRoleCard({
   role,
@@ -69,11 +75,10 @@ function TargetRoleCard({
                 spacing={1}
                 sx={{ alignItems: "center", gap: 1 }}
               >
-                {req.source ? (
-                  <Chip
-                    label={REQUIREMENT_SOURCE_CHIP[req.source] ?? req.source}
-                    size="small"
-                    color={req.source === "framework" ? "primary" : "default"}
+                {req.source && REQUIREMENT_SOURCE[req.source] ? (
+                  <StatusChip
+                    label={REQUIREMENT_SOURCE[req.source].label}
+                    tone={REQUIREMENT_SOURCE[req.source].tone}
                   />
                 ) : null}
                 <Typography variant="body2">{req.requirement_text}</Typography>
@@ -106,11 +111,10 @@ function RecordCard({ record }: { record: DecisionRecordListItem }) {
             <Typography variant="subtitle1" component="h3">
               {record.title}
             </Typography>
-            {record.source ? (
-              <Chip
-                label={SOURCE_CHIP[record.source] ?? record.source}
-                size="small"
-                color={record.source === "artifact" ? "primary" : "default"}
+            {record.source && DECISION_SOURCE[record.source] ? (
+              <StatusChip
+                label={DECISION_SOURCE[record.source].label}
+                tone={DECISION_SOURCE[record.source].tone}
               />
             ) : null}
           </Stack>
@@ -164,14 +168,14 @@ export default async function DashboardPage() {
   }
 
   return (
-    <Container maxWidth="sm" sx={{ py: 8 }}>
+    <Box sx={PAGE_SX}>
       <Stack spacing={4}>
         <Stack
           direction="row"
           sx={{ justifyContent: "space-between", alignItems: "center" }}
         >
           <Typography variant="h4" component="h1">
-            Your account
+            Your profile
           </Typography>
           <Box component="form" action={logout}>
             <Button type="submit" variant="outlined">
@@ -278,6 +282,6 @@ export default async function DashboardPage() {
           )}
         </Stack>
       </Stack>
-    </Container>
+    </Box>
   );
 }
