@@ -18,15 +18,30 @@ const DRAWER_WIDTH = 248;
 
 type NavItem = { label: string; href: string | null };
 
-// Order mirrors the prototype. Only "My profile" is wired today; the rest are
-// future features, shown disabled with a "Soon" marker.
+// Order mirrors the prototype. Wired items link; the rest are future features,
+// shown disabled with a "Soon" marker.
 const NAV_ITEMS: NavItem[] = [
-  { label: "Upload files", href: null },
+  { label: "Upload files", href: "/dashboard/files" },
   { label: "Review claims", href: null },
   { label: "Interview", href: null },
   { label: "Gap check", href: null },
   { label: "My profile", href: "/dashboard" },
 ];
+
+/**
+ * The active nav href is the *longest* wired href that prefixes the current path.
+ * This keeps `/dashboard/files` highlighting "Upload files" (not also the shorter
+ * "/dashboard" of "My profile"), while sub-pages like `/dashboard/decision-records`
+ * still fall back to "My profile".
+ */
+function resolveActiveHref(pathname: string): string | null {
+  const matches = NAV_ITEMS.map((item) => item.href).filter(
+    (href): href is string =>
+      href !== null && (pathname === href || pathname.startsWith(`${href}/`))
+  );
+  matches.sort((a, b) => b.length - a.length);
+  return matches[0] ?? null;
+}
 
 const SoonBadge = () => (
   <Box
@@ -51,6 +66,7 @@ const SoonBadge = () => (
 
 function NavContent({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
+  const activeHref = resolveActiveHref(pathname);
 
   return (
     <Box
@@ -83,7 +99,7 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
         sx={{ display: "flex", flexDirection: "column", gap: 1 }}
       >
         {NAV_ITEMS.map((item) => {
-          const active = item.href !== null && pathname.startsWith(item.href);
+          const active = item.href !== null && item.href === activeHref;
 
           if (item.href === null) {
             return (

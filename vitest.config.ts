@@ -18,6 +18,8 @@ export default defineConfig({
       all: true, // count included files even when a test file does not import them
       include: [
         "src/lib/**/validation.ts",
+        "src/lib/files/mappers.ts",
+        "src/lib/files/record.ts",
         "src/lib/decision-records/mappers.ts",
         "src/lib/decision-records/save.ts",
         "src/lib/target-roles/extract.ts",
