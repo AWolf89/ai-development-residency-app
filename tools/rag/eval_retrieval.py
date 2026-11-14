@@ -13,7 +13,8 @@ Questions file: a list of {"q": "...", "expect": ["<ref_id>", ...]}, where ref_i
 O*NET SOC code (e.g. "15-2051.00") or a framework slug. expect = [] means the corpus has no
 answer and retrieval should abstain (no relevant hit).
 
-Env: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, OPENROUTER_API_KEY.
+Env: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SECRET_KEY, OPENROUTER_API_KEY (service-role, because
+reference_chunks is readable only by authenticated users and this script has no user session).
 Reports hit rate @k, MRR (1.0 = right answer always first), and a suggested minSimilarity
 that separates answerable from unanswerable questions. Exit: 0 hit rate >= threshold, 1 below,
 2 bad input / request failure.
@@ -59,10 +60,12 @@ def main():
         return 2
 
     base = os.environ.get("NEXT_PUBLIC_SUPABASE_URL", "").rstrip("/")
-    pkey = os.environ.get("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY")
+    # reference_chunks is readable only by authenticated users (RLS mirrors reference_items),
+    # and this eval has no user session, so it uses the service-role key like the backfill.
+    skey = os.environ.get("SUPABASE_SECRET_KEY")
     okey = os.environ.get("OPENROUTER_API_KEY")
-    if not (base and pkey and okey):
-        print("ERROR: set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, OPENROUTER_API_KEY", file=sys.stderr)
+    if not (base and skey and okey):
+        print("ERROR: set NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SECRET_KEY, OPENROUTER_API_KEY", file=sys.stderr)
         return 2
 
     emb = http("POST", EMBED_URL, {"Authorization": f"Bearer {okey}", "Content-Type": "application/json"},
@@ -70,7 +73,7 @@ def main():
                 "provider": {"data_collection": "deny", "zdr": True}})
     vecs = [d["embedding"] for d in sorted(emb["data"], key=lambda d: d["index"])]
 
-    supa_headers = {"apikey": pkey, "Authorization": f"Bearer {pkey}", "Content-Type": "application/json"}
+    supa_headers = {"apikey": skey, "Authorization": f"Bearer {skey}", "Content-Type": "application/json"}
     rows, hits, rr, ans_sims, none_sims = [], 0, 0.0, [], []
     for x, v in zip(qs, vecs):
         res = http("POST", f"{base}/rest/v1/rpc/reference_hybrid_search", supa_headers,

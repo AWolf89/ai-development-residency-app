@@ -102,6 +102,7 @@ function dedup(items: string[]): string[] {
 }
 
 function makeReferenceChunk(args: {
+  id?: string;
   source: string;
   ref_id: string;
   ref_kind: string;
@@ -111,7 +112,7 @@ function makeReferenceChunk(args: {
   source_version: string | null;
 }): ReferenceChunk {
   return {
-    id: `${args.source}:${args.ref_id}:${args.section}`,
+    id: args.id ?? `${args.source}:${args.ref_id}:${args.section}`,
     source: args.source,
     ref_id: args.ref_id,
     ref_kind: args.ref_kind,
@@ -131,6 +132,9 @@ function chunkFrameworkRow(row: RawReferenceRow): ReferenceChunk {
   const body = [descr, ...extras].filter(Boolean).join("; ");
   const content = body ? `${row.name} — ${body}` : row.name;
   return makeReferenceChunk({
+    // entity_type is part of the id because a slug can repeat across framework entity types
+    // (reference_items is unique on source+entity_type+external_id, not external_id alone).
+    id: `${FRAMEWORK_SOURCE}:${row.entity_type}:${row.external_id}`,
     source: FRAMEWORK_SOURCE,
     ref_id: row.external_id,
     ref_kind: `framework_${row.entity_type}`,

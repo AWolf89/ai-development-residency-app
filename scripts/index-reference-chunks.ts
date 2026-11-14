@@ -21,7 +21,7 @@ import { chunkReferenceItems } from "../src/lib/rag/chunk";
 import { embedBatch } from "../src/lib/llm/embed";
 import type { RawReferenceRow, ReferenceChunk } from "../src/lib/rag/types";
 
-const PAGE = 1000;
+const PAGE = 5000;
 const EMBED_BATCH = 100;
 
 function env(name: string): string {
@@ -31,42 +31,89 @@ function env(name: string): string {
   return value;
 }
 
-/** Trim a raw row to only what the chunker reads, to keep the whole corpus in memory. */
-function slim(row: Record<string, unknown>): RawReferenceRow {
-  const payload = (row.payload ?? {}) as Record<string, unknown>;
-  const source = String(row.source);
-  // Framework chunks read the full payload (labels etc.); O*NET reads only the SOC code.
-  const slimPayload =
-    source === "onet" && row.entity_type !== "occupation"
-      ? { onetsoc_code: payload["onetsoc_code"] }
-      : payload;
-  return {
-    source,
-    entity_type: String(row.entity_type),
-    external_id: String(row.external_id),
-    name: String(row.name ?? ""),
-    description: row.description == null ? null : String(row.description),
-    payload: slimPayload,
-    source_version:
-      row.source_version == null ? null : String(row.source_version),
-  };
+function str(value: unknown): string {
+  return value == null ? "" : String(value);
+}
+function nullableStr(value: unknown): string | null {
+  return value == null ? null : String(value);
 }
 
+/**
+ * Paginate a PostgREST query, advancing by the number of rows actually returned so it works
+ * whether or not the server caps the page size.
+ */
+async function paginate(
+  build: (
+    from: number,
+    to: number
+  ) => PromiseLike<{
+    data: Record<string, unknown>[] | null;
+    error: { message: string } | null;
+  }>
+): Promise<Record<string, unknown>[]> {
+  const rows: Record<string, unknown>[] = [];
+  for (let from = 0; ;) {
+    const { data, error } = await build(from, from + PAGE - 1);
+    if (error) throw new Error(`reference_items read failed: ${error.message}`);
+    if (!data || data.length === 0) break;
+    rows.push(...data);
+    from += data.length;
+    if (data.length < PAGE) break;
+  }
+  return rows;
+}
+
+/**
+ * Load the corpus trimmed to only what the chunker reads. Framework rows (few) keep the full
+ * payload (the chunker pulls labels from it); O*NET rows (~316k) fetch only name/description
+ * plus the SOC code extracted server-side (`payload->>onetsoc_code`), so the large O*NET
+ * payloads are never transferred — the whole reason the naive full-payload load timed out.
+ */
 async function loadAllRows(
   supabase: SupabaseClient
 ): Promise<RawReferenceRow[]> {
-  const rows: RawReferenceRow[] = [];
-  for (let from = 0; ; from += PAGE) {
-    const { data, error } = await supabase
+  const framework = await paginate((from, to) =>
+    supabase
       .from("reference_items")
       .select(
         "source, entity_type, external_id, name, description, payload, source_version"
       )
-      .range(from, from + PAGE - 1);
-    if (error) throw new Error(`reference_items read failed: ${error.message}`);
-    if (!data || data.length === 0) break;
-    for (const row of data) rows.push(slim(row));
-    if (data.length < PAGE) break;
+      .eq("source", "techfleet-spf")
+      .range(from, to)
+  );
+  const onet = await paginate((from, to) =>
+    supabase
+      .from("reference_items")
+      .select(
+        "entity_type, external_id, name, description, source_version, onetsoc_code:payload->>onetsoc_code"
+      )
+      .eq("source", "onet")
+      .range(from, to)
+  );
+
+  const rows: RawReferenceRow[] = [];
+  for (const r of framework) {
+    rows.push({
+      source: str(r.source),
+      entity_type: str(r.entity_type),
+      external_id: str(r.external_id),
+      name: str(r.name),
+      description: nullableStr(r.description),
+      payload: (r.payload ?? {}) as Record<string, unknown>,
+      source_version: nullableStr(r.source_version),
+    });
+  }
+  for (const r of onet) {
+    rows.push({
+      source: "onet",
+      entity_type: str(r.entity_type),
+      external_id: str(r.external_id),
+      name: str(r.name),
+      description: nullableStr(r.description),
+      payload:
+        r.onetsoc_code == null ? {} : { onetsoc_code: str(r.onetsoc_code) },
+      source_version: nullableStr(r.source_version),
+    });
   }
   return rows;
 }
@@ -109,8 +156,15 @@ async function main() {
   console.log(`  ${rows.length} rows`);
 
   console.log("Chunking …");
-  const chunks = chunkReferenceItems(rows);
-  console.log(`  ${chunks.length} chunks`);
+  const rawChunks = chunkReferenceItems(rows);
+  // Defensive dedup by id: the upsert's ON CONFLICT (id) cannot touch the same id twice in
+  // one batch, so two chunks that resolve to the same id would abort it. Chunk ids are unique
+  // by construction; this is a belt-and-braces guard (keeps the last occurrence).
+  const chunks = [...new Map(rawChunks.map((c) => [c.id, c])).values()];
+  const dupes = rawChunks.length - chunks.length;
+  console.log(
+    `  ${chunks.length} chunks${dupes ? ` (${dupes} duplicate id(s) dropped)` : ""}`
+  );
 
   const existing = await loadExistingHashes(supabase);
   const changed: ReferenceChunk[] = chunks.filter(
