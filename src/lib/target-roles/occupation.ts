@@ -19,8 +19,13 @@ export type OccupationAttribute = {
   importance: number;
 };
 
-/** Which catalog a title suggestion came from. */
-export type RoleSource = "framework" | "onet";
+/**
+ * Which catalog a title suggestion came from. "framework" and "specialization"
+ * are both part of the Skills & Practices Framework (and share the "Framework"
+ * UI tag); they are distinguished so the right derivation path runs — a job-
+ * function's curated skills vs. a specialization's tasks + related-role skills.
+ */
+export type RoleSource = "framework" | "specialization" | "onet";
 
 export type OccupationSuggestion = {
   id: string;
@@ -37,6 +42,16 @@ export type FrameworkRoleCandidate = {
   /** Framework slug. */
   code: string;
   /** "Other job titles you may see in the world" — colloquial aliases. */
+  aliases: string[];
+};
+
+/** A Skills & Practices Framework specialization considered for the typeahead. */
+export type SpecializationCandidate = {
+  id: string;
+  name: string;
+  /** Framework slug. */
+  code: string;
+  /** Related job-function titles and the free-text "Roles" field, for matching. */
   aliases: string[];
 };
 
@@ -181,6 +196,53 @@ export function parseRoleAliases(payload: Record<string, unknown>): string[] {
   return dedupeByLower(parts.map((p) => p.trim()).filter((p) => p.length > 0));
 }
 
+/** A named, aliased candidate (a job-function or a specialization) to rank. */
+type NamedCandidate = {
+  id: string;
+  name: string;
+  code: string;
+  aliases: string[];
+};
+
+/**
+ * Shared ranking for name+alias candidates: a candidate matches when the prefix
+ * hits its name or any alias; name-prefix matches come first, then other
+ * name/alias matches. Case-insensitive, capped, and tagged with `source`.
+ */
+function rankNamedCandidates(
+  prefix: string,
+  candidates: NamedCandidate[],
+  source: RoleSource,
+  limit: number
+): OccupationSuggestion[] {
+  const needle = prefix.trim().toLowerCase();
+  if (needle.length === 0) {
+    return [];
+  }
+
+  const starts: OccupationSuggestion[] = [];
+  const contains: OccupationSuggestion[] = [];
+  for (const candidate of candidates) {
+    const name = candidate.name.toLowerCase();
+    const suggestion: OccupationSuggestion = {
+      id: candidate.id,
+      name: candidate.name,
+      code: candidate.code,
+      source,
+    };
+    if (name.startsWith(needle)) {
+      starts.push(suggestion);
+    } else if (
+      name.includes(needle) ||
+      candidate.aliases.some((a) => a.toLowerCase().includes(needle))
+    ) {
+      contains.push(suggestion);
+    }
+  }
+
+  return [...starts, ...contains].slice(0, Math.max(0, limit));
+}
+
 /**
  * Order framework job-functions for the typeahead: a role matches when the prefix
  * hits its name or any of its aliases, so "ux" finds "UX Designer". Name-prefix
@@ -191,30 +253,104 @@ export function rankFrameworkRoles(
   roles: FrameworkRoleCandidate[],
   limit: number = DEFAULT_SUGGESTION_LIMIT
 ): OccupationSuggestion[] {
-  const needle = prefix.trim().toLowerCase();
-  if (needle.length === 0) {
+  return rankNamedCandidates(prefix, roles, "framework", limit);
+}
+
+// --- Skills & Practices Framework specializations ---------------------------
+
+const SPECIALIZATION_TASKS_FIELD = "Specialization Tasks";
+const RELATED_POSITIONS_FIELD = "Related Tech Fleet Positions";
+const ROLES_FIELD = "Roles";
+
+/** Read the `slug` of a framework relation entry (an object with a `slug`). */
+function entrySlug(entry: unknown): string {
+  if (entry && typeof entry === "object" && "slug" in entry) {
+    const slug = (entry as { slug: unknown }).slug;
+    return typeof slug === "string" ? slug.trim() : "";
+  }
+  return "";
+}
+
+/**
+ * The specialization's own task labels (e.g. "Card Sorting", "Usability
+ * Testing"). These labels are drawn from the framework's activities, so saving
+ * them resolves to framework provenance. De-duplicated and trimmed.
+ */
+export function parseSpecializationTasks(
+  payload: Record<string, unknown>
+): string[] {
+  const raw = payload[SPECIALIZATION_TASKS_FIELD];
+  if (!Array.isArray(raw)) {
     return [];
   }
+  return dedupeByLower(raw.map(entryLabel).filter((l) => l.length > 0));
+}
 
-  const starts: OccupationSuggestion[] = [];
-  const contains: OccupationSuggestion[] = [];
-  for (const role of roles) {
-    const name = role.name.toLowerCase();
-    const suggestion: OccupationSuggestion = {
-      id: role.id,
-      name: role.name,
-      code: role.code,
-      source: "framework",
-    };
-    if (name.startsWith(needle)) {
-      starts.push(suggestion);
-    } else if (
-      name.includes(needle) ||
-      role.aliases.some((a) => a.toLowerCase().includes(needle))
-    ) {
-      contains.push(suggestion);
-    }
+/**
+ * The slugs of the job-functions related to this specialization. The repository
+ * walks these to borrow their curated skills when a specialization has few or no
+ * tasks of its own.
+ */
+export function parseRelatedRoleSlugs(
+  payload: Record<string, unknown>
+): string[] {
+  const raw = payload[RELATED_POSITIONS_FIELD];
+  if (!Array.isArray(raw)) {
+    return [];
   }
+  return dedupeByLower(raw.map(entrySlug).filter((s) => s.length > 0));
+}
 
-  return [...starts, ...contains].slice(0, Math.max(0, limit));
+/**
+ * Aliases used to find a specialization in the typeahead: the labels of its
+ * related job-functions plus the free-text "Roles" field, so "researcher" can
+ * surface "Qualitative UX Research".
+ */
+export function parseSpecializationAliases(
+  payload: Record<string, unknown>
+): string[] {
+  const relatedRaw = payload[RELATED_POSITIONS_FIELD];
+  const related = Array.isArray(relatedRaw) ? relatedRaw.map(entryLabel) : [];
+  const rolesRaw = payload[ROLES_FIELD];
+  const roles =
+    typeof rolesRaw === "string"
+      ? [rolesRaw]
+      : Array.isArray(rolesRaw)
+        ? rolesRaw.map(entryLabel)
+        : [];
+  return dedupeByLower(
+    [...related, ...roles].map((s) => s.trim()).filter((s) => s.length > 0)
+  );
+}
+
+/**
+ * Derive a specialization's requirement list: its own tasks first (the most
+ * specialization-specific signal, and already framework activities), then the
+ * skills of its related job-functions, de-duplicated (case-insensitive) and
+ * capped. `relatedRoleSkills` is the already-extracted skills of the related
+ * job-functions (the repository fetches and extracts them).
+ */
+export function extractSpecializationRequirements(
+  payload: Record<string, unknown>,
+  relatedRoleSkills: string[] = [],
+  limit: number = DEFAULT_REQUIREMENT_LIMIT
+): string[] {
+  const tasks = parseSpecializationTasks(payload);
+  return dedupeByLower([...tasks, ...relatedRoleSkills]).slice(
+    0,
+    Math.max(0, limit)
+  );
+}
+
+/**
+ * Order specializations for the typeahead: matches on the specialization name or
+ * an alias (related job-function title / "Roles"). Name-prefix matches first.
+ * Tagged source="specialization" so derivation uses the specialization path.
+ */
+export function rankSpecializations(
+  prefix: string,
+  specializations: SpecializationCandidate[],
+  limit: number = DEFAULT_SUGGESTION_LIMIT
+): OccupationSuggestion[] {
+  return rankNamedCandidates(prefix, specializations, "specialization", limit);
 }

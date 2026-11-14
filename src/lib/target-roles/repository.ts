@@ -14,15 +14,21 @@ import { pickOnetSearchTerm } from "./matching";
 import {
   rankOccupationSuggestions,
   rankFrameworkRoles,
+  rankSpecializations,
   extractFrameworkRoleSkills,
+  extractSpecializationRequirements,
   parseRoleAliases,
+  parseRelatedRoleSlugs,
+  parseSpecializationAliases,
   type OccupationSuggestion,
   type OccupationAttribute,
   type FrameworkRoleCandidate,
+  type SpecializationCandidate,
 } from "./occupation";
 
 const FRAMEWORK_SOURCE = "techfleet-spf";
 const JOB_FUNCTION_ENTITY = "job-functions";
+const SPECIALIZATION_ENTITY = "specializations";
 
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -100,19 +106,54 @@ export async function searchFrameworkRoles(
 }
 
 /**
- * Merged title suggestions: Framework roles first (the curated, tech-relevant
- * titles), then O*NET occupations, capped. Framework-first because this is a
- * tech-career app, and those titles (and their aliases) are what users look for.
+ * Title-path autosuggest over the Skills & Practices Framework specializations
+ * (Qualitative UX Research, Growth Product Management, …). Like job-functions
+ * there are only a couple dozen, so we fetch them all and match name + aliases in
+ * memory via the pure `rankSpecializations` (tagged source="specialization").
+ */
+export async function searchSpecializations(
+  supabase: ServerClient,
+  prefix: string
+): Promise<OccupationSuggestion[]> {
+  const term = prefix.trim();
+  if (term.length < MIN_OCCUPATION_PREFIX) {
+    return [];
+  }
+  const { data, error } = await supabase
+    .from("reference_items")
+    .select("id, name, external_id, payload")
+    .eq("source", FRAMEWORK_SOURCE)
+    .eq("entity_type", SPECIALIZATION_ENTITY);
+  if (error) {
+    throw new Error(error.message);
+  }
+  const specializations: SpecializationCandidate[] = (data ?? []).map((r) => ({
+    id: r.id as string,
+    name: r.name as string,
+    code: r.external_id as string,
+    aliases: parseSpecializationAliases(
+      (r.payload ?? {}) as Record<string, unknown>
+    ),
+  }));
+  return rankSpecializations(term, specializations);
+}
+
+/**
+ * Merged title suggestions: Framework job-functions and specializations first
+ * (the curated, tech-relevant titles — both shown with the "Framework" tag), then
+ * O*NET occupations, capped. Framework-first because this is a tech-career app,
+ * and those titles (and their aliases) are what users look for.
  */
 export async function searchRoleTitles(
   supabase: ServerClient,
   prefix: string
 ): Promise<OccupationSuggestion[]> {
-  const [framework, onet] = await Promise.all([
+  const [framework, specializations, onet] = await Promise.all([
     searchFrameworkRoles(supabase, prefix),
+    searchSpecializations(supabase, prefix),
     searchOccupations(supabase, prefix),
   ]);
-  return [...framework, ...onet].slice(0, 10);
+  return [...framework, ...specializations, ...onet].slice(0, 10);
 }
 
 /**
@@ -144,6 +185,58 @@ export async function getFrameworkRoleSkills(
   return extractFrameworkRoleSkills(
     (data.payload ?? {}) as Record<string, unknown>
   );
+}
+
+/**
+ * The derived requirements of a Framework specialization, by its slug: its own
+ * tasks first, then the curated skills of its related job-functions (walked via
+ * the payload's related-position slugs). The combining/ranking logic is pure and
+ * tested in occupation.test.ts; this wrapper only fetches. Returns [] for an
+ * unknown slug or one with no derivable data.
+ */
+export async function getSpecializationRequirements(
+  supabase: ServerClient,
+  slug: string
+): Promise<string[]> {
+  const value = slug.trim();
+  if (value.length === 0) {
+    return [];
+  }
+  const { data, error } = await supabase
+    .from("reference_items")
+    .select("payload")
+    .eq("source", FRAMEWORK_SOURCE)
+    .eq("entity_type", SPECIALIZATION_ENTITY)
+    .eq("external_id", value)
+    .maybeSingle();
+  if (error) {
+    throw new Error(error.message);
+  }
+  if (!data) {
+    return [];
+  }
+  const payload = (data.payload ?? {}) as Record<string, unknown>;
+
+  // Borrow the related job-functions' curated skills to flesh out thin
+  // specializations (e.g. Sprint Master → Agile Coach).
+  const relatedSlugs = parseRelatedRoleSlugs(payload);
+  let relatedRoleSkills: string[] = [];
+  if (relatedSlugs.length > 0) {
+    const { data: related, error: relatedError } = await supabase
+      .from("reference_items")
+      .select("payload")
+      .eq("source", FRAMEWORK_SOURCE)
+      .eq("entity_type", JOB_FUNCTION_ENTITY)
+      .in("external_id", relatedSlugs);
+    if (relatedError) {
+      throw new Error(relatedError.message);
+    }
+    relatedRoleSkills = (related ?? []).flatMap((r) =>
+      extractFrameworkRoleSkills((r.payload ?? {}) as Record<string, unknown>)
+    );
+  }
+
+  return extractSpecializationRequirements(payload, relatedRoleSkills);
 }
 
 /**

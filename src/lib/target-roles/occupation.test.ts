@@ -5,9 +5,15 @@ import {
   extractFrameworkRoleSkills,
   parseRoleAliases,
   rankFrameworkRoles,
+  parseSpecializationTasks,
+  parseRelatedRoleSlugs,
+  parseSpecializationAliases,
+  extractSpecializationRequirements,
+  rankSpecializations,
   type OccupationAttribute,
   type OccupationSuggestion,
   type FrameworkRoleCandidate,
+  type SpecializationCandidate,
 } from "./occupation";
 
 describe("buildRequirementsFromOccupation", () => {
@@ -239,5 +245,162 @@ describe("rankFrameworkRoles", () => {
   it("returns nothing for a blank prefix or no match", () => {
     expect(rankFrameworkRoles("   ", roles)).toEqual([]);
     expect(rankFrameworkRoles("nurse", roles)).toEqual([]);
+  });
+});
+
+// --- Specializations --------------------------------------------------------
+
+describe("parseSpecializationTasks", () => {
+  it("reads task labels, de-duplicates, and trims", () => {
+    const payload = {
+      "Specialization Tasks": [
+        { slug: "card-sorting", label: "Card Sorting " },
+        { slug: "interviewing", label: "Interviewing" },
+        { slug: "card-sorting-2", label: "card sorting" },
+      ],
+    };
+    expect(parseSpecializationTasks(payload)).toEqual([
+      "Card Sorting",
+      "Interviewing",
+    ]);
+  });
+
+  it("returns an empty list when the field is missing or not an array", () => {
+    expect(parseSpecializationTasks({})).toEqual([]);
+    expect(
+      parseSpecializationTasks({ "Specialization Tasks": "nope" })
+    ).toEqual([]);
+  });
+});
+
+describe("parseRelatedRoleSlugs", () => {
+  it("reads related job-function slugs and de-duplicates", () => {
+    const payload = {
+      "Related Tech Fleet Positions": [
+        { slug: "ux-researcher", label: "UX Researcher" },
+        { slug: "product-designer", label: "Product Designer" },
+        { slug: "ux-researcher", label: "dupe" },
+      ],
+    };
+    expect(parseRelatedRoleSlugs(payload)).toEqual([
+      "ux-researcher",
+      "product-designer",
+    ]);
+  });
+
+  it("returns an empty list when the field is missing or empty", () => {
+    expect(parseRelatedRoleSlugs({})).toEqual([]);
+    expect(
+      parseRelatedRoleSlugs({ "Related Tech Fleet Positions": [] })
+    ).toEqual([]);
+  });
+});
+
+describe("parseSpecializationAliases", () => {
+  it("combines related-position labels and the free-text Roles field", () => {
+    const payload = {
+      "Related Tech Fleet Positions": [
+        { slug: "ux-researcher", label: "UX Researcher" },
+      ],
+      Roles: "UX (User Experience) Researcher",
+    };
+    expect(parseSpecializationAliases(payload)).toEqual([
+      "UX Researcher",
+      "UX (User Experience) Researcher",
+    ]);
+  });
+
+  it("returns an empty list when no alias source is present", () => {
+    expect(parseSpecializationAliases({})).toEqual([]);
+  });
+});
+
+describe("extractSpecializationRequirements", () => {
+  const payload = {
+    "Specialization Tasks": [
+      { label: "Card Sorting" },
+      { label: "Interviewing" },
+    ],
+  };
+
+  it("lists tasks first, then related-role skills, and de-duplicates", () => {
+    const result = extractSpecializationRequirements(payload, [
+      "Interviewing", // duplicate of a task — collapsed
+      "Prototyping",
+    ]);
+    expect(result).toEqual(["Card Sorting", "Interviewing", "Prototyping"]);
+  });
+
+  it("falls back to related-role skills when there are no tasks", () => {
+    expect(
+      extractSpecializationRequirements({}, ["User Research", "Facilitation"])
+    ).toEqual(["User Research", "Facilitation"]);
+  });
+
+  it("returns an empty list when neither source has data", () => {
+    expect(extractSpecializationRequirements({}, [])).toEqual([]);
+  });
+
+  it("caps the combined list at the limit, tasks taking priority", () => {
+    const result = extractSpecializationRequirements(
+      payload,
+      ["Prototyping", "Research"],
+      2
+    );
+    expect(result).toEqual(["Card Sorting", "Interviewing"]);
+  });
+});
+
+describe("rankSpecializations", () => {
+  const specs: SpecializationCandidate[] = [
+    {
+      id: "sp-1",
+      name: "Qualitative UX Research",
+      code: "qualitative-ux-research",
+      aliases: ["UX Researcher", "UX (User Experience) Researcher"],
+    },
+    {
+      id: "sp-2",
+      name: "Back-end Developer",
+      code: "back-end-developer",
+      aliases: [],
+    },
+    {
+      id: "sp-3",
+      name: "Growth Product Management",
+      code: "growth-product-management",
+      aliases: ["Product Manager"],
+    },
+  ];
+
+  it("matches on the specialization name prefix and tags source=specialization", () => {
+    const result = rankSpecializations("qualitative", specs);
+    expect(result).toEqual([
+      {
+        id: "sp-1",
+        name: "Qualitative UX Research",
+        code: "qualitative-ux-research",
+        source: "specialization",
+      },
+    ]);
+  });
+
+  it("matches on an alias when the name doesn't match", () => {
+    // "researcher" appears only in sp-1's aliases.
+    expect(rankSpecializations("researcher", specs).map((r) => r.id)).toEqual([
+      "sp-1",
+    ]);
+  });
+
+  it("orders name-prefix matches before alias/contains matches", () => {
+    // "product" starts no name, but is inside sp-3's name and sp-3's alias.
+    // "growth" starts sp-3's name.
+    const result = rankSpecializations("product", specs);
+    expect(result.map((r) => r.id)).toEqual(["sp-3"]);
+  });
+
+  it("returns nothing for a blank prefix or no match", () => {
+    expect(rankSpecializations("   ", specs)).toEqual([]);
+    expect(rankSpecializations("nurse", specs)).toEqual([]);
   });
 });
