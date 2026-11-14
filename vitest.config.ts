@@ -31,6 +31,12 @@ export default defineConfig({
         "src/lib/reference/types.ts",
         "src/lib/reference/framework.ts",
         "src/lib/reference/onet.ts",
+        // AI foundation — pure modules only (the server-only gateway boundary in
+        // client.ts/run.ts/log.ts/supabase-sink.ts is covered by tests/llm/ via tsx, not here).
+        "src/lib/llm/config.ts",
+        "src/lib/llm/untrusted.ts",
+        "src/lib/llm/structured.ts",
+        "src/lib/llm/prompts/career-chat.ts",
       ],
       thresholds: {
         lines: 80,
