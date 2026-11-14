@@ -38,18 +38,14 @@ clause: no separate vector service, no Python/LangGraph).
 
 ## Considered Options
 
-* **pgvector in the existing Supabase Postgres**, two chunk tables, hybrid search in SQL
+* pgvector in the existing Supabase Postgres, two chunk tables, hybrid search in SQL
 * A dedicated vector database (Pinecone / Qdrant / Weaviate) alongside Supabase
 * Vector-only search in pgvector (no keyword/full-text leg)
 * Lexical search only (extend the existing trigram/`matchFramework` matching)
 
 ## Decision Outcome
 
-Chosen option: **"pgvector in the existing Supabase Postgres, two chunk tables, hybrid
-search in SQL"**, because it keeps embeddings under the same database, RLS, and backups as
-the rest of the app (no new service to run or secure), gives both a meaning search and an
-exact-term search, and reuses the gateway for embeddings so cost and privacy stay in one
-place.
+Chosen option: "pgvector in the existing Supabase Postgres, two chunk tables, hybrid search in SQL", because it keeps embeddings under the same database, RLS, and backups as the rest of the app (no new service to run or secure), gives both a meaning search and an exact-term search, and reuses the gateway for embeddings so cost and privacy stay in one place.
 
 1. **pgvector, additive tables.** Enable `vector`; add `reference_chunks` (shared,
    read-only) and `evidence_chunks` (per-user, own-rows RLS). `reference_items` and the
