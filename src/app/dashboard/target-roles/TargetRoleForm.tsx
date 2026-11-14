@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import {
   saveTargetRoleAction,
   suggestOccupationsAction,
-  deriveOccupationRequirementsAction,
+  deriveRequirementsAction,
 } from "@/lib/target-roles/actions";
 import { extractRequirements } from "@/lib/target-roles/extract";
 import {
@@ -114,13 +114,18 @@ export default function TargetRoleForm({ initialValues }: TargetRoleFormProps) {
     setTitle(selected.name);
     setClientError(null);
     try {
-      const { requirements: derived } =
-        await deriveOccupationRequirementsAction(selected.code);
+      const { requirements: derived } = await deriveRequirementsAction(
+        selected.source,
+        selected.code
+      );
       setRows(toRows(derived.length > 0 ? derived : [""]));
     } catch {
       showError("Could not load that role's skills. Try another title.");
     }
   }
+
+  const sourceLabel = (s: OccupationSuggestion["source"]) =>
+    s === "framework" ? "Framework" : "O*NET";
 
   // --- JD path --------------------------------------------------------------
   function handleExtract() {
@@ -242,6 +247,23 @@ export default function TargetRoleForm({ initialValues }: TargetRoleFormProps) {
                 onInputChange={(_, value) => handleTitleInputChange(value)}
                 onChange={(_, selected) => handleOccupationSelected(selected)}
                 noOptionsText="Type a job title to search…"
+                renderOption={(props, option) => (
+                  <Box
+                    component="li"
+                    {...props}
+                    key={option.id}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      gap: 2,
+                    }}
+                  >
+                    <span>{option.name}</span>
+                    <Typography variant="caption" color="text.secondary">
+                      {sourceLabel(option.source)}
+                    </Typography>
+                  </Box>
+                )}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -368,7 +390,11 @@ export default function TargetRoleForm({ initialValues }: TargetRoleFormProps) {
           </Typography>
           {mode === "title" && sourceOccupation ? (
             <Typography variant="body2" color="text.secondary">
-              Derived from {sourceOccupation.name} (O*NET)
+              Derived from {sourceOccupation.name} (
+              {sourceOccupation.source === "framework"
+                ? "Skills & Practices Framework"
+                : "O*NET"}
+              )
             </Typography>
           ) : null}
           <Box component="ul" sx={{ m: 0, pl: 3 }}>

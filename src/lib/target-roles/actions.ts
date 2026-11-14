@@ -6,12 +6,14 @@ import { createClient } from "@/lib/supabase/server";
 import { saveTargetRole } from "./save";
 import {
   createSupabaseTargetRoleRepository,
-  searchOccupations,
+  searchRoleTitles,
   getOccupationAttributes,
+  getFrameworkRoleSkills,
 } from "./repository";
 import {
   buildRequirementsFromOccupation,
   type OccupationSuggestion,
+  type RoleSource,
 } from "./occupation";
 
 /**
@@ -107,14 +109,17 @@ export async function suggestOccupationsAction(
   if (!user) {
     return [];
   }
-  return searchOccupations(supabase, prefix);
+  // Framework roles (UX Designer, Product Manager, …) and O*NET occupations.
+  return searchRoleTitles(supabase, prefix);
 }
 
 /**
- * Title-path derivation: turn a chosen occupation (by SOC code) into a starter
- * requirement list the user then edits. Pure ranking lives in `occupation.ts`.
+ * Title-path derivation: turn a chosen title into a starter requirement list the
+ * user then edits. A Framework role uses its own curated skills; an O*NET
+ * occupation uses its importance-ranked SOC attributes.
  */
-export async function deriveOccupationRequirementsAction(
+export async function deriveRequirementsAction(
+  source: RoleSource,
   code: string
 ): Promise<{ requirements: string[] }> {
   const supabase = await createClient();
@@ -123,6 +128,9 @@ export async function deriveOccupationRequirementsAction(
   } = await supabase.auth.getUser();
   if (!user) {
     redirect("/login");
+  }
+  if (source === "framework") {
+    return { requirements: await getFrameworkRoleSkills(supabase, code) };
   }
   const attributes = await getOccupationAttributes(supabase, code);
   return { requirements: buildRequirementsFromOccupation(attributes) };

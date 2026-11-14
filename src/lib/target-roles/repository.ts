@@ -13,9 +13,16 @@ import type { FrameworkItem } from "./matching";
 import { pickOnetSearchTerm } from "./matching";
 import {
   rankOccupationSuggestions,
+  rankFrameworkRoles,
+  extractFrameworkRoleSkills,
+  parseRoleAliases,
   type OccupationSuggestion,
   type OccupationAttribute,
+  type FrameworkRoleCandidate,
 } from "./occupation";
+
+const FRAMEWORK_SOURCE = "techfleet-spf";
+const JOB_FUNCTION_ENTITY = "job-functions";
 
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -53,12 +60,90 @@ export async function searchOccupations(
   if (error) {
     throw new Error(error.message);
   }
-  const candidates = (data ?? []).map((r) => ({
+  const candidates: OccupationSuggestion[] = (data ?? []).map((r) => ({
     id: r.id as string,
     name: r.name as string,
     code: r.external_id as string,
+    source: "onet",
   }));
   return rankOccupationSuggestions(term, candidates);
+}
+
+/**
+ * Title-path autosuggest over the Skills & Practices Framework job-functions
+ * (UX Designer, Product Manager, …). There are only a handful, so we fetch them
+ * all and match name + aliases in memory via the pure `rankFrameworkRoles`.
+ */
+export async function searchFrameworkRoles(
+  supabase: ServerClient,
+  prefix: string
+): Promise<OccupationSuggestion[]> {
+  const term = prefix.trim();
+  if (term.length < MIN_OCCUPATION_PREFIX) {
+    return [];
+  }
+  const { data, error } = await supabase
+    .from("reference_items")
+    .select("id, name, external_id, payload")
+    .eq("source", FRAMEWORK_SOURCE)
+    .eq("entity_type", JOB_FUNCTION_ENTITY);
+  if (error) {
+    throw new Error(error.message);
+  }
+  const roles: FrameworkRoleCandidate[] = (data ?? []).map((r) => ({
+    id: r.id as string,
+    name: r.name as string,
+    code: r.external_id as string,
+    aliases: parseRoleAliases((r.payload ?? {}) as Record<string, unknown>),
+  }));
+  return rankFrameworkRoles(term, roles);
+}
+
+/**
+ * Merged title suggestions: Framework roles first (the curated, tech-relevant
+ * titles), then O*NET occupations, capped. Framework-first because this is a
+ * tech-career app, and those titles (and their aliases) are what users look for.
+ */
+export async function searchRoleTitles(
+  supabase: ServerClient,
+  prefix: string
+): Promise<OccupationSuggestion[]> {
+  const [framework, onet] = await Promise.all([
+    searchFrameworkRoles(supabase, prefix),
+    searchOccupations(supabase, prefix),
+  ]);
+  return [...framework, ...onet].slice(0, 10);
+}
+
+/**
+ * The curated skills of a Framework job-function, by its slug — used to derive
+ * requirements when a Framework role is picked. The ranking/extraction logic is
+ * tested in occupation.test.ts.
+ */
+export async function getFrameworkRoleSkills(
+  supabase: ServerClient,
+  slug: string
+): Promise<string[]> {
+  const value = slug.trim();
+  if (value.length === 0) {
+    return [];
+  }
+  const { data, error } = await supabase
+    .from("reference_items")
+    .select("payload")
+    .eq("source", FRAMEWORK_SOURCE)
+    .eq("entity_type", JOB_FUNCTION_ENTITY)
+    .eq("external_id", value)
+    .maybeSingle();
+  if (error) {
+    throw new Error(error.message);
+  }
+  if (!data) {
+    return [];
+  }
+  return extractFrameworkRoleSkills(
+    (data.payload ?? {}) as Record<string, unknown>
+  );
 }
 
 /**
