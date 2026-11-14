@@ -124,8 +124,10 @@ export default function TargetRoleForm({ initialValues }: TargetRoleFormProps) {
     }
   }
 
+  // Job-functions and specializations are both part of the Skills & Practices
+  // Framework, so they share the "Framework" tag; only O*NET differs.
   const sourceLabel = (s: OccupationSuggestion["source"]) =>
-    s === "framework" ? "Framework" : "O*NET";
+    s === "onet" ? "O*NET" : "Framework";
 
   // --- JD path --------------------------------------------------------------
   function handleExtract() {
@@ -391,9 +393,9 @@ export default function TargetRoleForm({ initialValues }: TargetRoleFormProps) {
           {mode === "title" && sourceOccupation ? (
             <Typography variant="body2" color="text.secondary">
               Derived from {sourceOccupation.name} (
-              {sourceOccupation.source === "framework"
-                ? "Skills & Practices Framework"
-                : "O*NET"}
+              {sourceOccupation.source === "onet"
+                ? "O*NET"
+                : "Skills & Practices Framework"}
               )
             </Typography>
           ) : null}

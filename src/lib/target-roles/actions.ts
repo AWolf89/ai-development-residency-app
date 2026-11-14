@@ -9,6 +9,7 @@ import {
   searchRoleTitles,
   getOccupationAttributes,
   getFrameworkRoleSkills,
+  getSpecializationRequirements,
 } from "./repository";
 import {
   buildRequirementsFromOccupation,
@@ -115,7 +116,8 @@ export async function suggestOccupationsAction(
 
 /**
  * Title-path derivation: turn a chosen title into a starter requirement list the
- * user then edits. A Framework role uses its own curated skills; an O*NET
+ * user then edits. A Framework job-function uses its own curated skills; a
+ * Framework specialization uses its tasks plus related-role skills; an O*NET
  * occupation uses its importance-ranked SOC attributes.
  */
 export async function deriveRequirementsAction(
@@ -131,6 +133,11 @@ export async function deriveRequirementsAction(
   }
   if (source === "framework") {
     return { requirements: await getFrameworkRoleSkills(supabase, code) };
+  }
+  if (source === "specialization") {
+    return {
+      requirements: await getSpecializationRequirements(supabase, code),
+    };
   }
   const attributes = await getOccupationAttributes(supabase, code);
   return { requirements: buildRequirementsFromOccupation(attributes) };
