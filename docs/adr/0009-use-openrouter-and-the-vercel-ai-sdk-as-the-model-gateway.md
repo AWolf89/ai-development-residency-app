@@ -36,14 +36,13 @@ a separate service or importing a Python/LangGraph stack.
 
 ## Considered Options
 
-* **OpenRouter + Vercel AI SDK**, wrapped in a single server-side `src/lib/llm/` module
-* **Anthropic SDK called directly** from a server module
-* **A separate model-gateway service** (as R3 describes literally)
+* OpenRouter plus the Vercel AI SDK, wrapped in a single server-side module
+* Anthropic SDK called directly from a server module
+* A separate model-gateway service (as R3 describes literally)
 
 ## Decision Outcome
 
-Chosen option: **"OpenRouter + Vercel AI SDK, wrapped in a single server-side
-`src/lib/llm/` module"**, because OpenRouter gives the gateway's cross-provider fallback,
+Chosen option: "OpenRouter plus the Vercel AI SDK, wrapped in a single server-side module", because OpenRouter gives the gateway's cross-provider fallback,
 privacy routing, and a per-key credit cap without us operating a service, and the Vercel
 AI SDK gives typed calls, retries/timeout, and schema-validated structured output. The
 single `src/lib/llm/` module is the gateway: all calls go through it, so the R3 caps,
