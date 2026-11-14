@@ -37,6 +37,12 @@ export default defineConfig({
         "src/lib/llm/untrusted.ts",
         "src/lib/llm/structured.ts",
         "src/lib/llm/prompts/career-chat.ts",
+        // Evidence Search Pipeline — pure logic only (the embed/retrieve DB boundary in
+        // llm/embed.ts and rag/retrieve.ts is covered by tests/rag/ via tsx, not here).
+        "src/lib/rag/types.ts",
+        "src/lib/rag/config.ts",
+        "src/lib/rag/context.ts",
+        "src/lib/rag/chunk.ts",
       ],
       thresholds: {
         lines: 80,

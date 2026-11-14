@@ -14,9 +14,12 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:llm": "tsx --conditions=react-server tests/llm/mock-run.test.mts",
+    "test:rag": "tsx --conditions=react-server tests/rag/mock-rag.test.mts",
     "llm:check": "python3 tools/llm/check_llm_usage.py",
     "llm:models": "python3 tools/llm/check_models.py",
     "reference:import": "tsx scripts/import-reference-data.ts",
+    "rag:index": "tsx --conditions=react-server scripts/index-reference-chunks.ts",
+    "rag:eval": "python3 tools/rag/eval_retrieval.py --questions tests/rag/retrieval_questions.json --out docs/rag/retrieval-report.md",
     "test:a11y": "playwright test",
     "a11y:report": "python3 tools/a11y/summarize_axe.py --dir a11y-results/axe --out docs/accessibility/axe-report.md",
     "a11y:contrast": "python3 tools/a11y/check_contrast.py a11y-contrast.json"

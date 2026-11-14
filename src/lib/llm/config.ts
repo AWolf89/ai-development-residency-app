@@ -11,6 +11,9 @@ export const LLM_CONFIG = {
     chat: ["anthropic/claude-sonnet-5.5", "anthropic/claude-sonnet-4.5"],
     extract: ["anthropic/claude-haiku-5.5", "anthropic/claude-sonnet-5.5"],
   },
+  // Embedding model for the Evidence Search Pipeline (ADR-0010). Must match the vector(1536)
+  // columns in the RAG migration and EMBEDDING_DIM. Confirm availability with `npm run llm:models`.
+  embeddingModel: "openai/text-embedding-3-small",
   // Personal career data: only providers that don't store or train on prompts.
   provider: {
     data_collection: "deny" as const,
