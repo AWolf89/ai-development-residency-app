@@ -21,8 +21,33 @@ import { chunkReferenceItems } from "../src/lib/rag/chunk";
 import { embedBatch } from "../src/lib/llm/embed";
 import type { RawReferenceRow, ReferenceChunk } from "../src/lib/rag/types";
 
-const PAGE = 5000;
+const PAGE = 1000;
 const EMBED_BATCH = 100;
+// pgvector index maintenance makes large vector upserts heavy, so keep each write small enough
+// to stay under the server statement timeout, and retry transient timeouts with backoff.
+const UPSERT_BATCH = 50;
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** Upsert one batch of chunks into reference_chunks, retrying transient errors with backoff. */
+async function upsertChunks(
+  supabase: SupabaseClient,
+  rows: Record<string, unknown>[],
+  attempts = 5
+): Promise<void> {
+  for (let attempt = 1; ; attempt++) {
+    const { error } = await supabase
+      .from("reference_chunks")
+      .upsert(rows, { onConflict: "id" });
+    if (!error) return;
+    if (attempt >= attempts) {
+      throw new Error(
+        `reference_chunks upsert failed after ${attempts} attempts: ${error.message}`
+      );
+    }
+    await sleep(1000 * attempt); // 1s, 2s, 3s, 4s backoff
+  }
+}
 
 function env(name: string): string {
   const value = process.env[name];
@@ -38,27 +63,38 @@ function nullableStr(value: unknown): string | null {
   return value == null ? null : String(value);
 }
 
+type Queryable = {
+  order: (col: string, opts?: { ascending?: boolean }) => Queryable;
+  limit: (n: number) => Queryable;
+  gt: (col: string, value: string) => Queryable;
+} & PromiseLike<{
+  data: Record<string, unknown>[] | null;
+  error: { message: string } | null;
+}>;
+
 /**
- * Paginate a PostgREST query, advancing by the number of rows actually returned so it works
- * whether or not the server caps the page size.
+ * Keyset-paginate a PostgREST query over the whole table on the `id` primary key.
+ *
+ * OFFSET/`range` paging does not work here at corpus scale: PostgREST caps each response at
+ * ~1000 rows regardless of the requested span, and deep OFFSETs over the ~316k O*NET rows re-scan
+ * and discard every skipped row, blowing the statement timeout. Keyset paging (`order(id)` +
+ * `gt(id, cursor)`) rides the primary-key index, so each page costs the same no matter how deep,
+ * and the strictly-increasing cursor makes it gap-free and duplicate-free. `makeQuery` must
+ * return a fresh query (with its select + filters) each call and its select must include `id`.
  */
 async function paginate(
-  build: (
-    from: number,
-    to: number
-  ) => PromiseLike<{
-    data: Record<string, unknown>[] | null;
-    error: { message: string } | null;
-  }>
+  makeQuery: () => Queryable
 ): Promise<Record<string, unknown>[]> {
   const rows: Record<string, unknown>[] = [];
-  for (let from = 0; ;) {
-    const { data, error } = await build(from, from + PAGE - 1);
+  let cursor: string | null = null;
+  for (;;) {
+    let q = makeQuery().order("id", { ascending: true }).limit(PAGE);
+    if (cursor !== null) q = q.gt("id", cursor);
+    const { data, error } = await q;
     if (error) throw new Error(`reference_items read failed: ${error.message}`);
     if (!data || data.length === 0) break;
     rows.push(...data);
-    from += data.length;
-    if (data.length < PAGE) break;
+    cursor = String(data[data.length - 1].id);
   }
   return rows;
 }
@@ -72,23 +108,23 @@ async function paginate(
 async function loadAllRows(
   supabase: SupabaseClient
 ): Promise<RawReferenceRow[]> {
-  const framework = await paginate((from, to) =>
-    supabase
-      .from("reference_items")
-      .select(
-        "source, entity_type, external_id, name, description, payload, source_version"
-      )
-      .eq("source", "techfleet-spf")
-      .range(from, to)
+  const framework = await paginate(
+    () =>
+      supabase
+        .from("reference_items")
+        .select(
+          "id, source, entity_type, external_id, name, description, payload, source_version"
+        )
+        .eq("source", "techfleet-spf") as unknown as Queryable
   );
-  const onet = await paginate((from, to) =>
-    supabase
-      .from("reference_items")
-      .select(
-        "entity_type, external_id, name, description, source_version, onetsoc_code:payload->>onetsoc_code"
-      )
-      .eq("source", "onet")
-      .range(from, to)
+  const onet = await paginate(
+    () =>
+      supabase
+        .from("reference_items")
+        .select(
+          "id, entity_type, external_id, name, description, source_version, onetsoc_code:payload->>onetsoc_code"
+        )
+        .eq("source", "onet") as unknown as Queryable
   );
 
   const rows: RawReferenceRow[] = [];
@@ -122,17 +158,21 @@ async function loadExistingHashes(
   supabase: SupabaseClient
 ): Promise<Map<string, string>> {
   const hashes = new Map<string, string>();
-  for (let from = 0; ; from += PAGE) {
-    const { data, error } = await supabase
+  let cursor: string | null = null;
+  for (;;) {
+    let q = supabase
       .from("reference_chunks")
       .select("id, content_hash")
-      .range(from, from + PAGE - 1);
+      .order("id", { ascending: true })
+      .limit(PAGE);
+    if (cursor !== null) q = q.gt("id", cursor);
+    const { data, error } = await q;
     if (error)
       throw new Error(`reference_chunks read failed: ${error.message}`);
     if (!data || data.length === 0) break;
     for (const row of data)
       hashes.set(String(row.id), String(row.content_hash));
-    if (data.length < PAGE) break;
+    cursor = String(data[data.length - 1].id);
   }
   return hashes;
 }
@@ -199,11 +239,9 @@ async function main() {
       source_version: c.source_version,
       embedding: JSON.stringify(vectors[j]),
     }));
-    const { error } = await supabase
-      .from("reference_chunks")
-      .upsert(payload, { onConflict: "id" });
-    if (error)
-      throw new Error(`reference_chunks upsert failed: ${error.message}`);
+    for (let k = 0; k < payload.length; k += UPSERT_BATCH) {
+      await upsertChunks(supabase, payload.slice(k, k + UPSERT_BATCH));
+    }
     done += batch.length;
     console.log(`  embedded + upserted ${done}/${changed.length}`);
   }
