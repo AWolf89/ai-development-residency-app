@@ -126,3 +126,22 @@ export function evidenceCell(input: {
   }
   return { kind: "none", text: input.rationale.trim() || TRUE_GAP_FALLBACK };
 }
+
+/**
+ * Pick which target role the Gap Check page shows: the one named by the `?role=` param if
+ * it is one the user actually owns, otherwise the first (newest) role. Returns undefined
+ * only when the user has no roles. Kept pure so the page boundary stays logic-free and the
+ * selection is unit-tested (ADR-0012).
+ */
+export function selectActiveRole<T extends { id: string }>(
+  roles: T[],
+  roleParam: string | undefined
+): T | undefined {
+  if (roleParam) {
+    const match = roles.find((role) => role.id === roleParam);
+    if (match) {
+      return match;
+    }
+  }
+  return roles[0];
+}
