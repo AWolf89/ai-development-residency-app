@@ -1,16 +1,31 @@
 [
-  { "q": "What skills does a data scientist need?", "expect": ["15-2051.00"] },
   {
-    "q": "machine learning and predictive modeling jobs",
-    "expect": ["15-2051.00"]
+    "q": "How do I communicate clearly in writing at work?",
+    "expect": ["written-communication"]
   },
-  { "q": "How do I become a software developer?", "expect": ["15-1252.00"] },
-  { "q": "writing and testing application code", "expect": ["15-1252.00"] },
-  { "q": "What do registered nurses do?", "expect": ["29-1141.00"] },
-  { "q": "patient care in a hospital", "expect": ["29-1141.00"] },
   {
-    "q": "project management responsibilities",
-    "expect": ["11-3021.00", "11-9199.00"]
+    "q": "ways to resolve conflict between teammates",
+    "expect": ["conflict-resolution"]
+  },
+  {
+    "q": "writing effective prompts for an AI assistant",
+    "expect": ["ai-prompting"]
+  },
+  {
+    "q": "helping a team feel safe to speak up and take risks",
+    "expect": ["psychological-safety"]
+  },
+  {
+    "q": "designing a survey to gather user feedback",
+    "expect": ["survey-design"]
+  },
+  {
+    "q": "giving constructive feedback to a coworker",
+    "expect": ["delivering-feedback"]
+  },
+  {
+    "q": "analyzing research and synthesizing findings",
+    "expect": ["research-analysis"]
   },
   { "q": "What's the weather tomorrow?", "expect": [] },
   { "q": "Write me a poem about the ocean", "expect": [] },

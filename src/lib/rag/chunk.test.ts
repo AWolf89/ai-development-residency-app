@@ -182,6 +182,29 @@ describe("chunkReferenceItems — framework rows", () => {
     expect(chunks[0].content).toBe("SQL");
   });
 
+  it("gives framework rows distinct ids even when a slug repeats across entity types", () => {
+    const chunks = chunkReferenceItems([
+      row({
+        source: "techfleet-spf",
+        entity_type: "duties",
+        external_id: "lead",
+        name: "Lead (duty)",
+        payload: {},
+      }),
+      row({
+        source: "techfleet-spf",
+        entity_type: "deliverables",
+        external_id: "lead",
+        name: "Lead (deliverable)",
+        payload: {},
+      }),
+    ]);
+    const ids = chunks.map((c) => c.id);
+    expect(new Set(ids).size).toBe(2); // no id collision -> safe to upsert in one batch
+    expect(ids).toContain("techfleet-spf:duties:lead");
+    expect(ids).toContain("techfleet-spf:deliverables:lead");
+  });
+
   it("drops a framework row with a blank name", () => {
     const chunks = chunkReferenceItems([
       row({
