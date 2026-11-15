@@ -27,6 +27,38 @@
     "q": "analyzing research and synthesizing findings",
     "expect": ["research-analysis"]
   },
+  {
+    "q": "what does a data scientist do day to day?",
+    "expect": ["15-2051.00"]
+  },
+  {
+    "q": "responsibilities and duties of a software developer",
+    "expect": ["15-1252.00"]
+  },
+  {
+    "q": "skills and knowledge needed to be a registered nurse",
+    "expect": ["29-1141.00"]
+  },
+  {
+    "q": "what tasks do graphic designers perform",
+    "expect": ["27-1024.00"]
+  },
+  {
+    "q": "what a financial manager is responsible for",
+    "expect": ["11-3031.00"]
+  },
+  {
+    "q": "day to day work of a web developer building websites",
+    "expect": ["15-1254.00"]
+  },
+  {
+    "q": "what does a marketing manager do",
+    "expect": ["11-2021.00"]
+  },
+  {
+    "q": "what does a civil engineer design and build",
+    "expect": ["17-2051.00"]
+  },
   { "q": "What's the weather tomorrow?", "expect": [] },
   { "q": "Write me a poem about the ocean", "expect": [] },
   { "q": "Who won the World Series last night?", "expect": [] }

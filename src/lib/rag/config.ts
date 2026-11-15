@@ -8,9 +8,12 @@ export const RAG_CONFIG = {
   matchCount: 8,
   /**
    * Below this cosine similarity, a vector-only hit (no keyword match) is treated as
-   * "not found" rather than guessed. A starting value — tune with the eval harness.
+   * "not found" rather than guessed. Tuned with tools/rag/eval_retrieval.py against the full
+   * O*NET + framework corpus: unanswerable questions top out at ~0.347 and answerable ones
+   * start at ~0.480, so 0.41 separates them (the eval's own suggestion). See
+   * docs/rag/retrieval-report.md.
    */
-  minSimilarity: 0.3,
+  minSimilarity: 0.41,
   /** Hard cap on characters of context passed downstream (keeps prompts bounded). */
   maxContextChars: 6_000,
   /** Reciprocal-rank-fusion weights/constant, mirrored by the SQL function defaults. */
