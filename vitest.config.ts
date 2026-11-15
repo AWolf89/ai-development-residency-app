@@ -47,6 +47,7 @@ export default defineConfig({
         // covered by tests/gap/ via tsx, not here).
         "src/lib/gap/types.ts",
         "src/lib/gap/classify.ts",
+        "src/lib/gap/presentation.ts",
         "src/lib/llm/prompts/gap-classification.ts",
       ],
       thresholds: {
