@@ -43,6 +43,11 @@ export default defineConfig({
         "src/lib/rag/config.ts",
         "src/lib/rag/context.ts",
         "src/lib/rag/chunk.ts",
+        // Gap Classification — pure logic only (the server-only classifier.ts boundary is
+        // covered by tests/gap/ via tsx, not here).
+        "src/lib/gap/types.ts",
+        "src/lib/gap/classify.ts",
+        "src/lib/llm/prompts/gap-classification.ts",
       ],
       thresholds: {
         lines: 80,
