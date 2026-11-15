@@ -12,7 +12,11 @@ import {
   type GapModelFn,
   type RequirementInput,
 } from "./classify";
-import { gapModelOutputSchema, type AssessmentRow, type RequirementGap } from "./types";
+import {
+  gapModelOutputSchema,
+  type AssessmentRow,
+  type RequirementGap,
+} from "./types";
 
 // The Gap Classification boundary (Humble Object). It wires the real retriever and the model
 // gateway (runStructured + supabaseSink — one model path, ADR-0009) into the pure decision

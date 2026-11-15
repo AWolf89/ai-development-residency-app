@@ -150,7 +150,9 @@ describe("classifyRequirement — reference & metadata", () => {
   it("retrieves reference context and marks referenceUsed when found", async () => {
     const refRetrieval = retrieval({
       context: "[onet · 15-1252.00] Software developers design systems.",
-      sources: [{ source: "onet", id: "15-1252.00", title: "Software Developers" }],
+      sources: [
+        { source: "onet", id: "15-1252.00", title: "Software Developers" },
+      ],
     });
     const runModel = vi.fn(async () => ({
       output: modelOutput(),
@@ -217,9 +219,14 @@ describe("classifyRequirements — batch", () => {
       { id: "b", text: "no evidence" },
     ];
     const deps: ClassifyDeps = {
-      retrieveEvidence: async (q) => (q === "no evidence" ? NOT_FOUND : retrieval()),
+      retrieveEvidence: async (q) =>
+        q === "no evidence" ? NOT_FOUND : retrieval(),
       retrieveReference: async () => NOT_FOUND,
-      runModel: async () => ({ output: modelOutput(), attempts: 1, truncated: false }),
+      runModel: async () => ({
+        output: modelOutput(),
+        attempts: 1,
+        truncated: false,
+      }),
     };
     const gaps = await classifyRequirements(reqs, deps);
     expect(gaps.map((g) => g.requirementId)).toEqual(["a", "b"]);

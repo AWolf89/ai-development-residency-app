@@ -36,8 +36,11 @@ describe("gapModelOutputSchema", () => {
 
   it("accepts an empty citations array (gap verdicts need no citation)", () => {
     expect(
-      gapModelOutputSchema.safeParse({ ...valid, verdict: "gap", citations: [] })
-        .success
+      gapModelOutputSchema.safeParse({
+        ...valid,
+        verdict: "gap",
+        citations: [],
+      }).success
     ).toBe(true);
   });
 

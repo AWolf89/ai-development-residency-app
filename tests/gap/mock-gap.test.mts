@@ -21,7 +21,11 @@ const ok = (c: boolean, m: string) => {
   pass++;
 };
 
-const evidenceCite: Citation = { source: "file", id: "resume.pdf", title: "resume.pdf" };
+const evidenceCite: Citation = {
+  source: "file",
+  id: "resume.pdf",
+  title: "resume.pdf",
+};
 const found: Retrieval = {
   found: true,
   context: "[file · resume.pdf] Led a cloud migration.",
@@ -62,15 +66,27 @@ const gaps = await classifyRoleRequirements(
   deps
 );
 ok(gaps.length === 2, "classifies every requirement");
-ok(gaps[0].verdict === "met" && gaps[0].citations[0].id === "resume.pdf", "grounds the met verdict with a real citation");
-ok(gaps[1].verdict === "unknown" && gaps[1].modelAttempts === 0, "no-evidence requirement short-circuits to unknown");
-ok(modelCalls === 1, "the model is called only for the requirement that has evidence");
+ok(
+  gaps[0].verdict === "met" && gaps[0].citations[0].id === "resume.pdf",
+  "grounds the met verdict with a real citation"
+);
+ok(
+  gaps[1].verdict === "unknown" && gaps[1].modelAttempts === 0,
+  "no-evidence requirement short-circuits to unknown"
+);
+ok(
+  modelCalls === 1,
+  "the model is called only for the requirement that has evidence"
+);
 
 // 2. saveAssessments upserts one row per gap via the caller's Supabase client
 let upserted: { rows: AssessmentRow[]; opts: any } | null = null;
 const okClient: SaveClient = {
   from: (table: string) => {
-    ok(table === "requirement_gap_assessments", "saves to requirement_gap_assessments");
+    ok(
+      table === "requirement_gap_assessments",
+      "saves to requirement_gap_assessments"
+    );
     return {
       upsert: async (rows, opts) => {
         upserted = { rows, opts };
@@ -79,9 +95,16 @@ const okClient: SaveClient = {
     };
   },
 };
-await saveAssessments(gaps, { userId: "user-1", targetRoleId: "role-1" }, okClient);
+await saveAssessments(
+  gaps,
+  { userId: "user-1", targetRoleId: "role-1" },
+  okClient
+);
 ok(upserted!.rows.length === 2, "upserts one row per assessment");
-ok(upserted!.opts.onConflict === "role_requirement_id", "upsert keeps one current row per requirement");
+ok(
+  upserted!.opts.onConflict === "role_requirement_id",
+  "upsert keeps one current row per requirement"
+);
 ok(
   upserted!.rows[0].user_id === "user-1" &&
     upserted!.rows[0].role_requirement_id === "req-1" &&
@@ -94,12 +117,16 @@ ok(
 
 // 3. empty results write nothing
 let touched = false;
-await saveAssessments([], { userId: "u", targetRoleId: "r" }, {
-  from: () => {
-    touched = true;
-    return { upsert: async () => ({ error: null }) };
-  },
-});
+await saveAssessments(
+  [],
+  { userId: "u", targetRoleId: "r" },
+  {
+    from: () => {
+      touched = true;
+      return { upsert: async () => ({ error: null }) };
+    },
+  }
+);
 ok(!touched, "no assessments -> no database call");
 
 // 4. a Supabase error is surfaced
