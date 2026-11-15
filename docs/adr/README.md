@@ -21,3 +21,4 @@ This folder records the important technical decisions for this project: what we 
 | [0009](0009-use-openrouter-and-the-vercel-ai-sdk-as-the-model-gateway.md) | Use OpenRouter and the Vercel AI SDK as the model gateway | proposed |
 | [0010](0010-use-pgvector-for-closed-rag-retrieval-over-reference-and-evidence.md) | Use pgvector for closed-RAG retrieval over the reference corpus and user evidence | proposed |
 | [0011](0011-classify-evidence-against-role-requirements-with-a-grounded-four-verdict-schema.md) | Classify evidence against role requirements with a grounded four-verdict schema | proposed |
+| [0012](0012-present-gap-verdicts-in-three-buckets-computed-on-demand.md) | Present gap verdicts in three buckets, computed on demand | proposed |
