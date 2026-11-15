@@ -17,3 +17,7 @@ This folder records the important technical decisions for this project: what we 
 | [0005](0005-defer-ai-agent-features-to-later-weeks-for-the-week-3-releas.md) | Defer AI agent features to later weeks for the Week 3 release | proposed |
 | [0006](0006-disable-cache-components-for-standard-supabase-authenticatio.md) | Disable Cache Components for standard Supabase authentication | proposed |
 | [0007](0007-handle-user-career-data-with-a-privacy-by-default-policy.md) | Handle user career data with a privacy-by-default policy | proposed |
+| [0008](0008-store-reference-data-in-one-generic-read-only-table.md) | Store reference data in one generic read-only table | proposed |
+| [0009](0009-use-openrouter-and-the-vercel-ai-sdk-as-the-model-gateway.md) | Use OpenRouter and the Vercel AI SDK as the model gateway | proposed |
+| [0010](0010-use-pgvector-for-closed-rag-retrieval-over-reference-and-evidence.md) | Use pgvector for closed-RAG retrieval over the reference corpus and user evidence | proposed |
+| [0011](0011-classify-evidence-against-role-requirements-with-a-grounded-four-verdict-schema.md) | Classify evidence against role requirements with a grounded four-verdict schema | proposed |

@@ -15,6 +15,7 @@
     "test:coverage": "vitest run --coverage",
     "test:llm": "tsx --conditions=react-server tests/llm/mock-run.test.mts",
     "test:rag": "tsx --conditions=react-server tests/rag/mock-rag.test.mts",
+    "test:gap": "tsx --conditions=react-server tests/gap/mock-gap.test.mts",
     "llm:check": "python3 tools/llm/check_llm_usage.py",
     "llm:models": "python3 tools/llm/check_models.py",
     "reference:import": "tsx scripts/import-reference-data.ts",
