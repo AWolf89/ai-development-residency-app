@@ -22,3 +22,5 @@ This folder records the important technical decisions for this project: what we 
 | [0010](0010-use-pgvector-for-closed-rag-retrieval-over-reference-and-evidence.md) | Use pgvector for closed-RAG retrieval over the reference corpus and user evidence | proposed |
 | [0011](0011-classify-evidence-against-role-requirements-with-a-grounded-four-verdict-schema.md) | Classify evidence against role requirements with a grounded four-verdict schema | proposed |
 | [0012](0012-present-gap-verdicts-in-three-buckets-computed-on-demand.md) | Present gap verdicts in three buckets, computed on demand | proposed |
+| [0013](0013-model-the-reasoning-interview-as-an-explicit-fsm.md) | Model the Reasoning Interview as an explicit TypeScript FSM with a human-in-the-loop save gate | proposed |
+| [0014](0014-persist-interview-sessions-and-turns-for-decision-records.md) | Persist interview sessions and turns that feed decision records | proposed |
