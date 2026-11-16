@@ -23,7 +23,7 @@ type NavItem = { label: string; href: string | null };
 const NAV_ITEMS: NavItem[] = [
   { label: "Upload files", href: "/dashboard/files" },
   { label: "Review claims", href: null },
-  { label: "Interview", href: null },
+  { label: "Interview", href: "/dashboard/interview" },
   { label: "Gap check", href: "/dashboard/gap-check" },
   { label: "My profile", href: "/dashboard" },
 ];

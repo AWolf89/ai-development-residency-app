@@ -68,7 +68,6 @@ function makeRepo() {
         id: sid,
         created_at: "t",
         updated_at: "t",
-        target_role_id: null,
         ...row,
       } as InterviewSessionRow);
       return { id: sid };
@@ -91,7 +90,6 @@ function makeRepo() {
         answer_text: null,
         paraphrase: null,
         decision_record_id: null,
-        grounding_citation: null,
         ...row,
       } as InterviewTurnRow);
       return { id: tid };
