@@ -1,6 +1,11 @@
 import { describe, it, expect } from "vitest";
 import type { Citation } from "@/lib/rag/types";
-import { verdictToBucket, summarize, evidenceCell } from "./presentation";
+import {
+  verdictToBucket,
+  summarize,
+  evidenceCell,
+  selectActiveRole,
+} from "./presentation";
 
 const cite = (title: string): Citation => ({
   source: "file",
@@ -144,5 +149,25 @@ describe("evidenceCell", () => {
       kind: "none",
       text: "No evidence or recollection found",
     });
+  });
+});
+
+describe("selectActiveRole", () => {
+  const roles = [{ id: "r1" }, { id: "r2" }, { id: "r3" }];
+
+  it("returns the role named by the param when it is one the user owns", () => {
+    expect(selectActiveRole(roles, "r2")).toEqual({ id: "r2" });
+  });
+
+  it("falls back to the first (newest) role when the param is missing", () => {
+    expect(selectActiveRole(roles, undefined)).toEqual({ id: "r1" });
+  });
+
+  it("falls back to the first role when the param is not one the user owns", () => {
+    expect(selectActiveRole(roles, "someone-elses-id")).toEqual({ id: "r1" });
+  });
+
+  it("returns undefined when the user has no roles", () => {
+    expect(selectActiveRole([], "r1")).toBeUndefined();
   });
 });

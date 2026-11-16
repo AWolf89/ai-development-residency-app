@@ -22,11 +22,13 @@ import {
   verdictToBucket,
   summarize,
   evidenceCell,
+  selectActiveRole,
   type GapSummary,
 } from "@/lib/gap/presentation";
 import StatusChip from "@/components/StatusChip";
 import { serifStack, brand } from "@/theme-tokens";
 import RunGapCheckButton from "./RunGapCheckButton";
+import RolePicker from "./RolePicker";
 
 const PAGE_SX = {
   px: { xs: 2, md: 7 },
@@ -148,7 +150,8 @@ export default async function GapCheckPage({
     );
   }
 
-  const selected = roles.find((r) => r.id === roleParam) ?? roles[0];
+  // roles is non-empty here (the no-roles case returned above), so this is defined.
+  const selected = selectActiveRole(roles, roleParam) ?? roles[0];
   const requirements = await getRequirementsForRoles(supabase, [selected.id]);
   const assessments = await getAssessmentsForRole(supabase, selected.id);
   const byRequirement = new Map(
@@ -185,6 +188,10 @@ export default async function GapCheckPage({
             Change job description
           </Button>
         </Stack>
+
+        {roles.length > 1 ? (
+          <RolePicker roles={roles} selectedId={selected.id} />
+        ) : null}
 
         {requirements.length === 0 ? (
           <Typography variant="body2" color="text.secondary">
