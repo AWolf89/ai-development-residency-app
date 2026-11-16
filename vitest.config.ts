@@ -49,6 +49,12 @@ export default defineConfig({
         "src/lib/gap/classify.ts",
         "src/lib/gap/presentation.ts",
         "src/lib/llm/prompts/gap-classification.ts",
+        // Reasoning Interview — pure FSM core + prompts only (the server-only orchestrator
+        // boundary in interview/orchestrator.ts is covered by tests/interview/ via tsx, not here).
+        "src/lib/interview/types.ts",
+        "src/lib/interview/machine.ts",
+        "src/lib/llm/prompts/interview-question.ts",
+        "src/lib/llm/prompts/interview-paraphrase.ts",
       ],
       thresholds: {
         lines: 80,
