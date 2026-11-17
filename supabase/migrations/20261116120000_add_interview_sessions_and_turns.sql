@@ -58,10 +58,25 @@ create policy "Users delete own interview_sessions" on public.interview_sessions
 
 create policy "Users read own interview_turns" on public.interview_turns for select to authenticated
   using ((select auth.uid()) = user_id);
+-- A turn must be owned by the user AND belong to a session the user owns, so a turn can never be
+-- attached to (or moved under) another user's session even though own-rows would allow the user_id.
 create policy "Users insert own interview_turns" on public.interview_turns for insert to authenticated
-  with check ((select auth.uid()) = user_id);
+  with check (
+    (select auth.uid()) = user_id
+    and exists (
+      select 1 from public.interview_sessions s
+      where s.id = session_id and s.user_id = (select auth.uid())
+    )
+  );
 create policy "Users update own interview_turns" on public.interview_turns for update to authenticated
-  using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+  using ((select auth.uid()) = user_id)
+  with check (
+    (select auth.uid()) = user_id
+    and exists (
+      select 1 from public.interview_sessions s
+      where s.id = session_id and s.user_id = (select auth.uid())
+    )
+  );
 create policy "Users delete own interview_turns" on public.interview_turns for delete to authenticated
   using ((select auth.uid()) = user_id);
 
