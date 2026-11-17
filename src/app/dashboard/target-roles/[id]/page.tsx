@@ -2,12 +2,12 @@ import { notFound, redirect } from "next/navigation";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { createClient } from "@/lib/supabase/server";
 import {
   getTargetRoleById,
   getRequirementsForRoles,
 } from "@/lib/target-roles/queries";
+import PageHeading from "@/components/PageHeading";
 import TargetRoleForm from "../TargetRoleForm";
 
 export default async function EditTargetRolePage({
@@ -37,13 +37,10 @@ export default async function EditTargetRolePage({
     <Box sx={{ px: { xs: 2, md: 7 }, py: { xs: 4, md: 6 }, maxWidth: 820 }}>
       <Stack spacing={3}>
         <Link href="/dashboard">← Back to your account</Link>
-        <Typography variant="h4" component="h1">
-          Edit target role
-        </Typography>
-        <Typography color="text.secondary">
-          Update the title, job description, or requirements. You will review it
-          before it is saved.
-        </Typography>
+        <PageHeading
+          title="Edit target role"
+          subtitle="Update the title, job description, or requirements. You will review it before it is saved."
+        />
         <TargetRoleForm
           initialValues={{
             recordId: role.id,
