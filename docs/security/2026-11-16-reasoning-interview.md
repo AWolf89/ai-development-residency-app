@@ -17,7 +17,7 @@ Tools: npm audit (prod + dev), manual review (OWASP Top 10, LLM01, RLS, authz).
 | Critical | 0    | 0     | 0        |
 | High     | 0    | 0     | 0        |
 | Medium   | 0    | 0     | 0        |
-| Low      | 2    | 0     | 0        |
+| Low      | 1    | 1     | 0        |
 
 No Critical or High findings: the release is not blocked.
 
@@ -44,7 +44,7 @@ No Critical or High findings: the release is not blocked.
 ### F2: Concurrent double-accept could write a duplicate decision record
 
 - Severity: Low
-- Status: Open
+- Status: Fixed (idempotency guard added; narrow truly-concurrent race accepted)
 - Location: `src/lib/interview/orchestrator.ts` (`acceptDraft` → `advance` saving
   branch).
 - Risk: The FSM already blocks re-accepting a turn sequentially — once a turn is
@@ -58,11 +58,16 @@ No Critical or High findings: the release is not blocked.
   or privilege issue — a user could end up with duplicate records of their own.
 - Analogy: pressing a lift call button twice and two lifts arriving — wasteful, not
   dangerous.
-- Fix: (proposed, future) guard the save with a compare-and-set on the turn —
-  only save when `interview_turns.decision_record_id IS NULL`, matching the
-  matrix's "idempotency when a route mutates state" row. Deferred: the UI disables
-  the button while pending, and decision records are content (a duplicate is a
-  nuisance, not corruption).
+- Fix (done): the `saving` branch now re-reads the turn and skips the save when
+  `decision_record_id` is already set, adopting the existing record — matching the
+  matrix's "idempotency when a route mutates state" row. This removes the duplicate
+  for a repeat/late accept, a double click, and a retry after a partial failure whose
+  first save had completed.
+- Residual (accepted): two *truly simultaneous* accepts that both read the turn
+  before either stamps it, and the narrow window where `saveDecisionRecord` commits
+  but the follow-up `updateTurn` fails, can still duplicate. Fully closing this needs
+  a DB-level key (e.g. a unique `origin_turn_id` on `decision_records`); deferred as a
+  nuisance on the user's own rows, not corruption, and out of scope for this feature.
 
 ## Observations (outside this task - not changed)
 
@@ -80,7 +85,10 @@ Verified properties (no change needed):
 - **RLS own-rows.** `interview_sessions` and `interview_turns` carry `user_id` and
   the four own-rows policies (mirroring `requirement_gap_assessments`); `user_id` is
   denormalised onto turns so the policy needs no join. All reads go through
-  RLS-scoped `queries.ts` under the caller's client.
+  RLS-scoped `queries.ts` under the caller's client. Hardened in this review: the
+  turn INSERT/UPDATE `with check` now also requires the referenced `session_id` to
+  belong to the caller, so a turn can never be attached to or moved under another
+  user's session even though own-rows alone would allow a matching `user_id`.
 - **IDOR.** The Server Actions take a client-supplied `session_id`, but
   `getSession` is RLS-scoped — a session the caller does not own returns null and
   the orchestrator throws "interview session not found", so no cross-user read or

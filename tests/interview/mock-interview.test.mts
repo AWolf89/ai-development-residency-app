@@ -82,6 +82,9 @@ function makeRepo() {
     async getTurns(sid) {
       return [...turns.values()].filter((t) => t.session_id === sid);
     },
+    async getTurn(tid) {
+      return turns.get(tid) ?? null;
+    },
     async createTurn(row) {
       const tid = id("turn");
       turns.set(tid, {
@@ -384,6 +387,111 @@ function makeDeps(
     userId: "u1",
   });
   ok(resumed.state.status === "awaiting_answer", "resume → asks again");
+}
+
+// 11. Idempotent save: a turn that already has a decision_record_id is never saved twice.
+{
+  const { deps, counters, store } = makeDeps();
+  const s = await startInterview(deps, {
+    userId: "u1",
+    title: "x",
+    questionBudget: 1,
+  });
+  await submitAnswer(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+    answer: "a",
+  });
+  // Simulate a concurrent/earlier accept that already produced the record for this turn.
+  const answered = [...store.turns.values()].find(
+    (t) => t.status === "answered"
+  )!;
+  store.turns.set(answered.id, {
+    ...answered,
+    decision_record_id: "rec-prior",
+  });
+  const accepted = await acceptDraft(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+  });
+  ok(
+    counters.saves === 0,
+    "accept does not re-save a turn that already has a record"
+  );
+  ok(
+    accepted.state.status === "complete",
+    "the already-saved turn is adopted and the interview completes"
+  );
+  const turn = [...store.turns.values()].find((t) => t.id === answered.id)!;
+  ok(
+    turn.decision_record_id === "rec-prior",
+    "the existing record id is kept, not overwritten by a second save"
+  );
+}
+
+// 12. Resume recovers a captured answer when the breaker tripped during paraphrasing.
+{
+  const store = makeRepo();
+  const counters: Counters = { questions: 0, paraphrases: 0, saves: 0 };
+  let paraphraseWorks = false;
+  const deps: InterviewDeps = {
+    retrieveEvidence: async () => foundEvidence,
+    generateQuestion: async () => {
+      counters.questions++;
+      return `Q${counters.questions}?`;
+    },
+    paraphrase: async () => {
+      if (!paraphraseWorks) throw new Error("model down");
+      counters.paraphrases++;
+      return DRAFT;
+    },
+    saveRecord: async () => {
+      counters.saves++;
+      return { recordId: `rec-${counters.saves}` };
+    },
+    repo: store.repo,
+  };
+  const s = await startInterview(deps, {
+    userId: "u1",
+    title: "x",
+    questionBudget: 3,
+  });
+  const paused = await submitAnswer(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+    answer: "we chose postgres",
+  });
+  ok(
+    paused.state.status === "paused",
+    "paraphrase failure pauses the interview"
+  );
+  const stranded = [...store.turns.values()].find(
+    (t) => t.status === "answered"
+  );
+  ok(
+    !!stranded &&
+      stranded.answer_text === "we chose postgres" &&
+      stranded.paraphrase === null,
+    "the answer is captured on the turn but has no draft yet"
+  );
+  // The model recovers; resuming re-paraphrases that same answer instead of abandoning it.
+  paraphraseWorks = true;
+  const resumed = await resumeInterview(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+  });
+  ok(
+    resumed.state.status === "awaiting_confirmation",
+    "resume re-paraphrases the stranded answer back to the confirmation gate"
+  );
+  ok(
+    counters.saves === 0,
+    "recovery paraphrase still saves nothing (HITL gate holds)"
+  );
+  const recovered = [...store.turns.values()].find(
+    (t) => t.answer_text === "we chose postgres"
+  )!;
+  ok(recovered.paraphrase !== null, "the recovered turn now holds the draft");
 }
 
 console.log(`\n${pass} checks passed`);

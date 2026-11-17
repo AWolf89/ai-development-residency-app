@@ -71,6 +71,7 @@ export interface InterviewRepository {
   updateSession(id: string, patch: SessionPatch): Promise<void>;
   getSession(id: string): Promise<InterviewSessionRow | null>;
   getTurns(sessionId: string): Promise<InterviewTurnRow[]>;
+  getTurn(id: string): Promise<InterviewTurnRow | null>;
   createTurn(row: NewTurnRow): Promise<{ id: string }>;
   updateTurn(id: string, patch: TurnPatch): Promise<void>;
 }
@@ -170,7 +171,7 @@ async function load(
   deps: InterviewDeps,
   sessionId: string,
   userId: string
-): Promise<{ state: InterviewState; ctx: RunCtx }> {
+): Promise<{ state: InterviewState; ctx: RunCtx; turns: InterviewTurnRow[] }> {
   const session = await deps.repo.getSession(sessionId);
   if (!session) throw new InterviewError("interview session not found");
   const turns = await deps.repo.getTurns(sessionId);
@@ -184,6 +185,42 @@ async function load(
       previousQuestions: turns.map((t) => t.question_text),
       currentTurnId,
     },
+    turns,
+  };
+}
+
+/**
+ * If an answer was captured but never turned into a draft — the circuit breaker tripped during
+ * paraphrasing, so the session was paused with the turn left `answered` and no paraphrase — rebuild
+ * the `paraphrasing` state for that turn so resume re-attempts it instead of stranding the answer.
+ * Returns null when there is nothing to recover (the normal resume path then applies).
+ */
+function pendingParaphrase(
+  state: InterviewState,
+  turns: InterviewTurnRow[],
+  ctx: RunCtx
+): InterviewState | null {
+  if (state.status !== "paused") return null;
+  const latest = turns.length > 0 ? turns[turns.length - 1] : null;
+  if (
+    !latest ||
+    latest.status !== "answered" ||
+    !latest.answer_text ||
+    latest.paraphrase
+  ) {
+    return null;
+  }
+  ctx.currentTurnId = latest.id;
+  return {
+    status: "paraphrasing",
+    question: {
+      text: latest.question_text,
+      citation: latest.grounding_citation,
+    },
+    answer: latest.answer_text,
+    questionBudget: state.questionBudget,
+    askedCount: state.askedCount,
+    failureCount: 0,
   };
 }
 
@@ -266,6 +303,16 @@ async function advance(
       continue;
     }
     if (state.status === "saving") {
+      // Idempotency (CLAUDE.md rule 7): never create a second decision record for a turn that
+      // already has one. Covers a retry after a partial failure and a repeat/late accept whose
+      // first save already completed — we adopt the existing record instead of saving again.
+      const existing = ctx.currentTurnId
+        ? await deps.repo.getTurn(ctx.currentTurnId)
+        : null;
+      if (existing?.decision_record_id) {
+        state = reduce(state, { type: "saved" });
+        continue;
+      }
       const { recordId } = await deps.saveRecord({
         userId: ctx.userId,
         draft: state.draft,
@@ -411,8 +458,16 @@ export async function resumeInterview(
   deps: InterviewDeps,
   params: { sessionId: string; userId: string }
 ): Promise<InterviewRunResult> {
-  const { state, ctx } = await load(deps, params.sessionId, params.userId);
-  const final = await advance(deps, ctx, reduce(state, { type: "resume" }));
+  const { state, ctx, turns } = await load(
+    deps,
+    params.sessionId,
+    params.userId
+  );
+  // Recover an answer captured but not yet paraphrased (breaker tripped mid-paraphrase), else
+  // resume normally — ask the next question (or complete).
+  const start =
+    pendingParaphrase(state, turns, ctx) ?? reduce(state, { type: "resume" });
+  const final = await advance(deps, ctx, start);
   return { sessionId: params.sessionId, state: final };
 }
 
@@ -457,6 +512,16 @@ function supabaseInterviewRepository(
         .eq("session_id", sessionId)
         .order("created_at", { ascending: true });
       return (data ?? []) as InterviewTurnRow[];
+    },
+    async getTurn(id) {
+      const { data } = await supabase
+        .from("interview_turns")
+        .select(
+          "id, session_id, user_id, question_text, grounding_citation, answer_text, paraphrase, status, decision_record_id, created_at"
+        )
+        .eq("id", id)
+        .maybeSingle();
+      return (data as InterviewTurnRow | null) ?? null;
     },
     async createTurn(row) {
       const { data, error } = await supabase
