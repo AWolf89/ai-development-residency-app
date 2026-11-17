@@ -20,7 +20,8 @@ import {
   type RoleRequirementItem,
 } from "@/lib/target-roles/queries";
 import StatusChip from "@/components/StatusChip";
-import type { TagTone } from "@/theme-tokens";
+import PageHeading from "@/components/PageHeading";
+import { brand, type TagTone } from "@/theme-tokens";
 import ProfileForm from "./ProfileForm";
 
 const DECISION_SOURCE: Record<string, { label: string; tone: TagTone }> = {
@@ -49,7 +50,10 @@ function TargetRoleCard({
 }) {
   const created = new Date(role.created_at).toLocaleDateString();
   return (
-    <Card variant="outlined">
+    <Card
+      variant="outlined"
+      sx={{ borderLeft: `4px solid ${brand.tag.blue.fg}` }}
+    >
       <CardActionArea
         href={`/dashboard/target-roles/${role.id}`}
         aria-label={`Edit target role: ${role.title}`}
@@ -93,8 +97,15 @@ function TargetRoleCard({
 
 function RecordCard({ record }: { record: DecisionRecordListItem }) {
   const created = new Date(record.created_at).toLocaleDateString();
+  const tone: TagTone =
+    record.source && DECISION_SOURCE[record.source]
+      ? DECISION_SOURCE[record.source].tone
+      : "gray";
   return (
-    <Card variant="outlined">
+    <Card
+      variant="outlined"
+      sx={{ borderLeft: `4px solid ${brand.tag[tone].fg}` }}
+    >
       <CardActionArea
         href={`/dashboard/decision-records/${record.id}`}
         aria-label={`Edit decision record: ${record.title}`}
@@ -167,26 +178,29 @@ export default async function DashboardPage() {
     requirementsByRole.set(req.target_role_id, list);
   }
 
+  const profileSummary = [
+    `${records.length} decision record${records.length === 1 ? "" : "s"}`,
+    `${targetRoles.length} target role${targetRoles.length === 1 ? "" : "s"}`,
+  ].join(" · ");
+
   return (
     <Box sx={PAGE_SX}>
       <Stack spacing={4}>
-        <Stack
-          direction="row"
-          sx={{ justifyContent: "space-between", alignItems: "center" }}
-        >
-          <Typography variant="h4" component="h1">
-            Your profile
-          </Typography>
-          <Box component="form" action={logout}>
-            <Button type="submit" variant="outlined">
-              Log out
-            </Button>
-          </Box>
-        </Stack>
-
-        <Typography color="text.secondary">
-          Signed in as <strong>{user.email}</strong>
-        </Typography>
+        <PageHeading
+          title="Your profile"
+          subtitle={
+            <>
+              Signed in as <strong>{user.email}</strong> · {profileSummary}
+            </>
+          }
+          action={
+            <Box component="form" action={logout}>
+              <Button type="submit" variant="outlined">
+                Log out
+              </Button>
+            </Box>
+          }
+        />
 
         <Divider />
 

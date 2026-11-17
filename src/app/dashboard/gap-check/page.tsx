@@ -26,6 +26,7 @@ import {
   type GapSummary,
 } from "@/lib/gap/presentation";
 import StatusChip from "@/components/StatusChip";
+import PageHeading from "@/components/PageHeading";
 import { serifStack, brand } from "@/theme-tokens";
 import RunGapCheckButton from "./RunGapCheckButton";
 import RolePicker from "./RolePicker";
@@ -35,20 +36,6 @@ const PAGE_SX = {
   py: { xs: 4, md: 6 },
   maxWidth: 1180,
 } as const;
-
-function PageHeading({ title, subtitle }: { title: string; subtitle: string }) {
-  return (
-    <Stack spacing={1}>
-      <Typography
-        component="h1"
-        sx={{ fontFamily: serifStack, fontSize: { xs: 32, md: 44 }, m: 0 }}
-      >
-        {title}
-      </Typography>
-      <Typography color="text.secondary">{subtitle}</Typography>
-    </Stack>
-  );
-}
 
 function SummaryTile({
   count,
@@ -171,23 +158,18 @@ export default async function GapCheckPage({
   return (
     <Box sx={PAGE_SX}>
       <Stack spacing={4}>
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          spacing={2}
-          sx={{ justifyContent: "space-between", alignItems: "flex-start" }}
-        >
-          <PageHeading
-            title={title}
-            subtitle="Each requirement from the job description, compared with your confirmed evidence."
-          />
-          <Button
-            href={`/dashboard/target-roles/${selected.id}`}
-            variant="outlined"
-            sx={{ flexShrink: 0 }}
-          >
-            Change job description
-          </Button>
-        </Stack>
+        <PageHeading
+          title={title}
+          subtitle="Each requirement from the job description, compared with your confirmed evidence."
+          action={
+            <Button
+              href={`/dashboard/target-roles/${selected.id}`}
+              variant="outlined"
+            >
+              Change job description
+            </Button>
+          }
+        />
 
         {roles.length > 1 ? (
           <RolePicker roles={roles} selectedId={selected.id} />

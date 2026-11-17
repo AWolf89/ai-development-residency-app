@@ -2,13 +2,13 @@ import { notFound, redirect } from "next/navigation";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { createClient } from "@/lib/supabase/server";
 import {
   getDecisionRecordById,
   getLinkedFileId,
   getUserFiles,
 } from "@/lib/decision-records/queries";
+import PageHeading from "@/components/PageHeading";
 import DecisionRecordForm from "../DecisionRecordForm";
 
 export default async function EditDecisionRecordPage({
@@ -41,13 +41,10 @@ export default async function EditDecisionRecordPage({
     <Box sx={{ px: { xs: 2, md: 7 }, py: { xs: 4, md: 6 }, maxWidth: 820 }}>
       <Stack spacing={3}>
         <Link href="/dashboard">← Back to your account</Link>
-        <Typography variant="h4" component="h1">
-          Edit decision record
-        </Typography>
-        <Typography color="text.secondary">
-          Add the recommended detail or correct anything. You will review it
-          before it is saved.
-        </Typography>
+        <PageHeading
+          title="Edit decision record"
+          subtitle="Add the recommended detail or correct anything. You will review it before it is saved."
+        />
         <DecisionRecordForm
           files={files}
           initialValues={{

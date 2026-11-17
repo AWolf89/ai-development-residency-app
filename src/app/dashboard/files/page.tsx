@@ -2,10 +2,10 @@ import { redirect } from "next/navigation";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { createClient } from "@/lib/supabase/server";
 import { getFiles } from "@/lib/files/queries";
 import { mapFileRowToView } from "@/lib/files/mappers";
+import PageHeading from "@/components/PageHeading";
 import FilesManager from "./FilesManager";
 
 const PAGE_SX = {
@@ -32,16 +32,12 @@ export default async function FilesPage() {
   return (
     <Box sx={PAGE_SX}>
       <Stack spacing={4}>
-        <Stack spacing={1}>
-          <Typography variant="h4" component="h1">
-            Upload files
-          </Typography>
-          <Typography color="text.secondary">
-            Upload documents and images you want to cite as evidence — PDFs,
-            images, text, or Word documents, up to 25&nbsp;MB each. Only you can
-            see your files.
-          </Typography>
-        </Stack>
+        <PageHeading
+          title="Upload files"
+          subtitle={
+            "Upload documents and images you want to cite as evidence — PDFs, images, text, or Word documents, up to 25 MB each. Only you can see your files."
+          }
+        />
 
         <Divider />
 
