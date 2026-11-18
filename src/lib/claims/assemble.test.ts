@@ -88,7 +88,10 @@ describe("toClaim", () => {
     const claim = toClaim(bare);
     expect(claim.sourceCount).toBe(0);
     expect(claim.history).toEqual([]);
-    expect(claim.usage).toEqual({ requirementMatches: 0, fromInterview: false });
+    expect(claim.usage).toEqual({
+      requirementMatches: 0,
+      fromInterview: false,
+    });
   });
 });
 

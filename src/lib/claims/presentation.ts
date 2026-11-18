@@ -85,9 +85,7 @@ export function buildFacetTabs(claims: Claim[]): FacetTab[] {
       counts.set(claim.category, (counts.get(claim.category) ?? 0) + 1);
     }
   }
-  const tabs: FacetTab[] = [
-    { key: "all", label: "All", count: claims.length },
-  ];
+  const tabs: FacetTab[] = [{ key: "all", label: "All", count: claims.length }];
   for (const category of CLAIM_CATEGORIES) {
     tabs.push({
       key: category,

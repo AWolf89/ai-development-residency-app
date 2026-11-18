@@ -56,7 +56,13 @@ describe("toMarkdown", () => {
 
   it("labels an unfiled claim and omits an absent decision", () => {
     const md = toMarkdown(
-      [claim({ category: null, decision: null, usage: { requirementMatches: 0, fromInterview: false } })],
+      [
+        claim({
+          category: null,
+          decision: null,
+          usage: { requirementMatches: 0, fromInterview: false },
+        }),
+      ],
       NOW
     );
     expect(md).toContain("**Facet:** Unfiled");

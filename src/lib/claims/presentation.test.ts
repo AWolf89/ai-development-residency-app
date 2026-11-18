@@ -65,7 +65,11 @@ describe("summarize / summaryLine", () => {
 
   it("handles zero claims", () => {
     const summary = summarize([]);
-    expect(summary).toEqual({ claimCount: 0, sourceCount: 0, lastUpdated: null });
+    expect(summary).toEqual({
+      claimCount: 0,
+      sourceCount: 0,
+      lastUpdated: null,
+    });
     expect(summaryLine(summary)).toBe("0 claims · 0 sources");
   });
 

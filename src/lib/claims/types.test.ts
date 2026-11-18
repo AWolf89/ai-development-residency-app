@@ -17,7 +17,11 @@ describe("claimCategorySchema", () => {
 
 describe("claimStatusSchema", () => {
   it("accepts the three statuses", () => {
-    for (const s of ["evidence_linked", "recollection", "self_reported_metric"]) {
+    for (const s of [
+      "evidence_linked",
+      "recollection",
+      "self_reported_metric",
+    ]) {
       expect(claimStatusSchema.safeParse(s).success).toBe(true);
     }
   });
