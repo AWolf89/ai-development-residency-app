@@ -15,6 +15,8 @@ describe("mapDecisionRecordToRow", () => {
     why: "Memory buffering was the bottleneck.",
     outcome: "40min -> 6min, no more failures.",
     source: "artifact",
+    category: "technical",
+    isMetric: false,
   };
 
   it("maps every field into the snake_case row with the owner id", () => {
@@ -29,6 +31,8 @@ describe("mapDecisionRecordToRow", () => {
       outcome: input.outcome,
       source: "artifact",
       status: "confirmed",
+      category: "technical",
+      is_metric: false,
     });
   });
 
@@ -39,10 +43,12 @@ describe("mapDecisionRecordToRow", () => {
       decision: input.decision,
       outcome: input.outcome,
       source: input.source,
+      isMetric: false,
     };
     const row = mapDecisionRecordToRow(core, userId);
     expect(row.cue).toBeNull();
     expect(row.why).toBeNull();
+    expect(row.category).toBeNull();
   });
 
   it("carries the self-reported source label through unchanged", () => {
@@ -51,6 +57,11 @@ describe("mapDecisionRecordToRow", () => {
       userId
     );
     expect(row.source).toBe("self_reported");
+  });
+
+  it("carries the metric flag through", () => {
+    const row = mapDecisionRecordToRow({ ...input, isMetric: true }, userId);
+    expect(row.is_metric).toBe(true);
   });
 
   it("marks a saved record as confirmed (AC3 — only saved on confirm)", () => {

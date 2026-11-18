@@ -24,3 +24,4 @@ This folder records the important technical decisions for this project: what we 
 | [0012](0012-present-gap-verdicts-in-three-buckets-computed-on-demand.md) | Present gap verdicts in three buckets, computed on demand | proposed |
 | [0013](0013-model-the-reasoning-interview-as-an-explicit-fsm.md) | Model the Reasoning Interview as an explicit TypeScript FSM with a human-in-the-loop save gate | proposed |
 | [0014](0014-persist-interview-sessions-and-turns-for-decision-records.md) | Persist interview sessions and turns that feed decision records | proposed |
+| [0015](0015-model-a-claim-as-a-projection-over-decision-records.md) | Model a claim as a projection over decision records, not a new table | proposed |

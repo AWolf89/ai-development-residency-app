@@ -16,6 +16,7 @@
  * to add them).
  */
 import { z } from "zod";
+import { CLAIM_CATEGORIES, type ClaimCategory } from "@/lib/claims/types";
 
 /** The two provenance labels AC2 allows. Mirrors the DB CHECK constraint. */
 export const DECISION_SOURCES = ["artifact", "self_reported"] as const;
@@ -29,6 +30,10 @@ export type DecisionRecordInput = {
   why?: string;
   outcome: string;
   source: DecisionSource;
+  /** Claim facet for the evidence profile (ADR-0015); omitted = unfiled. */
+  category?: ClaimCategory;
+  /** User mark that this claim is a self-reported metric with no file (ADR-0015). */
+  isMetric: boolean;
 };
 
 export type ValidationResult =
@@ -45,6 +50,20 @@ const optionalText = z
   .transform((value) => (value.length > 0 ? value : undefined))
   .optional();
 
+// The facet is optional: a blank value (an unfiled claim) becomes `undefined`.
+const optionalCategory = z.preprocess(
+  (value) =>
+    typeof value === "string" && value.length > 0 ? value : undefined,
+  z.enum(CLAIM_CATEGORIES).optional()
+);
+
+// The metric flag arrives from the form as "true"/"false" (or a checkbox "on").
+const booleanFlag = z.preprocess(
+  (value) =>
+    value === true || value === "true" || value === "on" || value === "1",
+  z.boolean()
+);
+
 const schema = z.object({
   title: requiredText,
   situation: requiredText,
@@ -53,6 +72,8 @@ const schema = z.object({
   why: optionalText,
   outcome: requiredText,
   source: z.enum(DECISION_SOURCES),
+  category: optionalCategory,
+  isMetric: booleanFlag,
 });
 
 // User-facing message for the first field that fails, keyed by field path.

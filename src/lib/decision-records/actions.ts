@@ -50,6 +50,8 @@ export async function saveDecisionRecordAction(
     why: field(formData, "why"),
     outcome: field(formData, "outcome"),
     source: field(formData, "source"),
+    category: field(formData, "category"),
+    isMetric: field(formData, "is_metric"),
   };
 
   const fileId = field(formData, "file_id") || null;
