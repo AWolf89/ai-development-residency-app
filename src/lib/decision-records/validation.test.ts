@@ -18,11 +18,52 @@ describe("validateDecisionRecord", () => {
     why: "Buffering the whole file in memory was the real bottleneck.",
     outcome: "Runtime dropped from 40min to 6min and stopped failing.",
     source: "self_reported",
+    isMetric: false,
   };
 
   it("accepts a fully-filled record and returns the cleaned value (AC1)", () => {
     const result = validateDecisionRecord(complete);
     expect(result).toEqual({ ok: true, value: complete });
+  });
+
+  it("accepts and returns a valid facet (ADR-0015)", () => {
+    const result = validateDecisionRecord({
+      ...complete,
+      category: "delivery",
+    });
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.value.category).toBe("delivery");
+    }
+  });
+
+  it("treats a blank facet as unfiled (undefined)", () => {
+    const result = validateDecisionRecord({ ...complete, category: "" });
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.value.category).toBeUndefined();
+    }
+  });
+
+  it("coerces the metric flag from the form string", () => {
+    const yes = validateDecisionRecord({ ...complete, isMetric: "true" });
+    const no = validateDecisionRecord({ ...complete, isMetric: "false" });
+    expect(yes.ok && yes.value.isMetric).toBe(true);
+    expect(no.ok && no.value.isMetric).toBe(false);
+  });
+
+  it("defaults the metric flag to false when absent", () => {
+    const result = validateDecisionRecord({
+      title: complete.title,
+      situation: complete.situation,
+      decision: complete.decision,
+      outcome: complete.outcome,
+      source: complete.source,
+    });
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.value.isMetric).toBe(false);
+    }
   });
 
   it("accepts a core-only record with cue and why omitted", () => {

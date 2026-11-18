@@ -8,6 +8,7 @@
  */
 import type { createClient } from "@/lib/supabase/server";
 import type { DecisionSource } from "./validation";
+import type { ClaimCategory } from "@/lib/claims/types";
 
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -20,6 +21,8 @@ export type DecisionRecordListItem = {
   why: string | null;
   outcome: string | null;
   source: DecisionSource | null;
+  category: ClaimCategory | null;
+  is_metric: boolean;
   created_at: string;
 };
 
@@ -29,7 +32,7 @@ export type UserFile = {
 };
 
 const RECORD_COLUMNS =
-  "id, title, situation, cue, decision, why, outcome, source, created_at";
+  "id, title, situation, cue, decision, why, outcome, source, category, is_metric, created_at";
 
 /** All of the signed-in user's decision records, newest first (AC5). */
 export async function getDecisionRecords(

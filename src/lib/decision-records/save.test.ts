@@ -23,6 +23,7 @@ const validInput: DecisionRecordInput = {
   decision: "Switched to a streamed writer.",
   outcome: "40min -> 6min, no more failures.",
   source: "artifact",
+  isMetric: false,
 };
 
 describe("saveDecisionRecord", () => {

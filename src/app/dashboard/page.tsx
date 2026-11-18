@@ -9,10 +9,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { createClient } from "@/lib/supabase/server";
 import { logout } from "@/lib/auth/actions";
-import {
-  getDecisionRecords,
-  type DecisionRecordListItem,
-} from "@/lib/decision-records/queries";
+import { getClaims } from "@/lib/claims/queries";
+import { summarize, summaryLine } from "@/lib/claims/presentation";
 import {
   getTargetRoles,
   getRequirementsForRoles,
@@ -23,11 +21,8 @@ import StatusChip from "@/components/StatusChip";
 import PageHeading from "@/components/PageHeading";
 import { brand, type TagTone } from "@/theme-tokens";
 import ProfileForm from "./ProfileForm";
-
-const DECISION_SOURCE: Record<string, { label: string; tone: TagTone }> = {
-  artifact: { label: "Artifact", tone: "green" },
-  self_reported: { label: "Self-reported", tone: "orange" },
-};
+import ClaimsBrowser from "./ClaimsBrowser";
+import ExportButton from "./ExportButton";
 
 const REQUIREMENT_SOURCE: Record<string, { label: string; tone: TagTone }> = {
   framework: { label: "Framework", tone: "green" },
@@ -95,54 +90,6 @@ function TargetRoleCard({
   );
 }
 
-function RecordCard({ record }: { record: DecisionRecordListItem }) {
-  const created = new Date(record.created_at).toLocaleDateString();
-  const tone: TagTone =
-    record.source && DECISION_SOURCE[record.source]
-      ? DECISION_SOURCE[record.source].tone
-      : "gray";
-  return (
-    <Card
-      variant="outlined"
-      sx={{ borderLeft: `4px solid ${brand.tag[tone].fg}` }}
-    >
-      <CardActionArea
-        href={`/dashboard/decision-records/${record.id}`}
-        aria-label={`Edit decision record: ${record.title}`}
-      >
-        <CardContent>
-          <Stack
-            direction="row"
-            sx={{
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            <Typography variant="subtitle1" component="h3">
-              {record.title}
-            </Typography>
-            {record.source && DECISION_SOURCE[record.source] ? (
-              <StatusChip
-                label={DECISION_SOURCE[record.source].label}
-                tone={DECISION_SOURCE[record.source].tone}
-              />
-            ) : null}
-          </Stack>
-          {record.decision ? (
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-              {record.decision}
-            </Typography>
-          ) : null}
-          <Typography variant="caption" color="text.secondary">
-            Saved {created}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
-  );
-}
-
 export default async function DashboardPage() {
   const supabase = await createClient();
   const {
@@ -154,18 +101,18 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  // Read this user's own profile row. RLS ensures it can only be their own.
   const { data: profile } = await supabase
     .from("profiles")
     .select("display_name")
     .eq("id", user.id)
     .maybeSingle();
 
-  // The user's saved decision records (AC5): they persist and appear here on
-  // return. RLS guarantees only their own rows come back (AC7).
-  const records = await getDecisionRecords(supabase, user.id);
+  // The user's claims — their confirmed decision records, assembled with status, sources,
+  // history and usage. RLS guarantees only their own rows come back.
+  const claims = await getClaims(supabase, user.id);
+  const summary = summarize(claims);
 
-  // The user's saved target roles (AC4) and their requirements, grouped by role.
+  // Target roles stay reachable as a secondary section (used by the Gap Check).
   const targetRoles = await getTargetRoles(supabase, user.id);
   const roleRequirements = await getRequirementsForRoles(
     supabase,
@@ -178,29 +125,39 @@ export default async function DashboardPage() {
     requirementsByRole.set(req.target_role_id, list);
   }
 
-  const profileSummary = [
-    `${records.length} decision record${records.length === 1 ? "" : "s"}`,
-    `${targetRoles.length} target role${targetRoles.length === 1 ? "" : "s"}`,
-  ].join(" · ");
-
   return (
     <Box sx={PAGE_SX}>
       <Stack spacing={4}>
         <PageHeading
-          title="Your profile"
-          subtitle={
-            <>
-              Signed in as <strong>{user.email}</strong> · {profileSummary}
-            </>
-          }
+          title="Your evidence profile"
+          subtitle={summaryLine(summary)}
           action={
-            <Box component="form" action={logout}>
-              <Button type="submit" variant="outlined">
-                Log out
+            <Stack direction="row" spacing={1.5} sx={{ flexWrap: "wrap" }}>
+              <Button
+                href="/dashboard/decision-records/new"
+                variant="contained"
+              >
+                Add a record
               </Button>
-            </Box>
+              <ExportButton />
+              <Box component="form" action={logout}>
+                <Button type="submit" variant="text">
+                  Log out
+                </Button>
+              </Box>
+            </Stack>
           }
         />
+
+        {claims.length === 0 ? (
+          <Typography variant="body2" color="text.secondary">
+            No claims yet. Add a decision record — from an interview, an
+            uploaded artifact, or your own recollection — and it appears here as
+            a claim, tagged by how well it is backed.
+          </Typography>
+        ) : (
+          <ClaimsBrowser claims={claims} />
+        )}
 
         <Divider />
 
@@ -209,49 +166,10 @@ export default async function DashboardPage() {
             Display name
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            This is saved to your private profile. Log out and back in — it will
-            still be here, and no other user can see it.
+            Saved to your private profile. Log out and back in — it will still
+            be here, and no other user can see it.
           </Typography>
           <ProfileForm initialDisplayName={profile?.display_name ?? ""} />
-        </Stack>
-
-        <Divider />
-
-        <Stack spacing={2}>
-          <Stack
-            direction="row"
-            sx={{
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: 2,
-            }}
-          >
-            <Typography variant="h6" component="h2">
-              Your decision records
-            </Typography>
-            <Button href="/dashboard/decision-records/new" variant="contained">
-              Add a record
-            </Button>
-          </Stack>
-
-          {records.length === 0 ? (
-            <Typography variant="body2" color="text.secondary">
-              No decision records yet. Add one to capture the reasoning behind a
-              decision from your work.
-            </Typography>
-          ) : (
-            <Stack
-              spacing={1.5}
-              component="ul"
-              sx={{ listStyle: "none", m: 0, p: 0 }}
-            >
-              {records.map((record) => (
-                <Box component="li" key={record.id}>
-                  <RecordCard record={record} />
-                </Box>
-              ))}
-            </Stack>
-          )}
         </Stack>
 
         <Divider />

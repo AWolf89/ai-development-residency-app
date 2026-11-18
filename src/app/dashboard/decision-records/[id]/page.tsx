@@ -56,6 +56,8 @@ export default async function EditDecisionRecordPage({
             why: record.why ?? "",
             outcome: record.outcome ?? "",
             source: record.source ?? "",
+            category: record.category ?? "",
+            isMetric: record.is_metric ?? false,
             fileId: linkedFileId ?? "",
           }}
         />

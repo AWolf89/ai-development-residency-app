@@ -7,6 +7,7 @@
  * because a record only reaches the save step after the user confirms it (AC3).
  */
 import type { DecisionRecordInput, DecisionSource } from "./validation";
+import type { ClaimCategory } from "@/lib/claims/types";
 
 export type DecisionRecordRow = {
   user_id: string;
@@ -18,6 +19,8 @@ export type DecisionRecordRow = {
   outcome: string;
   source: DecisionSource;
   status: string;
+  category: ClaimCategory | null;
+  is_metric: boolean;
 };
 
 export function mapDecisionRecordToRow(
@@ -34,5 +37,7 @@ export function mapDecisionRecordToRow(
     outcome: input.outcome,
     source: input.source,
     status: "confirmed",
+    category: input.category ?? null,
+    is_metric: input.isMetric,
   };
 }

@@ -4,7 +4,9 @@ import { useActionState, useRef, useState } from "react";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import InputLabel from "@mui/material/InputLabel";
 import Link from "@mui/material/Link";
 import MenuItem from "@mui/material/MenuItem";
@@ -19,6 +21,8 @@ import {
   type DecisionSource,
 } from "@/lib/decision-records/validation";
 import type { UserFile } from "@/lib/decision-records/queries";
+import { CLAIM_CATEGORIES, type ClaimCategory } from "@/lib/claims/types";
+import { categoryLabel } from "@/lib/claims/presentation";
 
 export type DecisionRecordFormValues = {
   recordId?: string;
@@ -29,6 +33,8 @@ export type DecisionRecordFormValues = {
   why: string;
   outcome: string;
   source: DecisionSource | "";
+  category: ClaimCategory | "";
+  isMetric: boolean;
   fileId: string;
 };
 
@@ -50,6 +56,8 @@ const EMPTY: DecisionRecordFormValues = {
   why: "",
   outcome: "",
   source: "",
+  category: "",
+  isMetric: false,
   fileId: "",
 };
 
@@ -85,6 +93,8 @@ export default function DecisionRecordForm({
       why: values.why,
       outcome: values.outcome,
       source: values.source,
+      category: values.category,
+      isMetric: values.isMetric,
     });
     if (!result.ok) {
       setClientError(result.error);
@@ -119,6 +129,14 @@ export default function DecisionRecordForm({
       value: values.source ? SOURCE_LABELS[values.source] : "—",
     },
     {
+      label: "Facet",
+      value: values.category ? categoryLabel(values.category) : "Unfiled",
+    },
+    {
+      label: "Self-reported metric",
+      value: values.isMetric ? "Yes" : "No",
+    },
+    {
       label: "Supporting artifact",
       value: files.find((f) => f.id === values.fileId)?.file_name ?? "None",
     },
@@ -137,6 +155,8 @@ export default function DecisionRecordForm({
       <input type="hidden" name="why" value={values.why} />
       <input type="hidden" name="outcome" value={values.outcome} />
       <input type="hidden" name="source" value={values.source} />
+      <input type="hidden" name="category" value={values.category} />
+      <input type="hidden" name="is_metric" value={String(values.isMetric)} />
       <input type="hidden" name="file_id" value={values.fileId} />
 
       {state?.error ? (
@@ -229,6 +249,42 @@ export default function DecisionRecordForm({
               ))}
             </Select>
           </FormControl>
+
+          <FormControl fullWidth>
+            <InputLabel id="dr-category-label">Facet (optional)</InputLabel>
+            <Select
+              labelId="dr-category-label"
+              label="Facet (optional)"
+              value={values.category}
+              onChange={(e) =>
+                setValues((v) => ({
+                  ...v,
+                  category: e.target.value as ClaimCategory | "",
+                }))
+              }
+            >
+              <MenuItem value="">
+                <em>Unfiled</em>
+              </MenuItem>
+              {CLAIM_CATEGORIES.map((c) => (
+                <MenuItem key={c} value={c}>
+                  {categoryLabel(c)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={values.isMetric}
+                onChange={(e) =>
+                  setValues((v) => ({ ...v, isMetric: e.target.checked }))
+                }
+              />
+            }
+            label="This claim is a self-reported metric (a number with no supporting file)"
+          />
 
           <FormControl fullWidth>
             <InputLabel id="dr-file-label">

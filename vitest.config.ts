@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
 // Unit-test runner for the Career Evidence Agent.
@@ -9,6 +10,13 @@ import { defineConfig } from "vitest/config";
 // produce brittle tests. The `coverage.include` list below is the set the 80%
 // floor applies to; add each new pure-logic module to it as it lands.
 export default defineConfig({
+  // Match the tsconfig `@/*` -> `src/*` path alias so runtime (value) imports across
+  // modules resolve in tests, not just type-only imports (which are elided).
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
   test: {
     environment: "node", // pure functions today; add jsdom when we test components
     include: ["src/**/*.test.ts"],
