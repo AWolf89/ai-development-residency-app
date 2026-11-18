@@ -55,6 +55,13 @@ export default defineConfig({
         "src/lib/interview/machine.ts",
         "src/lib/llm/prompts/interview-question.ts",
         "src/lib/llm/prompts/interview-paraphrase.ts",
+        // Claims / Evidence Profile — pure logic only (the RLS-scoped read in
+        // claims/queries.ts is a logic-free Humble Object, exercised by tests/claims/ via tsx).
+        "src/lib/claims/types.ts",
+        "src/lib/claims/status.ts",
+        "src/lib/claims/assemble.ts",
+        "src/lib/claims/presentation.ts",
+        "src/lib/claims/export.ts",
       ],
       thresholds: {
         lines: 80,
