@@ -39,20 +39,14 @@ the prototype are a **facet** and a way to tell a *self-reported metric* from a 
 
 ## Considered Options
 
-* **Projection over `decision_records`** — a claim *is* a decision record, read through a
-  `src/lib/claims/` module; add two small columns (`category`, `is_metric`); derive status on
-  read
-* **A new `claims` table** — a parallel aggregate with its own title/text/status/sources,
-  populated from decision records
-* **A database view** — a SQL `view` that reshapes `decision_records` into claim rows
-* **Extend the prototype's status into a stored column** on `decision_records`, updated
-  whenever evidence changes
+* Projection over `decision_records`: a claim is a decision record read through a `src/lib/claims/` module, with two added columns (`category`, `is_metric`) and status derived on read
+* A new `claims` table: a parallel aggregate with its own title/text/status/sources, populated from decision records
+* A database view: a SQL `view` that reshapes `decision_records` into claim rows
+* Extend the status into a stored column on `decision_records`, updated whenever evidence changes
 
 ## Decision Outcome
 
-Chosen option: **"Projection over `decision_records`"**, because the record already holds a
-claim's title, text, source, history, evidence, and usage, so a claim is best modelled as a
-*view onto* that aggregate rather than a second copy of it. Concretely:
+Chosen option: "Projection over `decision_records`: a claim is a decision record read through a `src/lib/claims/` module, with two added columns (`category`, `is_metric`) and status derived on read", because the record already holds a claim's title, text, source, history, evidence, and usage, so a claim is best modelled as a view onto that aggregate rather than a second copy of it. Concretely:
 
 1. **One decision record = one claim.** The `src/lib/claims/` module reads `decision_records`
    (RLS-scoped) and assembles a `Claim` with its source count (`evidence_links`), version
