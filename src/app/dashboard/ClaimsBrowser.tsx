@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
@@ -50,45 +51,36 @@ function ClaimCard({
         bgcolor: selected ? brand.tag.blue.bg : "#fff",
       }}
     >
-      <CardContent
-        component="button"
-        type="button"
+      <CardActionArea
         onClick={onSelect}
         aria-pressed={selected}
-        sx={{
-          display: "block",
-          width: "100%",
-          textAlign: "left",
-          border: "none",
-          bgcolor: "transparent",
-          cursor: "pointer",
-          font: "inherit",
-          color: "inherit",
-        }}
+        aria-label={`Show details for ${claim.title}`}
       >
-        <Stack
-          direction="row"
-          sx={{
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            gap: 1,
-          }}
-        >
-          <Typography sx={{ fontWeight: 600, fontSize: 16 }}>
-            {claim.title}
+        <CardContent>
+          <Stack
+            direction="row"
+            sx={{
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              gap: 1,
+            }}
+          >
+            <Typography sx={{ fontWeight: 600, fontSize: 16 }}>
+              {claim.title}
+            </Typography>
+            <StatusChip label={status.label} tone={status.tone} />
+          </Stack>
+          {claim.decision ? (
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+              {claim.decision}
+            </Typography>
+          ) : null}
+          <Typography variant="caption" color="text.secondary">
+            {claim.sourceCount} source{claim.sourceCount === 1 ? "" : "s"} ·
+            saved {formatDate(claim.createdAt)}
           </Typography>
-          <StatusChip label={status.label} tone={status.tone} />
-        </Stack>
-        {claim.decision ? (
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-            {claim.decision}
-          </Typography>
-        ) : null}
-        <Typography variant="caption" color="text.secondary">
-          {claim.sourceCount} source{claim.sourceCount === 1 ? "" : "s"} · saved{" "}
-          {formatDate(claim.createdAt)}
-        </Typography>
-      </CardContent>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 }
