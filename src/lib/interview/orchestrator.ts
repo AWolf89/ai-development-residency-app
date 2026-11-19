@@ -12,6 +12,7 @@ import {
   type InterviewParaphraseInput,
 } from "@/lib/llm/prompts/interview-paraphrase";
 import { saveDecisionRecord } from "@/lib/decision-records/save";
+import { indexDecisionRecordEvidence } from "@/lib/decision-records/index-evidence";
 import { createSupabaseDecisionRecordRepository } from "@/lib/decision-records/repository";
 import { createInterview, reduce, QUESTION_HARD_CAP } from "./machine";
 import { cdmDraftSchema } from "./types";
@@ -592,6 +593,23 @@ export async function defaultDeps(userId: string): Promise<InterviewDeps> {
         },
       });
       if (!result.ok) throw new InterviewError(result.error);
+      // Index the accepted record as searchable evidence (Gap Check). Best-effort: the
+      // record is saved, so an indexing failure must not fail the interview's save step.
+      try {
+        await indexDecisionRecordEvidence({
+          recordId: result.recordId,
+          fields: {
+            title: draft.title,
+            situation: draft.situation,
+            cue: draft.cue ?? undefined,
+            decision: draft.decision,
+            why: draft.why ?? undefined,
+            outcome: draft.outcome,
+          },
+        });
+      } catch (err) {
+        console.error("evidence indexing failed for interview record", err);
+      }
       return { recordId: result.recordId };
     },
     repo: supabaseInterviewRepository(supabase),

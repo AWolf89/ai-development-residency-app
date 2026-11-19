@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { saveDecisionRecord } from "./save";
 import { createSupabaseDecisionRecordRepository } from "./repository";
+import { indexDecisionRecordEvidence } from "./index-evidence";
 
 /**
  * Result shape returned to the form via `useActionState`.
@@ -73,6 +74,25 @@ export async function saveDecisionRecordAction(
 
   if (!result.ok) {
     return { error: result.error };
+  }
+
+  // Index the saved record as searchable evidence (so the Gap Check can cite it).
+  // Best-effort: the record is already saved, so an indexing failure must not surface
+  // as a save error.
+  try {
+    await indexDecisionRecordEvidence({
+      recordId: result.recordId,
+      fields: {
+        title: input.title,
+        situation: input.situation,
+        cue: input.cue || undefined,
+        decision: input.decision,
+        why: input.why || undefined,
+        outcome: input.outcome,
+      },
+    });
+  } catch (err) {
+    console.error("evidence indexing failed for decision record", err);
   }
 
   revalidatePath("/dashboard");
