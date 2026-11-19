@@ -33,6 +33,8 @@ export interface TargetRoleRepository {
     userId: string,
     rows: RoleRequirementRow[]
   ): Promise<void>;
+  /** Delete one target role (dependents cascade in the DB; RLS scopes it). */
+  deleteTargetRole(id: string): Promise<void>;
 }
 
 export type SaveTargetRoleParams = {

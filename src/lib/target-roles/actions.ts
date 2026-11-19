@@ -96,6 +96,34 @@ export async function saveTargetRoleAction(
 }
 
 /**
+ * Thin Server Action: delete one of the signed-in user's target roles. Reached
+ * only from the edit page's explicit confirm step. RLS scopes the delete to the
+ * owner and dependents cascade in the DB, so no business logic lives here.
+ */
+export async function deleteTargetRoleAction(
+  roleId: string
+): Promise<TargetRoleState> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const repo = createSupabaseTargetRoleRepository(supabase);
+  try {
+    await repo.deleteTargetRole(roleId);
+  } catch {
+    return { error: "Could not delete that target role. Please try again." };
+  }
+
+  revalidatePath("/dashboard");
+  return { notice: "Deleted." };
+}
+
+/**
  * Title-path autosuggest: return ranked O*NET occupation suggestions for a typed
  * prefix. Called from the client typeahead as the user types. Returns [] when
  * signed out or the prefix is too short (the page itself guards the route).

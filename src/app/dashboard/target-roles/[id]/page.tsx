@@ -1,7 +1,9 @@
 import { notFound, redirect } from "next/navigation";
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { createClient } from "@/lib/supabase/server";
 import {
   getTargetRoleById,
@@ -9,6 +11,7 @@ import {
 } from "@/lib/target-roles/queries";
 import PageHeading from "@/components/PageHeading";
 import TargetRoleForm from "../TargetRoleForm";
+import DeleteTargetRoleButton from "../DeleteTargetRoleButton";
 
 export default async function EditTargetRolePage({
   params,
@@ -49,6 +52,19 @@ export default async function EditTargetRolePage({
             requirements: requirements.map((r) => r.requirement_text),
           }}
         />
+
+        <Divider />
+
+        <Stack spacing={1}>
+          <Typography variant="h6" component="h2">
+            Delete this target role
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Removing a target role also removes its requirements and any gap
+            assessments. This cannot be undone.
+          </Typography>
+          <DeleteTargetRoleButton roleId={role.id} roleTitle={role.title} />
+        </Stack>
       </Stack>
     </Box>
   );

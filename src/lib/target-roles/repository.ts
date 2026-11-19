@@ -348,5 +348,18 @@ export function createSupabaseTargetRoleRepository(
       }
       void userId; // ownership is enforced by RLS; kept for interface symmetry
     },
+
+    async deleteTargetRole(id: string) {
+      // RLS scopes the delete to the owner's row; role_requirements and
+      // requirement_gap_assessments cascade (FK on delete cascade). A non-owner
+      // or missing id simply deletes nothing.
+      const { error } = await supabase
+        .from("target_roles")
+        .delete()
+        .eq("id", id);
+      if (error) {
+        throw new Error(error.message);
+      }
+    },
   };
 }
