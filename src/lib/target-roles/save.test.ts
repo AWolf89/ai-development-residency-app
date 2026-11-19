@@ -10,6 +10,7 @@ function makeFakeRepo(
     insertTargetRole: vi.fn(async () => ({ id: "new-role-id" })),
     updateTargetRole: vi.fn(async () => {}),
     replaceRequirements: vi.fn(async () => {}),
+    deleteTargetRole: vi.fn(async () => {}),
     ...overrides,
   };
 }
