@@ -102,12 +102,13 @@ the MVP. One **additive** migration adds provenance columns:
 - `confidence text` — nullable; the agent's self-reported confidence for an investigated finding
 - `search_count int` — nullable; how many searches the investigation spent (audit)
 
-Idempotency (CLAUDE.md rule 7): the save is an **UPSERT** on the natural key
-`(user_id, role_requirement_id, target_role_id)` — natural idempotency via absolute overwrite
-(`SET verdict = …`), so a repeated or late `accept` cannot create a duplicate row. A unique
-constraint on that key backs the upsert; the migration adds it if the Gap Check migration did
-not. The migration is run with `supabase db push --dry-run` locally only; the hosted push
-happens **only on the user's explicit yes**. Every model call is already logged to `llm_runs`,
+Idempotency (CLAUDE.md rule 7): the save is an **UPSERT** keyed on `role_requirement_id` —
+natural idempotency via absolute overwrite (`SET verdict = …`), so a repeated or late `accept`
+cannot create a duplicate row. No new constraint is needed: `requirement_gap_assessments`
+already declares `role_requirement_id UNIQUE` (migration `20261114140000`), which is stricter
+than the composite key the earlier draft assumed and is exactly the upsert target. The
+migration is run with `supabase db push --dry-run` locally only; the hosted push happens
+**only on the user's explicit yes**. Every model call is already logged to `llm_runs`,
 so no separate investigation-audit table is built now (possible follow-up).
 
 ## UI
@@ -151,5 +152,5 @@ idempotent under a repeated accept — same approach as `tests/interview/` and `
 2. **Investigation types + machine (pure FSM)** — `investigation/types.ts` + `investigation/machine.ts`, test-first; 100% on guards and the HITL edge.
 3. **Investigation reflect prompt** — versioned grounded prompt file (sufficiency + query reformulation), `wrapUntrusted`, tests.
 4. **Investigation orchestrator boundary** — `investigation/orchestrator.ts` wiring retrieval + `runStructured` + gated UPSERT + Server Actions; tsx boundary test incl. "no save without accept" and idempotent accept.
-5. **Assessment provenance migration** — additive `method` / `confidence` / `search_count` columns + unique constraint for the upsert (dry-run local; hosted push gated on explicit yes).
+5. **Assessment provenance migration** — additive `method` / `confidence` / `search_count` columns (the upsert reuses the existing `role_requirement_id` UNIQUE; no new constraint) (dry-run local; hosted push gated on explicit yes).
 6. **Gap Check "Investigate" UI** — accessible MUI review panel + accept/edit/reject Server Actions on screen 04, for gap/unknown/partial requirements.
