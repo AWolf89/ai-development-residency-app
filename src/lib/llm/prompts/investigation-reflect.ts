@@ -1,7 +1,7 @@
 import type { PromptDef } from "./types";
 import { wrapUntrusted } from "../untrusted";
 
-// Grounded reflect prompt for the Evidence Investigation Agent (ADR-0015). One structured call
+// Grounded reflect prompt for the Evidence Investigation Agent (ADR-0017). One structured call
 // per search: the model judges whether the retrieved snippets substantiate ONE requirement and,
 // when they do not, proposes a reformulated query to try next. The honesty guards (no-evidence
 // short-circuit, citation validation against retrieved sources, verdict downgrade) are enforced

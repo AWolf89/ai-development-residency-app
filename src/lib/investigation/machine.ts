@@ -1,5 +1,5 @@
 /**
- * The Evidence Investigation Agent finite-state machine (ADR-0015) — a pure
+ * The Evidence Investigation Agent finite-state machine (ADR-0017) — a pure
  * `reduce(state, event)` router with no side effects. The orchestrator performs retrieval,
  * the reflect model call, and the assessment UPSERT, then feeds each result back here as the
  * next event. The safety properties live in this one module so they are auditable and

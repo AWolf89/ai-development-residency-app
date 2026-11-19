@@ -21,7 +21,7 @@ import type {
 } from "./types";
 
 /**
- * The Evidence Investigation Agent orchestrator (ADR-0015) — the `server-only` boundary that
+ * The Evidence Investigation Agent orchestrator (ADR-0017) — the `server-only` boundary that
  * drives the pure FSM (machine.ts). It performs the side effects the router must never contain
  * (retrieval, the reflect model call, the assessment UPSERT) and feeds each result back as the
  * next event. All dependencies are injected so the whole flow is tested with fakes

@@ -19,7 +19,7 @@ retrieval
 reuses the Gap Check's `requirement_gap_assessments` store, and follows the agent pattern
 established by the Reasoning Interview
 ([ADR-0013](../adr/0013-model-the-reasoning-interview-as-an-explicit-fsm.md)). The modelling
-decision is recorded in **ADR-0015**.
+decision is recorded in **ADR-0017**.
 
 ## Why an agent here (and not just a second query)
 
@@ -148,7 +148,7 @@ idempotent under a repeated accept — same approach as `tests/interview/` and `
 
 ## Kanban cards
 
-1. **ADR-0015: Evidence Investigation Agent as a bounded ReAct retrieval FSM** — record the loop model, HITL gate, caps, and closed-RAG grounding; note it reuses the interview pattern.
+1. **ADR-0017: Evidence Investigation Agent as a bounded ReAct retrieval FSM** — record the loop model, HITL gate, caps, and closed-RAG grounding; note it reuses the interview pattern.
 2. **Investigation types + machine (pure FSM)** — `investigation/types.ts` + `investigation/machine.ts`, test-first; 100% on guards and the HITL edge.
 3. **Investigation reflect prompt** — versioned grounded prompt file (sufficiency + query reformulation), `wrapUntrusted`, tests.
 4. **Investigation orchestrator boundary** — `investigation/orchestrator.ts` wiring retrieval + `runStructured` + gated UPSERT + Server Actions; tsx boundary test incl. "no save without accept" and idempotent accept.

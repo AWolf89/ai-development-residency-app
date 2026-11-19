@@ -2,7 +2,7 @@
 
 Status: Draft
 Size: Medium
-Design: docs/design/evidence-investigation-agent.md (ADR-0015 FSM + HITL)
+Design: docs/design/evidence-investigation-agent.md (ADR-0017 FSM + HITL)
 
 This is the app's **second agent loop**, built to the same standard as the Reasoning
 Interview. The tests exist mainly to prove the safety properties the FSM guarantees: an

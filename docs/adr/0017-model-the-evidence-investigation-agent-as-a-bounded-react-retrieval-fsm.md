@@ -4,7 +4,7 @@ date: 2026-11-18
 decision-makers: Amanda Wolf
 ---
 
-# 0015. Model the Evidence Investigation Agent as a bounded ReAct retrieval FSM with a human-in-the-loop save gate
+# 0017. Model the Evidence Investigation Agent as a bounded ReAct retrieval FSM with a human-in-the-loop save gate
 
 ## Context and Problem Statement
 

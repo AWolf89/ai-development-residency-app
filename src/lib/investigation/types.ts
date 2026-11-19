@@ -1,5 +1,5 @@
 /**
- * Shared types for the Evidence Investigation Agent (ADR-0015). Zod is the single source of
+ * Shared types for the Evidence Investigation Agent (ADR-0017). Zod is the single source of
  * truth and the TS types are inferred from it, so the FSM's state/event unions, the reflect
  * model-output contract, and the proposed `Finding` are validated the same way everywhere.
  * Pure data shapes, free of Supabase and the AI SDK, so the router in machine.ts is unit-tested
@@ -79,7 +79,7 @@ const counters = {
   failureCount: z.number().int().nonnegative(),
 };
 
-/** The FSM state: a discriminated union on `status` (ADR-0015). */
+/** The FSM state: a discriminated union on `status` (ADR-0017). */
 export const investigationStateSchema = z.discriminatedUnion("status", [
   z.object({
     status: z.literal("planning"),
