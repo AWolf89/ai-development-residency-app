@@ -7,6 +7,7 @@ function makeRepo(overrides: Partial<FileRepository> = {}): FileRepository {
   return {
     insertFile: vi.fn(async () => ({ id: "file-1" })),
     removeObject: vi.fn(async () => {}),
+    downloadObject: vi.fn(async () => new Uint8Array()),
     deleteFile: vi.fn(async () => {}),
     ...overrides,
   };

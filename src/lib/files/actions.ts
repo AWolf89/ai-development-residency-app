@@ -5,6 +5,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { recordUploadedFile } from "./record";
 import { createSupabaseFileRepository } from "./repository";
+import { indexUploadedFileEvidence } from "./index-upload";
+import { indexEvidenceForCurrentUser } from "@/lib/rag/evidence-index";
 
 /** Result shape returned to the client after an upload or delete. */
 export type FileActionState = {
@@ -47,6 +49,26 @@ export async function recordUploadAction(
 
   if (!result.ok) {
     return { error: result.error };
+  }
+
+  // Make the file searchable evidence: extract its text and index it (EIA/Gap Check).
+  // Best-effort — the file is already saved, so an indexing failure must not surface as
+  // an upload error; it just means this file won't match in the Gap Check until re-indexed.
+  try {
+    await indexUploadedFileEvidence(
+      {
+        fileId: result.id,
+        storagePath: input.storagePath,
+        fileName: input.fileName,
+        mimeType: input.mimeType,
+      },
+      {
+        download: (path) => repo.downloadObject(path),
+        index: indexEvidenceForCurrentUser,
+      }
+    );
+  } catch (err) {
+    console.error("evidence indexing failed for uploaded file", err);
   }
 
   revalidatePath("/dashboard/files");

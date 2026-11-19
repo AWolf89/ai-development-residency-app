@@ -38,6 +38,16 @@ export function createSupabaseFileRepository(
       }
     },
 
+    async downloadObject(storagePath: string) {
+      const { data, error } = await supabase.storage
+        .from(BUCKET)
+        .download(storagePath);
+      if (error || !data) {
+        throw new Error(error?.message ?? "Could not download file.");
+      }
+      return new Uint8Array(await data.arrayBuffer());
+    },
+
     async deleteFile({ id }) {
       // Look up the row first (RLS-scoped) to get its storage key. Remove the
       // object before the row so a crash never leaves a row pointing at nothing.

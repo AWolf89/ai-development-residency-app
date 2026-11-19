@@ -25,6 +25,8 @@ export type FileInsertRow = {
 export interface FileRepository {
   insertFile(row: FileInsertRow): Promise<{ id: string }>;
   removeObject(storagePath: string): Promise<void>;
+  /** Fetch a stored object's bytes (RLS-scoped). Used to extract text for indexing. */
+  downloadObject(storagePath: string): Promise<Uint8Array>;
   deleteFile(params: { id: string }): Promise<void>;
 }
 
