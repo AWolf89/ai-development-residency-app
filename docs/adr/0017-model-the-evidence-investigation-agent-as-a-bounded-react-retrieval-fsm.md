@@ -46,14 +46,14 @@ questions, and getting them wrong is costly for the same reasons:
 
 ## Considered Options
 
-* **Bounded ReAct retrieval FSM**: a discriminated-union `InvestigationState` + a pure `reduce(state, event)` router, with `saving` reachable only from `awaiting_review` on `accept`, a search-budget guard (default 3, hard cap 5), and a circuit breaker — the thin orchestrator does retrieval, the reflect model call, and the gated upsert
+* Bounded ReAct retrieval FSM: a discriminated-union `InvestigationState` + a pure `reduce(state, event)` router, with `saving` reachable only from `awaiting_review` on `accept`, a search-budget guard (default 3, hard cap 5), and a circuit breaker — the thin orchestrator does retrieval, the reflect model call, and the gated upsert
 * **Extend Gap Classification to loop internally**: fold reformulation into `classify.ts` as a loop, with no explicit state machine and no separate HITL step
 * **Autonomous bulk investigation**: automatically re-investigate every non-`met` requirement and write updated assessments, with the user reviewing the changed assessments afterward
 * **Import LangGraph (or a JS port)** and model the investigation as a graph
 
 ## Decision Outcome
 
-Chosen option: **"Bounded ReAct retrieval FSM"**, because it reuses the interview's audited
+Chosen option: "Bounded ReAct retrieval FSM: a discriminated-union `InvestigationState` + a pure `reduce(state, event)` router, with `saving` reachable only from `awaiting_review` on `accept`, a search-budget guard (default 3, hard cap 5), and a circuit breaker — the thin orchestrator does retrieval, the reflect model call, and the gated upsert", because it reuses the interview's audited
 control-flow pattern wholesale, makes the HITL gate and the loop bounds structural and
 unit-testable in one pure module, keeps the agent grounded by reusing the Gap Check's citation
 validation, and stays within one model path and one table — translating the R1/R3 principles
