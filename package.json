@@ -17,6 +17,7 @@
     "test:rag": "tsx --conditions=react-server tests/rag/mock-rag.test.mts",
     "test:gap": "tsx --conditions=react-server tests/gap/mock-gap.test.mts",
     "test:interview": "tsx --conditions=react-server tests/interview/mock-interview.test.mts",
+    "test:investigation": "tsx --conditions=react-server tests/investigation/mock-investigation.test.mts",
     "test:reviewer": "tsx --conditions=react-server tests/reviewer/mock-reviewer.test.mts",
     "test:claims": "tsx --conditions=react-server tests/claims/mock-claims.test.mts",
     "llm:check": "python3 tools/llm/check_llm_usage.py",
