@@ -45,6 +45,9 @@ export default async function EditDecisionRecordPage({
           title="Edit decision record"
           subtitle="Add the recommended detail or correct anything. You will review it before it is saved."
         />
+        <Link href={`/dashboard/decision-records/${id}/review`}>
+          Review this record for unsupported or overstated claims →
+        </Link>
         <DecisionRecordForm
           files={files}
           initialValues={{

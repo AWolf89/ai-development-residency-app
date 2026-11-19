@@ -70,6 +70,12 @@ export default defineConfig({
         "src/lib/claims/assemble.ts",
         "src/lib/claims/presentation.ts",
         "src/lib/claims/export.ts",
+        // Reviewer Agent Check — pure FSM core + grounding + prompt only (the server-only
+        // orchestrator boundary in reviewer/orchestrator.ts is covered by tests/reviewer/ via tsx).
+        "src/lib/reviewer/types.ts",
+        "src/lib/reviewer/machine.ts",
+        "src/lib/reviewer/grounding.ts",
+        "src/lib/llm/prompts/reviewer-check.ts",
       ],
       thresholds: {
         lines: 80,
