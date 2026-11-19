@@ -142,11 +142,14 @@ export default function ReviewPanel({
               sx={{ opacity: flag.disposition === "dismissed" ? 0.5 : 1 }}
             >
               <CardContent>
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  alignItems="center"
-                  sx={{ mb: 1, flexWrap: "wrap" }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                    gap: 1,
+                    mb: 1,
+                  }}
                 >
                   <Chip
                     size="small"
@@ -163,7 +166,7 @@ export default function ReviewPanel({
                     variant="outlined"
                     label={flag.targetField}
                   />
-                </Stack>
+                </Box>
                 <Typography variant="body1">{flag.message}</Typography>
                 {flag.citations.length > 0 && (
                   <Typography
