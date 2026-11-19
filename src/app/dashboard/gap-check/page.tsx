@@ -30,6 +30,10 @@ import PageHeading from "@/components/PageHeading";
 import { serifStack, brand } from "@/theme-tokens";
 import RunGapCheckButton from "./RunGapCheckButton";
 import RolePicker from "./RolePicker";
+import InvestigateDialog from "./InvestigateDialog";
+
+/** Verdicts the Evidence Investigation Agent can deepen (ADR-0017); `met` has nothing to chase. */
+const INVESTIGABLE_VERDICTS = new Set(["gap", "unknown", "partial"]);
 
 const PAGE_SX = {
   px: { xs: 2, md: 7 },
@@ -248,7 +252,19 @@ export default async function GapCheckPage({
                           )}
                         </TableCell>
                         <TableCell sx={{ borderColor: brand.hairline }}>
-                          <EvidenceCellView assessment={assessment} />
+                          <Stack spacing={1} sx={{ alignItems: "flex-start" }}>
+                            <EvidenceCellView assessment={assessment} />
+                            {assessment &&
+                            INVESTIGABLE_VERDICTS.has(assessment.verdict) ? (
+                              <InvestigateDialog
+                                requirement={{
+                                  id: req.id,
+                                  text: req.requirement_text,
+                                }}
+                                targetRoleId={selected.id}
+                              />
+                            ) : null}
+                          </Stack>
                         </TableCell>
                       </TableRow>
                     );
