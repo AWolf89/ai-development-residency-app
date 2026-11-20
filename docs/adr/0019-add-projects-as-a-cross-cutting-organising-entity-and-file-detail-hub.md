@@ -47,19 +47,14 @@ record. So the hard questions are:
 
 ## Considered Options
 
-* **A — New `projects` table + three nullable `project_id` FKs (`on delete set null`); file gets
-  only a one-line `caption`, and the file page is a hub that attaches/creates decision records and
-  assigns a project (Fork B).**
-* **B — No new table; reuse `target_roles` (or `decision_records`) as the grouping entity.**
-* **C — Fork A: add `description` / `your_role` / `context` / `decisions` narrative columns onto the
-  `files` table so a file documents itself.**
-* **D — A polymorphic `project_links` join table (one table linking a project to any entity) instead
-  of a `project_id` column per table.**
+* A — a new `projects` table with three nullable `project_id` FKs (`on delete set null`) and a one-line file `caption`, where the file page is a hub that links decision records and assigns a project (Fork B)
+* B — no new table; reuse `target_roles` (or `decision_records`) as the grouping entity
+* C — Fork A: add `description` / `your_role` / `context` / `decisions` narrative columns onto the `files` table so a file documents itself
+* D — a polymorphic `project_links` join table (one table linking a project to any entity) instead of a `project_id` column per table
 
 ## Decision Outcome
 
-Chosen option: **A** (new `projects` table, three nullable `project_id` FKs with
-`on delete set null`, file-detail **hub** with only a `caption`), because it gives project grouping
+Chosen option: "A — a new `projects` table with three nullable `project_id` FKs (`on delete set null`) and a one-line file `caption`, where the file page is a hub that links decision records and assigns a project (Fork B)", because it gives project grouping
 a first-class home without overloading an unrelated table, keeps all evidence narrative in decision
 records (one source of truth), makes assignment optional and project deletion non-destructive, and
 enforces ownership with the repo's established RLS `with check` pattern — all within one app and one

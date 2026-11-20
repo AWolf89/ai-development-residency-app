@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { createClient } from "@/lib/supabase/server";
 import { getFileDetail } from "@/lib/files/queries";
 import { formatBytes } from "@/lib/files/mappers";
