@@ -90,6 +90,21 @@ export function buildEnrichmentText(
   return parts.join("\n\n");
 }
 
+/**
+ * The full text to (re-)index into `evidence_chunks` for a file on accept: the file's own text
+ * (raw document text, or an image's vision description) followed by the enrichment passage. This
+ * is what makes an image, or a file the search missed before, retrievable and citable by the Gap
+ * Check. Returns "" when there is nothing to index (empty file text and nothing tagged).
+ */
+export function buildIndexedText(
+  fileText: string,
+  summary: string,
+  tags: ProposedTag[]
+): string {
+  const enrichment = buildEnrichmentText(summary, tags);
+  return [fileText.trim(), enrichment].filter(Boolean).join("\n\n");
+}
+
 /** Map a validated proposed tag + context to a `file_reference_tags` row (own-rows RLS). */
 export function toTagRow(
   tag: ProposedTag,

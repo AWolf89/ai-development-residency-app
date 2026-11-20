@@ -5,6 +5,7 @@ import {
   highConfidenceOnly,
   needsReview,
   buildEnrichmentText,
+  buildIndexedText,
   toTagRow,
 } from "./analyze";
 
@@ -132,6 +133,32 @@ describe("buildEnrichmentText", () => {
 
   it("returns an empty string when there is nothing to index", () => {
     expect(buildEnrichmentText("   ", [])).toBe("");
+  });
+});
+
+describe("buildIndexedText", () => {
+  const tags = validateTags(
+    [{ referenceItemId: SKILL.id, confidence: "high", rationale: "a" }],
+    [SKILL]
+  );
+
+  it("combines the file text with the enrichment passage", () => {
+    const text = buildIndexedText("Raw document text.", "A summary.", tags);
+    expect(text).toContain("Raw document text.");
+    expect(text).toContain("A summary.");
+    expect(text).toContain("Customer Journey Mapping (skills)");
+  });
+
+  it("uses the file text alone when there is no summary or tags", () => {
+    expect(buildIndexedText("Raw text.", "", [])).toBe("Raw text.");
+  });
+
+  it("uses the enrichment alone when there is no file text (e.g. a thin image)", () => {
+    expect(buildIndexedText("", "A summary.", [])).toBe("A summary.");
+  });
+
+  it("returns an empty string when there is nothing to index", () => {
+    expect(buildIndexedText("  ", "", [])).toBe("");
   });
 });
 
