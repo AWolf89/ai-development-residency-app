@@ -75,12 +75,26 @@ describe("extractText", () => {
     expect(parsers.docx).toHaveBeenCalledOnce();
   });
 
-  it("returns empty string for images (no OCR) without calling parsers", async () => {
+  it("returns empty string for images when no vision describer is injected", async () => {
     const parsers = fakeParsers();
     expect(await extractText(enc("x"), "image/png", parsers)).toBe("");
     expect(await extractText(enc("x"), "image/jpeg", parsers)).toBe("");
     expect(parsers.pdf).not.toHaveBeenCalled();
     expect(parsers.docx).not.toHaveBeenCalled();
+  });
+
+  it("routes images to the injected vision describer, with the mime type, trimmed", async () => {
+    const image = vi.fn(async () => "  a customer journey map  ");
+    const parsers = fakeParsers({ image });
+    expect(await extractText(enc("PNG"), "image/png", parsers)).toBe(
+      "a customer journey map"
+    );
+    expect(await extractText(enc("JPG"), "image/jpeg", parsers)).toBe(
+      "a customer journey map"
+    );
+    expect(image).toHaveBeenCalledWith(expect.any(Uint8Array), "image/png");
+    expect(image).toHaveBeenCalledWith(expect.any(Uint8Array), "image/jpeg");
+    expect(parsers.pdf).not.toHaveBeenCalled();
   });
 
   it("returns empty string for an unknown type", async () => {
