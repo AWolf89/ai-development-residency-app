@@ -56,12 +56,42 @@ describe("gapModelOutputSchema", () => {
     expect(gapModelOutputSchema.safeParse(rest).success).toBe(false);
   });
 
-  it("rejects a malformed citation (missing id)", () => {
+  // Fail-safe parsing (ADR-0011): a malformed citation is DROPPED, not fatal — otherwise one
+  // bad reply would 500 the whole gap check. resolveVerdict then downgrades uncited met/partial.
+  it("drops a malformed citation (missing id) instead of failing the call", () => {
+    const result = gapModelOutputSchema.safeParse({
+      ...valid,
+      citations: [{ source: "file" }],
+    });
+    expect(result.success).toBe(true);
+    expect(result.success && result.data.citations).toEqual([]);
+  });
+
+  it("keeps well-formed citations and drops malformed ones in the same array", () => {
+    const result = gapModelOutputSchema.safeParse({
+      ...valid,
+      citations: [
+        { source: "file", id: "resume.pdf" },
+        { source: "file" }, // missing id
+        "onet:15-1252.00", // not even an object
+        { source: "", id: "x" }, // blank source
+      ],
+    });
+    expect(result.success).toBe(true);
+    expect(result.success && result.data.citations).toEqual([
+      { source: "file", id: "resume.pdf" },
+    ]);
+  });
+
+  it("tolerates citations being absent or not an array (treats as none)", () => {
+    const { citations, ...noCitations } = valid;
+    void citations;
     expect(
-      gapModelOutputSchema.safeParse({
-        ...valid,
-        citations: [{ source: "file" }],
-      }).success
-    ).toBe(false);
+      gapModelOutputSchema.safeParse(noCitations).success &&
+        gapModelOutputSchema.parse(noCitations).citations
+    ).toEqual([]);
+    expect(
+      gapModelOutputSchema.parse({ ...valid, citations: "nope" }).citations
+    ).toEqual([]);
   });
 });
