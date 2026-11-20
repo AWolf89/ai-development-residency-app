@@ -67,6 +67,29 @@ export function needsReview(
   return tags.some((tag) => tag.confidence !== "high");
 }
 
+/**
+ * Build the enrichment passage indexed into `evidence_chunks` on accept (ADR-0020). Folding the
+ * file's summary plus its tagged competency names into the evidence corpus is what lets the Gap
+ * Check — which searches that corpus — retrieve and cite the file against a free-text requirement
+ * (e.g. an image tagged "Customer Journey Mapping" now matches a "Customer Experience Mapping"
+ * requirement). Returns "" when there is nothing worth indexing (no summary and no tags).
+ */
+export function buildEnrichmentText(
+  summary: string,
+  tags: ProposedTag[]
+): string {
+  const parts: string[] = [];
+  const trimmedSummary = summary.trim();
+  if (trimmedSummary) parts.push(trimmedSummary);
+  if (tags.length > 0) {
+    const listed = tags
+      .map((tag) => `${tag.name} (${tag.entityType})`)
+      .join("; ");
+    parts.push(`This file evidences: ${listed}.`);
+  }
+  return parts.join("\n\n");
+}
+
 /** Map a validated proposed tag + context to a `file_reference_tags` row (own-rows RLS). */
 export function toTagRow(
   tag: ProposedTag,

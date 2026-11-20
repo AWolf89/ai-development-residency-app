@@ -4,6 +4,7 @@ import {
   validateTags,
   highConfidenceOnly,
   needsReview,
+  buildEnrichmentText,
   toTagRow,
 } from "./analyze";
 
@@ -106,6 +107,31 @@ describe("needsReview (batch gate)", () => {
 
   it("is false for no tags and no questions (nothing to apply)", () => {
     expect(needsReview([], 0)).toBe(false);
+  });
+});
+
+describe("buildEnrichmentText", () => {
+  const tags = validateTags(
+    [
+      { referenceItemId: SKILL.id, confidence: "high", rationale: "a" },
+      { referenceItemId: DELIVERABLE.id, confidence: "medium", rationale: "b" },
+    ],
+    [SKILL, DELIVERABLE]
+  );
+
+  it("combines the summary with the tagged competency names and kinds", () => {
+    const text = buildEnrichmentText("A journey map for OUAT.", tags);
+    expect(text).toContain("A journey map for OUAT.");
+    expect(text).toContain("Customer Journey Mapping (skills)");
+    expect(text).toContain("Journey Map (deliverables)");
+  });
+
+  it("uses the summary alone when there are no tags", () => {
+    expect(buildEnrichmentText("Just a summary.", [])).toBe("Just a summary.");
+  });
+
+  it("returns an empty string when there is nothing to index", () => {
+    expect(buildEnrichmentText("   ", [])).toBe("");
   });
 });
 
