@@ -77,12 +77,18 @@ describe("createAnalysis", () => {
   });
 
   it("clamps a zero or negative budget up to at least one", () => {
-    expect(createAnalysis({ ...FILE, questionBudget: 0 }).questionBudget).toBe(1);
-    expect(createAnalysis({ ...FILE, questionBudget: -5 }).questionBudget).toBe(1);
+    expect(createAnalysis({ ...FILE, questionBudget: 0 }).questionBudget).toBe(
+      1
+    );
+    expect(createAnalysis({ ...FILE, questionBudget: -5 }).questionBudget).toBe(
+      1
+    );
   });
 
   it("keeps a budget within range unchanged", () => {
-    expect(createAnalysis({ ...FILE, questionBudget: 2 }).questionBudget).toBe(2);
+    expect(createAnalysis({ ...FILE, questionBudget: 2 }).questionBudget).toBe(
+      2
+    );
   });
 });
 
@@ -173,7 +179,12 @@ describe("clarification budget (hard loop bound)", () => {
 describe("ask-don't-guess / honesty floor", () => {
   it("proposes no tags rather than forcing them when the model is confident but found none", () => {
     const s = drive([
-      { type: "analyzed", summary: "A file with no clear framework match.", tags: [], questions: [] },
+      {
+        type: "analyzed",
+        summary: "A file with no clear framework match.",
+        tags: [],
+        questions: [],
+      },
     ]);
     expect(s.status).toBe("awaiting_review");
     if (s.status === "awaiting_review") expect(s.tags).toEqual([]);
@@ -192,7 +203,8 @@ describe("circuit breaker", () => {
 
   it("trips to paused (circuit_breaker) at the threshold", () => {
     let s: AnalysisState = createAnalysis(FILE);
-    for (let i = 0; i < BREAKER_THRESHOLD; i++) s = reduce(s, { type: "llm_failed" });
+    for (let i = 0; i < BREAKER_THRESHOLD; i++)
+      s = reduce(s, { type: "llm_failed" });
     expect(s.status).toBe("paused");
     if (s.status === "paused") expect(s.reason).toBe("circuit_breaker");
   });
@@ -253,7 +265,8 @@ describe("HITL isolation invariant (R1 §3.4)", () => {
     saving: drive([analyzedConfident, { type: "accept" }]),
     paused: (() => {
       let s: AnalysisState = createAnalysis(FILE);
-      for (let i = 0; i < BREAKER_THRESHOLD; i++) s = reduce(s, { type: "llm_failed" });
+      for (let i = 0; i < BREAKER_THRESHOLD; i++)
+        s = reduce(s, { type: "llm_failed" });
       return s;
     })(),
     complete: drive([analyzedConfident, { type: "accept" }, { type: "saved" }]),

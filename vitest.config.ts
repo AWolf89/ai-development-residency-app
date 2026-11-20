@@ -76,6 +76,12 @@ export default defineConfig({
         "src/lib/reviewer/machine.ts",
         "src/lib/reviewer/grounding.ts",
         "src/lib/llm/prompts/reviewer-check.ts",
+        // Learning Moment Capture — pure logic only (the Supabase repository boundary in
+        // learning-moments/repository.ts is a logic-free Humble Object, like the others).
+        "src/lib/learning-moments/types.ts",
+        "src/lib/learning-moments/mappers.ts",
+        "src/lib/learning-moments/save.ts",
+        "src/lib/learning-moments/presentation.ts",
         // File Analysis & Tagging — pure core only (the server-only classifier.ts and
         // describe-image.ts boundaries, and the gateway vision path in llm/run.ts, are not here).
         "src/lib/file-analysis/types.ts",

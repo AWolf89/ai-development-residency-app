@@ -142,7 +142,10 @@ export const analysisEventSchema = z.discriminatedUnion("type", [
     questions: z.array(clarifyingQuestionSchema),
   }),
   // The user answered the clarification questions; the orchestrator re-runs the analysis.
-  z.object({ type: z.literal("answers_submitted"), answers: z.array(z.string()) }),
+  z.object({
+    type: z.literal("answers_submitted"),
+    answers: z.array(z.string()),
+  }),
   // The user declined to answer; propose whatever tags we already have.
   z.object({ type: z.literal("skip_clarification") }),
   z.object({ type: z.literal("llm_failed") }),

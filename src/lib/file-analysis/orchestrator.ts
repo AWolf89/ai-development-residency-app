@@ -49,7 +49,8 @@ export async function resolveFileText(fileId: string): Promise<ResolvedFile> {
   const bytes = await repo.downloadObject(file.storage_path as string);
   const text = await extractText(bytes, (file.mime_type as string) ?? "", {
     ...defaultParsers,
-    image: (b, mimeType) => describeImage(b, mimeType, file.file_name as string),
+    image: (b, mimeType) =>
+      describeImage(b, mimeType, file.file_name as string),
   });
 
   // Cache the extracted text (replace any prior row) so accept/re-analysis reuse it.

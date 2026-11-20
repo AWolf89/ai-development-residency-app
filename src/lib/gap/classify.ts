@@ -22,6 +22,10 @@ import type {
 export const NO_EVIDENCE_RATIONALE =
   "No matching evidence was found for this requirement.";
 
+/** Rationale used when classifying one requirement throws (model/retrieval failure). */
+export const CLASSIFY_FAILED_RATIONALE =
+  "This requirement couldn't be checked automatically. Try running the gap check again.";
+
 /** One requirement to classify. */
 export type RequirementInput = { id: string; text: string };
 
@@ -132,6 +136,34 @@ export async function classifyRequirement(
   };
 }
 
+/**
+ * Classify one requirement, but never let its failure escape: on any thrown error (a spent
+ * structured-output correction budget, a retrieval/model outage) degrade this one requirement
+ * to `unknown` with an explanatory rationale. This is the per-item circuit breaker — a single
+ * bad model reply must not 500 the whole multi-requirement gap check.
+ */
+export async function classifyRequirementSafe(
+  req: RequirementInput,
+  deps: ClassifyDeps
+): Promise<RequirementGap> {
+  try {
+    return await classifyRequirement(req, deps);
+  } catch (err) {
+    console.error(`gap classification failed for requirement ${req.id}`, err);
+    return {
+      requirementId: req.id,
+      requirementText: req.text,
+      verdict: "unknown",
+      rationale: CLASSIFY_FAILED_RATIONALE,
+      citations: [],
+      evidenceFound: false,
+      referenceUsed: false,
+      modelAttempts: 0,
+      truncated: false,
+    };
+  }
+}
+
 /** Classify every requirement in order (bounded, sequential — not an agent loop). */
 export async function classifyRequirements(
   reqs: RequirementInput[],
@@ -139,7 +171,7 @@ export async function classifyRequirements(
 ): Promise<RequirementGap[]> {
   const results: RequirementGap[] = [];
   for (const req of reqs) {
-    results.push(await classifyRequirement(req, deps));
+    results.push(await classifyRequirementSafe(req, deps));
   }
   return results;
 }

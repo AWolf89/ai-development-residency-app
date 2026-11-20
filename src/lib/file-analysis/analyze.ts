@@ -8,12 +8,7 @@
  * candidate is dropped — the model cannot invent a competency that is not in the framework/O*NET.
  * This is the same guarantee Gap Classification's `validateCitations` gives (ADR-0011).
  */
-import type {
-  Candidate,
-  Confidence,
-  ModelTag,
-  ProposedTag,
-} from "./types";
+import type { Candidate, Confidence, ModelTag, ProposedTag } from "./types";
 
 /**
  * Keep only model tags that point at a really-offered candidate; dedup by reference_item id.
@@ -24,7 +19,9 @@ export function validateTags(
   returned: ModelTag[],
   candidates: Candidate[]
 ): ProposedTag[] {
-  const byId = new Map(candidates.map((candidate) => [candidate.id, candidate]));
+  const byId = new Map(
+    candidates.map((candidate) => [candidate.id, candidate])
+  );
   const out: ProposedTag[] = [];
   const seen = new Set<string>();
   for (const tag of returned) {

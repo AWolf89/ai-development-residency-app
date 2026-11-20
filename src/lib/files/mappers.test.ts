@@ -31,6 +31,8 @@ describe("mapFileRowToView", () => {
     size_bytes: 2048,
     created_at: "2026-11-12T10:00:00.000Z",
     storage_path: "user-1/uuid-resume.pdf",
+    caption: "My 2026 resume",
+    project_id: "project-1",
   };
 
   it("maps a row to the view model with a formatted size", () => {
@@ -40,10 +42,18 @@ describe("mapFileRowToView", () => {
       sizeLabel: "2.0 KB",
       createdAt: "2026-11-12T10:00:00.000Z",
       storagePath: "user-1/uuid-resume.pdf",
+      caption: "My 2026 resume",
+      projectId: "project-1",
     });
   });
 
   it("passes a null size through as a dash", () => {
     expect(mapFileRowToView({ ...row, size_bytes: null }).sizeLabel).toBe("—");
+  });
+
+  it("carries a null caption and project through unchanged", () => {
+    const view = mapFileRowToView({ ...row, caption: null, project_id: null });
+    expect(view.caption).toBeNull();
+    expect(view.projectId).toBeNull();
   });
 });

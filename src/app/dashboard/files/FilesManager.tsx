@@ -14,6 +14,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlined";
@@ -228,11 +229,14 @@ export default function FilesManager({
                           component="h3"
                           sx={{ wordBreak: "break-word" }}
                         >
-                          {file.name}
+                          <Link href={`/dashboard/files/${file.id}`}>
+                            {file.name}
+                          </Link>
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
                           {file.sizeLabel} · Uploaded{" "}
                           {new Date(file.createdAt).toLocaleDateString()}
+                          {file.caption ? ` · ${file.caption}` : ""}
                         </Typography>
                       </Box>
                       <Stack

@@ -61,9 +61,7 @@ export async function extractText(
     case "image/png":
     case "image/jpeg":
       // A vision read when a describer is injected; otherwise no text (as before).
-      return parsers.image
-        ? (await parsers.image(bytes, mimeType)).trim()
-        : "";
+      return parsers.image ? (await parsers.image(bytes, mimeType)).trim() : "";
     default:
       return "";
   }

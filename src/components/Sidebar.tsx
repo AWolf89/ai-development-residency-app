@@ -22,8 +22,10 @@ type NavItem = { label: string; href: string | null };
 // shown disabled with a "Soon" marker.
 const NAV_ITEMS: NavItem[] = [
   { label: "Upload files", href: "/dashboard/files" },
+  { label: "Projects", href: "/dashboard/projects" },
   { label: "Review claims", href: null },
   { label: "Interview", href: "/dashboard/interview" },
+  { label: "Learning moments", href: "/dashboard/learning-moments" },
   { label: "Gap check", href: "/dashboard/gap-check" },
   { label: "My profile", href: "/dashboard" },
 ];
@@ -155,6 +157,24 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
           );
         })}
       </List>
+
+      <Box
+        component="a"
+        href="/dashboard/about"
+        onClick={onNavigate}
+        sx={{
+          mt: "auto",
+          pt: 3,
+          px: "14px",
+          fontSize: 13,
+          color: brand.sidebarText,
+          opacity: 0.7,
+          textDecoration: "none",
+          "&:hover": { opacity: 1, textDecoration: "underline" },
+        }}
+      >
+        Data &amp; attributions
+      </Box>
     </Box>
   );
 }

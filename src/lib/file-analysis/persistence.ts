@@ -15,7 +15,8 @@ async function currentUserId(
 ): Promise<string> {
   const { data } = await supabase.auth.getClaims();
   const userId = data?.claims?.sub;
-  if (!userId) throw new Error("Saving file analysis requires a signed-in user.");
+  if (!userId)
+    throw new Error("Saving file analysis requires a signed-in user.");
   return userId;
 }
 

@@ -29,7 +29,11 @@ const DELIVERABLE: Candidate = {
 describe("validateTags (closed-world grounding)", () => {
   it("keeps only tags whose id is a real candidate, enriched with the candidate's identity", () => {
     const returned: ModelTag[] = [
-      { referenceItemId: SKILL.id, confidence: "high", rationale: "It is a journey map." },
+      {
+        referenceItemId: SKILL.id,
+        confidence: "high",
+        rationale: "It is a journey map.",
+      },
     ];
     const out = validateTags(returned, [SKILL, DELIVERABLE]);
     expect(out).toEqual([
@@ -47,7 +51,11 @@ describe("validateTags (closed-world grounding)", () => {
 
   it("drops a tag that points at an id that was never a candidate (no invented tags)", () => {
     const returned: ModelTag[] = [
-      { referenceItemId: "99999999-9999-4999-8999-999999999999", confidence: "high", rationale: "made up" },
+      {
+        referenceItemId: "99999999-9999-4999-8999-999999999999",
+        confidence: "high",
+        rationale: "made up",
+      },
     ];
     expect(validateTags(returned, [SKILL, DELIVERABLE])).toEqual([]);
   });
@@ -72,7 +80,11 @@ describe("highConfidenceOnly", () => {
     const tags = validateTags(
       [
         { referenceItemId: SKILL.id, confidence: "high", rationale: "a" },
-        { referenceItemId: DELIVERABLE.id, confidence: "medium", rationale: "b" },
+        {
+          referenceItemId: DELIVERABLE.id,
+          confidence: "medium",
+          rationale: "b",
+        },
       ],
       [SKILL, DELIVERABLE]
     );
@@ -165,7 +177,13 @@ describe("buildIndexedText", () => {
 describe("toTagRow", () => {
   it("maps a proposed tag to a file_reference_tags row", () => {
     const [tag] = validateTags(
-      [{ referenceItemId: SKILL.id, confidence: "high", rationale: "a journey map" }],
+      [
+        {
+          referenceItemId: SKILL.id,
+          confidence: "high",
+          rationale: "a journey map",
+        },
+      ],
       [SKILL]
     );
     expect(toTagRow(tag, { userId: "user-1", fileId: "file-1" })).toEqual({

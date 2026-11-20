@@ -41,7 +41,9 @@ const SKILL_ROW: ReferenceItemRow = {
 function makeDeps(over: Partial<AnalysisDeps> = {}): AnalysisDeps {
   return {
     retrieveReference: async () =>
-      retrieval([hit("techfleet-spf:skills:customer-journey-mapping", "techfleet-spf")]),
+      retrieval([
+        hit("techfleet-spf:skills:customer-journey-mapping", "techfleet-spf"),
+      ]),
     lookupReferenceItems: async () => [SKILL_ROW],
     runModel: async () => ({
       output: { summary: "A journey map.", tags: [], questions: [] },
@@ -98,8 +100,16 @@ describe("runAnalysisPass", () => {
     const output: AnalysisOutput = {
       summary: "A customer journey map for OUAT.",
       tags: [
-        { referenceItemId: SKILL_ROW.id, confidence: "high", rationale: "it is a journey map" },
-        { referenceItemId: "99999999-9999-4999-8999-999999999999", confidence: "high", rationale: "made up" },
+        {
+          referenceItemId: SKILL_ROW.id,
+          confidence: "high",
+          rationale: "it is a journey map",
+        },
+        {
+          referenceItemId: "99999999-9999-4999-8999-999999999999",
+          confidence: "high",
+          rationale: "made up",
+        },
       ],
       questions: ["Which project was this for?"],
     };

@@ -92,7 +92,11 @@ describe("analysisStateSchema (discriminated union)", () => {
 
   it("accepts each state shape", () => {
     expect(
-      analysisStateSchema.safeParse({ status: "analyzing", fileId: "f", ...counters }).success
+      analysisStateSchema.safeParse({
+        status: "analyzing",
+        fileId: "f",
+        ...counters,
+      }).success
     ).toBe(true);
     expect(
       analysisStateSchema.safeParse({
@@ -115,10 +119,15 @@ describe("analysisStateSchema (discriminated union)", () => {
 
   it("rejects an unknown status and a missing counter", () => {
     expect(
-      analysisStateSchema.safeParse({ status: "nope", fileId: "f", ...counters }).success
+      analysisStateSchema.safeParse({
+        status: "nope",
+        fileId: "f",
+        ...counters,
+      }).success
     ).toBe(false);
     expect(
-      analysisStateSchema.safeParse({ status: "analyzing", fileId: "f" }).success
+      analysisStateSchema.safeParse({ status: "analyzing", fileId: "f" })
+        .success
     ).toBe(false);
   });
 
@@ -146,7 +155,9 @@ describe("analysisEventSchema (discriminated union)", () => {
         questions: [{ text: "q?" }],
       }).success
     ).toBe(true);
-    expect(analysisEventSchema.safeParse({ type: "accept" }).success).toBe(true);
+    expect(analysisEventSchema.safeParse({ type: "accept" }).success).toBe(
+      true
+    );
     expect(
       analysisEventSchema.safeParse({ type: "edit", tags: [TAG] }).success
     ).toBe(true);

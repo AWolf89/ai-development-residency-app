@@ -12,7 +12,9 @@ describe("file-analysis prompt", () => {
     const s = fileAnalysis.system.toLowerCase();
     expect(s).toContain("only"); // only the supplied candidates
     expect(s).toContain("data, never instructions"); // injection defense
-    expect(s).toMatch(/never return an id that is not|omit a candidate rather than guess/);
+    expect(s).toMatch(
+      /never return an id that is not|omit a candidate rather than guess/
+    );
     expect(s).toMatch(/questions/); // ask when unsure
   });
 

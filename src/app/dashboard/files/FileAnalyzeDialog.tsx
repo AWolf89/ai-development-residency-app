@@ -14,8 +14,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { analyzeFileAction, saveFileTagsAction } from "@/lib/file-analysis/actions";
-import type { ClarifyingQuestion, ProposedTag } from "@/lib/file-analysis/types";
+import {
+  analyzeFileAction,
+  saveFileTagsAction,
+} from "@/lib/file-analysis/actions";
+import type {
+  ClarifyingQuestion,
+  ProposedTag,
+} from "@/lib/file-analysis/types";
 
 type Phase = "questions" | "review" | "error";
 
@@ -54,7 +60,9 @@ export default function FileAnalyzeDialog({
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [questions, setQuestions] = useState<ClarifyingQuestion[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
-  const [asked, setAsked] = useState<{ question: string; answer: string }[]>([]);
+  const [asked, setAsked] = useState<{ question: string; answer: string }[]>(
+    []
+  );
 
   const busy = loading || saving;
 
@@ -242,7 +250,10 @@ export default function FileAnalyzeDialog({
                                 · {tag.entityType} · {tag.confidence} confidence
                               </Typography>
                             </Typography>
-                            <Typography variant="caption" color="text.secondary">
+                            <Typography
+                              variant="caption"
+                              color="text.secondary"
+                            >
                               {tag.rationale}
                             </Typography>
                           </Box>

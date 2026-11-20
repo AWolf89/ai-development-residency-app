@@ -70,7 +70,11 @@ describe("dedupeCandidateKeys / candidateKeysFromHits", () => {
   it("dedupeCandidateKeys keeps distinct entity types with the same external_id", () => {
     const out = dedupeCandidateKeys([
       { source: "techfleet-spf", entity_type: "skills", external_id: "map" },
-      { source: "techfleet-spf", entity_type: "deliverables", external_id: "map" },
+      {
+        source: "techfleet-spf",
+        entity_type: "deliverables",
+        external_id: "map",
+      },
     ]);
     expect(out).toHaveLength(2);
   });
@@ -89,12 +93,20 @@ describe("rowMatchesAnyKey / toCandidate", () => {
   it("matches only the exact (source, entity_type, external_id) tuple", () => {
     expect(
       rowMatchesAnyKey(row, [
-        { source: "techfleet-spf", entity_type: "skills", external_id: "customer-journey-mapping" },
+        {
+          source: "techfleet-spf",
+          entity_type: "skills",
+          external_id: "customer-journey-mapping",
+        },
       ])
     ).toBe(true);
     expect(
       rowMatchesAnyKey(row, [
-        { source: "techfleet-spf", entity_type: "deliverables", external_id: "customer-journey-mapping" },
+        {
+          source: "techfleet-spf",
+          entity_type: "deliverables",
+          external_id: "customer-journey-mapping",
+        },
       ])
     ).toBe(false);
   });
