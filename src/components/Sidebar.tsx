@@ -24,6 +24,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Upload files", href: "/dashboard/files" },
   { label: "Review claims", href: null },
   { label: "Interview", href: "/dashboard/interview" },
+  { label: "Learning moments", href: "/dashboard/learning-moments" },
   { label: "Gap check", href: "/dashboard/gap-check" },
   { label: "My profile", href: "/dashboard" },
 ];
