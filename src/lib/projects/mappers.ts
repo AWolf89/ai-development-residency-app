@@ -1,8 +1,10 @@
 /**
- * Pure mapping from a `projects` row to the view model the UI renders, plus
- * deterministic, locale-independent label helpers. Kept separate from the Server
- * Component (Humble Object) so every branch is unit-testable with no network.
+ * Pure mapping between a `projects` row and the view model the UI renders (and
+ * the reverse: a validated input to the write row), plus deterministic,
+ * locale-independent label helpers. Kept separate from the Server Component
+ * (Humble Object) so every branch is unit-testable with no network.
  */
+import type { ProjectInput } from "./validation";
 
 export type ProjectRow = {
   id: string;
@@ -26,6 +28,35 @@ export type ProjectView = {
   dateRangeLabel: string;
   createdAt: string;
 };
+
+/** The shape written to the `projects` table (no id / timestamps). */
+export type ProjectWriteRow = {
+  user_id: string;
+  name: string;
+  role: string | null;
+  organisation: string | null;
+  summary: string | null;
+  status: string;
+  started_on: string | null;
+  ended_on: string | null;
+};
+
+/** Map a validated project input + the server-resolved user id to a write row. */
+export function mapProjectInputToRow(
+  value: ProjectInput,
+  userId: string
+): ProjectWriteRow {
+  return {
+    user_id: userId,
+    name: value.name,
+    role: value.role,
+    organisation: value.organisation,
+    summary: value.summary,
+    status: value.status,
+    started_on: value.startedOn,
+    ended_on: value.endedOn,
+  };
+}
 
 /** Counts of the three evidence types linked to a project. */
 export type ProjectLinkCounts = {
