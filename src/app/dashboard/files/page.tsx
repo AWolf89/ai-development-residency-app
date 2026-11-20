@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import { createClient } from "@/lib/supabase/server";
 import { getFiles } from "@/lib/files/queries";
 import { mapFileRowToView } from "@/lib/files/mappers";
+import { getFileTagsByFile } from "@/lib/file-analysis/queries";
 import PageHeading from "@/components/PageHeading";
 import FilesManager from "./FilesManager";
 
@@ -28,6 +29,7 @@ export default async function FilesPage() {
   // RLS guarantees only the signed-in user's own files come back.
   const rows = await getFiles(supabase, user.id);
   const files = rows.map(mapFileRowToView);
+  const tagsByFile = await getFileTagsByFile(supabase);
 
   return (
     <Box sx={PAGE_SX}>
@@ -41,7 +43,7 @@ export default async function FilesPage() {
 
         <Divider />
 
-        <FilesManager userId={user.id} files={files} />
+        <FilesManager userId={user.id} files={files} tagsByFile={tagsByFile} />
       </Stack>
     </Box>
   );
