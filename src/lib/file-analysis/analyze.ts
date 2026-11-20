@@ -64,6 +64,26 @@ export function needsReview(
   return tags.some((tag) => tag.confidence !== "high");
 }
 
+/** What a batch "Analyze all" pass should do with one file's result (ADR-0020). */
+export type BatchDecision =
+  | { status: "needs_review"; tagsToApply: [] }
+  | { status: "reviewed"; tagsToApply: ProposedTag[] };
+
+/**
+ * Decide the batch outcome for one file: an ambiguous or low-confidence result is left for
+ * interactive review (no tags applied); otherwise its high-confidence tags are applied
+ * unattended. Pure, so the batch loop's policy is unit-tested without a model or database.
+ */
+export function batchDecision(
+  tags: ProposedTag[],
+  questionCount: number
+): BatchDecision {
+  if (needsReview(tags, questionCount)) {
+    return { status: "needs_review", tagsToApply: [] };
+  }
+  return { status: "reviewed", tagsToApply: highConfidenceOnly(tags) };
+}
+
 /**
  * Build the enrichment passage indexed into `evidence_chunks` on accept (ADR-0020). Folding the
  * file's summary plus its tagged competency names into the evidence corpus is what lets the Gap

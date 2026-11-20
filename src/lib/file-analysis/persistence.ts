@@ -74,4 +74,10 @@ export async function saveFileAnalysis(params: {
     file_id: params.fileId,
     title: (file?.file_name as string) ?? "",
   });
+
+  // Mark the file reviewed, clearing any "needs review" flag a batch pass left on it.
+  await supabase
+    .from("files")
+    .update({ analysis_status: "reviewed" })
+    .eq("id", params.fileId);
 }

@@ -46,3 +46,14 @@ export async function getFileTagsByFile(
   }
   return byFile;
 }
+
+/** The ids of files the batch flagged as needing interactive review (RLS-scoped to the owner). */
+export async function getNeedsReviewFileIds(
+  supabase: ServerClient
+): Promise<Set<string>> {
+  const { data } = await supabase
+    .from("files")
+    .select("id")
+    .eq("analysis_status", "needs_review");
+  return new Set(((data ?? []) as { id: string }[]).map((row) => row.id));
+}

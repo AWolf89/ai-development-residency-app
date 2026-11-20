@@ -4,6 +4,7 @@ import {
   validateTags,
   highConfidenceOnly,
   needsReview,
+  batchDecision,
   buildEnrichmentText,
   buildIndexedText,
   toTagRow,
@@ -120,6 +121,44 @@ describe("needsReview (batch gate)", () => {
 
   it("is false for no tags and no questions (nothing to apply)", () => {
     expect(needsReview([], 0)).toBe(false);
+  });
+});
+
+describe("batchDecision", () => {
+  const high = validateTags(
+    [{ referenceItemId: SKILL.id, confidence: "high", rationale: "a" }],
+    [SKILL]
+  );
+  const mixed = validateTags(
+    [
+      { referenceItemId: SKILL.id, confidence: "high", rationale: "a" },
+      { referenceItemId: DELIVERABLE.id, confidence: "low", rationale: "b" },
+    ],
+    [SKILL, DELIVERABLE]
+  );
+
+  it("auto-applies high-confidence tags when there are no questions", () => {
+    const d = batchDecision(high, 0);
+    expect(d.status).toBe("reviewed");
+    expect(d.tagsToApply.map((t) => t.referenceItemId)).toEqual([SKILL.id]);
+  });
+
+  it("marks needs_review and applies nothing when the model asked questions", () => {
+    const d = batchDecision(high, 2);
+    expect(d.status).toBe("needs_review");
+    expect(d.tagsToApply).toEqual([]);
+  });
+
+  it("marks needs_review when any tag is below high confidence", () => {
+    const d = batchDecision(mixed, 0);
+    expect(d.status).toBe("needs_review");
+    expect(d.tagsToApply).toEqual([]);
+  });
+
+  it("is reviewed with nothing to apply when there are no tags and no questions", () => {
+    const d = batchDecision([], 0);
+    expect(d.status).toBe("reviewed");
+    expect(d.tagsToApply).toEqual([]);
   });
 });
 
