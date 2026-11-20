@@ -82,6 +82,15 @@ export default defineConfig({
         "src/lib/learning-moments/mappers.ts",
         "src/lib/learning-moments/save.ts",
         "src/lib/learning-moments/presentation.ts",
+        // File Analysis & Tagging — pure core only (the server-only classifier.ts and
+        // describe-image.ts boundaries, and the gateway vision path in llm/run.ts, are not here).
+        "src/lib/file-analysis/types.ts",
+        "src/lib/file-analysis/machine.ts",
+        "src/lib/file-analysis/analyze.ts",
+        "src/lib/file-analysis/candidates.ts",
+        "src/lib/file-analysis/pass.ts",
+        "src/lib/llm/prompts/file-analysis.ts",
+        "src/lib/llm/prompts/image-description.ts",
       ],
       thresholds: {
         lines: 80,

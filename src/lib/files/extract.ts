@@ -13,9 +13,15 @@ import type { AllowedMimeType } from "./validation";
 export type Parsers = {
   pdf: (bytes: Uint8Array) => Promise<string>;
   docx: (bytes: Uint8Array) => Promise<string>;
+  /**
+   * Optional vision read for images (ADR-0020). Omitted by default so extraction stays a pure,
+   * offline dispatch; the analysis boundary injects a real describer (src/lib/files/describe-image)
+   * so a model call never hides inside this module. Without it, images yield "" as before.
+   */
+  image?: (bytes: Uint8Array, mimeType: string) => Promise<string>;
 };
 
-const defaultParsers: Parsers = {
+export const defaultParsers: Parsers = {
   pdf: async (bytes) => {
     const { getDocumentProxy, extractText: extractPdfText } =
       await import("unpdf");
@@ -33,9 +39,10 @@ const defaultParsers: Parsers = {
 
 /**
  * Extract plain text from a file's bytes for the given MIME type. Text files are
- * decoded directly; PDFs and DOCX go through their parsers. Images (and any type we
- * can't read as text without OCR) return "" — the file is still stored, it just has
- * no searchable text in this version. Callers treat "" as "nothing to index".
+ * decoded directly; PDFs and DOCX go through their parsers. Images (PNG/JPEG) go
+ * through the injected vision describer when one is provided (ADR-0020), else "".
+ * Any other type returns "" — the file is still stored, it just has no searchable
+ * text. Callers treat "" as "nothing to index".
  */
 export async function extractText(
   bytes: Uint8Array,
@@ -51,8 +58,11 @@ export async function extractText(
       return (await parsers.pdf(bytes)).trim();
     case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
       return (await parsers.docx(bytes)).trim();
+    case "image/png":
+    case "image/jpeg":
+      // A vision read when a describer is injected; otherwise no text (as before).
+      return parsers.image ? (await parsers.image(bytes, mimeType)).trim() : "";
     default:
-      // images (png/jpeg) and anything else: no text without OCR (deferred).
       return "";
   }
 }

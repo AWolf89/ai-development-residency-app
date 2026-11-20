@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -25,6 +26,8 @@ import {
   inferMimeType,
 } from "@/lib/files/validation";
 import type { FileView } from "@/lib/files/mappers";
+import type { FileTagView } from "@/lib/file-analysis/queries";
+import FileAnalyzeDialog from "./FileAnalyzeDialog";
 
 const BUCKET = "user-files";
 
@@ -54,9 +57,14 @@ const ACCEPT = [
 type FilesManagerProps = {
   userId: string;
   files: FileView[];
+  tagsByFile: Record<string, FileTagView[]>;
 };
 
-export default function FilesManager({ userId, files }: FilesManagerProps) {
+export default function FilesManager({
+  userId,
+  files,
+  tagsByFile,
+}: FilesManagerProps) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -205,36 +213,73 @@ export default function FilesManager({ userId, files }: FilesManagerProps) {
               <Box component="li" key={file.id}>
                 <Card variant="outlined">
                   <CardContent
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: 2,
-                    }}
+                    sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}
                   >
-                    <Box sx={{ minWidth: 0 }}>
-                      <Typography
-                        variant="subtitle1"
-                        component="h3"
-                        sx={{ wordBreak: "break-word" }}
-                      >
-                        <Link href={`/dashboard/files/${file.id}`}>
-                          {file.name}
-                        </Link>
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {file.sizeLabel} · Uploaded{" "}
-                        {new Date(file.createdAt).toLocaleDateString()}
-                        {file.caption ? ` · ${file.caption}` : ""}
-                      </Typography>
-                    </Box>
-                    <IconButton
-                      aria-label={`Delete ${file.name}`}
-                      onClick={() => setDeleteTarget(file)}
-                      disabled={uploading}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                        gap: 2,
+                      }}
                     >
-                      <DeleteOutlineIcon />
-                    </IconButton>
+                      <Box sx={{ minWidth: 0 }}>
+                        <Typography
+                          variant="subtitle1"
+                          component="h3"
+                          sx={{ wordBreak: "break-word" }}
+                        >
+                          <Link href={`/dashboard/files/${file.id}`}>
+                            {file.name}
+                          </Link>
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {file.sizeLabel} · Uploaded{" "}
+                          {new Date(file.createdAt).toLocaleDateString()}
+                          {file.caption ? ` · ${file.caption}` : ""}
+                        </Typography>
+                      </Box>
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ flexShrink: 0, alignItems: "center" }}
+                      >
+                        <FileAnalyzeDialog
+                          fileId={file.id}
+                          fileName={file.name}
+                          disabled={uploading}
+                          onSaved={(name) => {
+                            setNotice(`Saved tags for “${name}”.`);
+                            router.refresh();
+                          }}
+                        />
+                        <IconButton
+                          aria-label={`Delete ${file.name}`}
+                          onClick={() => setDeleteTarget(file)}
+                          disabled={uploading}
+                        >
+                          <DeleteOutlineIcon />
+                        </IconButton>
+                      </Stack>
+                    </Box>
+
+                    {(tagsByFile[file.id]?.length ?? 0) > 0 ? (
+                      <Stack
+                        direction="row"
+                        sx={{ flexWrap: "wrap", gap: 0.5 }}
+                        aria-label={`Tags for ${file.name}`}
+                      >
+                        {tagsByFile[file.id].map((tag, i) => (
+                          <Chip
+                            key={`${tag.name}-${i}`}
+                            size="small"
+                            variant="outlined"
+                            label={tag.name}
+                            title={`${tag.entityType} · ${tag.confidence} confidence`}
+                          />
+                        ))}
+                      </Stack>
+                    ) : null}
                   </CardContent>
                 </Card>
               </Box>

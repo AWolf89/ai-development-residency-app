@@ -19,6 +19,7 @@ type RunOpts<I, O> = {
   sink: LogSink;
   userId?: string;
   appendUserText?: string; // extra user-turn text (used by the self-correction loop)
+  images?: { data: Uint8Array; mediaType: string }[]; // multimodal input (ADR-0020 vision read)
   fetch?: typeof fetch; // tests only
 };
 
@@ -38,6 +39,7 @@ export async function runLLM<I, O = string>({
   sink,
   userId,
   appendUserText,
+  images,
   fetch,
 }: RunOpts<I, O>): Promise<RunResult<O>> {
   const started = Date.now();
@@ -50,11 +52,28 @@ export async function runLLM<I, O = string>({
     prompt_version: prompt.version,
     model_requested: LLM_CONFIG.models[prompt.purpose][0],
   };
+  // With images, send a multimodal user turn (text + image parts); otherwise a plain prompt.
+  const messages =
+    images && images.length > 0
+      ? [
+          {
+            role: "user" as const,
+            content: [
+              { type: "text" as const, text: userText },
+              ...images.map((img) => ({
+                type: "image" as const,
+                image: img.data,
+                mediaType: img.mediaType,
+              })),
+            ],
+          },
+        ]
+      : undefined;
   try {
     const result = await generateText({
       model: getModel(prompt.purpose, { userId, fetch }),
       system: prompt.system,
-      prompt: userText,
+      ...(messages ? { messages } : { prompt: userText }),
       maxOutputTokens: LLM_CONFIG.maxOutputTokens,
       maxRetries: LLM_CONFIG.maxRetries,
       timeout: LLM_CONFIG.timeoutMs,
