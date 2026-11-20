@@ -34,7 +34,10 @@ describe("validateFileUpload", () => {
     "image/jpeg",
     "text/plain",
     "text/markdown",
+    "text/csv",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/vnd.ms-powerpoint",
   ])("accepts allowed mime type %s", (mimeType) => {
     const result = validateFileUpload({ ...valid, mimeType });
     expect(result.ok).toBe(true);
@@ -122,6 +125,24 @@ describe("inferMimeType", () => {
   it("falls back to the extension when the reported type is empty", () => {
     expect(inferMimeType("notes.md", "")).toBe("text/markdown");
     expect(inferMimeType("photo.JPG", "")).toBe("image/jpeg");
+    expect(inferMimeType("deck.pptx", "")).toBe(
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+    );
+  });
+
+  it("treats a .csv as text/csv even when the browser misreports it", () => {
+    // Windows + Excel reports CSVs as a spreadsheet type; the extension wins.
+    expect(inferMimeType("data.csv", "application/vnd.ms-excel")).toBe(
+      "text/csv"
+    );
+    expect(inferMimeType("data.CSV", "application/csv")).toBe("text/csv");
+    expect(inferMimeType("data.csv", "")).toBe("text/csv");
+  });
+
+  it("does not treat a real spreadsheet as csv", () => {
+    expect(inferMimeType("sheet.xls", "application/vnd.ms-excel")).toBe(
+      "application/vnd.ms-excel"
+    );
   });
 
   it("returns an empty string for an unknown extension and no reported type", () => {
