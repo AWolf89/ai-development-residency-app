@@ -157,6 +157,24 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
           );
         })}
       </List>
+
+      <Box
+        component="a"
+        href="/dashboard/about"
+        onClick={onNavigate}
+        sx={{
+          mt: "auto",
+          pt: 3,
+          px: "14px",
+          fontSize: 13,
+          color: brand.sidebarText,
+          opacity: 0.7,
+          textDecoration: "none",
+          "&:hover": { opacity: 1, textDecoration: "underline" },
+        }}
+      >
+        Data &amp; attributions
+      </Box>
     </Box>
   );
 }
