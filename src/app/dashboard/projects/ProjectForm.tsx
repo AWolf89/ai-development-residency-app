@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -15,20 +16,44 @@ import {
   type ProjectActionState,
 } from "@/lib/projects/actions";
 
+export type ProjectFormInitial = {
+  projectId: string;
+  name: string;
+  role: string;
+  organisation: string;
+  summary: string;
+  status: string;
+  startedOn: string;
+  endedOn: string;
+};
+
 /**
- * Create a project. A thin client form over the tested `saveProjectAction`: the
- * server re-validates, so the native `required` on name is only a first prompt.
- * On success the page revalidates and the new project appears in the list.
+ * Create or edit a project. A thin client form over the tested `saveProjectAction`
+ * (the server re-validates). With `initial` it edits that project (a hidden
+ * `project_id` switches the action to update) and returns to the project on save;
+ * without it, it creates and resets for the next one.
  */
-export default function ProjectForm() {
+export default function ProjectForm({
+  initial,
+}: {
+  initial?: ProjectFormInitial;
+}) {
+  const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
+  const editing = Boolean(initial);
+
   const [state, formAction, pending] = useActionState<
     ProjectActionState | undefined,
     FormData
   >(async (prev, formData) => {
     const result = await saveProjectAction(prev, formData);
     if (result.ok) {
-      formRef.current?.reset();
+      if (editing) {
+        router.push(`/dashboard/projects/${result.projectId}`);
+        router.refresh();
+      } else {
+        formRef.current?.reset();
+      }
     }
     return result;
   }, undefined);
@@ -41,23 +66,35 @@ export default function ProjectForm() {
             {state.error}
           </Alert>
         ) : null}
-        {state?.ok ? (
+        {state?.ok && !editing ? (
           <Alert severity="success" role="status">
             Project saved.
           </Alert>
         ) : null}
 
-        <TextField name="name" label="Project name" required fullWidth />
+        {initial ? (
+          <input type="hidden" name="project_id" value={initial.projectId} />
+        ) : null}
+
+        <TextField
+          name="name"
+          label="Project name"
+          required
+          fullWidth
+          defaultValue={initial?.name ?? ""}
+        />
         <TextField
           name="role"
           label="Your role (optional)"
           fullWidth
+          defaultValue={initial?.role ?? ""}
           helperText="e.g. Tech lead, Designer, Volunteer coordinator"
         />
         <TextField
           name="organisation"
           label="Organisation / client (optional)"
           fullWidth
+          defaultValue={initial?.organisation ?? ""}
         />
         <TextField
           name="summary"
@@ -65,6 +102,7 @@ export default function ProjectForm() {
           fullWidth
           multiline
           minRows={2}
+          defaultValue={initial?.summary ?? ""}
         />
 
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
@@ -73,6 +111,7 @@ export default function ProjectForm() {
             label="Start date (optional)"
             type="date"
             fullWidth
+            defaultValue={initial?.startedOn ?? ""}
             slotProps={{ inputLabel: { shrink: true } }}
           />
           <TextField
@@ -80,6 +119,7 @@ export default function ProjectForm() {
             label="End date (optional)"
             type="date"
             fullWidth
+            defaultValue={initial?.endedOn ?? ""}
             slotProps={{ inputLabel: { shrink: true } }}
           />
         </Stack>
@@ -90,7 +130,7 @@ export default function ProjectForm() {
             labelId="project-status-label"
             name="status"
             label="Status"
-            defaultValue="active"
+            defaultValue={initial?.status ?? "active"}
           >
             <MenuItem value="active">Active</MenuItem>
             <MenuItem value="archived">Archived</MenuItem>
@@ -103,7 +143,11 @@ export default function ProjectForm() {
           disabled={pending}
           sx={{ alignSelf: "flex-start" }}
         >
-          {pending ? "Saving…" : "Add project"}
+          {pending
+            ? "Saving…"
+            : editing
+              ? "Save changes"
+              : "Add project"}
         </Button>
       </Stack>
     </Box>

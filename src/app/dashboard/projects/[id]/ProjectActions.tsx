@@ -9,6 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Stack from "@mui/material/Stack";
 import { deleteProjectAction } from "@/lib/projects/actions";
 
 /**
@@ -36,9 +37,17 @@ export default function ProjectActions({ projectId }: { projectId: string }) {
 
   return (
     <>
-      <Button color="error" variant="outlined" onClick={() => setOpen(true)}>
-        Delete project
-      </Button>
+      <Stack direction="row" spacing={1.5}>
+        <Button
+          variant="outlined"
+          href={`/dashboard/projects/${projectId}/edit`}
+        >
+          Edit
+        </Button>
+        <Button color="error" variant="outlined" onClick={() => setOpen(true)}>
+          Delete project
+        </Button>
+      </Stack>
 
       <Dialog
         open={open}
