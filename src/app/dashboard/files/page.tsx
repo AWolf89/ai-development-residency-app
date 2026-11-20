@@ -5,7 +5,10 @@ import Stack from "@mui/material/Stack";
 import { createClient } from "@/lib/supabase/server";
 import { getFiles } from "@/lib/files/queries";
 import { mapFileRowToView } from "@/lib/files/mappers";
-import { getFileTagsByFile } from "@/lib/file-analysis/queries";
+import {
+  getFileTagsByFile,
+  getNeedsReviewFileIds,
+} from "@/lib/file-analysis/queries";
 import PageHeading from "@/components/PageHeading";
 import FilesManager from "./FilesManager";
 
@@ -30,6 +33,7 @@ export default async function FilesPage() {
   const rows = await getFiles(supabase, user.id);
   const files = rows.map(mapFileRowToView);
   const tagsByFile = await getFileTagsByFile(supabase);
+  const needsReviewIds = await getNeedsReviewFileIds(supabase);
 
   return (
     <Box sx={PAGE_SX}>
@@ -43,7 +47,12 @@ export default async function FilesPage() {
 
         <Divider />
 
-        <FilesManager userId={user.id} files={files} tagsByFile={tagsByFile} />
+        <FilesManager
+          userId={user.id}
+          files={files}
+          tagsByFile={tagsByFile}
+          needsReviewIds={[...needsReviewIds]}
+        />
       </Stack>
     </Box>
   );

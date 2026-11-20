@@ -4,6 +4,8 @@ import { createSupabaseFileRepository } from "@/lib/files/repository";
 import { extractText, defaultParsers } from "@/lib/files/extract";
 import { describeImage } from "@/lib/files/describe-image";
 import { analyzeFileText } from "./classifier";
+import { batchDecision } from "./analyze";
+import { saveFileAnalysis } from "./persistence";
 import type { AnalysisPassResult } from "./pass";
 
 // The File Analysis orchestrator (Humble Object, ADR-0020). It performs the IO around the pure
@@ -84,4 +86,65 @@ export async function analyzeFile(
   const { fileName, text } = await resolveFileText(fileId);
   const pass = await analyzeFileText(text, priorAnswers);
   return { ...pass, fileName, fileText: text };
+}
+
+export type BatchSummary = {
+  processed: number;
+  autoTagged: number;
+  needsReview: number;
+  failed: number;
+};
+
+/**
+ * Batch "Analyze all" (ADR-0020): analyze every not-yet-analyzed file non-interactively. A file
+ * whose result is confident gets its high-confidence tags applied; an ambiguous one is marked
+ * `needs_review` for the user to open individually — the batch never guesses and never asks. Each
+ * file is best-effort: one failure is counted and the sweep continues. Bounded and sequential
+ * (one model pass per file), on the user's explicit action — not an auto-run.
+ */
+export async function analyzeAllForCurrentUser(): Promise<BatchSummary> {
+  const supabase = await createClient();
+  await currentUserId(supabase); // ensure signed in (RLS scopes the rest)
+
+  // Only files not yet analyzed (null status); RLS limits this to the owner's files.
+  const { data, error } = await supabase
+    .from("files")
+    .select("id")
+    .is("analysis_status", null);
+  if (error) throw new Error(`listing files failed: ${error.message}`);
+
+  const summary: BatchSummary = {
+    processed: 0,
+    autoTagged: 0,
+    needsReview: 0,
+    failed: 0,
+  };
+
+  for (const row of (data ?? []) as { id: string }[]) {
+    try {
+      const result = await analyzeFile(row.id);
+      const decision = batchDecision(result.tags, result.questions.length);
+      if (decision.status === "needs_review") {
+        await supabase
+          .from("files")
+          .update({ analysis_status: "needs_review" })
+          .eq("id", row.id);
+        summary.needsReview += 1;
+      } else {
+        // saveFileAnalysis applies the tags, re-indexes, and marks the file reviewed.
+        await saveFileAnalysis({
+          fileId: row.id,
+          summary: result.summary,
+          tags: decision.tagsToApply,
+        });
+        if (decision.tagsToApply.length > 0) summary.autoTagged += 1;
+      }
+      summary.processed += 1;
+    } catch (err) {
+      console.error(`batch analysis failed for file ${row.id}`, err);
+      summary.failed += 1;
+    }
+  }
+
+  return summary;
 }

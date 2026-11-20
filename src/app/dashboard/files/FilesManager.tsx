@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
@@ -20,6 +20,7 @@ import Typography from "@mui/material/Typography";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlined";
 import { createClient } from "@/lib/supabase/client";
 import { recordUploadAction, deleteFileAction } from "@/lib/files/actions";
+import { analyzeAllAction } from "@/lib/file-analysis/actions";
 import {
   validateFileUpload,
   buildStoragePath,
@@ -58,22 +59,51 @@ type FilesManagerProps = {
   userId: string;
   files: FileView[];
   tagsByFile: Record<string, FileTagView[]>;
+  needsReviewIds: string[];
 };
 
 export default function FilesManager({
   userId,
   files,
   tagsByFile,
+  needsReviewIds,
 }: FilesManagerProps) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
+  const needsReview = useMemo(() => new Set(needsReviewIds), [needsReviewIds]);
 
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [analyzingAll, startAnalyzeAll] = useTransition();
 
   const [deleteTarget, setDeleteTarget] = useState<FileView | null>(null);
   const [deleting, setDeleting] = useState(false);
+
+  function analyzeAll() {
+    setError(null);
+    setNotice(null);
+    startAnalyzeAll(async () => {
+      const result = await analyzeAllAction();
+      if (!result.ok) {
+        setError(result.error);
+        return;
+      }
+      const { processed, autoTagged, needsReview: nr, failed } = result.summary;
+      if (processed === 0) {
+        setNotice("All files have already been analyzed.");
+      } else {
+        const parts = [
+          `Analyzed ${processed} file${processed === 1 ? "" : "s"}`,
+        ];
+        if (autoTagged > 0) parts.push(`${autoTagged} auto-tagged`);
+        if (nr > 0) parts.push(`${nr} need review`);
+        if (failed > 0) parts.push(`${failed} failed`);
+        setNotice(`${parts.join(" · ")}.`);
+      }
+      router.refresh();
+    });
+  }
 
   function resetInput() {
     if (inputRef.current) {
@@ -179,7 +209,7 @@ export default function FilesManager({
         </Alert>
       ) : null}
 
-      <Box>
+      <Stack direction="row" spacing={1.5} sx={{ flexWrap: "wrap", gap: 1.5 }}>
         <Button variant="contained" component="label" disabled={uploading}>
           {uploading ? "Uploading…" : "Choose a file"}
           <input
@@ -191,7 +221,16 @@ export default function FilesManager({
             onChange={handleFileChange}
           />
         </Button>
-      </Box>
+        {files.length > 0 ? (
+          <Button
+            variant="outlined"
+            onClick={analyzeAll}
+            disabled={analyzingAll || uploading}
+          >
+            {analyzingAll ? "Analyzing…" : "Analyze all"}
+          </Button>
+        ) : null}
+      </Stack>
 
       <Stack spacing={1.5}>
         <Typography variant="h6" component="h2">
@@ -263,13 +302,22 @@ export default function FilesManager({
                       </Stack>
                     </Box>
 
-                    {(tagsByFile[file.id]?.length ?? 0) > 0 ? (
+                    {(tagsByFile[file.id]?.length ?? 0) > 0 ||
+                    needsReview.has(file.id) ? (
                       <Stack
                         direction="row"
                         sx={{ flexWrap: "wrap", gap: 0.5 }}
                         aria-label={`Tags for ${file.name}`}
                       >
-                        {tagsByFile[file.id].map((tag, i) => (
+                        {needsReview.has(file.id) ? (
+                          <Chip
+                            size="small"
+                            color="warning"
+                            label="Needs review"
+                            title="The batch analysis needs your input before tagging this file"
+                          />
+                        ) : null}
+                        {(tagsByFile[file.id] ?? []).map((tag, i) => (
                           <Chip
                             key={`${tag.name}-${i}`}
                             size="small"

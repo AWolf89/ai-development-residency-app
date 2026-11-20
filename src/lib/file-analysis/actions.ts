@@ -4,7 +4,11 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { analyzeFile } from "./orchestrator";
+import {
+  analyzeFile,
+  analyzeAllForCurrentUser,
+  type BatchSummary,
+} from "./orchestrator";
 import { saveFileAnalysis } from "./persistence";
 import {
   proposedTagSchema,
@@ -100,5 +104,29 @@ export async function saveFileTagsAction(input: {
   } catch (err) {
     console.error("saving file analysis failed", err);
     return { ok: false, error: "Couldn't save these tags. Please try again." };
+  }
+}
+
+export type BatchResult =
+  { ok: true; summary: BatchSummary } | { ok: false; error: string };
+
+/** Batch "Analyze all": analyze every not-yet-analyzed file; auto-tag the confident ones. */
+export async function analyzeAllAction(): Promise<BatchResult> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
+  try {
+    const summary = await analyzeAllForCurrentUser();
+    revalidatePath("/dashboard/files");
+    return { ok: true, summary };
+  } catch (err) {
+    console.error("batch file analysis failed", err);
+    return {
+      ok: false,
+      error: "Couldn't analyze your files. Please try again.",
+    };
   }
 }
