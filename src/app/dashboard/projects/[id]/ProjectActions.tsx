@@ -54,7 +54,9 @@ export default function ProjectActions({ projectId }: { projectId: string }) {
         onClose={() => (deleting ? null : setOpen(false))}
         aria-labelledby="delete-project-title"
       >
-        <DialogTitle id="delete-project-title">Delete this project?</DialogTitle>
+        <DialogTitle id="delete-project-title">
+          Delete this project?
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             The project will be removed. Your files, decision records, and

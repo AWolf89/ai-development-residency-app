@@ -108,7 +108,9 @@ describe("validateFileCaption", () => {
 
   it("accepts a caption exactly at the cap and rejects one over it", () => {
     expect(validateFileCaption("a".repeat(FILE_CAPTION_MAX)).ok).toBe(true);
-    expect(validateFileCaption("a".repeat(FILE_CAPTION_MAX + 1)).ok).toBe(false);
+    expect(validateFileCaption("a".repeat(FILE_CAPTION_MAX + 1)).ok).toBe(
+      false
+    );
   });
 });
 

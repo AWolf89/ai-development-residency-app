@@ -63,9 +63,9 @@ describe("validateProjectInput", () => {
   });
 
   it("accepts a name at the max length and rejects one over it", () => {
-    expect(validateProjectInput({ name: "a".repeat(PROJECT_NAME_MAX) }).ok).toBe(
-      true
-    );
+    expect(
+      validateProjectInput({ name: "a".repeat(PROJECT_NAME_MAX) }).ok
+    ).toBe(true);
     expect(
       validateProjectInput({ name: "a".repeat(PROJECT_NAME_MAX + 1) }).ok
     ).toBe(false);
@@ -74,11 +74,14 @@ describe("validateProjectInput", () => {
   // --- optional field caps (boundary each) ---
   it("enforces the role cap at the boundary", () => {
     expect(
-      validateProjectInput({ ...minimal, role: "a".repeat(PROJECT_ROLE_MAX) }).ok
+      validateProjectInput({ ...minimal, role: "a".repeat(PROJECT_ROLE_MAX) })
+        .ok
     ).toBe(true);
     expect(
-      validateProjectInput({ ...minimal, role: "a".repeat(PROJECT_ROLE_MAX + 1) })
-        .ok
+      validateProjectInput({
+        ...minimal,
+        role: "a".repeat(PROJECT_ROLE_MAX + 1),
+      }).ok
     ).toBe(false);
   });
 
@@ -129,7 +132,9 @@ describe("validateProjectInput", () => {
 
   // --- status enum ---
   it("accepts both valid status values", () => {
-    expect(validateProjectInput({ ...minimal, status: "active" }).ok).toBe(true);
+    expect(validateProjectInput({ ...minimal, status: "active" }).ok).toBe(
+      true
+    );
     expect(validateProjectInput({ ...minimal, status: "archived" }).ok).toBe(
       true
     );

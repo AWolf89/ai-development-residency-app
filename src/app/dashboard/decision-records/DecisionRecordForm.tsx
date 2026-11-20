@@ -323,9 +323,7 @@ export default function DecisionRecordForm({
             label="Project (optional)"
             projects={projects}
             value={values.projectId}
-            onChange={(projectId) =>
-              setValues((v) => ({ ...v, projectId }))
-            }
+            onChange={(projectId) => setValues((v) => ({ ...v, projectId }))}
           />
 
           <Button

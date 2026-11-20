@@ -79,7 +79,10 @@ export async function deleteProjectAction(
   try {
     await repo.deleteProject(projectId);
   } catch {
-    return { ok: false, error: "Could not delete that project. Please try again." };
+    return {
+      ok: false,
+      error: "Could not delete that project. Please try again.",
+    };
   }
 
   revalidatePath("/dashboard/projects");

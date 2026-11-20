@@ -143,11 +143,7 @@ export default function ProjectForm({
           disabled={pending}
           sx={{ alignSelf: "flex-start" }}
         >
-          {pending
-            ? "Saving…"
-            : editing
-              ? "Save changes"
-              : "Add project"}
+          {pending ? "Saving…" : editing ? "Save changes" : "Add project"}
         </Button>
       </Stack>
     </Box>

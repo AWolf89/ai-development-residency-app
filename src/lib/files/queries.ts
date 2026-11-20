@@ -27,7 +27,11 @@ export async function getFiles(
   return (data ?? []) as FileRow[];
 }
 
-export type FileLinkedRecord = { linkId: string; recordId: string; title: string };
+export type FileLinkedRecord = {
+  linkId: string;
+  recordId: string;
+  title: string;
+};
 
 export type FileDetail = {
   id: string;
@@ -67,9 +71,7 @@ export async function getFileDetail(
 
   const linkedRecords: FileLinkedRecord[] = (links ?? []).map((row) => {
     const rec = row.decision_records as
-      | { title: string }
-      | { title: string }[]
-      | null;
+      { title: string } | { title: string }[] | null;
     const title = Array.isArray(rec) ? rec[0]?.title : rec?.title;
     return {
       linkId: row.id as string,

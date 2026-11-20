@@ -28,8 +28,7 @@ export type ProjectInput = {
 };
 
 export type ProjectValidationResult =
-  | { ok: true; value: ProjectInput }
-  | { ok: false; error: string };
+  { ok: true; value: ProjectInput } | { ok: false; error: string };
 
 /** Trim a possibly-absent string; an empty result becomes null. */
 function cleanOptional(value: unknown): string | null {
@@ -47,8 +46,7 @@ function isIsoDate(value: string): boolean {
   }
   const date = new Date(`${value}T00:00:00Z`);
   return (
-    !Number.isNaN(date.getTime()) &&
-    date.toISOString().slice(0, 10) === value
+    !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value
   );
 }
 

@@ -80,7 +80,11 @@ export async function getProjectWithLinks(
 
   return assembleProjectDetail({
     project,
-    files: (files.data ?? []) as { id: string; file_name: string; caption: string | null }[],
+    files: (files.data ?? []) as {
+      id: string;
+      file_name: string;
+      caption: string | null;
+    }[],
     records: (records.data ?? []) as { id: string; title: string }[],
     moments: (moments.data ?? []) as { id: string; kind: string }[],
   });

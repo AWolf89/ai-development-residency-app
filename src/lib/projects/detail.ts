@@ -14,7 +14,11 @@ import {
   type ProjectLinkCounts,
 } from "./mappers";
 
-export type ProjectDetailFile = { id: string; name: string; caption: string | null };
+export type ProjectDetailFile = {
+  id: string;
+  name: string;
+  caption: string | null;
+};
 export type ProjectDetailRecord = { id: string; title: string };
 export type ProjectDetailMoment = { id: string; kind: string };
 

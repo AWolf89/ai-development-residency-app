@@ -27,8 +27,7 @@ export type SaveProjectParams = {
 };
 
 export type SaveProjectResult =
-  | { ok: true; projectId: string }
-  | { ok: false; error: string };
+  { ok: true; projectId: string } | { ok: false; error: string };
 
 export async function saveProject(
   repo: ProjectRepository,

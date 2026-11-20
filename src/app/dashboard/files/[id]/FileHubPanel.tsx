@@ -161,13 +161,21 @@ export default function FileHubPanel({
             No records linked yet.
           </Typography>
         ) : (
-          <Stack component="ul" spacing={0.5} sx={{ listStyle: "none", m: 0, p: 0 }}>
+          <Stack
+            component="ul"
+            spacing={0.5}
+            sx={{ listStyle: "none", m: 0, p: 0 }}
+          >
             {linkedRecords.map((r) => (
               <Stack
                 key={r.linkId}
                 component="li"
                 direction="row"
-                sx={{ alignItems: "center", justifyContent: "space-between", gap: 1 }}
+                sx={{
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 1,
+                }}
               >
                 <Typography variant="body2">{r.title}</Typography>
                 <IconButton
@@ -184,7 +192,11 @@ export default function FileHubPanel({
         )}
 
         {attachable.length > 0 ? (
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 1 }}>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1.5}
+            sx={{ mt: 1 }}
+          >
             <FormControl fullWidth>
               <InputLabel id="attach-record-label">Add a record</InputLabel>
               <Select

@@ -18,8 +18,7 @@ export const MAX_FILE_NAME_LENGTH = 200;
 export const FILE_CAPTION_MAX = 280;
 
 export type CaptionValidationResult =
-  | { ok: true; value: string | null }
-  | { ok: false; error: string };
+  { ok: true; value: string | null } | { ok: false; error: string };
 
 /**
  * Validate a file's optional caption. Trims it; an empty or absent caption
