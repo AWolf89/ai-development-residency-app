@@ -45,6 +45,7 @@ export async function extractText(
   switch (mimeType) {
     case "text/plain":
     case "text/markdown":
+    case "text/csv":
       return new TextDecoder("utf-8").decode(bytes).trim();
     case "application/pdf":
       return (await parsers.pdf(bytes)).trim();

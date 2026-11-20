@@ -29,6 +29,34 @@ describe("extractText", () => {
     expect(out).toBe("# Title\n\nbody");
   });
 
+  it("decodes CSV as UTF-8 text without touching the parsers", async () => {
+    const parsers = fakeParsers();
+    const out = await extractText(
+      enc("name,role\nAda,Engineer\n"),
+      "text/csv",
+      parsers
+    );
+    expect(out).toBe("name,role\nAda,Engineer");
+    expect(parsers.pdf).not.toHaveBeenCalled();
+    expect(parsers.docx).not.toHaveBeenCalled();
+  });
+
+  it("returns empty string for PowerPoint (no parser yet) without calling parsers", async () => {
+    const parsers = fakeParsers();
+    expect(
+      await extractText(
+        enc("PK"),
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        parsers
+      )
+    ).toBe("");
+    expect(
+      await extractText(enc("x"), "application/vnd.ms-powerpoint", parsers)
+    ).toBe("");
+    expect(parsers.pdf).not.toHaveBeenCalled();
+    expect(parsers.docx).not.toHaveBeenCalled();
+  });
+
   it("routes PDFs to the pdf parser", async () => {
     const parsers = fakeParsers({ pdf: vi.fn(async () => "  resume text  ") });
     const out = await extractText(enc("%PDF"), "application/pdf", parsers);

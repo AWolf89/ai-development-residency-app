@@ -24,8 +24,13 @@ export const ALLOWED_MIME_TYPES = [
   "image/jpeg",
   "text/plain",
   "text/markdown",
+  "text/csv",
   // .docx
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  // .pptx
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  // .ppt (legacy)
+  "application/vnd.ms-powerpoint",
 ] as const;
 
 export type AllowedMimeType = (typeof ALLOWED_MIME_TYPES)[number];
@@ -38,7 +43,10 @@ const EXTENSION_MIME: Record<string, AllowedMimeType> = {
   jpeg: "image/jpeg",
   txt: "text/plain",
   md: "text/markdown",
+  csv: "text/csv",
   docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  ppt: "application/vnd.ms-powerpoint",
 };
 
 /**
@@ -48,10 +56,19 @@ const EXTENSION_MIME: Record<string, AllowedMimeType> = {
  * rejects.
  */
 export function inferMimeType(fileName: string, reportedType: string): string {
+  const ext = fileName.split(".").pop()?.toLowerCase() ?? "";
+
+  // A `.csv` is authoritative by extension: Windows browsers with Excel
+  // installed report CSVs as `application/vnd.ms-excel` or `application/csv`,
+  // which would otherwise be rejected. A real `.xls` keeps its own type and is
+  // still not accepted.
+  if (ext === "csv") {
+    return "text/csv";
+  }
+
   if (typeof reportedType === "string" && reportedType.trim().length > 0) {
     return reportedType;
   }
-  const ext = fileName.split(".").pop()?.toLowerCase() ?? "";
   return EXTENSION_MIME[ext] ?? "";
 }
 

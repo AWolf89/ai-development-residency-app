@@ -35,13 +35,19 @@ const ACCEPT = [
   ".jpeg",
   ".txt",
   ".md",
+  ".csv",
   ".docx",
+  ".pptx",
+  ".ppt",
   "application/pdf",
   "image/png",
   "image/jpeg",
   "text/plain",
   "text/markdown",
+  "text/csv",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  "application/vnd.ms-powerpoint",
 ].join(",");
 
 type FilesManagerProps = {
