@@ -46,8 +46,7 @@ Two costly-to-change questions had to be settled before any code:
 
 ## Considered Options
 
-* **Standalone `learning_moments` table + a lighter form capture**, with a `kind` dimension,
-  reusing `files`/`evidence_links` for artifacts.
+* Standalone `learning_moments` table with a `kind` dimension, captured by a lighter form (no LLM loop), reusing the existing `evidence_links`/`files` artifact model
 * **Extend the Reasoning Interview FSM**: add a learning-agility topic whose paraphrase emits
   a learning moment instead of a CDM record.
 * **Model a learning moment as a `decision_record`** (as ADR-0015 did for claims), adding
@@ -57,8 +56,7 @@ Two costly-to-change questions had to be settled before any code:
 
 ## Decision Outcome
 
-Chosen: **a standalone `learning_moments` table with a `kind` dimension, captured by a
-lighter form (no LLM loop), reusing the existing `evidence_links`/`files` artifact model.**
+Chosen option: "Standalone `learning_moments` table with a `kind` dimension, captured by a lighter form (no LLM loop), reusing the existing `evidence_links`/`files` artifact model", because a learning moment's fields do not map onto the CDM decision record and need no model call, so a dedicated table and a plain form fit the data without distorting the interview FSM.
 
 1. **Standalone, not an interview extension.** The interview FSM is tightly coupled to the
    CDM paraphrase → `decision_records`. A learning moment's fields do not map onto CDM
@@ -102,15 +100,16 @@ lighter form (no LLM loop), reusing the existing `evidence_links`/`files` artifa
 
 ### Consequences
 
-* Good: the safety-critical interview FSM is untouched; no LLM call means no R1/R3 runtime
-  machinery and a smaller, simpler feature.
-* Good: the record shape fits the data; `duration` is only required where it is meaningful.
-* Good: AC3 reuses the proven, security-hardened `evidence_links`/`files` path instead of a new one.
-* Good: validation, mapping, and save logic are pure functions, unit-tested to the 80% floor.
-* Bad / cost: making `evidence_links` polymorphic touches a shared, already-hardened table — the
+* Good, because the safety-critical interview FSM is untouched; no LLM call means no R1/R3
+  runtime machinery and a smaller, simpler feature.
+* Good, because the record shape fits the data; `duration` is only required where it is meaningful.
+* Good, because AC3 reuses the proven, security-hardened `evidence_links`/`files` path instead
+  of a new one.
+* Good, because validation, mapping, and save logic are pure functions, unit-tested to the 80% floor.
+* Bad, because making `evidence_links` polymorphic touches a shared, already-hardened table — the
   one change with blast radius beyond new files. Mitigated by the exactly-one-parent CHECK, the
   ownership policy, and leaving existing `decision_record_id` reads unchanged.
-* Neutral: the four kinds are a deliberate subset; the remaining learning-agility kinds
+* Neutral, because the four kinds are a deliberate subset; the remaining learning-agility kinds
   (failure, feedback, unlearning, reframe) can be added later by widening the `kind` CHECK.
 
 ## More Information
