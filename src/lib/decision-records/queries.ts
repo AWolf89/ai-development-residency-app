@@ -23,6 +23,7 @@ export type DecisionRecordListItem = {
   source: DecisionSource | null;
   category: ClaimCategory | null;
   is_metric: boolean;
+  project_id: string | null;
   created_at: string;
 };
 
@@ -32,7 +33,7 @@ export type UserFile = {
 };
 
 const RECORD_COLUMNS =
-  "id, title, situation, cue, decision, why, outcome, source, category, is_metric, created_at";
+  "id, title, situation, cue, decision, why, outcome, source, category, is_metric, project_id, created_at";
 
 /** All of the signed-in user's decision records, newest first (AC5). */
 export async function getDecisionRecords(

@@ -23,6 +23,7 @@ import {
 import type { UserFile } from "@/lib/decision-records/queries";
 import { CLAIM_CATEGORIES, type ClaimCategory } from "@/lib/claims/types";
 import { categoryLabel } from "@/lib/claims/presentation";
+import ProjectPicker, { type ProjectOption } from "@/components/ProjectPicker";
 
 export type DecisionRecordFormValues = {
   recordId?: string;
@@ -36,10 +37,12 @@ export type DecisionRecordFormValues = {
   category: ClaimCategory | "";
   isMetric: boolean;
   fileId: string;
+  projectId: string;
 };
 
 type DecisionRecordFormProps = {
   files: UserFile[];
+  projects: ProjectOption[];
   initialValues?: Partial<DecisionRecordFormValues>;
 };
 
@@ -59,10 +62,12 @@ const EMPTY: DecisionRecordFormValues = {
   category: "",
   isMetric: false,
   fileId: "",
+  projectId: "",
 };
 
 export default function DecisionRecordForm({
   files,
+  projects,
   initialValues,
 }: DecisionRecordFormProps) {
   const [values, setValues] = useState<DecisionRecordFormValues>({
@@ -140,6 +145,10 @@ export default function DecisionRecordForm({
       label: "Supporting artifact",
       value: files.find((f) => f.id === values.fileId)?.file_name ?? "None",
     },
+    {
+      label: "Project",
+      value: projects.find((p) => p.id === values.projectId)?.name ?? "None",
+    },
   ];
 
   return (
@@ -158,6 +167,7 @@ export default function DecisionRecordForm({
       <input type="hidden" name="category" value={values.category} />
       <input type="hidden" name="is_metric" value={String(values.isMetric)} />
       <input type="hidden" name="file_id" value={values.fileId} />
+      <input type="hidden" name="project_id" value={values.projectId} />
 
       {state?.error ? (
         <Alert severity="error" role="alert" sx={{ mb: 2 }}>
@@ -308,6 +318,13 @@ export default function DecisionRecordForm({
               ))}
             </Select>
           </FormControl>
+
+          <ProjectPicker
+            label="Project (optional)"
+            projects={projects}
+            value={values.projectId}
+            onChange={(projectId) => setValues((v) => ({ ...v, projectId }))}
+          />
 
           <Button
             type="button"

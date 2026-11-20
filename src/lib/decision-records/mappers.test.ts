@@ -33,7 +33,14 @@ describe("mapDecisionRecordToRow", () => {
       status: "confirmed",
       category: "technical",
       is_metric: false,
+      project_id: null,
     });
+  });
+
+  it("carries an assigned project id, or null when none is given", () => {
+    expect(mapDecisionRecordToRow(input, userId, "p-9").project_id).toBe("p-9");
+    expect(mapDecisionRecordToRow(input, userId, null).project_id).toBeNull();
+    expect(mapDecisionRecordToRow(input, userId).project_id).toBeNull();
   });
 
   it("stores absent optional fields as null (not undefined)", () => {

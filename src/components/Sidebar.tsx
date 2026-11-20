@@ -22,6 +22,7 @@ type NavItem = { label: string; href: string | null };
 // shown disabled with a "Soon" marker.
 const NAV_ITEMS: NavItem[] = [
   { label: "Upload files", href: "/dashboard/files" },
+  { label: "Projects", href: "/dashboard/projects" },
   { label: "Review claims", href: null },
   { label: "Interview", href: "/dashboard/interview" },
   { label: "Learning moments", href: "/dashboard/learning-moments" },

@@ -50,6 +50,7 @@ export async function saveLearningMomentAction(
 
   const fileId = field(formData, "file_id") || null;
   const recordId = field(formData, "record_id") || null;
+  const projectId = field(formData, "project_id") || null;
 
   const repo = createSupabaseLearningMomentRepository(supabase);
 
@@ -60,6 +61,7 @@ export async function saveLearningMomentAction(
       input,
       fileId,
       recordId,
+      projectId,
     });
   } catch {
     return { error: "Could not save your learning moment. Please try again." };

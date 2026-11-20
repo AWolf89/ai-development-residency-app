@@ -36,6 +36,8 @@ export type SaveLearningMomentParams = {
   fileId?: string | null;
   /** When present, update that existing record instead of inserting (edit). */
   recordId?: string | null;
+  /** Optional project this moment belongs to (ADR-0019). */
+  projectId?: string | null;
 };
 
 export type SaveResult =
@@ -50,7 +52,11 @@ export async function saveLearningMoment(
     return { ok: false, error: validated.error };
   }
 
-  const row = mapLearningMomentToRow(validated.value, params.userId);
+  const row = mapLearningMomentToRow(
+    validated.value,
+    params.userId,
+    params.projectId ?? null
+  );
 
   let recordId: string;
   if (params.recordId) {

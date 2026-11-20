@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import { createClient } from "@/lib/supabase/server";
 import { getFiles } from "@/lib/files/queries";
 import { getTargetRoles } from "@/lib/target-roles/queries";
+import { getProjects } from "@/lib/projects/queries";
 import { serifStack } from "@/theme-tokens";
 import CaptureForm from "./CaptureForm";
 
@@ -27,9 +28,10 @@ export default async function LearningMomentsPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const [files, roles] = await Promise.all([
+  const [files, roles, projectRows] = await Promise.all([
     getFiles(supabase, user.id),
     getTargetRoles(supabase, user.id),
+    getProjects(supabase, user.id),
   ]);
 
   const fileOptions = files.map((f) => ({ id: f.id, file_name: f.file_name }));
@@ -38,6 +40,7 @@ export default async function LearningMomentsPage() {
     title: r.title,
     company: r.company,
   }));
+  const projectOptions = projectRows.map((p) => ({ id: p.id, name: p.name }));
 
   return (
     <Box sx={PAGE_SX}>
@@ -55,7 +58,11 @@ export default async function LearningMomentsPage() {
             past role. Each one becomes evidence on your profile.
           </Typography>
         </Stack>
-        <CaptureForm files={fileOptions} roles={roleOptions} />
+        <CaptureForm
+          files={fileOptions}
+          roles={roleOptions}
+          projects={projectOptions}
+        />
       </Stack>
     </Box>
   );
