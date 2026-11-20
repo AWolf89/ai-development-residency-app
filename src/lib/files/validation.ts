@@ -14,6 +14,38 @@ export const MAX_FILE_BYTES = 25 * 1024 * 1024;
 /** A file name longer than this is rejected (keeps storage keys sane). */
 export const MAX_FILE_NAME_LENGTH = 200;
 
+/** A file's one-line caption ("what this deliverable is") cap. */
+export const FILE_CAPTION_MAX = 280;
+
+export type CaptionValidationResult =
+  | { ok: true; value: string | null }
+  | { ok: false; error: string };
+
+/**
+ * Validate a file's optional caption. Trims it; an empty or absent caption
+ * normalises to null (clearing the field), and anything over the cap is
+ * rejected. Pure, so the Server Action and the client can share the gate.
+ */
+export function validateFileCaption(input: unknown): CaptionValidationResult {
+  if (input === null || input === undefined) {
+    return { ok: true, value: null };
+  }
+  if (typeof input !== "string") {
+    return { ok: false, error: "That caption isn't valid." };
+  }
+  const trimmed = input.trim();
+  if (trimmed.length === 0) {
+    return { ok: true, value: null };
+  }
+  if (trimmed.length > FILE_CAPTION_MAX) {
+    return {
+      ok: false,
+      error: `Caption is too long (max ${FILE_CAPTION_MAX} characters).`,
+    };
+  }
+  return { ok: true, value: trimmed };
+}
+
 /**
  * Evidence files we accept. Kept deliberately small: documents and images a user
  * would cite as evidence. Not an arbitrary file host.

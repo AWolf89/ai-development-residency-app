@@ -1,11 +1,13 @@
 import { describe, it, expect } from "vitest";
 import {
   validateFileUpload,
+  validateFileCaption,
   sanitizeFileName,
   buildStoragePath,
   inferMimeType,
   MAX_FILE_BYTES,
   MAX_FILE_NAME_LENGTH,
+  FILE_CAPTION_MAX,
 } from "./validation";
 
 // Pure-logic unit tests (Humble Object): no network, canned inputs, every branch.
@@ -87,6 +89,27 @@ describe("validateFileUpload", () => {
       expect(result).toEqual({ ok: false, error: "Choose a file to upload." });
     }
   );
+});
+
+describe("validateFileCaption", () => {
+  it("accepts and trims a caption within the cap", () => {
+    expect(validateFileCaption("  Q3 launch deck  ")).toEqual({
+      ok: true,
+      value: "Q3 launch deck",
+    });
+  });
+
+  it("normalises an empty / whitespace caption to null", () => {
+    expect(validateFileCaption("")).toEqual({ ok: true, value: null });
+    expect(validateFileCaption("   ")).toEqual({ ok: true, value: null });
+    expect(validateFileCaption(null)).toEqual({ ok: true, value: null });
+    expect(validateFileCaption(undefined)).toEqual({ ok: true, value: null });
+  });
+
+  it("accepts a caption exactly at the cap and rejects one over it", () => {
+    expect(validateFileCaption("a".repeat(FILE_CAPTION_MAX)).ok).toBe(true);
+    expect(validateFileCaption("a".repeat(FILE_CAPTION_MAX + 1)).ok).toBe(false);
+  });
 });
 
 describe("sanitizeFileName", () => {

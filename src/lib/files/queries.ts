@@ -11,7 +11,7 @@ import type { FileRow } from "./mappers";
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
 
 const FILE_COLUMNS =
-  "id, file_name, mime_type, size_bytes, created_at, storage_path";
+  "id, file_name, mime_type, size_bytes, created_at, storage_path, caption, project_id";
 
 /** All of the signed-in user's uploaded files, newest first. */
 export async function getFiles(

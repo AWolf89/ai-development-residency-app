@@ -13,6 +13,8 @@ export type FileRow = {
   size_bytes: number | null;
   created_at: string;
   storage_path: string;
+  caption: string | null;
+  project_id: string | null;
 };
 
 export type FileView = {
@@ -21,6 +23,8 @@ export type FileView = {
   sizeLabel: string;
   createdAt: string;
   storagePath: string;
+  caption: string | null;
+  projectId: string | null;
 };
 
 /** Format a byte count as B / KB / MB. Null or unknown sizes render as "—". */
@@ -45,5 +49,7 @@ export function mapFileRowToView(row: FileRow): FileView {
     sizeLabel: formatBytes(row.size_bytes),
     createdAt: row.created_at,
     storagePath: row.storage_path,
+    caption: row.caption,
+    projectId: row.project_id,
   };
 }
