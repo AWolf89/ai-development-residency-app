@@ -20,6 +20,7 @@ import {
 } from "@/lib/learning-moments/presentation";
 import type { LearningMomentKind } from "@/lib/learning-moments/types";
 import { serifStack } from "@/theme-tokens";
+import ProjectPicker, { type ProjectOption } from "@/components/ProjectPicker";
 
 export type FileOption = { id: string; file_name: string };
 export type RoleOption = { id: string; title: string; company: string | null };
@@ -27,11 +28,16 @@ export type RoleOption = { id: string; title: string; company: string | null };
 type CaptureFormProps = {
   files: FileOption[];
   roles: RoleOption[];
+  projects: ProjectOption[];
 };
 
 const KINDS = allKindPresentations();
 
-export default function CaptureForm({ files, roles }: CaptureFormProps) {
+export default function CaptureForm({
+  files,
+  roles,
+  projects,
+}: CaptureFormProps) {
   const [kind, setKind] = useState<LearningMomentKind>("speed");
   const [context, setContext] = useState("");
   const [shift, setShift] = useState("");
@@ -39,6 +45,7 @@ export default function CaptureForm({ files, roles }: CaptureFormProps) {
   const [duration, setDuration] = useState("");
   const [fileId, setFileId] = useState("");
   const [roleId, setRoleId] = useState("");
+  const [projectId, setProjectId] = useState("");
   const [clientError, setClientError] = useState<string | null>(null);
   const [state, formAction, pending] = useActionState(
     saveLearningMomentAction,
@@ -89,6 +96,7 @@ export default function CaptureForm({ files, roles }: CaptureFormProps) {
       <input type="hidden" name="duration" value={duration} />
       <input type="hidden" name="file_id" value={fileId} />
       <input type="hidden" name="target_role_id" value={roleId} />
+      <input type="hidden" name="project_id" value={projectId} />
 
       <Stack spacing={2.5}>
         <FormControl fullWidth>
@@ -211,6 +219,15 @@ export default function CaptureForm({ files, roles }: CaptureFormProps) {
               ))}
             </Select>
           </FormControl>
+        ) : null}
+
+        {projects.length > 0 ? (
+          <ProjectPicker
+            label="Link to a project (optional)"
+            projects={projects}
+            value={projectId}
+            onChange={setProjectId}
+          />
         ) : null}
 
         <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>

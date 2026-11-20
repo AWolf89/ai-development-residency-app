@@ -57,6 +57,7 @@ export async function saveDecisionRecordAction(
 
   const fileId = field(formData, "file_id") || null;
   const recordId = field(formData, "record_id") || null;
+  const projectId = field(formData, "project_id") || null;
 
   const repo = createSupabaseDecisionRecordRepository(supabase);
 
@@ -67,6 +68,7 @@ export async function saveDecisionRecordAction(
       input,
       fileId,
       recordId,
+      projectId,
     });
   } catch {
     return { error: "Could not save your record. Please try again." };

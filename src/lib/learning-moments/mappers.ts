@@ -15,11 +15,13 @@ export type LearningMomentRow = {
   result: string;
   duration: string | null;
   target_role_id: string | null;
+  project_id: string | null;
 };
 
 export function mapLearningMomentToRow(
   input: LearningMomentInput,
-  userId: string
+  userId: string,
+  projectId: string | null = null
 ): LearningMomentRow {
   return {
     user_id: userId,
@@ -29,5 +31,6 @@ export function mapLearningMomentToRow(
     result: input.result,
     duration: input.duration ?? null,
     target_role_id: input.targetRoleId ?? null,
+    project_id: projectId,
   };
 }

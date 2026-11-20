@@ -21,11 +21,13 @@ export type DecisionRecordRow = {
   status: string;
   category: ClaimCategory | null;
   is_metric: boolean;
+  project_id: string | null;
 };
 
 export function mapDecisionRecordToRow(
   input: DecisionRecordInput,
-  userId: string
+  userId: string,
+  projectId: string | null = null
 ): DecisionRecordRow {
   return {
     user_id: userId,
@@ -39,5 +41,6 @@ export function mapDecisionRecordToRow(
     status: "confirmed",
     category: input.category ?? null,
     is_metric: input.isMetric,
+    project_id: projectId,
   };
 }

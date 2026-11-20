@@ -8,6 +8,7 @@ import {
   getLinkedFileId,
   getUserFiles,
 } from "@/lib/decision-records/queries";
+import { getProjects } from "@/lib/projects/queries";
 import PageHeading from "@/components/PageHeading";
 import DecisionRecordForm from "../DecisionRecordForm";
 
@@ -32,10 +33,12 @@ export default async function EditDecisionRecordPage({
     notFound();
   }
 
-  const [files, linkedFileId] = await Promise.all([
+  const [files, linkedFileId, projectRows] = await Promise.all([
     getUserFiles(supabase, user.id),
     getLinkedFileId(supabase, id),
+    getProjects(supabase, user.id),
   ]);
+  const projects = projectRows.map((p) => ({ id: p.id, name: p.name }));
 
   return (
     <Box sx={{ px: { xs: 2, md: 7 }, py: { xs: 4, md: 6 }, maxWidth: 820 }}>
@@ -50,6 +53,7 @@ export default async function EditDecisionRecordPage({
         </Link>
         <DecisionRecordForm
           files={files}
+          projects={projects}
           initialValues={{
             recordId: record.id,
             title: record.title ?? "",
@@ -62,6 +66,7 @@ export default async function EditDecisionRecordPage({
             category: record.category ?? "",
             isMetric: record.is_metric ?? false,
             fileId: linkedFileId ?? "",
+            projectId: record.project_id ?? "",
           }}
         />
       </Stack>

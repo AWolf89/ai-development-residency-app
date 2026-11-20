@@ -13,36 +13,19 @@ export type ProjectActionState = {
   error?: string;
 };
 
-/**
- * Thin Server Action: resolve the signed-in user and delegate to the tested
- * `saveProject` orchestration (validate → insert). The user id is the
- * server-resolved one, never a client-supplied value.
- */
-export async function createProjectAction(
-  input: unknown
-): Promise<ProjectActionState> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
-    redirect("/login");
-  }
-
-  const repo = createSupabaseProjectRepository(supabase);
-  const result = await saveProject(repo, { userId: user.id, input });
-  if (!result.ok) {
-    return { ok: false, error: result.error };
-  }
-
-  revalidatePath("/dashboard/projects");
-  return { ok: true, projectId: result.projectId };
+function str(value: FormDataEntryValue | null): string {
+  return typeof value === "string" ? value : "";
 }
 
-/** Thin Server Action: update one of the user's own projects (edit). */
-export async function updateProjectAction(
-  projectId: string,
-  input: unknown
+/**
+ * Thin Server Action (useActionState shape): resolve the signed-in user and
+ * delegate to the tested `saveProject` orchestration (validate → insert/update).
+ * A `project_id` hidden field selects edit over create. The user id is always
+ * the server-resolved one, never a client-supplied value.
+ */
+export async function saveProjectAction(
+  _prevState: ProjectActionState | undefined,
+  formData: FormData
 ): Promise<ProjectActionState> {
   const supabase = await createClient();
   const {
@@ -52,19 +35,28 @@ export async function updateProjectAction(
     redirect("/login");
   }
 
+  const input = {
+    name: str(formData.get("name")),
+    role: str(formData.get("role")),
+    organisation: str(formData.get("organisation")),
+    summary: str(formData.get("summary")),
+    status: str(formData.get("status")) || "active",
+    startedOn: str(formData.get("started_on")),
+    endedOn: str(formData.get("ended_on")),
+  };
+  const projectId = str(formData.get("project_id")) || null;
+
   const repo = createSupabaseProjectRepository(supabase);
-  const result = await saveProject(repo, {
-    userId: user.id,
-    input,
-    projectId,
-  });
+  const result = await saveProject(repo, { userId: user.id, input, projectId });
   if (!result.ok) {
     return { ok: false, error: result.error };
   }
 
   revalidatePath("/dashboard/projects");
-  revalidatePath(`/dashboard/projects/${projectId}`);
-  return { ok: true, projectId };
+  if (projectId) {
+    revalidatePath(`/dashboard/projects/${projectId}`);
+  }
+  return { ok: true, projectId: result.projectId };
 }
 
 /**
