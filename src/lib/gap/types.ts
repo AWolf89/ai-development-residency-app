@@ -24,11 +24,31 @@ export const modelCitationSchema = z.object({
 });
 export type ModelCitation = z.infer<typeof modelCitationSchema>;
 
-/** The structured output contract for one classification call (validated by Zod). */
+/**
+ * The structured output contract for one classification call (validated by Zod).
+ *
+ * Citations are parsed TOLERANTLY (ADR-0011 fail-safe). The model sometimes returns a
+ * citation with a missing/blank `id` — most often when it is asked to echo a file's
+ * filename-as-id (evidence_hybrid_search uses the filename as `ref_id`), unlike the clean
+ * O*NET codes it cites reliably. Failing the whole structured parse on that would — after
+ * the correction budget is spent — throw and 500 the entire gap check (every requirement),
+ * which is exactly what happened in production. Instead we DROP malformed citation entries
+ * here and keep the well-formed ones. A met/partial verdict left with no valid citation is
+ * then downgraded to `gap` by resolveVerdict (classify.ts): the system under-claims, never
+ * over-claims, preserving the closed-RAG honesty guarantee.
+ */
 export const gapModelOutputSchema = z.object({
   verdict: modelVerdictSchema,
   rationale: z.string().min(1).max(600),
-  citations: z.array(modelCitationSchema).max(20),
+  citations: z
+    .array(z.unknown())
+    .catch([]) // citations missing or not an array → treat as none, don't fail the call
+    .transform((arr) =>
+      arr.slice(0, 50).flatMap((c) => {
+        const parsed = modelCitationSchema.safeParse(c);
+        return parsed.success ? [parsed.data] : [];
+      })
+    ),
 });
 export type GapModelOutput = z.infer<typeof gapModelOutputSchema>;
 

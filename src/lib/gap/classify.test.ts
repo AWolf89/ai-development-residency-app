@@ -6,6 +6,7 @@ import {
   resolveVerdict,
   toAssessmentRow,
   NO_EVIDENCE_RATIONALE,
+  CLASSIFY_FAILED_RATIONALE,
   type ClassifyDeps,
 } from "./classify";
 import type { GapModelOutput } from "./types";
@@ -237,6 +238,30 @@ describe("classifyRequirements — batch", () => {
   it("returns an empty array for no requirements", async () => {
     const { deps } = makeDeps();
     expect(await classifyRequirements([], deps)).toEqual([]);
+  });
+
+  it("degrades a requirement whose model call throws to unknown, without failing the batch", async () => {
+    const reqs = [
+      { id: "a", text: "first — model throws" },
+      { id: "b", text: "second — succeeds" },
+    ];
+    let call = 0;
+    const deps: ClassifyDeps = {
+      retrieveEvidence: async () => retrieval(),
+      retrieveReference: async () => NOT_FOUND,
+      runModel: async () => {
+        call += 1;
+        if (call === 1) throw new Error("structured output failed validation");
+        return { output: modelOutput(), attempts: 1, truncated: false };
+      },
+    };
+    const gaps = await classifyRequirements(reqs, deps);
+
+    expect(gaps.map((g) => g.requirementId)).toEqual(["a", "b"]);
+    expect(gaps[0].verdict).toBe("unknown");
+    expect(gaps[0].rationale).toBe(CLASSIFY_FAILED_RATIONALE);
+    expect(gaps[0].citations).toEqual([]);
+    expect(gaps[1].verdict).toBe("met"); // the rest of the run still completes
   });
 });
 
