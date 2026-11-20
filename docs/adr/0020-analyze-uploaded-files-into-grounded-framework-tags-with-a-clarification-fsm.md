@@ -68,29 +68,32 @@ questions are therefore the same as for the other agent loops:
 
 ## Considered Options
 
-* **Grounded analysis + bounded clarification FSM (chosen).** A vision pass reads images into
-  `file_text`; a pure `reduce(state, event)` router drives `analyzing → (confident) proposing |
-  (ambiguous) awaiting_clarification → proposing → awaiting_review → saving`, with `saving`
-  reachable **only** from `awaiting_review` on `accept`, a hard question budget, and a circuit
-  breaker; tags are validated against the real candidate `reference_items` set; accepted tags are
-  written to a new `file_reference_tags` table **and** an enrichment text is indexed into
-  `evidence_chunks`.
-* **One-shot analysis, no questions.** Analyze in a single call and always auto-propose tags.
-  Simpler, but it either guesses on ambiguous files or silently under-tags them — the exact
-  fabrication/over-claiming risk we are trying to remove.
-* **Free-form AI tags (no fixed vocabulary).** Let the model invent tags per file. Zero setup but
-  tags drift ("journey mapping" vs "customer journey"), match the Gap Check poorly, and cannot be
-  grounded — rejected.
-* **OCR instead of a vision model for images.** Cheaper per image, but OCR reads only printed
-  text; it misses the meaning of a hand-drawn map or a mostly-visual diagram, which is most of the
-  evidence that is currently invisible — rejected as the primary path.
-* **Map every requirement to framework items up front.** Solve the bridge by forcing each
-  free-text requirement onto framework rows. High user burden and a separate modelling problem;
-  deferred to a stretch card, with enriched evidence text as the default bridge.
+* Grounded analysis + bounded clarification FSM
+  (chosen) — a vision pass reads images into `file_text`; a pure `reduce(state, event)` router
+  drives `analyzing → (confident) proposing | (ambiguous) awaiting_clarification → proposing →
+  awaiting_review → saving`, with `saving` reachable only from `awaiting_review` on `accept`, a
+  hard question budget, and a circuit breaker; tags are validated against the real candidate
+  `reference_items` set; accepted tags are written to a new `file_reference_tags` table and an
+  enrichment text is indexed into `evidence_chunks`.
+* One-shot analysis, no questions
+  Analyze in a single call and always auto-propose tags. Simpler, but it either guesses on
+  ambiguous files or silently under-tags them — the exact fabrication/over-claiming risk we are
+  trying to remove.
+* Free-form AI tags (no fixed vocabulary)
+  Let the model invent tags per file. Zero setup but tags drift ("journey mapping" vs "customer
+  journey"), match the Gap Check poorly, and cannot be grounded — rejected.
+* OCR instead of a vision model for images
+  Cheaper per image, but OCR reads only printed text; it misses the meaning of a hand-drawn map or
+  a mostly-visual diagram, which is most of the evidence that is currently invisible — rejected as
+  the primary path.
+* Map every requirement to framework items up front
+  Solve the bridge by forcing each free-text requirement onto framework rows. High user burden and
+  a separate modelling problem; deferred to a stretch card, with enriched evidence text as the
+  default bridge.
 
 ## Decision Outcome
 
-Chosen option: **"Grounded analysis + bounded clarification FSM"**, because it closes the
+Chosen option: "Grounded analysis + bounded clarification FSM", because it closes the
 image-blindness and no-structure gaps while reusing the app's proven, audited patterns wholesale:
 it keeps analysis grounded by reusing citation-style validation, makes ask-don't-guess and the
 no-write-without-accept guarantee structural and unit-testable in one pure module, and bridges to
