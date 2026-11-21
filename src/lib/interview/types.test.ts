@@ -3,6 +3,7 @@ import {
   groundingCitationSchema,
   groundedQuestionSchema,
   cdmDraftSchema,
+  answerClassificationSchema,
   interviewEventSchema,
   interviewStateSchema,
   INTERVIEW_STATUSES,
@@ -82,6 +83,40 @@ describe("cdmDraftSchema", () => {
   it("rejects a blank required field", () => {
     expect(
       cdmDraftSchema.safeParse({ ...valid, decision: "   " }).success
+    ).toBe(false);
+  });
+});
+
+describe("answerClassificationSchema (ADR-0021)", () => {
+  it("accepts an events answer with a null redirect", () => {
+    expect(
+      answerClassificationSchema.safeParse({ kind: "events", redirect: null })
+        .success
+    ).toBe(true);
+  });
+
+  it("accepts a conclusion answer with a redirect question", () => {
+    expect(
+      answerClassificationSchema.safeParse({
+        kind: "conclusion",
+        redirect: "What did you see happen at that point?",
+      }).success
+    ).toBe(true);
+  });
+
+  it("rejects an unknown kind", () => {
+    expect(
+      answerClassificationSchema.safeParse({ kind: "maybe", redirect: null })
+        .success
+    ).toBe(false);
+  });
+
+  it("rejects a blank redirect string", () => {
+    expect(
+      answerClassificationSchema.safeParse({
+        kind: "conclusion",
+        redirect: "   ",
+      }).success
     ).toBe(false);
   });
 });

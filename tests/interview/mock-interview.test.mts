@@ -7,6 +7,8 @@
 import assert from "node:assert/strict";
 import {
   startInterview,
+  startTimelineInterview,
+  confirmTimeline,
   submitAnswer,
   skipQuestion,
   acceptDraft,
@@ -105,7 +107,12 @@ function makeRepo() {
   return { repo, sessions, turns };
 }
 
-type Counters = { questions: number; paraphrases: number; saves: number };
+type Counters = {
+  questions: number;
+  paraphrases: number;
+  saves: number;
+  classifies: number;
+};
 
 function makeDeps(
   overrides: Partial<InterviewDeps> = {},
@@ -116,17 +123,27 @@ function makeDeps(
   store: ReturnType<typeof makeRepo>;
 } {
   const store = makeRepo();
-  const counters: Counters = { questions: 0, paraphrases: 0, saves: 0 };
+  const counters: Counters = {
+    questions: 0,
+    paraphrases: 0,
+    saves: 0,
+    classifies: 0,
+  };
   const deps: InterviewDeps = {
     retrieveEvidence: async () => evidence,
     generateQuestion: async () => {
       counters.questions++;
       return `Question ${counters.questions}?`;
     },
+    classifyAnswer: async () => {
+      counters.classifies++;
+      return { kind: "events", redirect: null };
+    },
     paraphrase: async () => {
       counters.paraphrases++;
       return DRAFT;
     },
+    listProjectFiles: async () => [],
     saveRecord: async () => {
       counters.saves++;
       return { recordId: `rec-${counters.saves}` };
@@ -432,7 +449,12 @@ function makeDeps(
 // 12. Resume recovers a captured answer when the breaker tripped during paraphrasing.
 {
   const store = makeRepo();
-  const counters: Counters = { questions: 0, paraphrases: 0, saves: 0 };
+  const counters: Counters = {
+    questions: 0,
+    paraphrases: 0,
+    saves: 0,
+    classifies: 0,
+  };
   let paraphraseWorks = false;
   const deps: InterviewDeps = {
     retrieveEvidence: async () => foundEvidence,
@@ -440,11 +462,16 @@ function makeDeps(
       counters.questions++;
       return `Q${counters.questions}?`;
     },
+    classifyAnswer: async () => {
+      counters.classifies++;
+      return { kind: "events", redirect: null };
+    },
     paraphrase: async () => {
       if (!paraphraseWorks) throw new Error("model down");
       counters.paraphrases++;
       return DRAFT;
     },
+    listProjectFiles: async () => [],
     saveRecord: async () => {
       counters.saves++;
       return { recordId: `rec-${counters.saves}` };
@@ -492,6 +519,94 @@ function makeDeps(
     (t) => t.answer_text === "we chose postgres"
   )!;
   ok(recovered.paraphrase !== null, "the recovered turn now holds the draft");
+}
+
+// 13. Timeline interview (ADR-0021): draft from files → awaiting_timeline → confirm → anchored.
+{
+  let lastPoint: { label: string; date: string | null } | null | undefined;
+  const { deps, counters, store } = makeDeps({
+    listProjectFiles: async () => [
+      { id: "f1", name: "Kickoff.pdf", createdAt: "2026-10-01" },
+      { id: "f2", name: "Launch v2.pdf", createdAt: "2026-11-01" },
+    ],
+    generateQuestion: async (input) => {
+      lastPoint = input.decisionPoint;
+      counters.questions++;
+      return "What did you notice?";
+    },
+  });
+  const started = await startTimelineInterview(deps, {
+    userId: "u1",
+    title: "Platform migration",
+    projectId: "p1",
+    questionBudget: 8,
+  });
+  if (started.state.status !== "awaiting_timeline") {
+    throw new Error("expected awaiting_timeline");
+  }
+  ok(true, "timeline interview starts awaiting timeline review");
+  ok(
+    started.state.timeline.length === 2,
+    "timeline drafted from the project files"
+  );
+  ok(
+    counters.questions === 0,
+    "no question asked before the timeline is confirmed"
+  );
+  const turns0 = await store.repo.getTurns(started.sessionId);
+  ok(turns0.length === 0, "no turns yet during the timeline phase");
+
+  const confirmed = await confirmTimeline(deps, {
+    sessionId: started.sessionId,
+    userId: "u1",
+    timeline: started.state.timeline,
+  });
+  ok(
+    confirmed.state.status === "awaiting_answer",
+    "confirming the timeline starts the question loop"
+  );
+  ok(
+    !!lastPoint && lastPoint.label === "Kickoff",
+    "the first question is anchored to the first decision point"
+  );
+  const session = await store.repo.getSession(started.sessionId);
+  ok(
+    session?.timeline?.length === 2,
+    "the confirmed timeline is persisted on the session"
+  );
+}
+
+// 14. Conclusion redirect (ADR-0021): a conclusion answer is re-asked, budget-neutral, no save.
+{
+  const { deps, counters, store } = makeDeps({
+    classifyAnswer: async () => ({
+      kind: "conclusion",
+      redirect: "What did you observe at that point?",
+    }),
+  });
+  const s = await startInterview(deps, {
+    userId: "u1",
+    title: "x",
+    questionBudget: 3,
+  });
+  const after = await submitAnswer(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+    answer: "it went great",
+  });
+  if (after.state.status !== "awaiting_answer") {
+    throw new Error("expected awaiting_answer after a conclusion");
+  }
+  ok(true, "a conclusion answer is sent back to the same question");
+  ok(
+    after.state.redirectHint === "What did you observe at that point?",
+    "the redirect hint is surfaced to the user"
+  );
+  ok(after.state.askedCount === 1, "a redirect does not spend a question");
+  ok(counters.paraphrases === 0, "a redirected answer is never paraphrased");
+  ok(counters.saves === 0, "a redirected answer saves nothing");
+  const turns = await store.repo.getTurns(s.sessionId);
+  ok(turns[0].status === "asked", "the turn is re-opened for another answer");
 }
 
 console.log(`\n${pass} checks passed`);

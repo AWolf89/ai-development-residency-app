@@ -39,6 +39,17 @@ export const cdmDraftSchema = z.object({
 });
 export type CdmDraft = z.infer<typeof cdmDraftSchema>;
 
+/**
+ * The answer classifier's output (ADR-0021): is the answer an account of what happened, or a
+ * conclusion that skips the events? A conclusion carries a `redirect` — one short question that
+ * guides the person back to what happened — which drives the budget-neutral `needs_redirect`.
+ */
+export const answerClassificationSchema = z.object({
+  kind: z.enum(["events", "conclusion"]),
+  redirect: z.string().trim().min(1).nullable(),
+});
+export type AnswerClassification = z.infer<typeof answerClassificationSchema>;
+
 /** Why an interview is paused: the user asked, or the circuit breaker tripped. */
 export const PAUSED_REASONS = ["user", "circuit_breaker"] as const;
 export const pausedReasonSchema = z.enum(PAUSED_REASONS);
