@@ -8,17 +8,30 @@ import type {
 } from "./types";
 import {
   createInterview,
+  createTimelineInterview,
   reduce,
   budgetReached,
   QUESTION_HARD_CAP,
   DEFAULT_QUESTION_BUDGET,
+  DEFAULT_TIMELINE_QUESTION_BUDGET,
   BREAKER_THRESHOLD,
 } from "./machine";
+import type { Timeline } from "./timeline";
 
 const QUESTION: GroundedQuestion = {
   text: "Walk me through a decision you made on this project.",
   citation: { source: "file", id: "slide-7", title: "Migration plan" },
 };
+
+const TIMELINE: Timeline = [
+  {
+    id: "entry-0",
+    label: "Kickoff",
+    date: "2026-10-01",
+    fileIds: ["f1"],
+    versionHint: null,
+  },
+];
 
 const DRAFT: CdmDraft = {
   title: "Chose Postgres",
@@ -75,6 +88,94 @@ describe("createInterview", () => {
 
   it("keeps a budget within range unchanged", () => {
     expect(createInterview({ questionBudget: 4 }).questionBudget).toBe(4);
+  });
+});
+
+describe("timeline phase (ADR-0021)", () => {
+  it("createTimelineInterview starts in drafting_timeline with the timeline budget", () => {
+    const s = createTimelineInterview();
+    expect(s.status).toBe("drafting_timeline");
+    expect(s.askedCount).toBe(0);
+    expect(s.failureCount).toBe(0);
+    expect(s.questionBudget).toBe(DEFAULT_TIMELINE_QUESTION_BUDGET);
+  });
+
+  it("clamps the timeline budget to the hard cap", () => {
+    expect(createTimelineInterview({ questionBudget: 99 }).questionBudget).toBe(
+      QUESTION_HARD_CAP
+    );
+  });
+
+  it("drafting_timeline --timeline_drafted--> awaiting_timeline carrying the timeline", () => {
+    const s = reduce(createTimelineInterview(), {
+      type: "timeline_drafted",
+      timeline: TIMELINE,
+    });
+    expect(s.status).toBe("awaiting_timeline");
+    if (s.status === "awaiting_timeline") expect(s.timeline).toEqual(TIMELINE);
+  });
+
+  it("awaiting_timeline --timeline_confirmed--> asking (no question spent yet)", () => {
+    const drafted = reduce(createTimelineInterview(), {
+      type: "timeline_drafted",
+      timeline: TIMELINE,
+    });
+    const s = reduce(drafted, { type: "timeline_confirmed" });
+    expect(s.status).toBe("asking");
+    expect(s.askedCount).toBe(0);
+  });
+
+  it("a confirmed empty (manual) timeline still starts the loop", () => {
+    const drafted = reduce(createTimelineInterview(), {
+      type: "timeline_drafted",
+      timeline: [],
+    });
+    expect(reduce(drafted, { type: "timeline_confirmed" }).status).toBe(
+      "asking"
+    );
+  });
+});
+
+describe("conclusion redirect (ADR-0021)", () => {
+  it("paraphrasing --needs_redirect--> awaiting_answer with the same question", () => {
+    const s = reduce(drive(toParaphrasing), {
+      type: "needs_redirect",
+      hint: "Tell me what you noticed, not how it turned out.",
+    });
+    expect(s.status).toBe("awaiting_answer");
+    if (s.status === "awaiting_answer") {
+      expect(s.question).toEqual(QUESTION);
+      expect(s.redirectHint).toBe(
+        "Tell me what you noticed, not how it turned out."
+      );
+    }
+  });
+
+  it("is budget-neutral: a redirect never changes asked_count", () => {
+    const before = drive(toParaphrasing);
+    expect(before.askedCount).toBe(1);
+    const after = reduce(before, { type: "needs_redirect", hint: "again" });
+    expect(after.askedCount).toBe(1);
+  });
+
+  it("repeated redirects cannot push the loop toward complete", () => {
+    let s: InterviewState = drive(toParaphrasing, { questionBudget: 1 });
+    for (let i = 0; i < 5; i++) {
+      s = reduce(s, { type: "needs_redirect", hint: "again" });
+      expect(s.status).toBe("awaiting_answer");
+      expect(s.askedCount).toBe(1);
+      // Re-answer to return to paraphrasing for the next redirect.
+      s = reduce(s, { type: "answer_submitted", answer: "it went well" });
+      expect(s.status).toBe("paraphrasing");
+    }
+  });
+
+  it("resets the failure counter on a successful classification (redirect)", () => {
+    let s: InterviewState = drive(toParaphrasing);
+    s = reduce(s, { type: "llm_failed" });
+    expect(s.failureCount).toBe(1);
+    s = reduce(s, { type: "needs_redirect", hint: "again" });
+    expect(s.failureCount).toBe(0);
   });
 });
 
@@ -298,6 +399,11 @@ describe("invalid events are ignored (no throw, state unchanged)", () => {
 describe("HITL isolation invariant (R1 §3.4)", () => {
   // Build one representative state per status.
   const states: Record<InterviewStatus, InterviewState> = {
+    drafting_timeline: createTimelineInterview(),
+    awaiting_timeline: reduce(createTimelineInterview(), {
+      type: "timeline_drafted",
+      timeline: TIMELINE,
+    }),
     planning: createInterview(),
     asking: drive([{ type: "plan_ready" }]),
     awaiting_answer: drive(toAwaitingAnswer),
@@ -314,8 +420,11 @@ describe("HITL isolation invariant (R1 §3.4)", () => {
   };
 
   const allEvents: InterviewEvent[] = [
+    { type: "timeline_drafted", timeline: TIMELINE },
+    { type: "timeline_confirmed" },
     { type: "plan_ready" },
     { type: "question_ready", question: QUESTION },
+    { type: "needs_redirect", hint: "again" },
     { type: "answer_submitted", answer: "something" },
     { type: "answer_skipped" },
     { type: "pause" },

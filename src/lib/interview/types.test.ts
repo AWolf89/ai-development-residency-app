@@ -102,6 +102,24 @@ describe("interviewEventSchema", () => {
     ).toBe(true);
   });
 
+  it("accepts the timeline + redirect events (ADR-0021)", () => {
+    expect(
+      interviewEventSchema.safeParse({ type: "timeline_confirmed" }).success
+    ).toBe(true);
+    expect(
+      interviewEventSchema.safeParse({
+        type: "timeline_drafted",
+        timeline: [],
+      }).success
+    ).toBe(true);
+    expect(
+      interviewEventSchema.safeParse({
+        type: "needs_redirect",
+        hint: "Walk me back to what actually happened.",
+      }).success
+    ).toBe(true);
+  });
+
   it("rejects an unknown event type", () => {
     expect(interviewEventSchema.safeParse({ type: "explode" }).success).toBe(
       false
@@ -152,16 +170,59 @@ describe("interviewStateSchema", () => {
       }).success
     ).toBe(false);
   });
+
+  it("accepts the timeline-phase states (ADR-0021)", () => {
+    expect(
+      interviewStateSchema.safeParse({
+        status: "drafting_timeline",
+        questionBudget: 8,
+        askedCount: 0,
+        failureCount: 0,
+      }).success
+    ).toBe(true);
+    expect(
+      interviewStateSchema.safeParse({
+        status: "awaiting_timeline",
+        timeline: [
+          {
+            id: "entry-0",
+            label: "Kickoff",
+            date: "2026-10-01",
+            fileIds: ["f1"],
+            versionHint: null,
+          },
+        ],
+        questionBudget: 8,
+        askedCount: 0,
+        failureCount: 0,
+      }).success
+    ).toBe(true);
+  });
+
+  it("accepts an awaiting_answer state carrying a redirect hint", () => {
+    expect(
+      interviewStateSchema.safeParse({
+        status: "awaiting_answer",
+        question: { text: "What happened?", citation: null },
+        redirectHint: "Tell me what you observed, not the outcome.",
+        questionBudget: 8,
+        askedCount: 1,
+        failureCount: 0,
+      }).success
+    ).toBe(true);
+  });
 });
 
 describe("enums", () => {
-  it("lists the eight interview statuses", () => {
+  it("lists the ten interview statuses", () => {
     expect([...INTERVIEW_STATUSES].sort()).toEqual(
       [
         "asking",
         "awaiting_answer",
         "awaiting_confirmation",
+        "awaiting_timeline",
         "complete",
+        "drafting_timeline",
         "paraphrasing",
         "paused",
         "planning",

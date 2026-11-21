@@ -6,6 +6,7 @@
  * SDK, so the router in machine.ts is unit-tested with plain inputs (Humble Object, CLAUDE.md §3).
  */
 import { z } from "zod";
+import { timelineSchema } from "./timeline";
 
 /** A retrieved source the question was grounded in (shape matches rag `Citation`). */
 export const groundingCitationSchema = z.object({
@@ -51,13 +52,22 @@ const counters = {
   failureCount: z.number().int().nonnegative(),
 };
 
-/** The FSM state: a discriminated union on `status` (ADR-0013). */
+/** The FSM state: a discriminated union on `status` (ADR-0013, timeline states ADR-0021). */
 export const interviewStateSchema = z.discriminatedUnion("status", [
+  // Pre-interview timeline phase (ADR-0021): draft from files, then let the user correct it.
+  z.object({ status: z.literal("drafting_timeline"), ...counters }),
+  z.object({
+    status: z.literal("awaiting_timeline"),
+    timeline: timelineSchema,
+    ...counters,
+  }),
   z.object({ status: z.literal("planning"), ...counters }),
   z.object({ status: z.literal("asking"), ...counters }),
   z.object({
     status: z.literal("awaiting_answer"),
     question: groundedQuestionSchema,
+    // Set when a conclusion answer was sent back for a re-ask (ADR-0021); UI coaching only.
+    redirectHint: z.string().optional(),
     ...counters,
   }),
   z.object({
@@ -91,6 +101,8 @@ export type InterviewState = z.infer<typeof interviewStateSchema>;
 
 /** The set of state names (for exhaustive handling and tests). */
 export const INTERVIEW_STATUSES = [
+  "drafting_timeline",
+  "awaiting_timeline",
   "planning",
   "asking",
   "awaiting_answer",
@@ -104,11 +116,16 @@ export type InterviewStatus = (typeof INTERVIEW_STATUSES)[number];
 
 /** The FSM input events: user actions and the orchestrator's IO results. */
 export const interviewEventSchema = z.discriminatedUnion("type", [
+  // Timeline phase (ADR-0021): the drafted timeline, then the user's confirmed correction.
+  z.object({ type: z.literal("timeline_drafted"), timeline: timelineSchema }),
+  z.object({ type: z.literal("timeline_confirmed") }),
   z.object({ type: z.literal("plan_ready") }),
   z.object({
     type: z.literal("question_ready"),
     question: groundedQuestionSchema,
   }),
+  // A conclusion was given instead of an account of events: re-ask without spending budget.
+  z.object({ type: z.literal("needs_redirect"), hint: z.string() }),
   z.object({ type: z.literal("answer_submitted"), answer: z.string() }),
   z.object({ type: z.literal("answer_skipped") }),
   z.object({ type: z.literal("pause") }),
