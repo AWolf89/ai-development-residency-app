@@ -3,6 +3,7 @@ import {
   groundingCitationSchema,
   groundedQuestionSchema,
   cdmDraftSchema,
+  answerClassificationSchema,
   interviewEventSchema,
   interviewStateSchema,
   INTERVIEW_STATUSES,
@@ -86,6 +87,40 @@ describe("cdmDraftSchema", () => {
   });
 });
 
+describe("answerClassificationSchema (ADR-0021)", () => {
+  it("accepts an events answer with a null redirect", () => {
+    expect(
+      answerClassificationSchema.safeParse({ kind: "events", redirect: null })
+        .success
+    ).toBe(true);
+  });
+
+  it("accepts a conclusion answer with a redirect question", () => {
+    expect(
+      answerClassificationSchema.safeParse({
+        kind: "conclusion",
+        redirect: "What did you see happen at that point?",
+      }).success
+    ).toBe(true);
+  });
+
+  it("rejects an unknown kind", () => {
+    expect(
+      answerClassificationSchema.safeParse({ kind: "maybe", redirect: null })
+        .success
+    ).toBe(false);
+  });
+
+  it("rejects a blank redirect string", () => {
+    expect(
+      answerClassificationSchema.safeParse({
+        kind: "conclusion",
+        redirect: "   ",
+      }).success
+    ).toBe(false);
+  });
+});
+
 describe("interviewEventSchema", () => {
   it("accepts a known event", () => {
     expect(interviewEventSchema.safeParse({ type: "accept" }).success).toBe(
@@ -98,6 +133,24 @@ describe("interviewEventSchema", () => {
       interviewEventSchema.safeParse({
         type: "answer_submitted",
         answer: "We chose X.",
+      }).success
+    ).toBe(true);
+  });
+
+  it("accepts the timeline + redirect events (ADR-0021)", () => {
+    expect(
+      interviewEventSchema.safeParse({ type: "timeline_confirmed" }).success
+    ).toBe(true);
+    expect(
+      interviewEventSchema.safeParse({
+        type: "timeline_drafted",
+        timeline: [],
+      }).success
+    ).toBe(true);
+    expect(
+      interviewEventSchema.safeParse({
+        type: "needs_redirect",
+        hint: "Walk me back to what actually happened.",
       }).success
     ).toBe(true);
   });
@@ -152,16 +205,59 @@ describe("interviewStateSchema", () => {
       }).success
     ).toBe(false);
   });
+
+  it("accepts the timeline-phase states (ADR-0021)", () => {
+    expect(
+      interviewStateSchema.safeParse({
+        status: "drafting_timeline",
+        questionBudget: 8,
+        askedCount: 0,
+        failureCount: 0,
+      }).success
+    ).toBe(true);
+    expect(
+      interviewStateSchema.safeParse({
+        status: "awaiting_timeline",
+        timeline: [
+          {
+            id: "entry-0",
+            label: "Kickoff",
+            date: "2026-10-01",
+            fileIds: ["f1"],
+            versionHint: null,
+          },
+        ],
+        questionBudget: 8,
+        askedCount: 0,
+        failureCount: 0,
+      }).success
+    ).toBe(true);
+  });
+
+  it("accepts an awaiting_answer state carrying a redirect hint", () => {
+    expect(
+      interviewStateSchema.safeParse({
+        status: "awaiting_answer",
+        question: { text: "What happened?", citation: null },
+        redirectHint: "Tell me what you observed, not the outcome.",
+        questionBudget: 8,
+        askedCount: 1,
+        failureCount: 0,
+      }).success
+    ).toBe(true);
+  });
 });
 
 describe("enums", () => {
-  it("lists the eight interview statuses", () => {
+  it("lists the ten interview statuses", () => {
     expect([...INTERVIEW_STATUSES].sort()).toEqual(
       [
         "asking",
         "awaiting_answer",
         "awaiting_confirmation",
+        "awaiting_timeline",
         "complete",
+        "drafting_timeline",
         "paraphrasing",
         "paused",
         "planning",

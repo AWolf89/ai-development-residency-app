@@ -6,6 +6,8 @@ import { createClient } from "@/lib/supabase/server";
 import {
   defaultDeps,
   startInterview,
+  startTimelineInterview,
+  confirmTimeline,
   submitAnswer,
   skipQuestion,
   pauseInterview,
@@ -13,6 +15,7 @@ import {
   editDraft,
   resumeInterview,
 } from "@/lib/interview/orchestrator";
+import { timelineSchema } from "@/lib/interview/timeline";
 
 const PATH = "/dashboard/interview";
 
@@ -41,8 +44,37 @@ export async function startInterviewAction(formData: FormData): Promise<void> {
   const title = field(formData, "title");
   if (!title) return;
   const targetRoleId = field(formData, "target_role_id") || null;
+  const projectId = field(formData, "project_id") || null;
   const deps = await defaultDeps(userId);
-  await startInterview(deps, { userId, title, targetRoleId });
+  // A project turns this into a timeline-anchored Decision-Point Interview (ADR-0021): draft a
+  // timeline from that project's files for the user to correct. Without one, the open CDM flow.
+  if (projectId) {
+    await startTimelineInterview(deps, {
+      userId,
+      title,
+      projectId,
+      targetRoleId,
+    });
+  } else {
+    await startInterview(deps, { userId, title, targetRoleId });
+  }
+  revalidatePath(PATH);
+}
+
+export async function confirmTimelineAction(formData: FormData): Promise<void> {
+  const userId = await userIdOrRedirect();
+  const sessionId = field(formData, "session_id");
+  const raw = field(formData, "timeline");
+  if (!sessionId) return;
+  // The client sends the corrected timeline as JSON; validate it before the orchestrator persists.
+  let timeline;
+  try {
+    timeline = timelineSchema.parse(JSON.parse(raw || "[]"));
+  } catch {
+    return; // malformed payload: do nothing (the page re-drafts on reload)
+  }
+  const deps = await defaultDeps(userId);
+  await confirmTimeline(deps, { sessionId, userId, timeline });
   revalidatePath(PATH);
 }
 

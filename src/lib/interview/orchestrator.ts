@@ -11,12 +11,28 @@ import {
   interviewParaphrase,
   type InterviewParaphraseInput,
 } from "@/lib/llm/prompts/interview-paraphrase";
+import {
+  answerClassify,
+  type AnswerClassifyInput,
+} from "@/lib/llm/prompts/answer-classify";
 import { saveDecisionRecord } from "@/lib/decision-records/save";
 import { indexDecisionRecordEvidence } from "@/lib/decision-records/index-evidence";
 import { createSupabaseDecisionRecordRepository } from "@/lib/decision-records/repository";
-import { createInterview, reduce, QUESTION_HARD_CAP } from "./machine";
-import { cdmDraftSchema } from "./types";
-import type { CdmDraft, GroundingCitation, InterviewState } from "./types";
+import {
+  createInterview,
+  createTimelineInterview,
+  reduce,
+  QUESTION_HARD_CAP,
+} from "./machine";
+import { draftTimeline, timelineSchema } from "./timeline";
+import { cdmDraftSchema, answerClassificationSchema } from "./types";
+import type {
+  AnswerClassification,
+  CdmDraft,
+  GroundingCitation,
+  InterviewState,
+} from "./types";
+import type { Timeline, TimelineFile } from "./timeline";
 import type { InterviewSessionRow, InterviewTurnRow } from "./queries";
 
 /**
@@ -40,18 +56,29 @@ export class InterviewError extends Error {
   }
 }
 
+/** Validate a user-corrected timeline at the boundary before persisting it (ADR-0021). */
+function answerTimelineOrThrow(timeline: Timeline): Timeline {
+  const parsed = timelineSchema.safeParse(timeline);
+  if (!parsed.success) {
+    throw new InterviewError(`invalid timeline: ${parsed.error.message}`);
+  }
+  return parsed.data;
+}
+
 // --- Persistence port (Humble Object): the exact Supabase surface the orchestrator uses. ---
 
 export type NewSessionRow = {
   user_id: string;
   title: string;
   target_role_id: string | null;
+  project_id: string | null;
+  timeline: Timeline | null;
   status: "active" | "paused" | "complete";
   question_budget: number;
   asked_count: number;
 };
 export type SessionPatch = Partial<
-  Pick<InterviewSessionRow, "status" | "asked_count" | "title">
+  Pick<InterviewSessionRow, "status" | "asked_count" | "title" | "timeline">
 >;
 export type NewTurnRow = {
   session_id: string;
@@ -63,7 +90,11 @@ export type NewTurnRow = {
 export type TurnPatch = Partial<
   Pick<
     InterviewTurnRow,
-    "answer_text" | "paraphrase" | "status" | "decision_record_id"
+    | "question_text"
+    | "answer_text"
+    | "paraphrase"
+    | "status"
+    | "decision_record_id"
   >
 >;
 
@@ -85,7 +116,11 @@ export type InterviewDeps = {
     sources: GroundingCitation[];
   }>;
   generateQuestion: (input: InterviewQuestionInput) => Promise<string>;
+  /** Classify an answer as events vs conclusion to drive the redirect (ADR-0021). */
+  classifyAnswer: (input: AnswerClassifyInput) => Promise<AnswerClassification>;
   paraphrase: (input: InterviewParaphraseInput) => Promise<CdmDraft>;
+  /** The user's files for a project, used to draft the timeline (ADR-0021). */
+  listProjectFiles: (projectId: string) => Promise<TimelineFile[]>;
   saveRecord: (args: {
     userId: string;
     draft: CdmDraft;
@@ -103,9 +138,23 @@ type RunCtx = {
   sessionId: string;
   userId: string;
   topic: string;
+  // The project whose files seed the timeline (ADR-0021), or null for the non-timeline flow.
+  projectId: string | null;
+  // The user-confirmed timeline the questions anchor to (ADR-0021), or null.
+  timeline: Timeline | null;
   previousQuestions: string[];
   currentTurnId: string | null;
 };
+
+/** Pick the timeline decision point to anchor the next question to (round-robin by progress). */
+function decisionPointFor(
+  timeline: Timeline | null,
+  askedCount: number
+): { label: string; date: string | null } | null {
+  if (!timeline || timeline.length === 0) return null;
+  const entry = timeline[askedCount % timeline.length];
+  return { label: entry.label, date: entry.date };
+}
 
 // A loop larger than this cannot happen under the budget + breaker; it is the R3/R1 force-stop.
 const MAX_STEPS = QUESTION_HARD_CAP * 5;
@@ -135,6 +184,14 @@ function rehydrate(
   if (session.status === "paused") {
     return {
       state: { status: "paused", reason: "user", ...base },
+      currentTurnId: null,
+    };
+  }
+  // Timeline phase (ADR-0021): a timeline interview with no confirmed timeline and no turns is
+  // still in draft/correct — re-enter drafting_timeline so the draft is rebuilt from the files.
+  if (session.project_id && !session.timeline && turns.length === 0) {
+    return {
+      state: { status: "drafting_timeline", ...base },
       currentTurnId: null,
     };
   }
@@ -183,6 +240,8 @@ async function load(
       sessionId,
       userId,
       topic: session.title,
+      projectId: session.project_id,
+      timeline: session.timeline,
       previousQuestions: turns.map((t) => t.question_text),
       currentTurnId,
     },
@@ -248,18 +307,34 @@ async function advance(
 ): Promise<InterviewState> {
   let state = initial;
   for (let steps = 0; steps < MAX_STEPS; steps++) {
+    if (state.status === "drafting_timeline") {
+      // Draft the project timeline from the user's files (ADR-0021) and hand it to the user to
+      // correct. No model call and no budget here — pure logic over the project's file metadata.
+      const files = ctx.projectId
+        ? await deps.listProjectFiles(ctx.projectId)
+        : [];
+      state = reduce(state, {
+        type: "timeline_drafted",
+        timeline: draftTimeline(files),
+      });
+      continue;
+    }
     if (state.status === "planning") {
       state = reduce(state, { type: "plan_ready" });
       continue;
     }
     if (state.status === "asking") {
       try {
-        const evidence = await deps.retrieveEvidence(ctx.topic);
+        // Anchor the question to a timeline decision point when there is one (ADR-0021), and
+        // ground retrieval on that point's label so the snippet matches the moment being probed.
+        const point = decisionPointFor(ctx.timeline, state.askedCount);
+        const evidence = await deps.retrieveEvidence(point?.label ?? ctx.topic);
         const citation = evidence.found ? (evidence.sources[0] ?? null) : null;
         const text = await deps.generateQuestion({
           topic: ctx.topic,
           evidenceContext: evidence.found ? evidence.context : null,
           previousQuestions: ctx.previousQuestions,
+          decisionPoint: point,
         });
         const next = reduce(state, {
           type: "question_ready",
@@ -284,6 +359,28 @@ async function advance(
     }
     if (state.status === "paraphrasing") {
       try {
+        // Guide back from a conclusion (ADR-0021): if the answer skips the events, re-ask the
+        // same question with a redirect instead of paraphrasing — budget-neutral in the FSM.
+        const decision = await deps.classifyAnswer({
+          question: state.question.text,
+          answer: state.answer,
+        });
+        if (decision.kind === "conclusion" && decision.redirect) {
+          const next = reduce(state, {
+            type: "needs_redirect",
+            hint: decision.redirect,
+          });
+          // Re-open the turn and replace its text with the guide-back question, so the UI shows
+          // the redirect and a reload resumes there (rehydrate → awaiting_answer, no budget spent).
+          if (ctx.currentTurnId) {
+            await deps.repo.updateTurn(ctx.currentTurnId, {
+              question_text: decision.redirect,
+              status: "asked",
+            });
+          }
+          state = next;
+          continue;
+        }
         const draft = await deps.paraphrase({
           question: state.question.text,
           answer: state.answer,
@@ -359,6 +456,8 @@ export async function startInterview(
     user_id: params.userId,
     title: params.title,
     target_role_id: params.targetRoleId ?? null,
+    project_id: null,
+    timeline: null,
     status: "active",
     question_budget: fresh.questionBudget,
     asked_count: 0,
@@ -367,11 +466,92 @@ export async function startInterview(
     sessionId,
     userId: params.userId,
     topic: params.title,
+    projectId: null,
+    timeline: null,
     previousQuestions: [],
     currentTurnId: null,
   };
   const state = await advance(deps, ctx, fresh);
   return { sessionId, state };
+}
+
+/**
+ * Start a timeline-anchored Decision-Point Interview (ADR-0021). Creates the session bound to a
+ * project, drafts the timeline from that project's files, and returns in `awaiting_timeline` for
+ * the user to correct before any question is asked. No record is ever written here.
+ */
+export async function startTimelineInterview(
+  deps: InterviewDeps,
+  params: {
+    userId: string;
+    title: string;
+    projectId: string;
+    targetRoleId?: string | null;
+    questionBudget?: number;
+  }
+): Promise<InterviewRunResult> {
+  const fresh = createTimelineInterview({
+    questionBudget: params.questionBudget,
+  });
+  const { id: sessionId } = await deps.repo.createSession({
+    user_id: params.userId,
+    title: params.title,
+    target_role_id: params.targetRoleId ?? null,
+    project_id: params.projectId,
+    timeline: null,
+    status: "active",
+    question_budget: fresh.questionBudget,
+    asked_count: 0,
+  });
+  const ctx: RunCtx = {
+    sessionId,
+    userId: params.userId,
+    topic: params.title,
+    projectId: params.projectId,
+    timeline: null,
+    previousQuestions: [],
+    currentTurnId: null,
+  };
+  const state = await advance(deps, ctx, fresh);
+  return { sessionId, state };
+}
+
+/**
+ * Confirm the user-corrected timeline (ADR-0021) and start the question loop. Persists the
+ * corrected timeline on the session so the loop anchors to it and it survives pause/resume,
+ * then advances from `awaiting_timeline` into `asking`. Ignored unless awaiting a timeline.
+ */
+export async function confirmTimeline(
+  deps: InterviewDeps,
+  params: { sessionId: string; userId: string; timeline: Timeline }
+): Promise<InterviewRunResult> {
+  const { state, ctx } = await load(deps, params.sessionId, params.userId);
+  // The loaded state is drafting_timeline or awaiting_timeline (rehydrate collapses an
+  // unconfirmed timeline session to drafting_timeline). Anything else means already confirmed.
+  if (
+    state.status !== "drafting_timeline" &&
+    state.status !== "awaiting_timeline"
+  ) {
+    return { sessionId: params.sessionId, state };
+  }
+  // Validate the corrected timeline at the boundary before it is persisted (R3 schema).
+  const timeline = answerTimelineOrThrow(params.timeline);
+  await deps.repo.updateSession(params.sessionId, { timeline });
+  ctx.timeline = timeline;
+  // Confirm from awaiting_timeline (carrying the corrected timeline) and start the question loop.
+  const awaiting: InterviewState = {
+    status: "awaiting_timeline",
+    timeline,
+    questionBudget: state.questionBudget,
+    askedCount: state.askedCount,
+    failureCount: state.failureCount,
+  };
+  const final = await advance(
+    deps,
+    ctx,
+    reduce(awaiting, { type: "timeline_confirmed" })
+  );
+  return { sessionId: params.sessionId, state: final };
 }
 
 export async function submitAnswer(
@@ -498,7 +678,7 @@ function supabaseInterviewRepository(
       const { data } = await supabase
         .from("interview_sessions")
         .select(
-          "id, user_id, title, target_role_id, status, question_budget, asked_count, created_at, updated_at"
+          "id, user_id, title, target_role_id, project_id, timeline, status, question_budget, asked_count, created_at, updated_at"
         )
         .eq("id", id)
         .maybeSingle();
@@ -568,6 +748,29 @@ export async function defaultDeps(userId: string): Promise<InterviewDeps> {
         userId,
       });
       return text.trim();
+    },
+    classifyAnswer: async (input) => {
+      const { data } = await runStructured({
+        prompt: answerClassify,
+        input,
+        schema: answerClassificationSchema,
+        sink: supabaseSink,
+        userId,
+      });
+      return data;
+    },
+    listProjectFiles: async (projectId) => {
+      const { data } = await supabase
+        .from("files")
+        .select("id, file_name, created_at")
+        .eq("user_id", userId)
+        .eq("project_id", projectId)
+        .order("created_at", { ascending: true });
+      return (data ?? []).map((row) => ({
+        id: row.id as string,
+        name: row.file_name as string,
+        createdAt: row.created_at as string,
+      }));
     },
     paraphrase: async (input) => {
       const { data } = await runStructured({

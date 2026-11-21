@@ -17,6 +17,8 @@ import type { InterviewEvent, InterviewState } from "./types";
 export const QUESTION_HARD_CAP = 10;
 /** Default number of questions when the caller does not set one. */
 export const DEFAULT_QUESTION_BUDGET = 6;
+/** Default budget for a timeline-anchored decision-point interview (ADR-0021): 5–8 → 8. */
+export const DEFAULT_TIMELINE_QUESTION_BUDGET = 8;
 /** Consecutive model failures that trip the circuit breaker. */
 export const BREAKER_THRESHOLD = 3;
 
@@ -25,16 +27,38 @@ type Counters = Pick<
   "questionBudget" | "askedCount" | "failureCount"
 >;
 
+/** Clamp a requested budget to [1, hard cap] so no configuration can exceed the cap. */
+function clampBudget(requested: number): number {
+  return Math.min(QUESTION_HARD_CAP, Math.max(1, Math.floor(requested)));
+}
+
 /** Start a fresh interview in `planning`, clamping the budget to [1, hard cap]. */
 export function createInterview(opts?: {
   questionBudget?: number;
 }): InterviewState {
-  const requested = opts?.questionBudget ?? DEFAULT_QUESTION_BUDGET;
-  const questionBudget = Math.min(
-    QUESTION_HARD_CAP,
-    Math.max(1, Math.floor(requested))
+  const questionBudget = clampBudget(
+    opts?.questionBudget ?? DEFAULT_QUESTION_BUDGET
   );
   return { status: "planning", questionBudget, askedCount: 0, failureCount: 0 };
+}
+
+/**
+ * Start a timeline-anchored decision-point interview (ADR-0021) in `drafting_timeline` — the
+ * pre-interview phase that builds a project timeline and lets the user correct it before the
+ * question loop begins. Same counters and the same clamped budget as `createInterview`.
+ */
+export function createTimelineInterview(opts?: {
+  questionBudget?: number;
+}): InterviewState {
+  const questionBudget = clampBudget(
+    opts?.questionBudget ?? DEFAULT_TIMELINE_QUESTION_BUDGET
+  );
+  return {
+    status: "drafting_timeline",
+    questionBudget,
+    askedCount: 0,
+    failureCount: 0,
+  };
 }
 
 /** True once as many questions have been asked as the budget allows. */
@@ -79,6 +103,18 @@ export function reduce(
   };
 
   switch (state.status) {
+    case "drafting_timeline":
+      // The orchestrator drafted the timeline from the project's files; show it for review.
+      if (event.type === "timeline_drafted") {
+        return { status: "awaiting_timeline", timeline: event.timeline, ...c };
+      }
+      return state;
+
+    case "awaiting_timeline":
+      // The user confirmed (and possibly corrected) the timeline; start the question loop.
+      if (event.type === "timeline_confirmed") return continueOrComplete(c);
+      return state;
+
     case "planning":
       if (event.type === "plan_ready") return continueOrComplete(c);
       return state;
@@ -124,6 +160,18 @@ export function reduce(
           questionBudget: c.questionBudget,
           askedCount: c.askedCount,
           failureCount: 0, // a successful paraphrase resets the breaker
+        };
+      }
+      // The answer was a conclusion, not an account of events (ADR-0021): re-ask the SAME
+      // question with a redirect hint and DO NOT spend a question — budget-neutral by design.
+      if (event.type === "needs_redirect") {
+        return {
+          status: "awaiting_answer",
+          question: state.question,
+          redirectHint: event.hint,
+          questionBudget: c.questionBudget,
+          askedCount: c.askedCount,
+          failureCount: 0, // a successful classification resets the breaker
         };
       }
       if (event.type === "llm_failed") return onFailure(state, c);

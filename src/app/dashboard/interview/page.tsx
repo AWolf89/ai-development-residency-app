@@ -8,15 +8,19 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { createClient } from "@/lib/supabase/server";
 import { getTargetRoles } from "@/lib/target-roles/queries";
+import { getProjects } from "@/lib/projects/queries";
 import {
   getLatestInterviewSession,
   getTurnsForSession,
+  getProjectTimelineFiles,
   type InterviewTurnRow,
 } from "@/lib/interview/queries";
+import { draftTimeline } from "@/lib/interview/timeline";
 import { serifStack, brand } from "@/theme-tokens";
 import AnswerForm from "./AnswerForm";
 import PlaybackGate from "./PlaybackGate";
 import StartForm from "./StartForm";
+import TimelineReview from "./TimelineReview";
 import { resumeAction } from "./actions";
 
 const PAGE_SX = {
@@ -167,6 +171,8 @@ export default async function InterviewPage() {
     title: r.title,
     company: r.company,
   }));
+  const projects = await getProjects(supabase, user.id);
+  const projectOptions = projects.map((p) => ({ id: p.id, name: p.name }));
 
   const session = await getLatestInterviewSession(supabase);
   const turns = session ? await getTurnsForSession(supabase, session.id) : [];
@@ -189,7 +195,34 @@ export default async function InterviewPage() {
               another below.
             </Typography>
           ) : null}
-          <StartForm roles={roleOptions} />
+          <StartForm roles={roleOptions} projects={projectOptions} />
+        </Stack>
+      </Box>
+    );
+  }
+
+  // Timeline phase (ADR-0021): an active, project-backed session with no confirmed timeline and
+  // no turns yet. Draft the timeline from the project's files and let the user correct it first.
+  if (
+    session.status === "active" &&
+    session.project_id &&
+    !session.timeline &&
+    turns.length === 0
+  ) {
+    const files = await getProjectTimelineFiles(
+      supabase,
+      user.id,
+      session.project_id
+    );
+    const draft = draftTimeline(files);
+    return (
+      <Box sx={PAGE_SX}>
+        <Stack spacing={4} sx={{ maxWidth: 760 }}>
+          <PageHeading
+            title={`${session.title}: your timeline`}
+            subtitle="We map out the project first, then talk through the decisions at each point."
+          />
+          <TimelineReview sessionId={session.id} draft={draft} />
         </Stack>
       </Box>
     );

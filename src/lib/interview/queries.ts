@@ -8,6 +8,7 @@
  */
 import type { createClient } from "@/lib/supabase/server";
 import type { CdmDraft, GroundingCitation } from "./types";
+import type { Timeline, TimelineFile } from "./timeline";
 
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -16,6 +17,10 @@ export type InterviewSessionRow = {
   user_id: string;
   title: string;
   target_role_id: string | null;
+  // The project whose files seeded the timeline, or null for the non-timeline flow (ADR-0021).
+  project_id: string | null;
+  // The user-confirmed timeline, or null until confirmed (ADR-0021).
+  timeline: Timeline | null;
   status: "active" | "paused" | "complete";
   question_budget: number;
   asked_count: number;
@@ -37,7 +42,7 @@ export type InterviewTurnRow = {
 };
 
 const SESSION_COLS =
-  "id, user_id, title, target_role_id, status, question_budget, asked_count, created_at, updated_at";
+  "id, user_id, title, target_role_id, project_id, timeline, status, question_budget, asked_count, created_at, updated_at";
 const TURN_COLS =
   "id, session_id, user_id, question_text, grounding_citation, answer_text, paraphrase, status, decision_record_id, created_at";
 
@@ -65,6 +70,28 @@ export async function getLatestInterviewSession(
     .limit(1)
     .maybeSingle();
   return (data as InterviewSessionRow | null) ?? null;
+}
+
+/**
+ * The user's files for a project, shaped for drafting a timeline (ADR-0021). Oldest first so
+ * `draftTimeline` sees them in chronological order. RLS scopes this to the owner.
+ */
+export async function getProjectTimelineFiles(
+  supabase: ServerClient,
+  userId: string,
+  projectId: string
+): Promise<TimelineFile[]> {
+  const { data } = await supabase
+    .from("files")
+    .select("id, file_name, created_at")
+    .eq("user_id", userId)
+    .eq("project_id", projectId)
+    .order("created_at", { ascending: true });
+  return (data ?? []).map((row) => ({
+    id: row.id as string,
+    name: row.file_name as string,
+    createdAt: row.created_at as string,
+  }));
 }
 
 /** The turns of one session in order (oldest first) — the interview history. */
