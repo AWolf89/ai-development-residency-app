@@ -25,12 +25,15 @@ import {
   selectActiveRole,
   type GapSummary,
 } from "@/lib/gap/presentation";
+import { getLearningMoments } from "@/lib/learning-moments/queries";
+import { selectGapLearningEvidence } from "@/lib/learning-moments/gap-evidence";
 import StatusChip from "@/components/StatusChip";
 import PageHeading from "@/components/PageHeading";
 import { serifStack, brand } from "@/theme-tokens";
 import RunGapCheckButton from "./RunGapCheckButton";
 import RolePicker from "./RolePicker";
 import InvestigateDialog from "./InvestigateDialog";
+import LearningEvidencePanel from "./LearningEvidencePanel";
 
 /** Verdicts the Evidence Investigation Agent can deepen (ADR-0017); `met` has nothing to chase. */
 const INVESTIGABLE_VERDICTS = new Set(["gap", "unknown", "partial"]);
@@ -155,6 +158,17 @@ export default async function GapCheckPage({
   const summary = summarize(assessed.map((a) => a.verdict));
   const hasAssessments = assessed.length > 0;
 
+  // Learning Evidence in the Gap Check: when there are true gaps, surface the user's own
+  // learning-agility records as evidence the gaps can be closed. Only queried when it is needed,
+  // and the panel renders only if there are relevant records — nothing is invented (AC3).
+  const learningEvidence =
+    summary.trueGaps > 0
+      ? selectGapLearningEvidence(
+          await getLearningMoments(supabase, user.id),
+          selected.id
+        )
+      : [];
+
   const title = `Gap check: ${selected.title}${
     selected.company ? `, ${selected.company}` : ""
   }`;
@@ -272,6 +286,10 @@ export default async function GapCheckPage({
                 </TableBody>
               </Table>
             </TableContainer>
+
+            {learningEvidence.length > 0 ? (
+              <LearningEvidencePanel evidence={learningEvidence} />
+            ) : null}
           </>
         )}
       </Stack>
