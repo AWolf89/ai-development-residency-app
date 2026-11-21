@@ -607,6 +607,10 @@ function makeDeps(
   ok(counters.saves === 0, "a redirected answer saves nothing");
   const turns = await store.repo.getTurns(s.sessionId);
   ok(turns[0].status === "asked", "the turn is re-opened for another answer");
+  ok(
+    turns[0].question_text === "What did you observe at that point?",
+    "the on-screen question becomes the guide-back question"
+  );
 }
 
 console.log(`\n${pass} checks passed`);

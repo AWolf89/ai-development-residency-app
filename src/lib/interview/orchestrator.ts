@@ -90,7 +90,11 @@ export type NewTurnRow = {
 export type TurnPatch = Partial<
   Pick<
     InterviewTurnRow,
-    "answer_text" | "paraphrase" | "status" | "decision_record_id"
+    | "question_text"
+    | "answer_text"
+    | "paraphrase"
+    | "status"
+    | "decision_record_id"
   >
 >;
 
@@ -366,9 +370,13 @@ async function advance(
             type: "needs_redirect",
             hint: decision.redirect,
           });
-          // Re-open the turn so a reload resumes at the same question (rehydrate → awaiting_answer).
+          // Re-open the turn and replace its text with the guide-back question, so the UI shows
+          // the redirect and a reload resumes there (rehydrate → awaiting_answer, no budget spent).
           if (ctx.currentTurnId) {
-            await deps.repo.updateTurn(ctx.currentTurnId, { status: "asked" });
+            await deps.repo.updateTurn(ctx.currentTurnId, {
+              question_text: decision.redirect,
+              status: "asked",
+            });
           }
           state = next;
           continue;

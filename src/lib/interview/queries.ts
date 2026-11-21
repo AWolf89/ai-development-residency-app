@@ -8,7 +8,7 @@
  */
 import type { createClient } from "@/lib/supabase/server";
 import type { CdmDraft, GroundingCitation } from "./types";
-import type { Timeline } from "./timeline";
+import type { Timeline, TimelineFile } from "./timeline";
 
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -70,6 +70,28 @@ export async function getLatestInterviewSession(
     .limit(1)
     .maybeSingle();
   return (data as InterviewSessionRow | null) ?? null;
+}
+
+/**
+ * The user's files for a project, shaped for drafting a timeline (ADR-0021). Oldest first so
+ * `draftTimeline` sees them in chronological order. RLS scopes this to the owner.
+ */
+export async function getProjectTimelineFiles(
+  supabase: ServerClient,
+  userId: string,
+  projectId: string
+): Promise<TimelineFile[]> {
+  const { data } = await supabase
+    .from("files")
+    .select("id, file_name, created_at")
+    .eq("user_id", userId)
+    .eq("project_id", projectId)
+    .order("created_at", { ascending: true });
+  return (data ?? []).map((row) => ({
+    id: row.id as string,
+    name: row.file_name as string,
+    createdAt: row.created_at as string,
+  }));
 }
 
 /** The turns of one session in order (oldest first) — the interview history. */
