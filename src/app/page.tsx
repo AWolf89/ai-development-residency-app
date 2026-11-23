@@ -26,7 +26,7 @@ export default async function Home() {
       <Container maxWidth="md">
         <Stack spacing={3} sx={{ alignItems: "flex-start" }}>
           <Chip
-            label="MVP #1 · In development"
+            label="MVP #2 · In development"
             variant="outlined"
             // secondary.main (#00897b) is only 4.06:1 on the page background;
             // #00695c reaches 5.8:1 (WCAG 1.4.3 Contrast).
@@ -68,8 +68,9 @@ export default async function Home() {
           )}
 
           <Typography variant="caption" color="text.disabled">
-            Foundation scaffold with accounts (E1–E3). Features arrive as the
-            backlog is built out.
+            The interview, file-analysis, gap-check and reviewer agents already
+            run on a closed, cited evidence base. MVP #2 connects them into one
+            investigation-driven flow — from upload to a record you can defend.
           </Typography>
         </Stack>
       </Container>
