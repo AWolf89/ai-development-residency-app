@@ -26,6 +26,8 @@ export interface DecisionRecordRepository {
     userId: string;
     decisionRecordId: string;
     fileId: string | null;
+    /** Optional supporting span (page/section/char range) the link cites (ADR-0022 §5.2). */
+    location?: string | null;
   }): Promise<void>;
   /**
    * Ensure a claim backs this record (ADR-0022): create a `claims` row and the
@@ -44,6 +46,8 @@ export type SaveDecisionRecordParams = {
   input: unknown;
   /** Optional supporting artifact to link (AC4). */
   fileId?: string | null;
+  /** Optional supporting passage/location for that artifact (ADR-0022 §5.2). */
+  location?: string | null;
   /** When present, update that existing record instead of inserting (edit). */
   recordId?: string | null;
   /** Optional project this record belongs to (ADR-0019). */
@@ -82,6 +86,7 @@ export async function saveDecisionRecord(
     userId: params.userId,
     decisionRecordId: recordId,
     fileId: params.fileId ?? null,
+    location: params.location ?? null,
   });
 
   // Ensure the record has a backing claim (ADR-0022) — idempotent, so an edit of an existing

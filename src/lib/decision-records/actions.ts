@@ -53,9 +53,12 @@ export async function saveDecisionRecordAction(
     source: field(formData, "source"),
     category: field(formData, "category"),
     isMetric: field(formData, "is_metric"),
+    contribution: field(formData, "contribution"),
+    attributionNote: field(formData, "attribution_note"),
   };
 
   const fileId = field(formData, "file_id") || null;
+  const location = field(formData, "location") || null;
   const recordId = field(formData, "record_id") || null;
   const projectId = field(formData, "project_id") || null;
 
@@ -67,6 +70,7 @@ export async function saveDecisionRecordAction(
       userId: user.id,
       input,
       fileId,
+      location,
       recordId,
       projectId,
     });

@@ -17,6 +17,7 @@
  */
 import { z } from "zod";
 import { CLAIM_CATEGORIES, type ClaimCategory } from "@/lib/claims/types";
+import { CONTRIBUTIONS, type Contribution } from "@/lib/provenance/types";
 
 /** The two provenance labels AC2 allows. Mirrors the DB CHECK constraint. */
 export const DECISION_SOURCES = ["artifact", "self_reported"] as const;
@@ -34,6 +35,13 @@ export type DecisionRecordInput = {
   category?: ClaimCategory;
   /** User mark that this claim is a self-reported metric with no file (ADR-0015). */
   isMetric: boolean;
+  /**
+   * Attribution — who did the work (ADR-0022 §5.2). Omitted = unspecified; never defaulted to
+   * "individual" so team/project work is not presented as a solo accomplishment.
+   */
+  contribution?: Contribution;
+  /** Optional free-text qualifier for the contribution. */
+  attributionNote?: string;
 };
 
 export type ValidationResult =
@@ -57,6 +65,13 @@ const optionalCategory = z.preprocess(
   z.enum(CLAIM_CATEGORIES).optional()
 );
 
+// Attribution is optional: a blank value stays `undefined` (unspecified) — never "individual".
+const optionalContribution = z.preprocess(
+  (value) =>
+    typeof value === "string" && value.length > 0 ? value : undefined,
+  z.enum(CONTRIBUTIONS).optional()
+);
+
 // The metric flag arrives from the form as "true"/"false" (or a checkbox "on").
 const booleanFlag = z.preprocess(
   (value) =>
@@ -74,6 +89,8 @@ const schema = z.object({
   source: z.enum(DECISION_SOURCES),
   category: optionalCategory,
   isMetric: booleanFlag,
+  contribution: optionalContribution,
+  attributionNote: optionalText,
 });
 
 // User-facing message for the first field that fails, keyed by field path.
