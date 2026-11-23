@@ -46,7 +46,8 @@ Judge agreement: **not checked** (no model run yet). On the first run, label ~20
 
 1. `OPENROUTER_API_KEY`, `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and
    `OPENROUTER_BASE_URL=https://openrouter.ai/api/v1` exported in the shell (keys live in `.env.local`).
-2. **Node ≥ 22.22** (promptfoo 0.124.1 requires it; this machine is 22.20) and `npm install` to pull promptfoo.
+2. **Node ≥ 22.22** (promptfoo 0.124.1 requires it; this machine is 22.20); install promptfoo on demand
+   with `npm install --save-dev --save-exact promptfoo@0.124.1` (kept out of the committed lockfile due to its size).
 3. A **yes to spend** (the run calls models).
 4. Confirm the judge model id (`google/gemini-2.5-flash` — a different family than our Claude chat models).
 

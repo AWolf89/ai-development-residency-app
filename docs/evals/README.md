@@ -22,8 +22,10 @@ Two layers:
 
 ## Run (model layer)
 
-Prereqs: **Node ≥ 22.22**, `npm install` (pulls promptfoo), and these env vars exported
-(keys are in `.env.local`, never committed):
+Prereqs: **Node ≥ 22.22**; install promptfoo on demand with
+`npm install --save-dev --save-exact promptfoo@0.124.1` (kept OUT of the committed lockfile because of
+its very large transitive tree and the Node-version floor — the paid run is gated anyway); and these
+env vars exported (keys are in `.env.local`, never committed):
 
 ```
 OPENROUTER_API_KEY=...

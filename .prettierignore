@@ -19,5 +19,9 @@ data/reference/
 # This protects the guardrail specs in .claude/rules/ and the ADRs in docs/adr/.
 *.md
 
+# Eval harness (vendored dev tooling from the ai-evals skill; kept verbatim, not restyled).
+evals/
+promptfooconfig.yaml
+
 # Generated
 next-env.d.ts
