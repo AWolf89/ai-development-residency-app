@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: accepted
 date: 2026-11-22
 decision-makers: Amanda Wolf
 ---
@@ -185,6 +185,6 @@ and the HITL-gate and FSM patterns of
 [ADR-0013](0013-model-the-reasoning-interview-as-an-explicit-fsm.md) /
 [ADR-0016](0016-model-the-reviewer-agent-check-as-a-grounded-fsm-quality-gate.md). Honours
 [ADR-0005](0005-defer-ai-agent-features-to-later-weeks-for-the-week-3-releas.md): no new AI
-path is introduced by this decision. Status `proposed` pending the user's "approved".
+path is introduced by this decision. Accepted 2026-11-23.
 Revisit when Phase-1 migrations are authored, or if the fan-out proves unneeded (in which
 case Option A's enrichment would be the fallback).
