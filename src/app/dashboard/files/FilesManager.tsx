@@ -29,6 +29,7 @@ import {
 import type { FileView } from "@/lib/files/mappers";
 import type { FileTagView } from "@/lib/file-analysis/queries";
 import FileAnalyzeDialog from "./FileAnalyzeDialog";
+import ProposeRecordsDialog from "./ProposeRecordsDialog";
 
 const BUCKET = "user-files";
 
@@ -289,6 +290,25 @@ export default function FilesManager({
                           disabled={uploading}
                           onSaved={(name) => {
                             setNotice(`Saved tags for “${name}”.`);
+                            router.refresh();
+                          }}
+                        />
+                        <ProposeRecordsDialog
+                          fileId={file.id}
+                          fileName={file.name}
+                          disabled={uploading}
+                          onSaved={({ fileName, projectId, records }) => {
+                            const parts: string[] = [];
+                            if (projectId) parts.push("a project");
+                            if (records > 0)
+                              parts.push(
+                                `${records} record${records === 1 ? "" : "s"}`
+                              );
+                            const what =
+                              parts.length > 0
+                                ? parts.join(" and ")
+                                : "nothing";
+                            setNotice(`Saved ${what} from “${fileName}”.`);
                             router.refresh();
                           }}
                         />
