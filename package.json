@@ -20,6 +20,7 @@
     "test:investigation": "tsx --conditions=react-server tests/investigation/mock-investigation.test.mts",
     "test:reviewer": "tsx --conditions=react-server tests/reviewer/mock-reviewer.test.mts",
     "test:claims": "tsx --conditions=react-server tests/claims/mock-claims.test.mts",
+    "test:proposal": "tsx --conditions=react-server tests/file-analysis/mock-proposal.test.mts",
     "llm:check": "python3 tools/llm/check_llm_usage.py",
     "llm:models": "python3 tools/llm/check_models.py",
     "reference:import": "tsx scripts/import-reference-data.ts",
