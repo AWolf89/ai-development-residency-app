@@ -32,3 +32,4 @@ This folder records the important technical decisions for this project: what we 
 | [0020](0020-analyze-uploaded-files-into-grounded-framework-tags-with-a-clarification-fsm.md) | Analyze uploaded files into grounded framework tags with a human-in-the-loop clarification FSM | proposed |
 | [0021](0021-anchor-the-cdm-interview-to-a-user-corrected-project-timeline.md) | Anchor the CDM interview to a user-corrected project timeline, with a budget-neutral conclusion→redirect branch | proposed |
 | [0022](0022-split-the-evidence-record-from-the-claim-and-define-the-clai.md) | Split the evidence record from the claim and define the claim lifecycle | accepted |
+| [0023](0023-reconcile-new-uploads-against-existing-evidence-and-store-co.md) | Reconcile new uploads against existing evidence and store conflicts in a dedicated table | accepted |

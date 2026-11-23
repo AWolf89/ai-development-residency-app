@@ -30,6 +30,7 @@ import type { FileView } from "@/lib/files/mappers";
 import type { FileTagView } from "@/lib/file-analysis/queries";
 import FileAnalyzeDialog from "./FileAnalyzeDialog";
 import ProposeRecordsDialog from "./ProposeRecordsDialog";
+import ReconcileDialog from "./ReconcileDialog";
 
 const BUCKET = "user-files";
 
@@ -309,6 +310,19 @@ export default function FilesManager({
                                 ? parts.join(" and ")
                                 : "nothing";
                             setNotice(`Saved ${what} from “${fileName}”.`);
+                            router.refresh();
+                          }}
+                        />
+                        <ReconcileDialog
+                          fileId={file.id}
+                          fileName={file.name}
+                          disabled={uploading}
+                          onSaved={({ fileName, saved }) => {
+                            setNotice(
+                              saved > 0
+                                ? `Saved ${saved} reconciliation decision${saved === 1 ? "" : "s"} for “${fileName}”.`
+                                : `No decisions saved for “${fileName}”.`
+                            );
                             router.refresh();
                           }}
                         />
