@@ -27,3 +27,8 @@ This folder records the important technical decisions for this project: what we 
 | [0015](0015-model-a-claim-as-a-projection-over-decision-records.md) | Model a claim as a projection over decision records, not a new table | proposed |
 | [0016](0016-model-the-reviewer-agent-check-as-a-grounded-fsm-quality-gate.md) | Model the Reviewer Agent Check as a grounded TypeScript FSM quality gate with a human-in-the-loop accept | proposed |
 | [0017](0017-model-the-evidence-investigation-agent-as-a-bounded-react-retrieval-fsm.md) | Model the Evidence Investigation Agent as a bounded ReAct retrieval FSM with a human-in-the-loop save gate | proposed |
+| [0018](0018-model-learning-moment-capture-as-a-standalone-record-with-kinds.md) | Model Learning Moment Capture as a standalone record with kinds, not an interview extension | proposed |
+| [0019](0019-add-projects-as-a-cross-cutting-organising-entity-and-file-detail-hub.md) | Add Projects as a cross-cutting organising entity and a file-detail hub | proposed |
+| [0020](0020-analyze-uploaded-files-into-grounded-framework-tags-with-a-clarification-fsm.md) | Analyze uploaded files into grounded framework tags with a human-in-the-loop clarification FSM | proposed |
+| [0021](0021-anchor-the-cdm-interview-to-a-user-corrected-project-timeline.md) | Anchor the CDM interview to a user-corrected project timeline, with a budget-neutral conclusion→redirect branch | proposed |
+| [0022](0022-split-the-evidence-record-from-the-claim-and-define-the-clai.md) | Split the evidence record from the claim and define the claim lifecycle | proposed |
