@@ -27,7 +27,10 @@
     "rag:eval": "python3 tools/rag/eval_retrieval.py --questions tests/rag/retrieval_questions.json --out docs/rag/retrieval-report.md",
     "test:a11y": "playwright test",
     "a11y:report": "python3 tools/a11y/summarize_axe.py --dir a11y-results/axe --out docs/accessibility/axe-report.md",
-    "a11y:contrast": "python3 tools/a11y/check_contrast.py a11y-contrast.json"
+    "a11y:contrast": "python3 tools/a11y/check_contrast.py a11y-contrast.json",
+    "eval:build": "python3 tools/evals/build_promptfoo_tests.py --cases evals/chat/cases.jsonl --out evals/chat/tests.generated.json --min-per-category 0",
+    "eval:run": "npm run eval:build && PROMPTFOO_DISABLE_TELEMETRY=1 promptfoo eval -c promptfooconfig.yaml -o evals/results/latest.json",
+    "eval:report": "python3 tools/evals/summarize_run.py evals/results/latest.json --min-pass 0.9 --out docs/evals/latest.md"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -60,6 +63,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "prettier": "^3.9.10",
+    "promptfoo": "0.124.1",
     "supabase": "2.122.1",
     "tsx": "^4.23.15",
     "typescript": "^5",

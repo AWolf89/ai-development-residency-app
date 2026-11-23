@@ -1,0 +1,21 @@
+# Answer-quality evals for the career chatbot (ai-evals skill).
+description: Career chatbot answer quality
+prompts:
+  - "{{question}}"
+providers:
+  - id: file://evals/chat/provider.mjs
+    label: career-chat-app
+defaultTest:
+  options:
+    # Judge: a different model family than the chatbot, called through OpenRouter with privacy routing.
+    provider:
+      id: openai:chat:google/gemini-2.5-flash
+      config:
+        apiBaseUrl: "{{env.OPENROUTER_BASE_URL}}"
+        apiKey: "{{env.OPENROUTER_API_KEY}}"
+        temperature: 0
+        passthrough:
+          provider: { data_collection: deny, zdr: true }
+tests: file://evals/chat/tests.generated.json
+evaluateOptions:
+  maxConcurrency: 2

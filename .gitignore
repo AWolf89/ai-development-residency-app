@@ -13,6 +13,11 @@
 # testing
 /coverage
 
+# evals (generated / run artifacts; cases + harness ARE committed)
+/evals/chat/tests.generated.json
+/evals/results
+/.promptfoo
+
 # O*NET source files (large, licensed) — provided locally by the developer,
 # never committed. The Skills & Practices Framework data IS committed (CC BY 4.0).
 /data/reference/onet/*
