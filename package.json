@@ -30,7 +30,11 @@
     "a11y:contrast": "python3 tools/a11y/check_contrast.py a11y-contrast.json",
     "eval:build": "python3 tools/evals/build_promptfoo_tests.py --cases evals/chat/cases.jsonl --out evals/chat/tests.generated.json --min-per-category 0",
     "eval:run": "npm run eval:build && PROMPTFOO_DISABLE_TELEMETRY=1 promptfoo eval -c promptfooconfig.yaml -o evals/results/latest.json",
-    "eval:report": "python3 tools/evals/summarize_run.py evals/results/latest.json --min-pass 0.9 --out docs/evals/latest.md"
+    "eval:report": "python3 tools/evals/summarize_run.py evals/results/latest.json --min-pass 0.9 --out docs/evals/latest.md",
+    "eval:agents:build": "python3 tools/evals/build_agent_tests.py --cases evals/agents/cases.jsonl --fixtures evals/agents/fixtures.json --out evals/agents/tests.generated.json",
+    "eval:agents:selftest": "tsx tools/evals/agents_selftest.mts",
+    "eval:agents": "npm run eval:agents:build && PROMPTFOO_DISABLE_TELEMETRY=1 promptfoo eval -c promptfooconfig.agents.yaml -o evals/results/agents.json",
+    "eval:agents:report": "python3 tools/evals/summarize_run.py evals/results/agents.json --min-pass 0.9 --out docs/evals/agents-latest.md"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",

@@ -23,14 +23,32 @@ These already encode several of the proposal's §13 behaviours as regression ass
 downgrade of ungrounded overstatement (Tests 1/3/8), *"no-evidence requirement short-circuits to
 unknown"* (Test 10), and the HITL invariant *"nothing saved during the pass"* across all agents.
 
-## Checks (model behaviour — golden set authored, run pending)
+## Checks (model behaviour — runners built, paid run pending)
 
 The ten §13 scenarios are authored in [`evals/agents/cases.jsonl`](../../evals/agents/cases.jsonl),
-each traced to the offline test that already guards its logic and to the agent suite that will run it
+each traced to the offline test that already guards its logic and to the agent runner that exercises it
 against the live model. A career-chatbot answer set is in
 [`evals/chat/cases.jsonl`](../../evals/chat/cases.jsonl) (unanswerable / out-of-scope / injection,
 incl. the pressure-to-exaggerate cases for Test 8). Run instructions and the per-test plan are in
 [`README.md`](README.md).
+
+**Model-level runners are now built and verified offline** (the deferred half of the gate). Nine of the
+ten §13 scenarios are runnable against the live model — reviewer (Tests 1, 3, 4, 8), file-analysis
+(Tests 2, 5, 9), interview (Test 6), gap (Test 10); Test 7 (cross-document reconciliation) stays PENDING
+until the Phase 2 reconciliation feature. Each runner calls the **real** prompt module via the gateway
+(`runStructured`) plus the real pure grounding — not a copy — over the synthetic Jordan Lee fixtures
+(`evals/agents/fixtures.json`, AC5: no real user data). Verified free, with no model call:
+
+| Step | Result |
+|---|---|
+| `eval:agents:build` (golden set + fixtures → tests) | **9 tests** (reviewer 4, file-analysis 3, interview 1, gap 1); Test 7 pending |
+| `eval:agents:selftest` (renders every real prompt with its fixture) | **9/9 runners wired** |
+| code checks (`checks.mjs`, unit-exercised) | grounding / no-invented-citation / attribution / short-circuit **pass** |
+| full deterministic net (`npm test`) | **729 passed**, unchanged (no agent code touched) |
+
+What remains before the model-level numbers exist is the **paid run itself**, still gated (see "Waiting
+on you"): the harness is complete, but the live-model pass rates, cost/latency, and judge-agreement
+figures below are produced only by `npm run eval:agents && npm run eval:agents:report`.
 
 ## Cost and speed
 
@@ -51,6 +69,9 @@ Judge agreement: **not checked** (no model run yet). On the first run, label ~20
 3. A **yes to spend** (the run calls models).
 4. Confirm the judge model id (`google/gemini-2.5-flash` — a different family than our Claude chat models).
 
-Once those are set: `npm run eval:run && npm run eval:report` writes `docs/evals/latest.md`. That is the
-candidate every future agent change is compared against (`tools/evals/compare_runs.py`); ship only with
-no regressions vs this baseline.
+Once those are set, the agent reasoning baseline is `npm run eval:agents && npm run eval:agents:report`
+(writes `docs/evals/agents-latest.md`); the chat baseline is `npm run eval:run && npm run eval:report`
+(writes `docs/evals/latest.md`). Those are the candidates every future agent/prompt/model change is
+compared against (`tools/evals/compare_runs.py`); ship only with no regressions vs this baseline. On the
+first agents run, check judge agreement (`tools/evals/judge_agreement.py`, ≥ 80%) before trusting the
+grader scores.

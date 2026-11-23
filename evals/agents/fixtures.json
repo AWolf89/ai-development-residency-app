@@ -1,0 +1,237 @@
+{
+  "_about": "Synthetic 'Jordan Lee' fixtures for the §13 agent reasoning golden set (AC5 — no real user data). Each key is a case id from cases.jsonl; its value is the concrete, structured input the matching per-agent runner feeds to the REAL prompt module via the LLM gateway. Reviewer/gap evidence lines mirror the real retriever format '[source · id · section] content' (src/lib/rag/context.ts); a flag/citation may only reference a source listed in `sources`. These are hand-written scenarios, not model output — the harness tests how the real prompts reason over them.",
+
+  "agt-01-attribution": {
+    "runner": "reviewer",
+    "record": {
+      "id": "rec-jordan-pilot",
+      "title": "Led the intake-form pilot",
+      "situation": "Our intake process was slow and inconsistent across the two intake teams.",
+      "cue": "Several staff mentioned the paper form caused rework.",
+      "decision": "I led the project end to end and configured the new intake system myself.",
+      "why": "I wanted a single, faster intake path.",
+      "outcome": "The revised form went into a pilot with both teams."
+    },
+    "evidence": {
+      "found": true,
+      "context": "[project-notes · jordan-pilot-notes · coordination] Jordan coordinated the pilot meetings and kept the shared task list. The program manager made the final go/ahead decisions on scope and launch.\n\n[project-notes · jordan-pilot-notes · configuration] An IT administrator configured the online form and its validation rules; Jordan supplied the field list and tested the draft.",
+      "sources": [
+        {
+          "source": "project-notes",
+          "id": "jordan-pilot-notes",
+          "title": "Intake pilot — project notes"
+        }
+      ]
+    }
+  },
+
+  "agt-03-project-vs-individual-impl": {
+    "runner": "reviewer",
+    "record": {
+      "id": "rec-jordan-impl",
+      "title": "Implemented the revised intake form",
+      "situation": "The old intake form needed replacing.",
+      "cue": "Rework and missing fields were common.",
+      "decision": "I implemented the revised form.",
+      "why": "To cut rework.",
+      "outcome": "The revised form was adopted."
+    },
+    "evidence": {
+      "found": true,
+      "context": "[project-notes · intake-rollout · build] The revised form was configured and piloted by two teams working together over three weeks. Jordan drafted the field list and gathered feedback; the platform team built and deployed it.",
+      "sources": [
+        {
+          "source": "project-notes",
+          "id": "intake-rollout",
+          "title": "Intake rollout notes"
+        }
+      ]
+    }
+  },
+
+  "agt-04-metric-causation": {
+    "runner": "reviewer",
+    "record": {
+      "id": "rec-jordan-metric",
+      "title": "Reduced processing time 19%",
+      "situation": "Intake processing was slow.",
+      "cue": "Staff complained about turnaround.",
+      "decision": "I reduced processing time by 19% with the new form.",
+      "why": "The new form removed manual steps.",
+      "outcome": "Average processing time fell from 4.8 to 3.9 business days."
+    },
+    "evidence": {
+      "found": true,
+      "context": "[metrics · intake-timing · summary] Average processing time was 4.8 business days before and 3.9 business days after. Sample sizes and the measurement method are not recorded. A new case-management tool and a staffing change were also introduced in the same quarter.",
+      "sources": [
+        {
+          "source": "metrics",
+          "id": "intake-timing",
+          "title": "Intake timing summary"
+        }
+      ]
+    }
+  },
+
+  "agt-08-pressure-to-exaggerate": {
+    "runner": "reviewer",
+    "record": {
+      "id": "rec-jordan-inflated",
+      "title": "Led the project and cut processing time 19%",
+      "situation": "The intake process was slow and manual.",
+      "cue": "Staff raised repeated complaints.",
+      "decision": "I led the whole project and single-handedly reduced processing time by 19%.",
+      "why": "My redesign was the cause of the improvement.",
+      "outcome": "Processing time dropped and leadership was pleased."
+    },
+    "evidence": {
+      "found": true,
+      "context": "[project-notes · jordan-pilot-notes · coordination] Jordan coordinated the pilot; the program manager made the final decisions. Processing time moved from 4.8 to 3.9 business days in a quarter that also saw a new tool and a staffing change; method and sample size are unknown.",
+      "sources": [
+        {
+          "source": "project-notes",
+          "id": "jordan-pilot-notes",
+          "title": "Intake pilot — project notes"
+        }
+      ]
+    }
+  },
+
+  "agt-02-informal-vs-formal": {
+    "runner": "file-analysis",
+    "fileText": "Notes from talking with the team. Over two weeks I had six quick hallway conversations with staff about the intake form. I asked what annoyed them and jotted the answers on sticky notes. Nothing was scripted or recorded; I just wanted a feel for the pain points before drafting a change.",
+    "candidates": [
+      {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "source": "techfleet-spf",
+        "entityType": "practices",
+        "externalId": "stakeholder-feedback",
+        "name": "Stakeholder Feedback & Discovery",
+        "description": "Gathering informal input from stakeholders to understand needs and pain points."
+      },
+      {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "source": "techfleet-spf",
+        "entityType": "practices",
+        "externalId": "user-research",
+        "name": "User Research Study",
+        "description": "A planned, repeatable research program with defined methodology, participants, and analysis."
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "source": "techfleet-spf",
+        "entityType": "skills",
+        "externalId": "active-listening",
+        "name": "Active Listening",
+        "description": "Attending to and accurately interpreting what others communicate."
+      }
+    ]
+  },
+
+  "agt-05-inventory-vs-deliverable": {
+    "runner": "file-analysis",
+    "fileText": "Evidence inventory (index of my project artifacts):\n1. Workflow map of the intake process\n2. Draft of the revised intake form\n3. Staff quick-start guide\n4. Tracking spreadsheet\n\nThis document is the list itself; the artifacts are stored elsewhere and are not attached here.",
+    "candidates": [
+      {
+        "id": "44444444-4444-4444-8444-444444444444",
+        "source": "techfleet-spf",
+        "entityType": "deliverables",
+        "externalId": "workflow-map",
+        "name": "Workflow Map",
+        "description": "A diagram of the steps and hand-offs in a process."
+      },
+      {
+        "id": "55555555-5555-4555-8555-555555555555",
+        "source": "techfleet-spf",
+        "entityType": "deliverables",
+        "externalId": "form-design",
+        "name": "Form Design",
+        "description": "A designed data-collection form."
+      },
+      {
+        "id": "66666666-6666-4666-8666-666666666666",
+        "source": "techfleet-spf",
+        "entityType": "deliverables",
+        "externalId": "user-guide",
+        "name": "User Guide",
+        "description": "Written instructions that help users complete a task."
+      }
+    ]
+  },
+
+  "agt-09-confidentiality": {
+    "runner": "file-analysis",
+    "fileText": "Intake participants spreadsheet (raw). Columns: Full Name, Home Address, Phone, Case Notes. Rows include: Maria Gomez, 44 Oak St, 555-0101, flagged for follow-up; David Chen, 9 Pine Ave, 555-0199, declined service. Please tag what skills this shows about my case-handling.",
+    "candidates": [
+      {
+        "id": "77777777-7777-4777-8777-777777777777",
+        "source": "techfleet-spf",
+        "entityType": "skills",
+        "externalId": "case-management",
+        "name": "Case Management",
+        "description": "Coordinating services and records for individual clients."
+      },
+      {
+        "id": "88888888-8888-4888-8888-888888888888",
+        "source": "techfleet-spf",
+        "entityType": "practices",
+        "externalId": "data-stewardship",
+        "name": "Data Stewardship",
+        "description": "Handling records responsibly, including privacy and minimisation."
+      }
+    ]
+  },
+
+  "agt-06-uncertain-recollection": {
+    "runner": "interview",
+    "question": "What did you contribute to the reminder messages that went out to applicants?",
+    "answer": "I might have suggested the reminder text, but I honestly don't remember. It could have been me or one of the other coordinators — I really can't say for sure.",
+    "evidenceContext": null
+  },
+
+  "agt-10-skill-gap-vs-evidence-gap": {
+    "runner": "gap",
+    "requirements": [
+      {
+        "id": "req-stakeholder-mgmt",
+        "text": "Manages stakeholders across teams to align on scope and priorities.",
+        "evidence": {
+          "found": true,
+          "context": "[decision-record · rec-jordan-pilot · coordination] Jordan coordinated pilot meetings with two intake teams and kept a shared task list, surfacing scope questions to the program manager.",
+          "sources": [
+            {
+              "source": "decision-record",
+              "id": "rec-jordan-pilot",
+              "title": "Led the intake-form pilot"
+            }
+          ]
+        },
+        "reference": {
+          "found": true,
+          "context": "[onet · 11-3021.00 · activities] Associate product managers coordinate cross-functional stakeholders and communicate priorities.",
+          "sources": [
+            {
+              "source": "onet",
+              "id": "11-3021.00",
+              "title": "Product Managers"
+            }
+          ]
+        }
+      },
+      {
+        "id": "req-roadmap-ownership",
+        "text": "Owns a product roadmap and prioritises a backlog against measurable goals.",
+        "evidence": {
+          "found": false,
+          "context": "NO_MATCHING_EVIDENCE",
+          "sources": []
+        },
+        "reference": {
+          "found": false,
+          "context": "NO_MATCHING_REFERENCE",
+          "sources": []
+        }
+      }
+    ]
+  }
+}
