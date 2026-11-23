@@ -27,6 +27,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Interview", href: "/dashboard/interview" },
   { label: "Learning moments", href: "/dashboard/learning-moments" },
   { label: "Gap check", href: "/dashboard/gap-check" },
+  { label: "Investigations", href: "/dashboard/investigations" },
   { label: "My profile", href: "/dashboard" },
 ];
 
