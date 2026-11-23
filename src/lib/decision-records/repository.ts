@@ -61,5 +61,43 @@ export function createSupabaseDecisionRecordRepository(
         }
       }
     },
+
+    async ensureClaim({ userId, decisionRecordId }) {
+      // Idempotent: if a claim already backs this record, do nothing (RLS scopes the read to
+      // the user's own rows), so an edit never creates a second claim.
+      const { data: existing, error: selectError } = await supabase
+        .from("claim_evidence")
+        .select("id")
+        .eq("decision_record_id", decisionRecordId)
+        .limit(1);
+      if (selectError) {
+        throw new Error(selectError.message);
+      }
+      if (existing && existing.length > 0) {
+        return;
+      }
+
+      // Create the claim at its lifecycle baseline, then link it to the record. The computed
+      // lifecycle (ADR-0022 §3) takes over from there; 'draft' is only the stored baseline.
+      const { data: claim, error: claimError } = await supabase
+        .from("claims")
+        .insert({ user_id: userId, status: "draft" })
+        .select("id")
+        .single();
+      if (claimError) {
+        throw new Error(claimError.message);
+      }
+
+      const { error: linkError } = await supabase
+        .from("claim_evidence")
+        .insert({
+          user_id: userId,
+          claim_id: claim.id as string,
+          decision_record_id: decisionRecordId,
+        });
+      if (linkError) {
+        throw new Error(linkError.message);
+      }
+    },
   };
 }

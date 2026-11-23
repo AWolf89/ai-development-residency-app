@@ -12,6 +12,7 @@ function makeFakeRepo(
     insertRecord: vi.fn(async () => ({ id: "new-record-id" })),
     updateRecord: vi.fn(async () => {}),
     setEvidenceLink: vi.fn(async () => {}),
+    ensureClaim: vi.fn(async () => {}),
     ...overrides,
   };
 }
@@ -50,6 +51,11 @@ describe("saveDecisionRecord", () => {
       decisionRecordId: "new-record-id",
       fileId: "file-abc",
     });
+    // A backing claim is created for the saved record (ADR-0022).
+    expect(repo.ensureClaim).toHaveBeenCalledWith({
+      userId,
+      decisionRecordId: "new-record-id",
+    });
   });
 
   it("clears the file link when no file is chosen", async () => {
@@ -83,6 +89,7 @@ describe("saveDecisionRecord", () => {
     expect(repo.insertRecord).not.toHaveBeenCalled();
     expect(repo.updateRecord).not.toHaveBeenCalled();
     expect(repo.setEvidenceLink).not.toHaveBeenCalled();
+    expect(repo.ensureClaim).not.toHaveBeenCalled();
   });
 
   it("updates an existing record and re-syncs its link (idempotent edit)", async () => {
