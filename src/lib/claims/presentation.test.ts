@@ -14,11 +14,13 @@ import type { Claim } from "./types";
 function claim(overrides: Partial<Claim> = {}): Claim {
   return {
     id: "c1",
+    claimId: "claim-1",
     title: "A claim",
     decision: null,
     category: "delivery",
     isMetric: false,
     status: "recollection",
+    lifecycle: "needs_investigation",
     sourceFileIds: [],
     sourceCount: 0,
     createdAt: "2026-11-01T00:00:00Z",

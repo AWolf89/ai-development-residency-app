@@ -27,6 +27,16 @@ export interface DecisionRecordRepository {
     decisionRecordId: string;
     fileId: string | null;
   }): Promise<void>;
+  /**
+   * Ensure a claim backs this record (ADR-0022): create a `claims` row and the
+   * `claim_evidence` link when none exists yet. Idempotent — a record edited after its claim
+   * already exists is left alone — so the one-claim-per-record (1:1) invariant holds and the
+   * /dashboard projection keeps working for records saved after the migration.
+   */
+  ensureClaim(params: {
+    userId: string;
+    decisionRecordId: string;
+  }): Promise<void>;
 }
 
 export type SaveDecisionRecordParams = {
@@ -72,6 +82,13 @@ export async function saveDecisionRecord(
     userId: params.userId,
     decisionRecordId: recordId,
     fileId: params.fileId ?? null,
+  });
+
+  // Ensure the record has a backing claim (ADR-0022) — idempotent, so an edit of an existing
+  // record does not create a second claim.
+  await repo.ensureClaim({
+    userId: params.userId,
+    decisionRecordId: recordId,
   });
 
   return { ok: true, recordId };

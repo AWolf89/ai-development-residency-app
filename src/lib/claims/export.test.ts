@@ -5,11 +5,13 @@ import type { Claim } from "./types";
 function claim(overrides: Partial<Claim> = {}): Claim {
   return {
     id: "c1",
+    claimId: "claim-1",
     title: "Co-led the billing migration",
     decision: "Picked a phased cutover",
     category: "delivery",
     isMetric: false,
     status: "evidence_linked",
+    lifecycle: "supported",
     sourceFileIds: ["f1"],
     sourceCount: 1,
     createdAt: "2026-11-01T00:00:00Z",
