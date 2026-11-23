@@ -46,9 +46,9 @@ describe("computeLifecycleStatus — computed states from a draft baseline", () 
   });
 
   it("is needs_investigation when an open gap stands (even with some evidence)", () => {
-    expect(
-      computeLifecycleStatus("draft", { ...NONE, hasOpenGap: true })
-    ).toBe("needs_investigation");
+    expect(computeLifecycleStatus("draft", { ...NONE, hasOpenGap: true })).toBe(
+      "needs_investigation"
+    );
     expect(
       computeLifecycleStatus("draft", {
         hasSupportingEvidence: true,
@@ -140,6 +140,8 @@ describe("claimLifecycleStateSchema", () => {
     ]) {
       expect(claimLifecycleStateSchema.safeParse(s).success).toBe(true);
     }
-    expect(claimLifecycleStateSchema.safeParse("confirmed").success).toBe(false);
+    expect(claimLifecycleStateSchema.safeParse("confirmed").success).toBe(
+      false
+    );
   });
 });

@@ -122,7 +122,10 @@ const ROWS: ClaimRow[] = [
   const { client } = fakeSupabase(ROWS);
   const claims = await getClaims(client as never, "user-1");
   ok(claims.length === 2, "two claims assembled");
-  ok(claims[0].id === "r1" && claims[1].id === "r2", "record id kept as id, order preserved");
+  ok(
+    claims[0].id === "r1" && claims[1].id === "r2",
+    "record id kept as id, order preserved"
+  );
   ok(
     claims[0].claimId === "c1" && claims[1].claimId === "c2",
     "claim aggregate id exposed separately"
@@ -131,7 +134,10 @@ const ROWS: ClaimRow[] = [
     claims[0].sourceCount === 1 && claims[0].status === "evidence_linked",
     "deduped source → evidence_linked"
   );
-  ok(claims[0].lifecycle === "supported", "linked source → supported lifecycle");
+  ok(
+    claims[0].lifecycle === "supported",
+    "linked source → supported lifecycle"
+  );
   ok(
     claims[0].history.map((h) => h.versionNumber).join(",") === "2,1",
     "history newest version first"

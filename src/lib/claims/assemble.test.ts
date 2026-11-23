@@ -38,7 +38,9 @@ function claimRow(
 
 describe("toClaim", () => {
   it("keeps the record id as id and exposes the claim id separately", () => {
-    const claim = toClaim(claimRow(record({ id: "rec-9" }), { id: "claim-9" }))!;
+    const claim = toClaim(
+      claimRow(record({ id: "rec-9" }), { id: "claim-9" })
+    )!;
     expect(claim.id).toBe("rec-9");
     expect(claim.claimId).toBe("claim-9");
   });
@@ -101,7 +103,9 @@ describe("toClaim", () => {
   });
 
   it("maps an unknown or null category to null", () => {
-    expect(toClaim(claimRow(record({ category: "nope" })))!.category).toBeNull();
+    expect(
+      toClaim(claimRow(record({ category: "nope" })))!.category
+    ).toBeNull();
     expect(toClaim(claimRow(record({ category: null })))!.category).toBeNull();
     expect(toClaim(claimRow(record({ category: "technical" })))!.category).toBe(
       "technical"
