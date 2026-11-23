@@ -6,6 +6,13 @@ This is the net that pins the four agents' current reasoning **before** any evol
 (Phases 1–4) touches them. It has two layers: the deterministic logic baseline (runs now, offline)
 and the model-behaviour golden set (needs an OpenRouter key; first paid run pending).
 
+> **Re-verified 2026-11-22 on `main` after Phase 1** (claim model + structured provenance). The
+> deterministic net is **green**: 729 vitest unit tests (up from 693 — the +36 are Phase 1's new
+> `claims`/`provenance` tests, not agent-logic changes) and 112 agent-mock checks (reviewer 23,
+> interview 53, investigation 26, gap 10), unchanged. Phase 1 was additive schema work and did **not**
+> touch any agent prompt or reducer, so the agent-reasoning baseline below still holds. This is the
+> gate's first regression re-run across a merged change (AC3) and it passed.
+
 ## Run (deterministic logic — offline, captured)
 
 All green on the branch tip, no models called (mocked LLM + pure reducers):
