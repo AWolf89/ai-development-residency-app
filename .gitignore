@@ -15,6 +15,7 @@
 
 # evals (generated / run artifacts; cases + harness ARE committed)
 /evals/chat/tests.generated.json
+/evals/agents/tests.generated.json
 /evals/results
 /.promptfoo
 

@@ -22,6 +22,7 @@ data/reference/
 # Eval harness (vendored dev tooling from the ai-evals skill; kept verbatim, not restyled).
 evals/
 promptfooconfig.yaml
+promptfooconfig.agents.yaml
 
 # Generated
 next-env.d.ts

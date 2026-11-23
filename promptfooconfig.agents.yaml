@@ -1,0 +1,26 @@
+# Agent reasoning evals — the four FSM agents' §13 golden set (ai-evals skill). Sibling of
+# promptfooconfig.yaml (the chat suite): promptfoo is one provider-suite per config, so each suite
+# is its own file with the SAME cross-family judge. The provider dispatches each case to its
+# per-agent runner (evals/agents/{reviewer,file-analysis,interview,gap}.mts) by the case's `agent`
+# var; the runner calls the REAL prompt + gateway + grounding. Build the tests first with
+# `npm run eval:agents:build` (free). Run order and per-test plan: docs/evals/README.md §13.
+description: Agent reasoning (§13 golden set)
+prompts:
+  - "{{case_id}}" # the provider reads vars (agent, case_id); the rendered prompt is unused
+providers:
+  - id: file://evals/agents/provider.mjs
+    label: agents-app
+defaultTest:
+  options:
+    # Judge: a different model family than the agents' Claude models, via OpenRouter privacy routing.
+    provider:
+      id: openai:chat:google/gemini-2.5-flash
+      config:
+        apiBaseUrl: "{{env.OPENROUTER_BASE_URL}}"
+        apiKey: "{{env.OPENROUTER_API_KEY}}"
+        temperature: 0
+        passthrough:
+          provider: { data_collection: deny, zdr: true }
+tests: file://evals/agents/tests.generated.json
+evaluateOptions:
+  maxConcurrency: 2

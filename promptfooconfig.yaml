@@ -1,4 +1,6 @@
 # Answer-quality evals for the career chatbot (ai-evals skill).
+# The agent reasoning suite (the four FSM agents' §13 golden set) is a sibling config,
+# promptfooconfig.agents.yaml — promptfoo is one provider-suite per file — run with `npm run eval:agents`.
 description: Career chatbot answer quality
 prompts:
   - "{{question}}"
