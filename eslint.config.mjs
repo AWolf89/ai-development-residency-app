@@ -51,6 +51,9 @@ const eslintConfig = defineConfig([
     "playwright-report/**",
     "test-results/**",
     "a11y-results/**",
+    // Eval harness + dev tooling (vendored scripts; linted by neither ESLint nor Prettier):
+    "evals/**",
+    "tools/**",
   ]),
 ]);
 
