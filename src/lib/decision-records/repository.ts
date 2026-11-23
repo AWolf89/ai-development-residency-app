@@ -39,7 +39,7 @@ export function createSupabaseDecisionRecordRepository(
       }
     },
 
-    async setEvidenceLink({ userId, decisionRecordId, fileId }) {
+    async setEvidenceLink({ userId, decisionRecordId, fileId, location }) {
       // Replace any existing link for this record (RLS scopes the delete to the
       // user's own rows) so editing never leaves duplicates.
       const { error: deleteError } = await supabase
@@ -55,6 +55,7 @@ export function createSupabaseDecisionRecordRepository(
           user_id: userId,
           decision_record_id: decisionRecordId,
           file_id: fileId,
+          location: location ?? null,
         });
         if (error) {
           throw new Error(error.message);

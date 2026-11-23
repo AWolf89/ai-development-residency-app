@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import { createClient } from "@/lib/supabase/server";
 import {
   getDecisionRecordById,
-  getLinkedFileId,
+  getLinkedEvidence,
   getUserFiles,
 } from "@/lib/decision-records/queries";
 import { getProjects } from "@/lib/projects/queries";
@@ -33,9 +33,9 @@ export default async function EditDecisionRecordPage({
     notFound();
   }
 
-  const [files, linkedFileId, projectRows] = await Promise.all([
+  const [files, linkedEvidence, projectRows] = await Promise.all([
     getUserFiles(supabase, user.id),
-    getLinkedFileId(supabase, id),
+    getLinkedEvidence(supabase, id),
     getProjects(supabase, user.id),
   ]);
   const projects = projectRows.map((p) => ({ id: p.id, name: p.name }));
@@ -65,7 +65,10 @@ export default async function EditDecisionRecordPage({
             source: record.source ?? "",
             category: record.category ?? "",
             isMetric: record.is_metric ?? false,
-            fileId: linkedFileId ?? "",
+            contribution: record.contribution ?? "",
+            attributionNote: record.attribution_note ?? "",
+            fileId: linkedEvidence.fileId ?? "",
+            location: linkedEvidence.location ?? "",
             projectId: record.project_id ?? "",
           }}
         />

@@ -33,8 +33,25 @@ describe("mapDecisionRecordToRow", () => {
       status: "confirmed",
       category: "technical",
       is_metric: false,
+      contribution: null,
+      attribution_note: null,
       project_id: null,
     });
+  });
+
+  it("carries attribution (contribution + note), defaulting to null when unset", () => {
+    expect(mapDecisionRecordToRow(input, userId).contribution).toBeNull();
+    expect(mapDecisionRecordToRow(input, userId).attribution_note).toBeNull();
+    const row = mapDecisionRecordToRow(
+      {
+        ...input,
+        contribution: "team",
+        attributionNote: "I owned the schema.",
+      },
+      userId
+    );
+    expect(row.contribution).toBe("team");
+    expect(row.attribution_note).toBe("I owned the schema.");
   });
 
   it("carries an assigned project id, or null when none is given", () => {

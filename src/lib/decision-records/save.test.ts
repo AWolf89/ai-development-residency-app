@@ -34,6 +34,7 @@ describe("saveDecisionRecord", () => {
       userId,
       input: validInput,
       fileId: "file-abc",
+      location: "p. 3, Results",
     });
 
     expect(result).toEqual({ ok: true, recordId: "new-record-id" });
@@ -46,10 +47,12 @@ describe("saveDecisionRecord", () => {
         status: "confirmed",
       })
     );
+    // The supporting file and its passage/location are linked together (ADR-0022 §5.2).
     expect(repo.setEvidenceLink).toHaveBeenCalledWith({
       userId,
       decisionRecordId: "new-record-id",
       fileId: "file-abc",
+      location: "p. 3, Results",
     });
     // A backing claim is created for the saved record (ADR-0022).
     expect(repo.ensureClaim).toHaveBeenCalledWith({
@@ -71,6 +74,7 @@ describe("saveDecisionRecord", () => {
       userId,
       decisionRecordId: "new-record-id",
       fileId: null,
+      location: null,
     });
   });
 
@@ -111,6 +115,7 @@ describe("saveDecisionRecord", () => {
       userId,
       decisionRecordId: "existing-id",
       fileId: "file-xyz",
+      location: null,
     });
   });
 });

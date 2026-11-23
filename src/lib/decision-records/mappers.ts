@@ -8,6 +8,7 @@
  */
 import type { DecisionRecordInput, DecisionSource } from "./validation";
 import type { ClaimCategory } from "@/lib/claims/types";
+import type { Contribution } from "@/lib/provenance/types";
 
 export type DecisionRecordRow = {
   user_id: string;
@@ -21,6 +22,9 @@ export type DecisionRecordRow = {
   status: string;
   category: ClaimCategory | null;
   is_metric: boolean;
+  /** Attribution — who did the work (ADR-0022 §5.2); null = unspecified. */
+  contribution: Contribution | null;
+  attribution_note: string | null;
   project_id: string | null;
 };
 
@@ -41,6 +45,8 @@ export function mapDecisionRecordToRow(
     status: "confirmed",
     category: input.category ?? null,
     is_metric: input.isMetric,
+    contribution: input.contribution ?? null,
+    attribution_note: input.attributionNote ?? null,
     project_id: projectId,
   };
 }

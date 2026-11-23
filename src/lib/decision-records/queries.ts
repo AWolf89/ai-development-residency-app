@@ -9,6 +9,7 @@
 import type { createClient } from "@/lib/supabase/server";
 import type { DecisionSource } from "./validation";
 import type { ClaimCategory } from "@/lib/claims/types";
+import type { Contribution } from "@/lib/provenance/types";
 
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -23,6 +24,8 @@ export type DecisionRecordListItem = {
   source: DecisionSource | null;
   category: ClaimCategory | null;
   is_metric: boolean;
+  contribution: Contribution | null;
+  attribution_note: string | null;
   project_id: string | null;
   created_at: string;
 };
@@ -33,7 +36,7 @@ export type UserFile = {
 };
 
 const RECORD_COLUMNS =
-  "id, title, situation, cue, decision, why, outcome, source, category, is_metric, project_id, created_at";
+  "id, title, situation, cue, decision, why, outcome, source, category, is_metric, contribution, attribution_note, project_id, created_at";
 
 /** All of the signed-in user's decision records, newest first (AC5). */
 export async function getDecisionRecords(
@@ -64,18 +67,21 @@ export async function getDecisionRecordById(
   return (data as DecisionRecordListItem | null) ?? null;
 }
 
-/** The file currently linked to a record, if any (for the edit form). */
-export async function getLinkedFileId(
+/** The evidence currently linked to a record (file + supporting span), if any, for the edit form. */
+export async function getLinkedEvidence(
   supabase: ServerClient,
   decisionRecordId: string
-): Promise<string | null> {
+): Promise<{ fileId: string | null; location: string | null }> {
   const { data } = await supabase
     .from("evidence_links")
-    .select("file_id")
+    .select("file_id, location")
     .eq("decision_record_id", decisionRecordId)
     .maybeSingle();
 
-  return (data?.file_id as string | null) ?? null;
+  return {
+    fileId: (data?.file_id as string | null) ?? null,
+    location: (data?.location as string | null) ?? null,
+  };
 }
 
 /** The signed-in user's uploaded files, for the supporting-artifact picker. */

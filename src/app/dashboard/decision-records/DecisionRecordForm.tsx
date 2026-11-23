@@ -23,6 +23,11 @@ import {
 import type { UserFile } from "@/lib/decision-records/queries";
 import { CLAIM_CATEGORIES, type ClaimCategory } from "@/lib/claims/types";
 import { categoryLabel } from "@/lib/claims/presentation";
+import {
+  CONTRIBUTIONS,
+  contributionLabel,
+  type Contribution,
+} from "@/lib/provenance/types";
 import ProjectPicker, { type ProjectOption } from "@/components/ProjectPicker";
 
 export type DecisionRecordFormValues = {
@@ -36,7 +41,10 @@ export type DecisionRecordFormValues = {
   source: DecisionSource | "";
   category: ClaimCategory | "";
   isMetric: boolean;
+  contribution: Contribution | "";
+  attributionNote: string;
   fileId: string;
+  location: string;
   projectId: string;
 };
 
@@ -61,7 +69,10 @@ const EMPTY: DecisionRecordFormValues = {
   source: "",
   category: "",
   isMetric: false,
+  contribution: "",
+  attributionNote: "",
   fileId: "",
+  location: "",
   projectId: "",
 };
 
@@ -100,6 +111,8 @@ export default function DecisionRecordForm({
       source: values.source,
       category: values.category,
       isMetric: values.isMetric,
+      contribution: values.contribution,
+      attributionNote: values.attributionNote,
     });
     if (!result.ok) {
       setClientError(result.error);
@@ -142,8 +155,20 @@ export default function DecisionRecordForm({
       value: values.isMetric ? "Yes" : "No",
     },
     {
+      label: "Attribution",
+      value: contributionLabel(values.contribution || null),
+    },
+    {
+      label: "Attribution note",
+      value: values.attributionNote || "—",
+    },
+    {
       label: "Supporting artifact",
       value: files.find((f) => f.id === values.fileId)?.file_name ?? "None",
+    },
+    {
+      label: "Supporting passage",
+      value: values.location || "—",
     },
     {
       label: "Project",
@@ -166,7 +191,14 @@ export default function DecisionRecordForm({
       <input type="hidden" name="source" value={values.source} />
       <input type="hidden" name="category" value={values.category} />
       <input type="hidden" name="is_metric" value={String(values.isMetric)} />
+      <input type="hidden" name="contribution" value={values.contribution} />
+      <input
+        type="hidden"
+        name="attribution_note"
+        value={values.attributionNote}
+      />
       <input type="hidden" name="file_id" value={values.fileId} />
+      <input type="hidden" name="location" value={values.location} />
       <input type="hidden" name="project_id" value={values.projectId} />
 
       {state?.error ? (
@@ -297,6 +329,40 @@ export default function DecisionRecordForm({
           />
 
           <FormControl fullWidth>
+            <InputLabel id="dr-contribution-label">
+              Attribution (optional)
+            </InputLabel>
+            <Select
+              labelId="dr-contribution-label"
+              label="Attribution (optional)"
+              value={values.contribution}
+              onChange={(e) =>
+                setValues((v) => ({
+                  ...v,
+                  contribution: e.target.value as Contribution | "",
+                }))
+              }
+            >
+              <MenuItem value="">
+                <em>Unspecified</em>
+              </MenuItem>
+              {CONTRIBUTIONS.map((c) => (
+                <MenuItem key={c} value={c}>
+                  {contributionLabel(c)}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <TextField
+            label="Attribution note (optional)"
+            value={values.attributionNote}
+            onChange={set("attributionNote")}
+            fullWidth
+            helperText="Who did what, e.g. “I owned the schema; the team built the UI.”"
+          />
+
+          <FormControl fullWidth>
             <InputLabel id="dr-file-label">
               Supporting artifact (optional)
             </InputLabel>
@@ -318,6 +384,14 @@ export default function DecisionRecordForm({
               ))}
             </Select>
           </FormControl>
+
+          <TextField
+            label="Supporting passage / location (optional)"
+            value={values.location}
+            onChange={set("location")}
+            fullWidth
+            helperText="Where in the artifact this is backed, e.g. “p. 3, Results” or a quoted line."
+          />
 
           <ProjectPicker
             label="Project (optional)"
