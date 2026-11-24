@@ -18,7 +18,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import StatusChip from "@/components/StatusChip";
-import { verdictToBucket } from "@/lib/gap/presentation";
+import { verdictToCategory } from "@/lib/gap/presentation";
 import { MODEL_VERDICTS, type ModelVerdict } from "@/lib/gap/types";
 import {
   startInvestigationAction,
@@ -135,7 +135,7 @@ export default function InvestigateDialog({
     });
   }
 
-  const bucket = finding ? verdictToBucket(finding.verdict) : null;
+  const category = finding ? verdictToCategory(finding.verdict) : null;
 
   return (
     <>
@@ -236,8 +236,8 @@ export default function InvestigateDialog({
                     >
                       Proposed verdict
                     </Typography>
-                    {bucket ? (
-                      <StatusChip label={bucket.label} tone={bucket.tone} />
+                    {category ? (
+                      <StatusChip label={category.label} tone={category.tone} />
                     ) : null}
                   </Box>
 

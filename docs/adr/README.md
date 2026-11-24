@@ -21,7 +21,7 @@ This folder records the important technical decisions for this project: what we 
 | [0009](0009-use-openrouter-and-the-vercel-ai-sdk-as-the-model-gateway.md) | Use OpenRouter and the Vercel AI SDK as the model gateway | proposed |
 | [0010](0010-use-pgvector-for-closed-rag-retrieval-over-reference-and-evidence.md) | Use pgvector for closed-RAG retrieval over the reference corpus and user evidence | proposed |
 | [0011](0011-classify-evidence-against-role-requirements-with-a-grounded-four-verdict-schema.md) | Classify evidence against role requirements with a grounded four-verdict schema | proposed |
-| [0012](0012-present-gap-verdicts-in-three-buckets-computed-on-demand.md) | Present gap verdicts in three buckets, computed on demand | proposed |
+| [0012](0012-present-gap-verdicts-in-three-buckets-computed-on-demand.md) | Present gap verdicts in three buckets, computed on demand | superseded by ADR-0024 |
 | [0013](0013-model-the-reasoning-interview-as-an-explicit-fsm.md) | Model the Reasoning Interview as an explicit TypeScript FSM with a human-in-the-loop save gate | proposed |
 | [0014](0014-persist-interview-sessions-and-turns-for-decision-records.md) | Persist interview sessions and turns that feed decision records | proposed |
 | [0015](0015-model-a-claim-as-a-projection-over-decision-records.md) | Model a claim as a projection over decision records, not a new table | proposed |
@@ -33,3 +33,4 @@ This folder records the important technical decisions for this project: what we 
 | [0021](0021-anchor-the-cdm-interview-to-a-user-corrected-project-timeline.md) | Anchor the CDM interview to a user-corrected project timeline, with a budget-neutral conclusion→redirect branch | proposed |
 | [0022](0022-split-the-evidence-record-from-the-claim-and-define-the-clai.md) | Split the evidence record from the claim and define the claim lifecycle | accepted |
 | [0023](0023-reconcile-new-uploads-against-existing-evidence-and-store-co.md) | Reconcile new uploads against existing evidence and store conflicts in a dedicated table | accepted |
+| [0024](0024-present-gap-verdicts-in-four-categories-and-route-unverified.md) | Present gap verdicts in four evidence categories and route unverified to investigation | accepted |

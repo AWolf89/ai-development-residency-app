@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import type { Citation } from "@/lib/rag/types";
 import {
-  verdictToBucket,
+  verdictToCategory,
   summarize,
   evidenceCell,
   selectActiveRole,
@@ -13,60 +13,65 @@ const cite = (title: string): Citation => ({
   title,
 });
 
-describe("verdictToBucket", () => {
-  it("maps met to Supported (green)", () => {
-    expect(verdictToBucket("met")).toEqual({
-      bucket: "supported",
-      label: "Supported",
+describe("verdictToCategory (ADR-0024: one category per verdict)", () => {
+  it("maps met to Demonstrated (green)", () => {
+    expect(verdictToCategory("met")).toEqual({
+      category: "demonstrated",
+      label: "Demonstrated",
       tone: "green",
     });
   });
 
-  it("maps partial to Supported too (it still rests on real evidence)", () => {
-    expect(verdictToBucket("partial").bucket).toBe("supported");
-    expect(verdictToBucket("partial").tone).toBe("green");
+  it("gives partial its own Partially demonstrated category (blue), not Supported", () => {
+    expect(verdictToCategory("partial")).toEqual({
+      category: "partial",
+      label: "Partially demonstrated",
+      tone: "blue",
+    });
   });
 
-  it("maps unknown to Undocumented (orange)", () => {
-    expect(verdictToBucket("unknown")).toEqual({
-      bucket: "undocumented",
-      label: "Undocumented",
+  it("maps unknown to Unverified (orange) — no evidence retrieved, not a failure", () => {
+    expect(verdictToCategory("unknown")).toEqual({
+      category: "unverified",
+      label: "Unverified",
       tone: "orange",
     });
   });
 
-  it("maps gap to True gap (gray)", () => {
-    expect(verdictToBucket("gap")).toEqual({
-      bucket: "true_gap",
-      label: "True gap",
+  it("maps gap to Development opportunity (gray), never a hiring verdict", () => {
+    expect(verdictToCategory("gap")).toEqual({
+      category: "development",
+      label: "Development opportunity",
       tone: "gray",
     });
   });
 });
 
-describe("summarize", () => {
-  it("counts each bucket, met+partial folding into supported", () => {
+describe("summarize (four categories)", () => {
+  it("counts each category separately — partial no longer folds into demonstrated", () => {
     const s = summarize(["met", "partial", "met", "unknown", "gap"]);
     expect(s).toEqual({
-      supported: 3,
-      undocumented: 1,
-      trueGaps: 1,
+      demonstrated: 2,
+      partiallyDemonstrated: 1,
+      unverified: 1,
+      development: 1,
       assessed: 5,
     });
   });
 
   it("returns all-zero for an empty list", () => {
     expect(summarize([])).toEqual({
-      supported: 0,
-      undocumented: 0,
-      trueGaps: 0,
+      demonstrated: 0,
+      partiallyDemonstrated: 0,
+      unverified: 0,
+      development: 0,
       assessed: 0,
     });
   });
 });
 
 describe("evidenceCell", () => {
-  it("shows the primary citation and source count for a met verdict", () => {
+  it("shows the primary citation and source count for a demonstrated (met) verdict", () => {
     const cell = evidenceCell({
       verdict: "met",
       citations: [cite("Billing migration"), cite("Perf review")],
@@ -90,7 +95,7 @@ describe("evidenceCell", () => {
     });
   });
 
-  it("prefixes 'Partial:' for a partial verdict", () => {
+  it("shows the citation for a partial verdict (the category label carries the nuance)", () => {
     const cell = evidenceCell({
       verdict: "partial",
       citations: [cite("Co-lead note")],
@@ -98,11 +103,11 @@ describe("evidenceCell", () => {
     });
     expect(cell).toEqual({
       kind: "evidence",
-      text: "Partial: Co-lead note · 1 source",
+      text: "Co-lead note · 1 source",
     });
   });
 
-  it("falls back to a generic line when a supported verdict has no citations", () => {
+  it("falls back to a generic line when a cited verdict has no citations", () => {
     const cell = evidenceCell({
       verdict: "met",
       citations: [],
@@ -114,7 +119,7 @@ describe("evidenceCell", () => {
     });
   });
 
-  it("returns an actionable next step pointing at files for undocumented", () => {
+  it("routes an unverified (unknown) requirement to investigation, not a file upload or course (AC2)", () => {
     const cell = evidenceCell({
       verdict: "unknown",
       citations: [],
@@ -122,12 +127,14 @@ describe("evidenceCell", () => {
     });
     expect(cell.kind).toBe("next_step");
     if (cell.kind === "next_step") {
-      expect(cell.href).toBe("/dashboard/files");
+      expect(cell.href).toBe("/dashboard/investigations");
       expect(cell.text.length).toBeGreaterThan(0);
+      // Must not push the user toward training/qualification.
+      expect(cell.text.toLowerCase()).not.toMatch(/course|training|qualif/);
     }
   });
 
-  it("shows the rationale for a true gap", () => {
+  it("shows the rationale for a development opportunity (gap)", () => {
     const cell = evidenceCell({
       verdict: "gap",
       citations: [],
@@ -139,7 +146,7 @@ describe("evidenceCell", () => {
     });
   });
 
-  it("falls back to a standard line when a true gap has no rationale", () => {
+  it("falls back to a standard line when a development opportunity has no rationale", () => {
     const cell = evidenceCell({
       verdict: "gap",
       citations: [],
