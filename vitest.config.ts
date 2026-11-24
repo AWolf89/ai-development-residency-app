@@ -91,6 +91,11 @@ export default defineConfig({
         "src/lib/file-analysis/pass.ts",
         "src/lib/llm/prompts/file-analysis.ts",
         "src/lib/llm/prompts/image-description.ts",
+        // Thin orchestration layer — pure FSM core + types only (the server-only orchestrator
+        // boundary in orchestrator/orchestrator.ts is covered by tests/orchestrator/ via tsx, and
+        // queries.ts/actions.ts are logic-free Humble Objects — ADR-0026).
+        "src/lib/orchestrator/types.ts",
+        "src/lib/orchestrator/machine.ts",
       ],
       thresholds: {
         lines: 80,
