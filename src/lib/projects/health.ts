@@ -107,3 +107,40 @@ export type ProjectCardData = {
   sourceCount: number;
   health: ProjectHealth;
 };
+
+/** A single claim's health badge, derived from its lifecycle (same buckets as the health bar). */
+export type ClaimBadge = "supported" | "needs_evidence" | "challenged";
+
+/**
+ * Map a claim's lifecycle to its badge. supported/user_confirmed ⇒ Supported;
+ * draft/needs_investigation ⇒ Needs evidence; challenged ⇒ Challenged. (Archived claims never
+ * reach here — the active profile excludes them, ADR-0022 §3 — so this defaults to needs_evidence.)
+ */
+export function claimBadge(lifecycle: ClaimLifecycleState): ClaimBadge {
+  switch (lifecycle) {
+    case "supported":
+    case "user_confirmed":
+      return "supported";
+    case "challenged":
+      return "challenged";
+    default:
+      return "needs_evidence";
+  }
+}
+
+export type ClaimBadgeMeta = { label: string; color: string; fg: string };
+
+/** Display meta for each claim badge (challenged is the filled danger chip from the mock). */
+export const CLAIM_BADGE_META: Record<ClaimBadge, ClaimBadgeMeta> = {
+  supported: {
+    label: "Supported",
+    color: brand.tag.green.bg,
+    fg: brand.tag.green.fg,
+  },
+  needs_evidence: {
+    label: "Needs evidence",
+    color: brand.tag.orange.bg,
+    fg: brand.tag.orange.fg,
+  },
+  challenged: { label: "Challenged", color: brand.danger, fg: "#ffffff" },
+};
