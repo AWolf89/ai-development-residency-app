@@ -38,6 +38,8 @@ export type SaveLearningMomentParams = {
   recordId?: string | null;
   /** Optional project this moment belongs to (ADR-0019). */
   projectId?: string | null;
+  /** The interview a proposed moment came from (ADR-0025); null/absent for manual entry. */
+  interviewSessionId?: string | null;
 };
 
 export type SaveResult =
@@ -55,7 +57,8 @@ export async function saveLearningMoment(
   const row = mapLearningMomentToRow(
     validated.value,
     params.userId,
-    params.projectId ?? null
+    params.projectId ?? null,
+    params.interviewSessionId ?? null
   );
 
   let recordId: string;

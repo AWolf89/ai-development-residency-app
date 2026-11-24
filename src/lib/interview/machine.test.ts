@@ -63,7 +63,20 @@ const toParaphrasing: InterviewEvent[] = [
 ];
 const toConfirmation: InterviewEvent[] = [
   ...toParaphrasing,
-  { type: "paraphrase_ready", draft: DRAFT },
+  { type: "paraphrase_ready", draft: DRAFT, learningMoment: null },
+];
+
+const LM_DRAFT = {
+  kind: "pivot" as const,
+  context: "Mid-migration the dual-write kept drifting.",
+  shift: "Switched from dual-write to a read-repair backfill.",
+  result: "Cutover drift dropped to zero.",
+  duration: null,
+};
+// A paraphrase that also carried a detected learning moment (ADR-0025).
+const toConfirmationWithLM: InterviewEvent[] = [
+  ...toParaphrasing,
+  { type: "paraphrase_ready", draft: DRAFT, learningMoment: LM_DRAFT },
 ];
 
 describe("createInterview", () => {
@@ -240,6 +253,103 @@ describe("confirmation branches other than accept", () => {
   });
 });
 
+describe("learning-moment gate (ADR-0025)", () => {
+  it("carries a detected learning moment onto awaiting_confirmation and into saving", () => {
+    const confirming = drive(toConfirmationWithLM);
+    expect(confirming.status).toBe("awaiting_confirmation");
+    if (confirming.status === "awaiting_confirmation") {
+      expect(confirming.learningMoment).toEqual(LM_DRAFT);
+    }
+    const saving = reduce(confirming, { type: "accept" });
+    expect(saving.status).toBe("saving");
+    if (saving.status === "saving") {
+      expect(saving.learningMoment).toEqual(LM_DRAFT);
+    }
+  });
+
+  it("saving --saved--> awaiting_learning_moment when a moment was detected", () => {
+    const s = drive(
+      [...toConfirmationWithLM, { type: "accept" }, { type: "saved" }],
+      {
+        questionBudget: 6,
+      }
+    );
+    expect(s.status).toBe("awaiting_learning_moment");
+    if (s.status === "awaiting_learning_moment") {
+      expect(s.learningMoment).toEqual(LM_DRAFT);
+    }
+  });
+
+  it("saving --saved--> asking (skips the gate) when NO moment was detected (AC4)", () => {
+    const s = drive(
+      [...toConfirmation, { type: "accept" }, { type: "saved" }],
+      {
+        questionBudget: 6,
+      }
+    );
+    expect(s.status).toBe("asking");
+  });
+
+  it("awaiting_learning_moment --accept--> saving_learning_moment (the ONLY way in)", () => {
+    const s = drive(
+      [
+        ...toConfirmationWithLM,
+        { type: "accept" },
+        { type: "saved" },
+        { type: "accept" },
+      ],
+      { questionBudget: 6 }
+    );
+    expect(s.status).toBe("saving_learning_moment");
+    if (s.status === "saving_learning_moment") {
+      expect(s.learningMoment).toEqual(LM_DRAFT);
+    }
+  });
+
+  it("awaiting_learning_moment --reject--> asking, nothing saved", () => {
+    const s = drive(
+      [
+        ...toConfirmationWithLM,
+        { type: "accept" },
+        { type: "saved" },
+        { type: "reject" },
+      ],
+      { questionBudget: 6 }
+    );
+    expect(s.status).toBe("asking");
+  });
+
+  it("awaiting_learning_moment --pause--> paused (reason: user)", () => {
+    const s = drive([
+      ...toConfirmationWithLM,
+      { type: "accept" },
+      { type: "saved" },
+      { type: "pause" },
+    ]);
+    expect(s.status).toBe("paused");
+    if (s.status === "paused") expect(s.reason).toBe("user");
+  });
+
+  it("saving_learning_moment --saved--> asking (gate complete)", () => {
+    const s = drive(
+      [
+        ...toConfirmationWithLM,
+        { type: "accept" },
+        { type: "saved" },
+        { type: "accept" },
+        { type: "saved" },
+      ],
+      { questionBudget: 6 }
+    );
+    expect(s.status).toBe("asking");
+  });
+
+  it("editing a record drops its learning moment (re-detected next answer)", () => {
+    const s = drive([...toConfirmationWithLM, { type: "edit" }]);
+    expect(s.status).toBe("awaiting_answer");
+  });
+});
+
 describe("skip and pause / resume", () => {
   it("awaiting_answer --answer_skipped--> asking", () => {
     const s = drive([...toAwaitingAnswer, { type: "answer_skipped" }], {
@@ -365,7 +475,11 @@ describe("circuit breaker", () => {
     let s: InterviewState = drive(toParaphrasing);
     s = reduce(s, { type: "llm_failed" });
     expect(s.failureCount).toBe(1);
-    s = reduce(s, { type: "paraphrase_ready", draft: DRAFT });
+    s = reduce(s, {
+      type: "paraphrase_ready",
+      draft: DRAFT,
+      learningMoment: null,
+    });
     expect(s.failureCount).toBe(0);
   });
 });
@@ -375,9 +489,13 @@ describe("invalid events are ignored (no throw, state unchanged)", () => {
     const planning = createInterview();
     expect(reduce(planning, { type: "accept" })).toBe(planning);
     const asking = drive([{ type: "plan_ready" }]);
-    expect(reduce(asking, { type: "paraphrase_ready", draft: DRAFT })).toBe(
-      asking
-    );
+    expect(
+      reduce(asking, {
+        type: "paraphrase_ready",
+        draft: DRAFT,
+        learningMoment: null,
+      })
+    ).toBe(asking);
   });
 
   it("complete is terminal — every event leaves it unchanged", () => {
@@ -410,6 +528,17 @@ describe("HITL isolation invariant (R1 §3.4)", () => {
     paraphrasing: drive(toParaphrasing),
     awaiting_confirmation: drive(toConfirmation),
     saving: drive([...toConfirmation, { type: "accept" }]),
+    awaiting_learning_moment: drive([
+      ...toConfirmationWithLM,
+      { type: "accept" },
+      { type: "saved" },
+    ]),
+    saving_learning_moment: drive([
+      ...toConfirmationWithLM,
+      { type: "accept" },
+      { type: "saved" },
+      { type: "accept" },
+    ]),
     paused: drive([...toAwaitingAnswer, { type: "pause" }]),
     complete: drive(
       [...toConfirmation, { type: "accept" }, { type: "saved" }],
@@ -428,7 +557,7 @@ describe("HITL isolation invariant (R1 §3.4)", () => {
     { type: "answer_submitted", answer: "something" },
     { type: "answer_skipped" },
     { type: "pause" },
-    { type: "paraphrase_ready", draft: DRAFT },
+    { type: "paraphrase_ready", draft: DRAFT, learningMoment: null },
     { type: "llm_failed" },
     { type: "accept" },
     { type: "edit" },
@@ -447,6 +576,21 @@ describe("HITL isolation invariant (R1 §3.4)", () => {
           next.status === "saving" && state.status !== "saving";
         if (enteredSaving) {
           expect(status).toBe("awaiting_confirmation");
+          expect(event.type).toBe("accept");
+        }
+      }
+    }
+  });
+
+  it("saving_learning_moment is reachable ONLY from awaiting_learning_moment on accept (ADR-0025)", () => {
+    for (const [status, state] of Object.entries(states)) {
+      for (const event of allEvents) {
+        const next = reduce(state, event);
+        const entered =
+          next.status === "saving_learning_moment" &&
+          state.status !== "saving_learning_moment";
+        if (entered) {
+          expect(status).toBe("awaiting_learning_moment");
           expect(event.type).toBe("accept");
         }
       }

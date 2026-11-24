@@ -23,6 +23,7 @@ describe("mapLearningMomentToRow", () => {
       duration: "5 days",
       target_role_id: "33333333-3333-3333-3333-333333333333",
       project_id: null,
+      interview_session_id: null,
     });
   });
 
@@ -36,6 +37,21 @@ describe("mapLearningMomentToRow", () => {
     expect(mapLearningMomentToRow(input, userId, "p-7").project_id).toBe("p-7");
     expect(mapLearningMomentToRow(input, userId, null).project_id).toBeNull();
     expect(mapLearningMomentToRow(input, userId).project_id).toBeNull();
+  });
+
+  it("carries an interview session id (ADR-0025), or null for manual entry", () => {
+    const input: LearningMomentInput = {
+      kind: "pivot",
+      context: "c",
+      shift: "s",
+      result: "r",
+    };
+    expect(
+      mapLearningMomentToRow(input, userId, null, "sess-1").interview_session_id
+    ).toBe("sess-1");
+    expect(
+      mapLearningMomentToRow(input, userId).interview_session_id
+    ).toBeNull();
   });
 
   it("stores omitted optional fields as NULL", () => {

@@ -7,6 +7,7 @@
  */
 import { z } from "zod";
 import { timelineSchema } from "./timeline";
+import { learningMomentKindSchema } from "@/lib/learning-moments/types";
 
 /** A retrieved source the question was grounded in (shape matches rag `Citation`). */
 export const groundingCitationSchema = z.object({
@@ -50,6 +51,65 @@ export const answerClassificationSchema = z.object({
 });
 export type AnswerClassification = z.infer<typeof answerClassificationSchema>;
 
+/**
+ * A proposed learning moment (ADR-0025) — the learning-moment fields in the user's own words,
+ * detected from an answer. Mirrors the `learning_moments` save shape (ADR-0018): kind/context/
+ * shift/result required, duration nullable (the structured-output contract emits it explicitly).
+ * project/interview linkage is stamped by the orchestrator, never by the model.
+ */
+export const learningMomentDraftSchema = z.object({
+  kind: learningMomentKindSchema,
+  context: z.string().trim().min(1),
+  shift: z.string().trim().min(1),
+  result: z.string().trim().min(1),
+  duration: z.string().trim().min(1).nullable(),
+});
+export type LearningMomentDraft = z.infer<typeof learningMomentDraftSchema>;
+
+/**
+ * The learning-moment detector's output (ADR-0025): is a learning moment present in the answer,
+ * and if so, its fields. `isLearningMoment: false` ⇒ the orchestrator proposes nothing (AC4),
+ * so the fields are nullable and only trusted when the flag is true.
+ */
+export const learningMomentDetectionSchema = z.object({
+  isLearningMoment: z.boolean(),
+  kind: learningMomentKindSchema.nullable(),
+  context: z.string().trim().min(1).nullable(),
+  shift: z.string().trim().min(1).nullable(),
+  result: z.string().trim().min(1).nullable(),
+  duration: z.string().trim().min(1).nullable(),
+});
+export type LearningMomentDetection = z.infer<
+  typeof learningMomentDetectionSchema
+>;
+
+/**
+ * Turn a raw detection into a trusted learning-moment draft (ADR-0025). Returns null unless the
+ * model clearly flagged a learning moment AND every required field is present — a defensive ground
+ * so an incomplete or false signal proposes nothing (AC4). Pure, so the orchestrator and the
+ * model-level eval runner both use it, and it is covered by the boundary tests.
+ */
+export function groundLearningMoment(
+  detection: LearningMomentDetection
+): LearningMomentDraft | null {
+  if (!detection.isLearningMoment) return null;
+  if (
+    !detection.kind ||
+    !detection.context ||
+    !detection.shift ||
+    !detection.result
+  ) {
+    return null;
+  }
+  return {
+    kind: detection.kind,
+    context: detection.context,
+    shift: detection.shift,
+    result: detection.result,
+    duration: detection.duration,
+  };
+}
+
 /** Why an interview is paused: the user asked, or the circuit breaker tripped. */
 export const PAUSED_REASONS = ["user", "circuit_breaker"] as const;
 export const pausedReasonSchema = z.enum(PAUSED_REASONS);
@@ -92,6 +152,9 @@ export const interviewStateSchema = z.discriminatedUnion("status", [
     question: groundedQuestionSchema,
     answer: z.string(),
     draft: cdmDraftSchema,
+    // A learning moment detected from this answer (ADR-0025), or null. Carried so it survives
+    // into the save and the second gate; never saved here.
+    learningMoment: learningMomentDraftSchema.nullable(),
     ...counters,
   }),
   z.object({
@@ -99,6 +162,19 @@ export const interviewStateSchema = z.discriminatedUnion("status", [
     question: groundedQuestionSchema,
     answer: z.string(),
     draft: cdmDraftSchema,
+    learningMoment: learningMomentDraftSchema.nullable(),
+    ...counters,
+  }),
+  // The second HITL gate (ADR-0025): reached only after a record is saved, and only when a
+  // learning moment was detected. `accept` is the sole edge into saving_learning_moment.
+  z.object({
+    status: z.literal("awaiting_learning_moment"),
+    learningMoment: learningMomentDraftSchema,
+    ...counters,
+  }),
+  z.object({
+    status: z.literal("saving_learning_moment"),
+    learningMoment: learningMomentDraftSchema,
     ...counters,
   }),
   z.object({
@@ -120,6 +196,8 @@ export const INTERVIEW_STATUSES = [
   "paraphrasing",
   "awaiting_confirmation",
   "saving",
+  "awaiting_learning_moment",
+  "saving_learning_moment",
   "paused",
   "complete",
 ] as const;
@@ -140,7 +218,12 @@ export const interviewEventSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("answer_submitted"), answer: z.string() }),
   z.object({ type: z.literal("answer_skipped") }),
   z.object({ type: z.literal("pause") }),
-  z.object({ type: z.literal("paraphrase_ready"), draft: cdmDraftSchema }),
+  z.object({
+    type: z.literal("paraphrase_ready"),
+    draft: cdmDraftSchema,
+    // The learning moment detected alongside the paraphrase (ADR-0025), or null for no signal.
+    learningMoment: learningMomentDraftSchema.nullable(),
+  }),
   z.object({ type: z.literal("llm_failed") }),
   z.object({ type: z.literal("accept") }),
   z.object({ type: z.literal("edit") }),

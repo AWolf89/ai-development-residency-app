@@ -249,12 +249,13 @@ describe("interviewStateSchema", () => {
 });
 
 describe("enums", () => {
-  it("lists the ten interview statuses", () => {
+  it("lists the twelve interview statuses", () => {
     expect([...INTERVIEW_STATUSES].sort()).toEqual(
       [
         "asking",
         "awaiting_answer",
         "awaiting_confirmation",
+        "awaiting_learning_moment",
         "awaiting_timeline",
         "complete",
         "drafting_timeline",
@@ -262,6 +263,7 @@ describe("enums", () => {
         "paused",
         "planning",
         "saving",
+        "saving_learning_moment",
       ].sort()
     );
   });

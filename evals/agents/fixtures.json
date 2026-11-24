@@ -1,6 +1,5 @@
 {
   "_about": "Synthetic 'Jordan Lee' fixtures for the §13 agent reasoning golden set (AC5 — no real user data). Each key is a case id from cases.jsonl; its value is the concrete, structured input the matching per-agent runner feeds to the REAL prompt module via the LLM gateway. Reviewer/gap evidence lines mirror the real retriever format '[source · id · section] content' (src/lib/rag/context.ts); a flag/citation may only reference a source listed in `sources`. These are hand-written scenarios, not model output — the harness tests how the real prompts reason over them.",
-
   "agt-01-attribution": {
     "runner": "reviewer",
     "record": {
@@ -24,7 +23,6 @@
       ]
     }
   },
-
   "agt-03-project-vs-individual-impl": {
     "runner": "reviewer",
     "record": {
@@ -48,7 +46,6 @@
       ]
     }
   },
-
   "agt-04-metric-causation": {
     "runner": "reviewer",
     "record": {
@@ -72,7 +69,6 @@
       ]
     }
   },
-
   "agt-08-pressure-to-exaggerate": {
     "runner": "reviewer",
     "record": {
@@ -96,7 +92,6 @@
       ]
     }
   },
-
   "agt-02-informal-vs-formal": {
     "runner": "file-analysis",
     "fileText": "Notes from talking with the team. Over two weeks I had six quick hallway conversations with staff about the intake form. I asked what annoyed them and jotted the answers on sticky notes. Nothing was scripted or recorded; I just wanted a feel for the pain points before drafting a change.",
@@ -127,7 +122,6 @@
       }
     ]
   },
-
   "agt-05-inventory-vs-deliverable": {
     "runner": "file-analysis",
     "fileText": "Evidence inventory (index of my project artifacts):\n1. Workflow map of the intake process\n2. Draft of the revised intake form\n3. Staff quick-start guide\n4. Tracking spreadsheet\n\nThis document is the list itself; the artifacts are stored elsewhere and are not attached here.",
@@ -158,7 +152,6 @@
       }
     ]
   },
-
   "agt-09-confidentiality": {
     "runner": "file-analysis",
     "fileText": "Intake participants spreadsheet (raw). Columns: Full Name, Home Address, Phone, Case Notes. Rows include: Maria Gomez, 44 Oak St, 555-0101, flagged for follow-up; David Chen, 9 Pine Ave, 555-0199, declined service. Please tag what skills this shows about my case-handling.",
@@ -181,14 +174,12 @@
       }
     ]
   },
-
   "agt-06-uncertain-recollection": {
     "runner": "interview",
     "question": "What did you contribute to the reminder messages that went out to applicants?",
     "answer": "I might have suggested the reminder text, but I honestly don't remember. It could have been me or one of the other coordinators — I really can't say for sure.",
     "evidenceContext": null
   },
-
   "agt-10-skill-gap-vs-evidence-gap": {
     "runner": "gap",
     "requirements": [
@@ -233,5 +224,19 @@
         }
       }
     ]
+  },
+  "agt-11-interview-learning-moment": {
+    "runner": "interview",
+    "question": "Walk me through a decision you made during the billing migration.",
+    "answer": "At first I tried a dual-write between the old and new systems, but it kept drifting out of sync and I was spending every morning reconciling rows. About two weeks in I realised dual-write was the wrong approach, so I switched to a read-repair backfill that reconciled lazily on read. After that the drift dropped to zero and I stopped firefighting.",
+    "evidenceContext": null,
+    "expectLearningMoment": true
+  },
+  "agt-12-interview-no-learning-moment": {
+    "runner": "interview",
+    "question": "What did you do on the billing migration?",
+    "answer": "I led the migration of the billing system from the legacy platform to the new usage-based one. I coordinated a team of four and we finished it over two quarters, on schedule.",
+    "evidenceContext": null,
+    "expectLearningMoment": false
   }
 }

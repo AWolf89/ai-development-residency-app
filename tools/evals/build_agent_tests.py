@@ -20,7 +20,7 @@ CHECKS = "file://evals/agents/checks.mjs"
 # §13 build order: test number -> runner. Test 7 is intentionally absent (PENDING, Phase 2).
 TEST_RUNNER = {1: "reviewer", 3: "reviewer", 4: "reviewer", 8: "reviewer",
                2: "file-analysis", 5: "file-analysis", 9: "file-analysis",
-               6: "interview", 10: "gap"}
+               6: "interview", 10: "gap", 11: "interview"}
 PENDING_TESTS = {7}
 
 # Scenario-specific assertion config (the forbidden framing / deferring wording a case turns on).
@@ -33,6 +33,11 @@ DEFER = {
         r"inventory|index|list(ed|ing)?|referenced|not (attached|included|reviewed|present)|stored elsewhere|the artifacts",
     "agt-09-confidentiality":
         r"redact|anonymi|aggregate|de-identif|remove (the )?name|without (the )?name|personal(ly identif)?|confidential|privacy",
+}
+# Interview learning-moment cases (ADR-0025): case_id -> whether a learning moment should be proposed.
+LEARNING_MOMENT = {
+    "agt-11-interview-learning-moment": True,
+    "agt-12-interview-no-learning-moment": False,
 }
 
 
@@ -81,6 +86,9 @@ def extra_vars(case_id, runner, fixture):
             v["forbidden_phrases"] = FORBIDDEN[case_id]
         if case_id in DEFER:
             v["defer_regex"] = DEFER[case_id]
+    elif runner == "interview":
+        if case_id in LEARNING_MOMENT:
+            v["expect_learning_moment"] = LEARNING_MOMENT[case_id]
     return v
 
 
@@ -95,6 +103,8 @@ def asserts_for(runner, case_id, scenario, expect):
             code.append(js("fileAsksOrDefers"))
     elif runner == "interview":
         code = [js("interviewPreservesUncertainty")]
+        if case_id in LEARNING_MOMENT:
+            code.append(js("interviewProposesLearningMoment"))
     else:  # gap
         code = [js("gapNoBinaryVerdict"), js("gapNoEvidenceShortCircuits"), js("gapNoInventedCitation")]
     return [*code, judge(runner, scenario, expect)]

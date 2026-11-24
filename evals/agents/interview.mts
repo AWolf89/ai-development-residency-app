@@ -7,11 +7,15 @@
 // fields, a validation refusal (nothing fabricated). Usage: tsx interview.mts <caseId>.
 import { answerClassify } from "../../src/lib/llm/prompts/answer-classify";
 import { interviewParaphrase } from "../../src/lib/llm/prompts/interview-paraphrase";
+import { learningMomentDetect } from "../../src/lib/llm/prompts/learning-moment-detect";
 import { runStructured } from "../../src/lib/llm/run";
 import {
   answerClassificationSchema,
   cdmDraftSchema,
+  learningMomentDetectionSchema,
+  groundLearningMoment,
   type CdmDraft,
+  type LearningMomentDraft,
 } from "../../src/lib/interview/types";
 import { SELFTEST, emit, loadFixture, makeCostSink } from "./_lib.mjs";
 
@@ -32,6 +36,10 @@ if (SELFTEST) {
     question: fixture.question,
     answer: fixture.answer,
     evidenceContext: fixture.evidenceContext,
+  });
+  learningMomentDetect.render({
+    question: fixture.question,
+    answer: fixture.answer,
   });
   emit({
     agent: "interview",
@@ -78,10 +86,21 @@ if (classification.kind === "conclusion" && classification.redirect) {
   }
 }
 
+// Detect a learning moment from the same answer (ADR-0025), grounded the same way the
+// orchestrator grounds it — null unless the model clearly flagged one and filled the fields (AC4).
+let learningMoment: LearningMomentDraft | null = null;
+const { data: detection } = await runStructured({
+  prompt: learningMomentDetect,
+  input: { question: fixture.question, answer: fixture.answer },
+  schema: learningMomentDetectionSchema,
+  sink,
+});
+learningMoment = groundLearningMoment(detection);
+
 emit({
   agent: "interview",
   caseId,
-  output: { classification, redirect, draft, paraphraseRefused },
+  output: { classification, redirect, draft, paraphraseRefused, learningMoment },
   cost_usd: getCost(),
   latency_ms: Date.now() - started,
 });

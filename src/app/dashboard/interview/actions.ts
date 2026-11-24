@@ -13,6 +13,8 @@ import {
   pauseInterview,
   acceptDraft,
   editDraft,
+  acceptLearningMoment,
+  rejectLearningMoment,
   resumeInterview,
 } from "@/lib/interview/orchestrator";
 import { timelineSchema } from "@/lib/interview/timeline";
@@ -121,6 +123,30 @@ export async function editAction(formData: FormData): Promise<void> {
   if (!sessionId) return;
   const deps = await defaultDeps(userId);
   await editDraft(deps, { sessionId, userId });
+  revalidatePath(PATH);
+}
+
+/** Save the proposed learning moment (ADR-0025) — the only control that writes it. */
+export async function acceptLearningMomentAction(
+  formData: FormData
+): Promise<void> {
+  const userId = await userIdOrRedirect();
+  const sessionId = field(formData, "session_id");
+  if (!sessionId) return;
+  const deps = await defaultDeps(userId);
+  await acceptLearningMoment(deps, { sessionId, userId });
+  revalidatePath(PATH);
+}
+
+/** Dismiss the proposed learning moment (ADR-0025) — nothing is saved. */
+export async function rejectLearningMomentAction(
+  formData: FormData
+): Promise<void> {
+  const userId = await userIdOrRedirect();
+  const sessionId = field(formData, "session_id");
+  if (!sessionId) return;
+  const deps = await defaultDeps(userId);
+  await rejectLearningMoment(deps, { sessionId, userId });
   revalidatePath(PATH);
 }
 

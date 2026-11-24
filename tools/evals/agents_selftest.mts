@@ -13,7 +13,7 @@ const run = promisify(execFile);
 const TEST_RUNNER: Record<number, string> = {
   1: "reviewer", 3: "reviewer", 4: "reviewer", 8: "reviewer",
   2: "file-analysis", 5: "file-analysis", 9: "file-analysis",
-  6: "interview", 10: "gap",
+  6: "interview", 10: "gap", 11: "interview",
 };
 const PENDING = new Set([7]);
 
