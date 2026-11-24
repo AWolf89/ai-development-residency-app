@@ -84,6 +84,12 @@ export type OrchestrationDeps = {
   runners: Record<StepKey, StepRunner>;
   /** The derive-on-read Investigation Queue, surfaced when the flow completes. No queue table. */
   loadQueue: () => Promise<InvestigationItem[]>;
+  /**
+   * Read back the project id the propose step's accept-only save created for a file (null if none).
+   * The orchestrator never saves; it only OBSERVES the agent's own HITL save via `completeStep`, so
+   * it learns the created project id by this read — never by a new reasoning or persistence path.
+   */
+  resolveProjectId: (fileId: string) => Promise<string | null>;
   repo: OrchestrationRepository;
 };
 
@@ -199,16 +205,38 @@ export async function advanceRun(
 }
 
 /**
+ * When the PROPOSE step's save is the one being accepted, read back the project that save created
+ * and record its id on the run, so the later interview step anchors to it (timeline-anchored
+ * Decision-Point Interview, ADR-0021). This is a position-only patch over an existing column — no
+ * new reasoning, no new save path. It fires once (only while `project_id` is still unset) and only
+ * for the propose step; every other accept returns an empty patch.
+ */
+async function projectLinkOnAccept(
+  deps: OrchestrationDeps,
+  row: OrchestrationRunRow,
+  state: OrchestrationState
+): Promise<RunPatch> {
+  const acceptingPropose =
+    state.status === "awaiting_review" && state.cursor === "propose";
+  if (!acceptingPropose || row.project_id !== null) return {};
+  const projectId = await deps.resolveProjectId(row.file_id);
+  return projectId ? { project_id: projectId } : {};
+}
+
+/**
  * Record that the cursor step's own agent HITL save succeeded (the gate fired outside the
  * orchestrator — AC2) and advance to the next step. Ignored unless the step is `awaiting_review`.
+ * On a propose accept it also captures the created project id (`projectLinkOnAccept`).
  */
 export async function completeStep(
   deps: OrchestrationDeps,
   params: { runId: string; userId: string }
 ): Promise<OrchestrationRunResult> {
   const row = await loadOwned(deps, params.runId, params.userId);
-  const next = reduce(rehydrate(row), { type: "step_accepted" });
-  await deps.repo.updateRun(params.runId, toPatch(next));
+  const state = rehydrate(row);
+  const linkPatch = await projectLinkOnAccept(deps, row, state);
+  const next = reduce(state, { type: "step_accepted" });
+  await deps.repo.updateRun(params.runId, { ...linkPatch, ...toPatch(next) });
   return {
     runId: params.runId,
     state: next,
@@ -311,6 +339,26 @@ export async function defaultDeps(userId: string): Promise<OrchestrationDeps> {
       .filter((id): id is string => id !== null);
   }
 
+  /**
+   * The project the propose step's approved save created for this file, newest first (null if the
+   * user approved records without a project, or skipped propose). Found by the project id on the
+   * newest decision record linked to the file — the same evidence_links wiring `linkedRecordIds`
+   * reads — so the orchestrator observes the created project without a new save path.
+   */
+  async function projectForFile(fileId: string): Promise<string | null> {
+    const recordIds = await linkedRecordIds(fileId);
+    if (recordIds.length === 0) return null;
+    const { data } = await supabase
+      .from("decision_records")
+      .select("project_id, created_at")
+      .in("id", recordIds)
+      .not("project_id", "is", null)
+      .order("created_at", { ascending: false })
+      .limit(1);
+    const row = ((data ?? []) as { project_id: string | null }[])[0];
+    return row?.project_id ?? null;
+  }
+
   /** The file's name, used as the interview title. */
   async function fileName(fileId: string): Promise<string> {
     const { data } = await supabase
@@ -329,7 +377,8 @@ export async function defaultDeps(userId: string): Promise<OrchestrationDeps> {
     reconcile: async (run) => ({ payload: await reconcileFile(run.file_id) }),
 
     // Propose a project + evidence records from the file (no write — persisted only on approve).
-    // Records the proposed project id so the interview step can anchor to it.
+    // The created project id is captured later, when the user accepts this step's save
+    // (`projectLinkOnAccept`), so the interview step can anchor to it.
     propose: async (run) => {
       const proposal = await proposeFromFile(run.file_id);
       return { payload: proposal };
@@ -370,6 +419,7 @@ export async function defaultDeps(userId: string): Promise<OrchestrationDeps> {
   return {
     runners,
     loadQueue: async () => buildQueue(await collectSignals(supabase, userId)),
+    resolveProjectId: projectForFile,
     repo,
   };
 }

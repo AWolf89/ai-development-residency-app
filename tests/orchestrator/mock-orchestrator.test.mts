@@ -54,7 +54,10 @@ function fakeRepo() {
 }
 
 /** Build deps whose runners are pure propose stubs. None can save — there is no save in the deps. */
-function fakeDeps(overrides?: Partial<Record<StepKey, StepRunner>>) {
+function fakeDeps(
+  overrides?: Partial<Record<StepKey, StepRunner>>,
+  opts?: { resolveProjectId?: (fileId: string) => Promise<string | null> }
+) {
   const { repo, rows } = fakeRepo();
   const calls: StepKey[] = [];
   let queueLoads = 0;
@@ -83,6 +86,8 @@ function fakeDeps(overrides?: Partial<Record<StepKey, StepRunner>>) {
         },
       ];
     },
+    // By default the propose step created no project, so the interview stays the plain loop.
+    resolveProjectId: opts?.resolveProjectId ?? (async () => null),
     repo,
   };
   return { deps, rows, calls, queueLoads: () => queueLoads };
@@ -253,6 +258,66 @@ async function stepThrough(deps: OrchestrationDeps, runId: string) {
     threw = true;
   }
   ok(threw, "another user's run is refused");
+}
+
+// 10. accepting the propose step captures the approved project id so the interview is timeline-anchored.
+{
+  const seenProjectIds: (string | null)[] = [];
+  const { deps, rows } = fakeDeps(
+    {
+      // Record the project id the orchestrator hands the interview step (null = plain loop).
+      interview: async (run) => {
+        seenProjectIds.push(run.project_id);
+        return {
+          payload: { step: "interview", proposed: true },
+          patch: { interview_session_id: "s-1" },
+        };
+      },
+    },
+    { resolveProjectId: async () => "proj-9" }
+  );
+  const { runId } = await startRun(deps, { userId: USER, fileId: "f1" });
+  await stepThrough(deps, runId); // reconcile → done
+  ok(
+    rows.get(runId)?.project_id === null,
+    "no project is linked before the propose step is accepted"
+  );
+  await stepThrough(deps, runId); // propose: advance then accept the HITL save
+  ok(
+    rows.get(runId)?.project_id === "proj-9",
+    "accepting the propose step captures the approved project id on the run"
+  );
+  await advanceRun(deps, { runId, userId: USER }); // run the interview step's propose entry point
+  ok(
+    seenProjectIds[0] === "proj-9",
+    "the interview step receives the anchored project id (timeline-anchored, ADR-0021)"
+  );
+}
+
+// 11. accepting a step that created no project leaves project_id null (interview falls back to the plain loop).
+{
+  const seenProjectIds: (string | null)[] = [];
+  const { deps, rows } = fakeDeps(
+    {
+      interview: async (run) => {
+        seenProjectIds.push(run.project_id);
+        return { payload: { step: "interview", proposed: true } };
+      },
+    },
+    { resolveProjectId: async () => null }
+  );
+  const { runId } = await startRun(deps, { userId: USER, fileId: "f1" });
+  await stepThrough(deps, runId); // reconcile → done
+  await stepThrough(deps, runId); // propose accepted, but no project was created
+  ok(
+    rows.get(runId)?.project_id === null,
+    "no project id is captured when the propose step created none"
+  );
+  await advanceRun(deps, { runId, userId: USER });
+  ok(
+    seenProjectIds[0] === null,
+    "the interview step stays the plain loop with no project"
+  );
 }
 
 console.log(`\n${pass} checks passed`);
