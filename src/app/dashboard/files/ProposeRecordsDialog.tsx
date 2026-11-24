@@ -21,6 +21,7 @@ import {
 } from "@/lib/file-analysis/proposal/actions";
 import { contributionLabel } from "@/lib/provenance/types";
 import type {
+  FileProposal,
   ProposalQuestion,
   ProposedProject,
   ProposedRecord,
@@ -37,6 +38,14 @@ type Props = {
     projectId: string | null;
     records: number;
   }) => void;
+  /**
+   * An already-computed proposal (from the orchestrator's `advanceRun`), so the dialog can seed its
+   * review without running a second `proposeRecordsAction` pass. Optional — existing callers omit
+   * it and the dialog fetches its own (MVP 2 Phase 4 flow wizard). Presentation only.
+   */
+  initialProposal?: FileProposal;
+  /** Override the trigger button's text (the flow wizard labels it in context). */
+  triggerLabel?: string;
 };
 
 /**
@@ -54,6 +63,8 @@ export default function ProposeRecordsDialog({
   fileName,
   disabled,
   onSaved,
+  initialProposal,
+  triggerLabel,
 }: Props) {
   const titleId = useId();
 
@@ -124,6 +135,21 @@ export default function ProposeRecordsDialog({
     setAsked([]);
     setPhase("review");
     setOpen(true);
+    // Seed from the orchestrator's already-computed proposal when the flow wizard supplies it, so
+    // the propose entry point runs once, not twice. Mirrors runPass's success branch exactly.
+    if (initialProposal) {
+      if (initialProposal.questions.length > 0) {
+        setProject(initialProposal.project);
+        setRecords(initialProposal.records);
+        setDropped(initialProposal.droppedRecords);
+        setQuestions(initialProposal.questions);
+        setAnswers(initialProposal.questions.map(() => ""));
+        setPhase("questions");
+      } else {
+        applyProposal(initialProposal);
+      }
+      return;
+    }
     runPass();
   }
 
@@ -191,7 +217,7 @@ export default function ProposeRecordsDialog({
         disabled={disabled}
         aria-label={`Propose records from ${fileName}`}
       >
-        Propose records
+        {triggerLabel ?? "Propose records"}
       </Button>
 
       <Dialog

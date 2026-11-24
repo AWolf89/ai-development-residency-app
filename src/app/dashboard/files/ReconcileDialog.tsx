@@ -31,6 +31,14 @@ type Props = {
   fileName: string;
   disabled?: boolean;
   onSaved: (summary: { fileName: string; saved: number }) => void;
+  /**
+   * An already-computed reconciliation (from the orchestrator's `advanceRun`), so the dialog can
+   * seed its review without running a second `reconcileFileAction` pass. Optional — existing
+   * callers omit it and the dialog fetches its own (MVP 2 Phase 4 flow wizard). Presentation only.
+   */
+  initialProposal?: { flags: ReconciliationFlag[]; dropped: number };
+  /** Override the trigger button's text (the flow wizard labels it in context). */
+  triggerLabel?: string;
 };
 
 const KIND_LABEL: Record<ReconciliationKind, string> = {
@@ -52,6 +60,8 @@ export default function ReconcileDialog({
   fileName,
   disabled,
   onSaved,
+  initialProposal,
+  triggerLabel,
 }: Props) {
   const titleId = useId();
 
@@ -71,6 +81,14 @@ export default function ReconcileDialog({
     setDropped(0);
     setPhase("review");
     setOpen(true);
+    // Seed from the orchestrator's already-computed pass when the flow wizard supplies it, so the
+    // propose entry point runs once, not twice. No fetch — the review opens straight away.
+    if (initialProposal) {
+      setFlags(initialProposal.flags);
+      setDropped(initialProposal.dropped);
+      setPhase(initialProposal.flags.length === 0 ? "empty" : "review");
+      return;
+    }
     startLoading(async () => {
       const res = await reconcileFileAction(fileId);
       if (!res.ok) {
@@ -119,7 +137,7 @@ export default function ReconcileDialog({
         disabled={disabled}
         aria-label={`Check ${fileName} for conflicts with your evidence`}
       >
-        Check for conflicts
+        {triggerLabel ?? "Check for conflicts"}
       </Button>
 
       <Dialog

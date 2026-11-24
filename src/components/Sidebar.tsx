@@ -21,6 +21,7 @@ type NavItem = { label: string; href: string | null };
 // Order mirrors the prototype. Wired items link; the rest are future features,
 // shown disabled with a "Soon" marker.
 const NAV_ITEMS: NavItem[] = [
+  { label: "Guided flow", href: "/dashboard/flow" },
   { label: "Upload files", href: "/dashboard/files" },
   { label: "Projects", href: "/dashboard/projects" },
   { label: "Review claims", href: "/dashboard/claims" },
