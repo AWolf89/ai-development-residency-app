@@ -35,3 +35,5 @@ This folder records the important technical decisions for this project: what we 
 | [0023](0023-reconcile-new-uploads-against-existing-evidence-and-store-co.md) | Reconcile new uploads against existing evidence and store conflicts in a dedicated table | accepted |
 | [0024](0024-present-gap-verdicts-in-four-categories-and-route-unverified.md) | Present gap verdicts in four evidence categories and route unverified to investigation | accepted |
 | [0025](0025-propose-learning-moments-from-the-interview-via-a-second-hitl-gate.md) | Propose learning moments from the interview via a second HITL gate | accepted |
+| [0026](0026-compose-the-agents-with-a-thin-supervisor-fsm-over-existing-entry-points.md) | Compose the agents with a thin supervisor FSM over existing entry points | accepted |
+| [0027](0027-simplify-the-dashboard-navigation-into-four-primary-sections.md) | Simplify the dashboard navigation into four primary sections | accepted |
