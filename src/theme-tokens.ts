@@ -18,6 +18,8 @@ export const brand = {
     green: { bg: "#e2efe5", fg: "#2e6b3f" },
     gray: { bg: "#ecebe7", fg: "#5f6675" },
   },
+  /** Semantic danger (an open challenge) — the health bar's "challenged" segment. */
+  danger: "#9f3b32",
 } as const;
 
 export type TagTone = keyof typeof brand.tag;

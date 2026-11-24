@@ -7,7 +7,13 @@
  * the pure `assembleProjectDetail` (tested with canned rows).
  */
 import type { createClient } from "@/lib/supabase/server";
-import type { ProjectRow } from "./mappers";
+import { getClaims } from "@/lib/claims/queries";
+import type { ClaimLifecycleState } from "@/lib/claims/lifecycle";
+import {
+  mapProjectRowToView,
+  type ProjectRow,
+  type ProjectView,
+} from "./mappers";
 import { assembleProjectDetail, type ProjectDetail } from "./detail";
 
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
@@ -27,6 +33,73 @@ export async function getProjects(
     .order("created_at", { ascending: false });
 
   return (data ?? []) as ProjectRow[];
+}
+
+/** One project card's data for the list: the project plus its claim lifecycles and source count. */
+export type ProjectOverview = {
+  project: ProjectView;
+  claimLifecycles: ClaimLifecycleState[];
+  sourceCount: number;
+};
+
+/**
+ * The Projects list (plan §6.2; Figma "Projects"): every project with the claim lifecycles and
+ * linked-file count its health card needs. A read-only aggregation — claims map to a project
+ * through their backing decision record's `project_id` (a claim's `id` is that record's id,
+ * ADR-0022). All selects are RLS-scoped to the owner (AC4); the pure `computeProjectHealth`
+ * turns each `claimLifecycles` into the bar and counts.
+ */
+export async function getProjectsOverview(
+  supabase: ServerClient,
+  userId: string
+): Promise<ProjectOverview[]> {
+  const [projectRows, claims, recordRows, fileRows] = await Promise.all([
+    getProjects(supabase, userId),
+    getClaims(supabase, userId),
+    supabase
+      .from("decision_records")
+      .select("id, project_id")
+      .eq("user_id", userId),
+    supabase.from("files").select("project_id").eq("user_id", userId),
+  ]);
+
+  // record id -> project id (claims hang off their backing decision record).
+  const recordToProject = new Map<string, string>();
+  for (const row of (recordRows.data ?? []) as {
+    id: string;
+    project_id: string | null;
+  }[]) {
+    if (row.project_id) {
+      recordToProject.set(row.id, row.project_id);
+    }
+  }
+
+  const lifecyclesByProject = new Map<string, ClaimLifecycleState[]>();
+  for (const claim of claims) {
+    const projectId = recordToProject.get(claim.id);
+    if (!projectId) {
+      continue;
+    }
+    const list = lifecyclesByProject.get(projectId) ?? [];
+    list.push(claim.lifecycle);
+    lifecyclesByProject.set(projectId, list);
+  }
+
+  const sourcesByProject = new Map<string, number>();
+  for (const row of (fileRows.data ?? []) as { project_id: string | null }[]) {
+    if (row.project_id) {
+      sourcesByProject.set(
+        row.project_id,
+        (sourcesByProject.get(row.project_id) ?? 0) + 1
+      );
+    }
+  }
+
+  return projectRows.map((row) => ({
+    project: mapProjectRowToView(row),
+    claimLifecycles: lifecyclesByProject.get(row.id) ?? [],
+    sourceCount: sourcesByProject.get(row.id) ?? 0,
+  }));
 }
 
 /** One project the user owns, or null. */
