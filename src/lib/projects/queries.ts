@@ -15,6 +15,7 @@ import {
   type ProjectView,
 } from "./mappers";
 import { assembleProjectDetail, type ProjectDetail } from "./detail";
+import { assembleProjectHub, type ProjectHub } from "./hub";
 
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -160,5 +161,68 @@ export async function getProjectWithLinks(
     }[],
     records: (records.data ?? []) as { id: string; title: string }[],
     moments: (moments.data ?? []) as { id: string; kind: string }[],
+  });
+}
+
+/**
+ * The Project Workspace hub (plan §6.2; Figma detail frame): a project plus everything linked to
+ * it — files, decision records (with their decision/outcome/category), learning moments, and the
+ * claims that project over those records (ADR-0022). Returns null when the project is not owned.
+ * All selects are RLS-scoped (AC4); the pure `assembleProjectHub` shapes the sections.
+ */
+export async function getProjectHub(
+  supabase: ServerClient,
+  userId: string,
+  id: string
+): Promise<ProjectHub | null> {
+  const project = await getProject(supabase, userId, id);
+  if (!project) {
+    return null;
+  }
+
+  const [files, records, moments, claims] = await Promise.all([
+    supabase
+      .from("files")
+      .select("id, file_name, caption")
+      .eq("project_id", id)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("decision_records")
+      .select("id, title, decision, outcome, category")
+      .eq("project_id", id)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("learning_moments")
+      .select("id, kind")
+      .eq("project_id", id)
+      .order("created_at", { ascending: false }),
+    getClaims(supabase, userId),
+  ]);
+
+  const recordRows = (records.data ?? []) as {
+    id: string;
+    title: string;
+    decision: string | null;
+    outcome: string | null;
+    category: string | null;
+  }[];
+
+  // Claims hang off their backing decision record (a claim's id is that record's id). Keep only
+  // the claims whose record belongs to this project.
+  const recordIds = new Set(recordRows.map((r) => r.id));
+  const hubClaims = claims
+    .filter((c) => recordIds.has(c.id))
+    .map((c) => ({ id: c.id, title: c.title, lifecycle: c.lifecycle }));
+
+  return assembleProjectHub({
+    project: mapProjectRowToView(project),
+    files: (files.data ?? []) as {
+      id: string;
+      file_name: string;
+      caption: string | null;
+    }[],
+    records: recordRows,
+    moments: (moments.data ?? []) as { id: string; kind: string }[],
+    claims: hubClaims,
   });
 }

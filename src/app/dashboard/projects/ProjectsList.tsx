@@ -12,10 +12,10 @@ import StatusChip from "@/components/StatusChip";
 import { brand } from "@/theme-tokens";
 import {
   DISPLAY_STATUS_META,
-  HEALTH_SEGMENT_COLORS,
   type ProjectCardData,
   type ProjectDisplayStatus,
 } from "@/lib/projects/health";
+import { ProjectHealthBar, ProjectHealthLegend } from "./ProjectHealthBar";
 
 type Filter = "all" | ProjectDisplayStatus;
 
@@ -144,9 +144,9 @@ function ProjectCard({ card }: { card: ProjectCardData }) {
               </Typography>
             ) : null}
 
-            <HealthBar card={card} />
+            <ProjectHealthBar health={card.health} />
 
-            <HealthLegend card={card} />
+            <ProjectHealthLegend health={card.health} />
 
             <Stack
               direction="row"
@@ -178,120 +178,5 @@ function ProjectCard({ card }: { card: ProjectCardData }) {
         </CardContent>
       </CardActionArea>
     </Card>
-  );
-}
-
-function HealthBar({ card }: { card: ProjectCardData }) {
-  const { supported, needEvidence, challenged, claims } = card.health;
-  const label = `${supported} supported, ${needEvidence} need evidence, ${challenged} challenged`;
-
-  if (claims === 0) {
-    return (
-      <Box
-        aria-label="No claims yet"
-        sx={{
-          height: 8,
-          borderRadius: 999,
-          bgcolor: brand.hairline,
-        }}
-      />
-    );
-  }
-
-  const segments: { key: string; value: number; color: string }[] = [
-    {
-      key: "supported",
-      value: supported,
-      color: HEALTH_SEGMENT_COLORS.supported,
-    },
-    {
-      key: "needEvidence",
-      value: needEvidence,
-      color: HEALTH_SEGMENT_COLORS.needEvidence,
-    },
-    {
-      key: "challenged",
-      value: challenged,
-      color: HEALTH_SEGMENT_COLORS.challenged,
-    },
-  ];
-
-  return (
-    <Box
-      role="img"
-      aria-label={label}
-      sx={{
-        display: "flex",
-        height: 8,
-        borderRadius: 999,
-        overflow: "hidden",
-        bgcolor: brand.hairline,
-      }}
-    >
-      {segments
-        .filter((s) => s.value > 0)
-        .map((s) => (
-          <Box
-            key={s.key}
-            sx={{ flexGrow: s.value, bgcolor: s.color }}
-            aria-hidden="true"
-          />
-        ))}
-    </Box>
-  );
-}
-
-function Dot({ color }: { color: string }) {
-  return (
-    <Box
-      component="span"
-      aria-hidden="true"
-      sx={{
-        width: 8,
-        height: 8,
-        borderRadius: "50%",
-        bgcolor: color,
-        display: "inline-block",
-        flexShrink: 0,
-      }}
-    />
-  );
-}
-
-function HealthLegend({ card }: { card: ProjectCardData }) {
-  const { supported, needEvidence, challenged } = card.health;
-  const items = [
-    {
-      key: "supported",
-      text: `${supported} supported`,
-      color: HEALTH_SEGMENT_COLORS.supported,
-    },
-    {
-      key: "needEvidence",
-      text: `${needEvidence} need evidence`,
-      color: HEALTH_SEGMENT_COLORS.needEvidence,
-    },
-    {
-      key: "challenged",
-      text: `${challenged} challenged`,
-      color: HEALTH_SEGMENT_COLORS.challenged,
-    },
-  ];
-  return (
-    <Stack direction="row" spacing={2} sx={{ flexWrap: "wrap", gap: 1 }}>
-      {items.map((i) => (
-        <Stack
-          key={i.key}
-          direction="row"
-          spacing={0.75}
-          sx={{ alignItems: "center" }}
-        >
-          <Dot color={i.color} />
-          <Typography variant="caption" color="text.secondary">
-            {i.text}
-          </Typography>
-        </Stack>
-      ))}
-    </Stack>
   );
 }
