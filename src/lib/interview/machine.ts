@@ -157,6 +157,8 @@ export function reduce(
           question: state.question,
           answer: state.answer,
           draft: event.draft,
+          // Carry any detected learning moment through to the second gate (ADR-0025).
+          learningMoment: event.learningMoment,
           questionBudget: c.questionBudget,
           askedCount: c.askedCount,
           failureCount: 0, // a successful paraphrase resets the breaker
@@ -185,16 +187,47 @@ export function reduce(
           question: state.question,
           answer: state.answer,
           draft: state.draft,
+          learningMoment: state.learningMoment,
           ...c,
         };
       }
-      // Edit re-asks the SAME question (no re-count).
+      // Edit re-asks the SAME question (no re-count); a declined record drops its learning
+      // moment too — it is re-detected on the next answer.
       if (event.type === "edit")
         return { status: "awaiting_answer", question: state.question, ...c };
       if (event.type === "reject") return continueOrComplete(c);
       return state;
 
     case "saving":
+      // After the record is saved, offer the detected learning moment (ADR-0025) through the
+      // SECOND isolated gate — else continue. The learning-moment save is never done here.
+      if (event.type === "saved") {
+        return state.learningMoment
+          ? {
+              status: "awaiting_learning_moment",
+              learningMoment: state.learningMoment,
+              ...c,
+            }
+          : continueOrComplete(c);
+      }
+      return state;
+
+    case "awaiting_learning_moment":
+      // Second HITL gate (ADR-0025): accept is the ONLY edge into saving_learning_moment.
+      if (event.type === "accept") {
+        return {
+          status: "saving_learning_moment",
+          learningMoment: state.learningMoment,
+          ...c,
+        };
+      }
+      // Dismiss the proposal and move on; nothing is saved.
+      if (event.type === "reject") return continueOrComplete(c);
+      if (event.type === "pause")
+        return { status: "paused", reason: "user", ...c };
+      return state;
+
+    case "saving_learning_moment":
       if (event.type === "saved") return continueOrComplete(c);
       return state;
 

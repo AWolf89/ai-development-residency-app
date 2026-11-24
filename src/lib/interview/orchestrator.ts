@@ -15,9 +15,15 @@ import {
   answerClassify,
   type AnswerClassifyInput,
 } from "@/lib/llm/prompts/answer-classify";
+import {
+  learningMomentDetect,
+  type LearningMomentDetectInput,
+} from "@/lib/llm/prompts/learning-moment-detect";
 import { saveDecisionRecord } from "@/lib/decision-records/save";
 import { indexDecisionRecordEvidence } from "@/lib/decision-records/index-evidence";
 import { createSupabaseDecisionRecordRepository } from "@/lib/decision-records/repository";
+import { saveLearningMoment } from "@/lib/learning-moments/save";
+import { createSupabaseLearningMomentRepository } from "@/lib/learning-moments/repository";
 import {
   createInterview,
   createTimelineInterview,
@@ -25,12 +31,18 @@ import {
   QUESTION_HARD_CAP,
 } from "./machine";
 import { draftTimeline, timelineSchema } from "./timeline";
-import { cdmDraftSchema, answerClassificationSchema } from "./types";
+import {
+  cdmDraftSchema,
+  answerClassificationSchema,
+  learningMomentDetectionSchema,
+  groundLearningMoment,
+} from "./types";
 import type {
   AnswerClassification,
   CdmDraft,
   GroundingCitation,
   InterviewState,
+  LearningMomentDraft,
 } from "./types";
 import type { Timeline, TimelineFile } from "./timeline";
 import type { InterviewSessionRow, InterviewTurnRow } from "./queries";
@@ -95,6 +107,8 @@ export type TurnPatch = Partial<
     | "paraphrase"
     | "status"
     | "decision_record_id"
+    | "learning_moment_draft"
+    | "learning_moment_id"
   >
 >;
 
@@ -119,11 +133,22 @@ export type InterviewDeps = {
   /** Classify an answer as events vs conclusion to drive the redirect (ADR-0021). */
   classifyAnswer: (input: AnswerClassifyInput) => Promise<AnswerClassification>;
   paraphrase: (input: InterviewParaphraseInput) => Promise<CdmDraft>;
+  /** Detect a learning moment in an answer (ADR-0025); null when there is no signal (AC4). */
+  detectLearningMoment: (
+    input: LearningMomentDetectInput
+  ) => Promise<LearningMomentDraft | null>;
   /** The user's files for a project, used to draft the timeline (ADR-0021). */
   listProjectFiles: (projectId: string) => Promise<TimelineFile[]>;
   saveRecord: (args: {
     userId: string;
     draft: CdmDraft;
+  }) => Promise<{ recordId: string }>;
+  /** Save an accepted learning moment, linked to its project + interview (ADR-0025). */
+  saveLearningMoment: (args: {
+    userId: string;
+    draft: LearningMomentDraft;
+    projectId: string | null;
+    interviewSessionId: string;
   }) => Promise<{ recordId: string }>;
   repo: InterviewRepository;
 };
@@ -216,6 +241,23 @@ function rehydrate(
         question,
         answer: latest.answer_text ?? "",
         draft: latest.paraphrase,
+        learningMoment: latest.learning_moment_draft ?? null,
+        ...base,
+      },
+      currentTurnId: latest.id,
+    };
+  }
+  // Record saved, a learning moment was detected, and it hasn't been resolved yet: re-enter the
+  // second HITL gate for that turn (ADR-0025).
+  if (
+    latest.status === "saved" &&
+    latest.learning_moment_draft &&
+    !latest.learning_moment_id
+  ) {
+    return {
+      state: {
+        status: "awaiting_learning_moment",
+        learningMoment: latest.learning_moment_draft,
         ...base,
       },
       currentTurnId: latest.id,
@@ -386,11 +428,28 @@ async function advance(
           answer: state.answer,
           evidenceContext: null,
         });
-        const next = reduce(state, { type: "paraphrase_ready", draft });
+        // Detect a learning moment in the same answer (ADR-0025). Best-effort: a detection
+        // failure yields no proposal (the decision record is the primary artifact), so it
+        // never fails the interview or trips the breaker.
+        let learningMoment: LearningMomentDraft | null = null;
+        try {
+          learningMoment = await deps.detectLearningMoment({
+            question: state.question.text,
+            answer: state.answer,
+          });
+        } catch {
+          learningMoment = null;
+        }
+        const next = reduce(state, {
+          type: "paraphrase_ready",
+          draft,
+          learningMoment,
+        });
         if (next.status === "awaiting_confirmation" && ctx.currentTurnId) {
           await deps.repo.updateTurn(ctx.currentTurnId, {
             answer_text: state.answer,
             paraphrase: draft,
+            learning_moment_draft: learningMoment,
             status: "answered",
           });
         }
@@ -419,6 +478,31 @@ async function advance(
         await deps.repo.updateTurn(ctx.currentTurnId, {
           decision_record_id: recordId,
           status: "saved",
+        });
+      }
+      state = reduce(state, { type: "saved" });
+      continue;
+    }
+    if (state.status === "saving_learning_moment") {
+      // The second HITL save (ADR-0025). Idempotency (CLAUDE.md rule 7): skip if the turn is
+      // already stamped with a learning_moment_id, so a retry or a late re-accept never saves a
+      // second moment. Linked to the project + this interview; RLS scopes the write (AC5).
+      const existing = ctx.currentTurnId
+        ? await deps.repo.getTurn(ctx.currentTurnId)
+        : null;
+      if (existing?.learning_moment_id) {
+        state = reduce(state, { type: "saved" });
+        continue;
+      }
+      const { recordId } = await deps.saveLearningMoment({
+        userId: ctx.userId,
+        draft: state.learningMoment,
+        projectId: ctx.projectId,
+        interviewSessionId: ctx.sessionId,
+      });
+      if (ctx.currentTurnId) {
+        await deps.repo.updateTurn(ctx.currentTurnId, {
+          learning_moment_id: recordId,
         });
       }
       state = reduce(state, { type: "saved" });
@@ -625,6 +709,30 @@ export async function rejectDraft(
   return { sessionId: params.sessionId, state: final };
 }
 
+/**
+ * Accept the proposed learning moment (ADR-0025): the ONLY control that saves it. Dispatches
+ * `accept`, which from `awaiting_learning_moment` moves to `saving_learning_moment`, where the
+ * orchestrator performs the save. A no-op in any other state.
+ */
+export async function acceptLearningMoment(
+  deps: InterviewDeps,
+  params: { sessionId: string; userId: string }
+): Promise<InterviewRunResult> {
+  const { state, ctx } = await load(deps, params.sessionId, params.userId);
+  const final = await advance(deps, ctx, reduce(state, { type: "accept" }));
+  return { sessionId: params.sessionId, state: final };
+}
+
+/** Dismiss the proposed learning moment (ADR-0025): nothing is saved, the loop continues. */
+export async function rejectLearningMoment(
+  deps: InterviewDeps,
+  params: { sessionId: string; userId: string }
+): Promise<InterviewRunResult> {
+  const { state, ctx } = await load(deps, params.sessionId, params.userId);
+  const final = await advance(deps, ctx, reduce(state, { type: "reject" }));
+  return { sessionId: params.sessionId, state: final };
+}
+
 export async function pauseInterview(
   deps: InterviewDeps,
   params: { sessionId: string; userId: string }
@@ -688,7 +796,7 @@ function supabaseInterviewRepository(
       const { data } = await supabase
         .from("interview_turns")
         .select(
-          "id, session_id, user_id, question_text, grounding_citation, answer_text, paraphrase, status, decision_record_id, created_at"
+          "id, session_id, user_id, question_text, grounding_citation, answer_text, paraphrase, status, decision_record_id, learning_moment_draft, learning_moment_id, created_at"
         )
         .eq("session_id", sessionId)
         .order("created_at", { ascending: true });
@@ -698,7 +806,7 @@ function supabaseInterviewRepository(
       const { data } = await supabase
         .from("interview_turns")
         .select(
-          "id, session_id, user_id, question_text, grounding_citation, answer_text, paraphrase, status, decision_record_id, created_at"
+          "id, session_id, user_id, question_text, grounding_citation, answer_text, paraphrase, status, decision_record_id, learning_moment_draft, learning_moment_id, created_at"
         )
         .eq("id", id)
         .maybeSingle();
@@ -781,6 +889,40 @@ export async function defaultDeps(userId: string): Promise<InterviewDeps> {
         userId,
       });
       return data;
+    },
+    detectLearningMoment: async (input) => {
+      const { data } = await runStructured({
+        prompt: learningMomentDetect,
+        input,
+        schema: learningMomentDetectionSchema,
+        sink: supabaseSink,
+        userId,
+      });
+      return groundLearningMoment(data);
+    },
+    saveLearningMoment: async ({
+      userId: uid,
+      draft,
+      projectId,
+      interviewSessionId,
+    }) => {
+      const result = await saveLearningMoment(
+        createSupabaseLearningMomentRepository(supabase),
+        {
+          userId: uid,
+          input: {
+            kind: draft.kind,
+            context: draft.context,
+            shift: draft.shift,
+            result: draft.result,
+            duration: draft.duration ?? undefined,
+          },
+          projectId: projectId ?? null,
+          interviewSessionId,
+        }
+      );
+      if (!result.ok) throw new InterviewError(result.error);
+      return { recordId: result.recordId };
     },
     saveRecord: async ({ userId: uid, draft }) => {
       const result = await saveDecisionRecord(decisionRepo, {

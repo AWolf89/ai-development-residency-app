@@ -17,8 +17,10 @@ import {
 } from "@/lib/interview/queries";
 import { draftTimeline } from "@/lib/interview/timeline";
 import { serifStack, brand } from "@/theme-tokens";
+import { presentationFor } from "@/lib/learning-moments/presentation";
 import AnswerForm from "./AnswerForm";
 import PlaybackGate from "./PlaybackGate";
+import LearningMomentGate from "./LearningMomentGate";
 import StartForm from "./StartForm";
 import TimelineReview from "./TimelineReview";
 import { resumeAction } from "./actions";
@@ -158,6 +160,42 @@ function PlaybackCard({ turn }: { turn: InterviewTurnRow }) {
   );
 }
 
+/**
+ * The second HITL gate's card (ADR-0025): the agent proposes a learning moment detected from the
+ * last answer. Display-only; the save happens only on accept through LearningMomentGate.
+ */
+function LearningMomentCard({ turn }: { turn: InterviewTurnRow }) {
+  const draft = turn.learning_moment_draft;
+  if (!draft) return null;
+  const kindLabel = presentationFor(draft.kind).label;
+  return (
+    <Card
+      variant="outlined"
+      sx={{ borderLeft: `4px solid ${brand.accent}`, bgcolor: "#fff" }}
+    >
+      <CardContent>
+        <Stack spacing={1.5}>
+          <Typography sx={{ ...UPPER_LABEL_SX, color: brand.accent }}>
+            I also noticed a learning moment
+          </Typography>
+          <Typography sx={{ fontFamily: serifStack, fontSize: 18 }}>
+            {kindLabel}
+          </Typography>
+          <DraftField label="Context" value={draft.context} />
+          <DraftField label="What changed" value={draft.shift} />
+          <DraftField label="Result" value={draft.result} />
+          <DraftField label="Duration" value={draft.duration} />
+          <Typography variant="body2" color="text.secondary">
+            Save this to your learning moments, or skip it — nothing is saved
+            until you choose.
+          </Typography>
+          <LearningMomentGate sessionId={turn.session_id} />
+        </Stack>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default async function InterviewPage() {
   const supabase = await createClient();
   const {
@@ -264,6 +302,13 @@ export default async function InterviewPage() {
               <QuestionCard turn={latest} />
               <PlaybackCard turn={latest} />
             </>
+          ) : latest &&
+            latest.status === "saved" &&
+            latest.learning_moment_draft &&
+            !latest.learning_moment_id ? (
+            // The second HITL gate (ADR-0025): a learning moment was detected and the record is
+            // already saved — propose the moment before moving on.
+            <LearningMomentCard turn={latest} />
           ) : latest ? (
             <>
               <QuestionCard turn={latest} />

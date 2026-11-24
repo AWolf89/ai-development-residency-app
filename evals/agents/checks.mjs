@@ -149,6 +149,42 @@ export function interviewPreservesUncertainty(output) {
   };
 }
 
+/**
+ * The learning-moment detector (ADR-0025) proposes one only when the answer really shows a shift
+ * or realisation, and never invents one. `expect_learning_moment` in the case vars says which it
+ * is: true → a grounded draft with a valid kind; false → no draft (AC4).
+ */
+export function interviewProposesLearningMoment(output, context) {
+  const p = parse(output);
+  if (!p.ok) return { pass: false, score: 0, reason: "runner output was not JSON" };
+  const expected = context.vars.expect_learning_moment === true;
+  const lm = p.value.learningMoment ?? null;
+  if (!expected) {
+    const pass = lm === null;
+    return {
+      pass,
+      score: pass ? 1 : 0,
+      reason: pass
+        ? "no learning moment invented from an answer without a learning signal"
+        : "proposed a learning moment where there was no signal",
+    };
+  }
+  const kinds = ["speed", "insight", "pivot", "transfer"];
+  const pass =
+    !!lm &&
+    kinds.includes(lm.kind) &&
+    !!lm.context &&
+    !!lm.shift &&
+    !!lm.result;
+  return {
+    pass,
+    score: pass ? 1 : 0,
+    reason: pass
+      ? "proposed a grounded learning moment with a valid kind and filled fields"
+      : "did not propose a grounded learning moment where one was present",
+  };
+}
+
 // --- Gap (Test 10) ---
 
 /** The no-evidence requirement short-circuits to `unknown` with no model call (can't invent coverage). */

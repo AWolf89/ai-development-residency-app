@@ -14,12 +14,17 @@ import {
   acceptDraft,
   editDraft,
   rejectDraft,
+  acceptLearningMoment,
+  rejectLearningMoment,
   pauseInterview,
   resumeInterview,
   type InterviewDeps,
   type InterviewRepository,
 } from "../../src/lib/interview/orchestrator";
-import type { CdmDraft } from "../../src/lib/interview/types";
+import type {
+  CdmDraft,
+  LearningMomentDraft,
+} from "../../src/lib/interview/types";
 import type {
   InterviewSessionRow,
   InterviewTurnRow,
@@ -95,6 +100,8 @@ function makeRepo() {
         answer_text: null,
         paraphrase: null,
         decision_record_id: null,
+        learning_moment_draft: null,
+        learning_moment_id: null,
         ...row,
       } as InterviewTurnRow);
       return { id: tid };
@@ -112,6 +119,16 @@ type Counters = {
   paraphrases: number;
   saves: number;
   classifies: number;
+  detects: number;
+  lmSaves: number;
+};
+
+const LM_DRAFT: LearningMomentDraft = {
+  kind: "pivot",
+  context: "Mid-migration the dual-write kept drifting.",
+  shift: "Switched to a read-repair backfill.",
+  result: "Cutover drift dropped to zero.",
+  duration: null,
 };
 
 function makeDeps(
@@ -128,6 +145,8 @@ function makeDeps(
     paraphrases: 0,
     saves: 0,
     classifies: 0,
+    detects: 0,
+    lmSaves: 0,
   };
   const deps: InterviewDeps = {
     retrieveEvidence: async () => evidence,
@@ -143,10 +162,19 @@ function makeDeps(
       counters.paraphrases++;
       return DRAFT;
     },
+    // Default: NO learning moment detected — the existing scenarios behave exactly as before.
+    detectLearningMoment: async () => {
+      counters.detects++;
+      return null;
+    },
     listProjectFiles: async () => [],
     saveRecord: async () => {
       counters.saves++;
       return { recordId: `rec-${counters.saves}` };
+    },
+    saveLearningMoment: async () => {
+      counters.lmSaves++;
+      return { recordId: `lm-${counters.lmSaves}` };
     },
     repo: store.repo,
     ...overrides,
@@ -454,6 +482,8 @@ function makeDeps(
     paraphrases: 0,
     saves: 0,
     classifies: 0,
+    detects: 0,
+    lmSaves: 0,
   };
   let paraphraseWorks = false;
   const deps: InterviewDeps = {
@@ -471,10 +501,18 @@ function makeDeps(
       counters.paraphrases++;
       return DRAFT;
     },
+    detectLearningMoment: async () => {
+      counters.detects++;
+      return null;
+    },
     listProjectFiles: async () => [],
     saveRecord: async () => {
       counters.saves++;
       return { recordId: `rec-${counters.saves}` };
+    },
+    saveLearningMoment: async () => {
+      counters.lmSaves++;
+      return { recordId: `lm-${counters.lmSaves}` };
     },
     repo: store.repo,
   };
@@ -610,6 +648,173 @@ function makeDeps(
   ok(
     turns[0].question_text === "What did you observe at that point?",
     "the on-screen question becomes the guide-back question"
+  );
+}
+
+// 15. No learning signal (the default): no second gate, straight to the next question (AC4).
+{
+  const { deps, counters } = makeDeps();
+  const s = await startInterview(deps, {
+    userId: "u1",
+    title: "x",
+    questionBudget: 3,
+  });
+  await submitAnswer(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+    answer: "We chose Postgres.",
+  });
+  const accepted = await acceptDraft(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+  });
+  ok(counters.detects === 1, "the detector ran once on the answer");
+  ok(
+    accepted.state.status === "awaiting_answer",
+    "no learning moment → next question, no second gate"
+  );
+  ok(counters.lmSaves === 0, "no learning moment saved when none was detected");
+}
+
+// 16. A detected learning moment pauses at the second gate and saves NOTHING yet (HITL).
+{
+  const { deps, counters, store } = makeDeps({
+    detectLearningMoment: async () => {
+      counters.detects++;
+      return LM_DRAFT;
+    },
+  });
+  const s = await startInterview(deps, {
+    userId: "u1",
+    title: "x",
+    questionBudget: 3,
+  });
+  await submitAnswer(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+    answer: "I switched approaches when the dual-write drifted.",
+  });
+  const accepted = await acceptDraft(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+  });
+  ok(
+    accepted.state.status === "awaiting_learning_moment",
+    "a detected moment stops at the second gate after the record is saved"
+  );
+  ok(counters.saves === 1, "the decision record was saved (first gate)");
+  ok(
+    counters.lmSaves === 0,
+    "NO learning moment saved at the gate (HITL — awaits accept)"
+  );
+  const saved = (await store.repo.getTurns(s.sessionId)).find(
+    (t) => t.status === "saved"
+  )!;
+  ok(
+    saved.learning_moment_draft !== null && saved.learning_moment_id === null,
+    "the turn holds the proposed moment but no saved id yet"
+  );
+}
+
+// 17. Accepting the proposed moment saves EXACTLY one, stamps the turn, and continues.
+{
+  const { deps, counters, store } = makeDeps({
+    detectLearningMoment: async () => {
+      counters.detects++;
+      return LM_DRAFT;
+    },
+  });
+  const s = await startInterview(deps, {
+    userId: "u1",
+    title: "x",
+    questionBudget: 3,
+  });
+  await submitAnswer(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+    answer: "I switched approaches.",
+  });
+  await acceptDraft(deps, { sessionId: s.sessionId, userId: "u1" });
+  const done = await acceptLearningMoment(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+  });
+  ok(counters.lmSaves === 1, "accepting the moment saves exactly one");
+  ok(
+    done.state.status === "awaiting_answer",
+    "after the moment is saved, the next question is asked"
+  );
+  const stamped = (await store.repo.getTurns(s.sessionId)).find(
+    (t) => t.learning_moment_id === "lm-1"
+  );
+  ok(!!stamped, "the turn is stamped with the saved learning_moment_id");
+}
+
+// 18. Dismissing the proposed moment saves nothing and continues.
+{
+  const { deps, counters } = makeDeps({
+    detectLearningMoment: async () => {
+      counters.detects++;
+      return LM_DRAFT;
+    },
+  });
+  const s = await startInterview(deps, {
+    userId: "u1",
+    title: "x",
+    questionBudget: 3,
+  });
+  await submitAnswer(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+    answer: "I switched approaches.",
+  });
+  await acceptDraft(deps, { sessionId: s.sessionId, userId: "u1" });
+  const dismissed = await rejectLearningMoment(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+  });
+  ok(counters.lmSaves === 0, "dismiss saves no learning moment");
+  ok(dismissed.state.status === "awaiting_answer", "dismiss → next question");
+}
+
+// 19. Idempotent moment save: a turn already stamped is never saved twice.
+{
+  const { deps, counters, store } = makeDeps({
+    detectLearningMoment: async () => {
+      counters.detects++;
+      return LM_DRAFT;
+    },
+  });
+  const s = await startInterview(deps, {
+    userId: "u1",
+    title: "x",
+    questionBudget: 3,
+  });
+  await submitAnswer(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+    answer: "I switched approaches.",
+  });
+  await acceptDraft(deps, { sessionId: s.sessionId, userId: "u1" });
+  // Simulate the moment already saved for this turn (a prior/concurrent accept).
+  const savedTurn = [...store.turns.values()].find(
+    (t) => t.learning_moment_draft !== null
+  )!;
+  store.turns.set(savedTurn.id, {
+    ...savedTurn,
+    learning_moment_id: "lm-prior",
+  });
+  const again = await acceptLearningMoment(deps, {
+    sessionId: s.sessionId,
+    userId: "u1",
+  });
+  ok(
+    counters.lmSaves === 0,
+    "accept does not re-save a turn that already has a learning moment"
+  );
+  ok(
+    again.state.status === "awaiting_answer",
+    "the already-saved moment is adopted and the loop continues"
   );
 }
 

@@ -16,12 +16,15 @@ export type LearningMomentRow = {
   duration: string | null;
   target_role_id: string | null;
   project_id: string | null;
+  // The interview a proposed moment came from (ADR-0025); null for manual entry.
+  interview_session_id: string | null;
 };
 
 export function mapLearningMomentToRow(
   input: LearningMomentInput,
   userId: string,
-  projectId: string | null = null
+  projectId: string | null = null,
+  interviewSessionId: string | null = null
 ): LearningMomentRow {
   return {
     user_id: userId,
@@ -32,5 +35,6 @@ export function mapLearningMomentToRow(
     duration: input.duration ?? null,
     target_role_id: input.targetRoleId ?? null,
     project_id: projectId,
+    interview_session_id: interviewSessionId,
   };
 }

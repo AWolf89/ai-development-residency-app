@@ -34,3 +34,4 @@ This folder records the important technical decisions for this project: what we 
 | [0022](0022-split-the-evidence-record-from-the-claim-and-define-the-clai.md) | Split the evidence record from the claim and define the claim lifecycle | accepted |
 | [0023](0023-reconcile-new-uploads-against-existing-evidence-and-store-co.md) | Reconcile new uploads against existing evidence and store conflicts in a dedicated table | accepted |
 | [0024](0024-present-gap-verdicts-in-four-categories-and-route-unverified.md) | Present gap verdicts in four evidence categories and route unverified to investigation | accepted |
+| [0025](0025-propose-learning-moments-from-the-interview-via-a-second-hitl-gate.md) | Propose learning moments from the interview via a second HITL gate | accepted |

@@ -7,7 +7,7 @@
  * rows to FSM state is the orchestrator's job (Humble Object, CLAUDE.md §3).
  */
 import type { createClient } from "@/lib/supabase/server";
-import type { CdmDraft, GroundingCitation } from "./types";
+import type { CdmDraft, GroundingCitation, LearningMomentDraft } from "./types";
 import type { Timeline, TimelineFile } from "./timeline";
 
 type ServerClient = Awaited<ReturnType<typeof createClient>>;
@@ -38,13 +38,17 @@ export type InterviewTurnRow = {
   paraphrase: CdmDraft | null;
   status: "asked" | "answered" | "skipped" | "saved";
   decision_record_id: string | null;
+  // A detected learning-moment proposal for this turn (ADR-0025), or null for no signal.
+  learning_moment_draft: LearningMomentDraft | null;
+  // The saved learning moment proposed from this turn (ADR-0025): idempotency + rehydration.
+  learning_moment_id: string | null;
   created_at: string;
 };
 
 const SESSION_COLS =
   "id, user_id, title, target_role_id, project_id, timeline, status, question_budget, asked_count, created_at, updated_at";
 const TURN_COLS =
-  "id, session_id, user_id, question_text, grounding_citation, answer_text, paraphrase, status, decision_record_id, created_at";
+  "id, session_id, user_id, question_text, grounding_citation, answer_text, paraphrase, status, decision_record_id, learning_moment_draft, learning_moment_id, created_at";
 
 /** One interview session by id (RLS-scoped to the owner), or null if not found. */
 export async function getInterviewSession(
