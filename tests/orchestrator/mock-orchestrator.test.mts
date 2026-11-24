@@ -278,7 +278,10 @@ async function stepThrough(deps: OrchestrationDeps, runId: string) {
   );
   const { runId } = await startRun(deps, { userId: USER, fileId: "f1" });
   await stepThrough(deps, runId); // reconcile → done
-  ok(rows.get(runId)?.project_id === null, "no project is linked before the propose step is accepted");
+  ok(
+    rows.get(runId)?.project_id === null,
+    "no project is linked before the propose step is accepted"
+  );
   await stepThrough(deps, runId); // propose: advance then accept the HITL save
   ok(
     rows.get(runId)?.project_id === "proj-9",
@@ -311,7 +314,10 @@ async function stepThrough(deps: OrchestrationDeps, runId: string) {
     "no project id is captured when the propose step created none"
   );
   await advanceRun(deps, { runId, userId: USER });
-  ok(seenProjectIds[0] === null, "the interview step stays the plain loop with no project");
+  ok(
+    seenProjectIds[0] === null,
+    "the interview step stays the plain loop with no project"
+  );
 }
 
 console.log(`\n${pass} checks passed`);
