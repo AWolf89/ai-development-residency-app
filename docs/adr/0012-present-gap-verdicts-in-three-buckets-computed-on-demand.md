@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: superseded by ADR-0024
 date: 2026-11-15
 decision-makers: Amanda Wolf
 ---

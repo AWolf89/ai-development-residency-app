@@ -19,7 +19,7 @@ import {
 } from "@/lib/target-roles/queries";
 import { getAssessmentsForRole, type AssessmentItem } from "@/lib/gap/queries";
 import {
-  verdictToBucket,
+  verdictToCategory,
   summarize,
   evidenceCell,
   selectActiveRole,
@@ -78,21 +78,49 @@ function SummaryTiles({ summary }: { summary: GapSummary }) {
       sx={{ alignItems: "stretch" }}
     >
       <SummaryTile
-        count={summary.supported}
-        label="Supported by evidence"
+        count={summary.demonstrated}
+        label="Demonstrated by your evidence"
         color={brand.tag.green.fg}
       />
       <SummaryTile
-        count={summary.undocumented}
-        label="Undocumented: you've done it, no file shows it"
+        count={summary.partiallyDemonstrated}
+        label="Partially demonstrated"
+        color={brand.tag.blue.fg}
+      />
+      <SummaryTile
+        count={summary.unverified}
+        label="Unverified: no evidence found yet — worth investigating"
         color={brand.tag.orange.fg}
       />
       <SummaryTile
-        count={summary.trueGaps}
-        label="True gaps"
+        count={summary.development}
+        label="Development opportunities"
         color={brand.tag.gray.fg}
       />
     </Stack>
+  );
+}
+
+/**
+ * The product's core framing (ADR-0024, plan §6.5): a missing piece of evidence is not
+ * proof of a missing skill. Unverified requirements route to investigation, never to a
+ * course or a hiring verdict.
+ */
+function EvidenceNotSkillNote() {
+  return (
+    <Card
+      variant="outlined"
+      sx={{ borderColor: brand.tag.orange.fg, bgcolor: brand.tag.orange.bg }}
+    >
+      <CardContent>
+        <Typography variant="body2" sx={{ color: brand.tag.orange.fg }}>
+          <strong>Missing evidence isn&apos;t proof of a missing skill.</strong>{" "}
+          An <em>Unverified</em> requirement just means nothing in your evidence
+          covers it yet — investigate what you&apos;ve actually done before
+          treating it as a gap. We never read these as a hiring verdict.
+        </Typography>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -162,7 +190,7 @@ export default async function GapCheckPage({
   // learning-agility records as evidence the gaps can be closed. Only queried when it is needed,
   // and the panel renders only if there are relevant records — nothing is invented (AC3).
   const learningEvidence =
-    summary.trueGaps > 0
+    summary.development > 0
       ? selectGapLearningEvidence(
           await getLearningMoments(supabase, user.id),
           selected.id
@@ -203,7 +231,12 @@ export default async function GapCheckPage({
           </Typography>
         ) : (
           <>
-            {hasAssessments ? <SummaryTiles summary={summary} /> : null}
+            {hasAssessments ? (
+              <>
+                <SummaryTiles summary={summary} />
+                <EvidenceNotSkillNote />
+              </>
+            ) : null}
 
             <Stack
               direction="row"
@@ -252,8 +285,10 @@ export default async function GapCheckPage({
                         <TableCell sx={{ borderColor: brand.hairline }}>
                           {assessment ? (
                             <StatusChip
-                              label={verdictToBucket(assessment.verdict).label}
-                              tone={verdictToBucket(assessment.verdict).tone}
+                              label={
+                                verdictToCategory(assessment.verdict).label
+                              }
+                              tone={verdictToCategory(assessment.verdict).tone}
                             />
                           ) : (
                             <Typography
