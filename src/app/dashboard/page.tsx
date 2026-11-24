@@ -17,12 +17,15 @@ import {
   type TargetRoleListItem,
   type RoleRequirementItem,
 } from "@/lib/target-roles/queries";
+import { collectHealthInputs } from "@/lib/evidence-health/signals";
+import { buildHealth } from "@/lib/evidence-health/build";
 import StatusChip from "@/components/StatusChip";
 import PageHeading from "@/components/PageHeading";
 import { brand, type TagTone } from "@/theme-tokens";
 import ProfileForm from "./ProfileForm";
 import ClaimsBrowser from "./ClaimsBrowser";
 import ExportButton from "./ExportButton";
+import EvidenceHealthSection from "./EvidenceHealthSection";
 
 const REQUIREMENT_SOURCE: Record<string, { label: string; tone: TagTone }> = {
   framework: { label: "Framework", tone: "green" },
@@ -112,6 +115,10 @@ export default async function DashboardPage() {
   const claims = await getClaims(supabase, user.id);
   const summary = summarize(claims);
 
+  // Evidence-health indicators (plan §6.6): a derive-on-read projection over existing data —
+  // claim lifecycle, the investigation queue, projects, and gap coverage. No single score.
+  const health = buildHealth(await collectHealthInputs(supabase, user.id));
+
   // Target roles stay reachable as a secondary section (used by the Gap Check).
   const targetRoles = await getTargetRoles(supabase, user.id);
   const roleRequirements = await getRequirementsForRoles(
@@ -148,6 +155,10 @@ export default async function DashboardPage() {
             </Stack>
           }
         />
+
+        <EvidenceHealthSection health={health} />
+
+        <Divider />
 
         {claims.length === 0 ? (
           <Typography variant="body2" color="text.secondary">
