@@ -38,15 +38,32 @@ export default function ReviewPanel({
   recordId,
   alreadyReviewed,
   priorFlags,
+  initialProposal,
+  onAccepted,
+  hideBackLink,
 }: {
   recordId: string;
   alreadyReviewed: boolean;
   priorFlags: ReviewFlag[];
+  /**
+   * Flags already proposed by the orchestrator's `advanceRun`, so the panel opens straight at the
+   * review step without a second `runReviewAction` pass. Optional — existing callers omit it and
+   * the panel runs its own review (MVP 2 Phase 4 flow wizard). Presentation only.
+   */
+  initialProposal?: { flags: ReviewFlag[] };
+  /** Called after the HITL `acceptReviewAction` save succeeds (the flow wizard advances on it). */
+  onAccepted?: () => void;
+  /** Hide the "Back to the record" link when embedded in the flow wizard. */
+  hideBackLink?: boolean;
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const [phase, setPhase] = useState<Phase>(alreadyReviewed ? "done" : "idle");
-  const [flags, setFlags] = useState<ReviewFlag[]>(priorFlags);
+  const [phase, setPhase] = useState<Phase>(
+    alreadyReviewed ? "done" : initialProposal ? "proposed" : "idle"
+  );
+  const [flags, setFlags] = useState<ReviewFlag[]>(
+    initialProposal ? initialProposal.flags : priorFlags
+  );
   const [error, setError] = useState<string | null>(null);
 
   const run = () => {
@@ -85,6 +102,7 @@ export default function ReviewPanel({
       try {
         await acceptReviewAction(recordId, flags);
         setPhase("done");
+        onAccepted?.();
       } catch {
         setError("Could not save the review. Please try again.");
       }
@@ -206,7 +224,7 @@ export default function ReviewPanel({
         </Stack>
       )}
 
-      {phase === "done" && (
+      {phase === "done" && !hideBackLink && (
         <Box>
           <Button
             variant="text"

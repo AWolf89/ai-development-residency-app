@@ -52,5 +52,65 @@
     "fg": "#767676",
     "bg": "#ffffff",
     "use": "ui"
+  },
+  {
+    "name": "flow run/retry button label (AA orange)",
+    "fg": "#ffffff",
+    "bg": "#c2561f",
+    "use": "text"
+  },
+  {
+    "name": "flow step marker: done (white on green)",
+    "fg": "#ffffff",
+    "bg": "#2e6b3f",
+    "use": "text"
+  },
+  {
+    "name": "flow step marker: in review/current (white on AA orange)",
+    "fg": "#ffffff",
+    "bg": "#c2561f",
+    "use": "text"
+  },
+  {
+    "name": "flow step marker: failed (white on danger)",
+    "fg": "#ffffff",
+    "bg": "#9f3b32",
+    "use": "text"
+  },
+  {
+    "name": "flow step marker: skipped (white on gray)",
+    "fg": "#ffffff",
+    "bg": "#5f6675",
+    "use": "text"
+  },
+  {
+    "name": "flow step marker: active map (white on sidebar navy)",
+    "fg": "#ffffff",
+    "bg": "#1d2433",
+    "use": "text"
+  },
+  {
+    "name": "flow step marker: pending number on paper",
+    "fg": "#5f6675",
+    "bg": "#ffffff",
+    "use": "text"
+  },
+  {
+    "name": "flow overline (blue) on paper",
+    "fg": "#2f5d8c",
+    "bg": "#ffffff",
+    "use": "text"
+  },
+  {
+    "name": "status chip blue label on blue tint",
+    "fg": "#2f5d8c",
+    "bg": "#e3ebf4",
+    "use": "text"
+  },
+  {
+    "name": "status chip green label on green tint",
+    "fg": "#2e6b3f",
+    "bg": "#e2efe5",
+    "use": "text"
   }
 ]
