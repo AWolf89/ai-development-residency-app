@@ -13,64 +13,13 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import { brand, serifStack } from "@/theme-tokens";
+import { NAV_SECTIONS, resolveActiveSection } from "@/lib/nav/sections";
 
 const DRAWER_WIDTH = 248;
 
-type NavItem = { label: string; href: string | null };
-
-// Order mirrors the prototype. Wired items link; the rest are future features,
-// shown disabled with a "Soon" marker.
-const NAV_ITEMS: NavItem[] = [
-  { label: "Guided flow", href: "/dashboard/flow" },
-  { label: "Upload files", href: "/dashboard/files" },
-  { label: "Projects", href: "/dashboard/projects" },
-  { label: "Review claims", href: "/dashboard/claims" },
-  { label: "Interview", href: "/dashboard/interview" },
-  { label: "Learning moments", href: "/dashboard/learning-moments" },
-  { label: "Gap check", href: "/dashboard/gap-check" },
-  { label: "Investigations", href: "/dashboard/investigations" },
-  { label: "My profile", href: "/dashboard" },
-];
-
-/**
- * The active nav href is the *longest* wired href that prefixes the current path.
- * This keeps `/dashboard/files` highlighting "Upload files" (not also the shorter
- * "/dashboard" of "My profile"), while sub-pages like `/dashboard/decision-records`
- * still fall back to "My profile".
- */
-function resolveActiveHref(pathname: string): string | null {
-  const matches = NAV_ITEMS.map((item) => item.href).filter(
-    (href): href is string =>
-      href !== null && (pathname === href || pathname.startsWith(`${href}/`))
-  );
-  matches.sort((a, b) => b.length - a.length);
-  return matches[0] ?? null;
-}
-
-const SoonBadge = () => (
-  <Box
-    component="span"
-    sx={{
-      ml: "auto",
-      fontSize: 10,
-      fontWeight: 600,
-      letterSpacing: 0.4,
-      textTransform: "uppercase",
-      color: brand.sidebarText,
-      opacity: 0.6,
-      border: `1px solid ${brand.sidebarActiveBg}`,
-      borderRadius: 999,
-      px: 0.75,
-      py: 0.25,
-    }}
-  >
-    Soon
-  </Box>
-);
-
 function NavContent({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
-  const activeHref = resolveActiveHref(pathname);
+  const activeSection = resolveActiveSection(pathname);
 
   return (
     <Box
@@ -102,32 +51,8 @@ function NavContent({ onNavigate }: { onNavigate?: () => void }) {
         disablePadding
         sx={{ display: "flex", flexDirection: "column", gap: 1 }}
       >
-        {NAV_ITEMS.map((item) => {
-          const active = item.href !== null && item.href === activeHref;
-
-          if (item.href === null) {
-            return (
-              <ListItem key={item.label} disablePadding>
-                <Box
-                  aria-disabled="true"
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    px: "14px",
-                    py: "12px",
-                    borderRadius: 2,
-                    fontSize: 15,
-                    color: brand.sidebarText,
-                    opacity: 0.5,
-                  }}
-                >
-                  {item.label}
-                  <SoonBadge />
-                </Box>
-              </ListItem>
-            );
-          }
+        {NAV_SECTIONS.map((item) => {
+          const active = item.label === activeSection?.label;
 
           return (
             <ListItem key={item.label} disablePadding>
