@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getClaims } from "@/lib/claims/queries";
 import { summarize, summaryLine } from "@/lib/claims/presentation";
 import PageHeading from "@/components/PageHeading";
+import EvidenceLibraryTabs from "@/components/EvidenceLibraryTabs";
 import ClaimsBrowser from "../ClaimsBrowser";
 
 const PAGE_SX = {
@@ -39,6 +40,7 @@ export default async function ReviewClaimsPage() {
   return (
     <Box sx={PAGE_SX}>
       <Stack spacing={4}>
+        <EvidenceLibraryTabs />
         <PageHeading
           title="Review claims"
           subtitle={summaryLine(summary)}
