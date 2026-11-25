@@ -10,6 +10,7 @@ import {
   getNeedsReviewFileIds,
 } from "@/lib/file-analysis/queries";
 import PageHeading from "@/components/PageHeading";
+import EvidenceLibraryTabs from "@/components/EvidenceLibraryTabs";
 import FilesManager from "./FilesManager";
 
 const PAGE_SX = {
@@ -38,6 +39,7 @@ export default async function FilesPage() {
   return (
     <Box sx={PAGE_SX}>
       <Stack spacing={4}>
+        <EvidenceLibraryTabs />
         <PageHeading
           title="Upload files"
           subtitle={

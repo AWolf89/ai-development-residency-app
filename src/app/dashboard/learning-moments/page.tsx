@@ -7,6 +7,7 @@ import { getFiles } from "@/lib/files/queries";
 import { getTargetRoles } from "@/lib/target-roles/queries";
 import { getProjects } from "@/lib/projects/queries";
 import { serifStack } from "@/theme-tokens";
+import EvidenceLibraryTabs from "@/components/EvidenceLibraryTabs";
 import CaptureForm from "./CaptureForm";
 
 const PAGE_SX = {
@@ -45,6 +46,7 @@ export default async function LearningMomentsPage() {
   return (
     <Box sx={PAGE_SX}>
       <Stack spacing={4}>
+        <EvidenceLibraryTabs />
         <Stack spacing={1}>
           <Typography
             component="h1"

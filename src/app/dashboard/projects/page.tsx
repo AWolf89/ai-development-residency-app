@@ -11,6 +11,7 @@ import {
   type ProjectCardData,
 } from "@/lib/projects/health";
 import PageHeading from "@/components/PageHeading";
+import EvidenceLibraryTabs from "@/components/EvidenceLibraryTabs";
 import ProjectForm from "./ProjectForm";
 import ProjectsList from "./ProjectsList";
 
@@ -52,6 +53,7 @@ export default async function ProjectsPage() {
   return (
     <Box sx={PAGE_SX}>
       <Stack spacing={4}>
+        <EvidenceLibraryTabs />
         <PageHeading
           title="Projects"
           subtitle="Each project groups the sources, decisions, and claims from one piece of work. Open one to build its evidence."
