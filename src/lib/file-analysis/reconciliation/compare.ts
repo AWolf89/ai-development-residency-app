@@ -9,12 +9,56 @@
  *  - a flag that cites NO real existing source is DROPPED — a contradiction/complementary match is
  *    meaningless without the existing thing it relates to.
  */
-import type { Citation } from "@/lib/rag/types";
+import { buildContext } from "@/lib/rag/context";
+import type { Citation, Hit, Retrieval } from "@/lib/rag/types";
 import type {
   ModelCitation,
   ReconciliationFlag,
   ReconciliationOutput,
 } from "./types";
+
+/**
+ * Split a document into up to `max` evenly-spaced query windows of `size` chars each, covering
+ * start to end. Reconciliation retrieves the user's existing evidence by querying the NEW file's
+ * text; a single first-slice query misses overlaps that sit deeper in a multi-section document
+ * (e.g. the second job on a resume), so it reported "no overlaps" for work it clearly repeats
+ * (GF3). Querying across the whole file surfaces that evidence. Windows may overlap when the
+ * document is short; the hit de-dup in `mergeRetrievals` collapses the duplicates.
+ */
+export function windowizeForRetrieval(
+  text: string,
+  size: number,
+  max: number
+): string[] {
+  if (size <= 0 || max <= 0) return [];
+  if (text.length <= size) return text.length > 0 ? [text] : [];
+  const count = Math.min(max, Math.ceil(text.length / size));
+  if (count === 1) return [text.slice(0, size)];
+  const lastStart = text.length - size;
+  const windows: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const start = Math.round((lastStart * i) / (count - 1));
+    windows.push(text.slice(start, start + size));
+  }
+  return windows;
+}
+
+/**
+ * Merge several evidence retrievals into one: union their raw hits, keep the highest-scoring copy
+ * of each hit, and rebuild a single capped context + de-duped source list. Lets reconciliation
+ * query the whole file across several windows and still present one grounded existing-evidence set.
+ */
+export function mergeRetrievals(retrievals: Retrieval[]): Retrieval {
+  const byId = new Map<string, Hit>();
+  for (const r of retrievals) {
+    for (const h of r.hits) {
+      const prev = byId.get(h.id);
+      if (!prev || h.score > prev.score) byId.set(h.id, h);
+    }
+  }
+  const merged = [...byId.values()].sort((a, b) => b.score - a.score);
+  return buildContext(merged, { corpus: "evidence" });
+}
 
 /** Keep only citations that point at a really-retrieved existing source; dedup by source+id. */
 export function validateCitations(

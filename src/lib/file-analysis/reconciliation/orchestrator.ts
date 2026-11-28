@@ -5,7 +5,11 @@ import { supabaseSink } from "@/lib/llm/supabase-sink";
 import { reconciliation } from "@/lib/llm/prompts/reconciliation";
 import { retrieveEvidence } from "@/lib/rag/retrieve";
 import { resolveFileText } from "../orchestrator";
-import { groundReconciliation } from "./compare";
+import {
+  groundReconciliation,
+  windowizeForRetrieval,
+  mergeRetrievals,
+} from "./compare";
 import { persistReconciliationFlags } from "./persist";
 import { createSupabaseReconciliationFlagRepository } from "./repository";
 import { reconciliationOutputSchema } from "./types";
@@ -17,8 +21,11 @@ import type { ReconciliationFlag } from "./types";
 // supabaseSink — one model path, ADR-0009), and ground the result. It never writes at ingest;
 // flags are persisted only on an explicit user decision (HITL, ADR-0013).
 
-// How much of the new file to use as the retrieval query (enough to find related evidence).
+// How much of the new file to use per retrieval query (enough to find related evidence).
 const QUERY_CHARS = 2000;
+// How many query windows to spread across the file, so overlapping evidence deep in a multi-section
+// document is still surfaced (GF3) while the embedding spend stays bounded (R3 §1).
+const MAX_QUERY_WINDOWS = 4;
 
 export type FileReconciliation = {
   flags: ReconciliationFlag[];
@@ -39,7 +46,12 @@ export async function reconcileFile(
     return { flags: [], dropped: 0 };
   }
 
-  const retrieval = await retrieveEvidence(text.slice(0, QUERY_CHARS));
+  // Query across the whole file (several bounded windows), not just its first slice, so existing
+  // evidence that overlaps a later section is still retrieved and can be flagged (GF3).
+  const windows = windowizeForRetrieval(text, QUERY_CHARS, MAX_QUERY_WINDOWS);
+  const retrieval = mergeRetrievals(
+    await Promise.all(windows.map((w) => retrieveEvidence(w)))
+  );
   // Exclude the file itself (if it was already indexed) so it can't conflict with itself. Evidence
   // citations are keyed by title, so a file source matches on its name.
   const existingSources = retrieval.sources.filter(

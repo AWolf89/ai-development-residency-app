@@ -1,7 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { groundReconciliation, validateCitations } from "./compare";
+import {
+  groundReconciliation,
+  validateCitations,
+  windowizeForRetrieval,
+  mergeRetrievals,
+} from "./compare";
 import type { ReconciliationOutput } from "./types";
-import type { Citation } from "@/lib/rag/types";
+import type { Citation, Hit, Retrieval } from "@/lib/rag/types";
 
 const SOURCES: Citation[] = [
   { source: "file", id: "report.pdf", title: "Impact report" },
@@ -121,5 +126,74 @@ describe("groundReconciliation", () => {
     );
     expect(flags.map((f) => f.message)).toEqual(["real", "real2"]);
     expect(dropped).toBe(1);
+  });
+});
+
+describe("windowizeForRetrieval", () => {
+  it("returns the whole text as one window when it fits", () => {
+    expect(windowizeForRetrieval("short", 10, 4)).toEqual(["short"]);
+  });
+
+  it("returns no windows for empty text", () => {
+    expect(windowizeForRetrieval("", 10, 4)).toEqual([]);
+  });
+
+  it("spans start to end of a long document", () => {
+    const text = "0123456789".repeat(3); // 30 chars
+    const windows = windowizeForRetrieval(text, 10, 4);
+    expect(windows).toHaveLength(3); // ceil(30/10)
+    expect(windows[0]).toBe(text.slice(0, 10));
+    expect(windows[windows.length - 1]).toBe(text.slice(20, 30)); // last window ends at EOF
+  });
+
+  it("caps the number of windows but still reaches the end", () => {
+    const text = "0123456789".repeat(3); // 30 chars
+    const windows = windowizeForRetrieval(text, 10, 2);
+    expect(windows).toHaveLength(2);
+    expect(windows[0]).toBe(text.slice(0, 10));
+    expect(windows[1]).toBe(text.slice(20, 30));
+  });
+});
+
+describe("mergeRetrievals", () => {
+  const hit = (
+    over: Partial<Hit> & Pick<Hit, "id" | "ref_id" | "score">
+  ): Hit => ({
+    source: "decision_record",
+    title: over.ref_id,
+    section: "entity",
+    content: `content ${over.ref_id}`,
+    keyword_rank: 1, // relevant → survives buildContext
+    semantic_rank: null,
+    similarity: null,
+    ...over,
+  });
+  const retrieval = (hits: Hit[]): Retrieval => ({
+    found: hits.length > 0,
+    context: "",
+    sources: [],
+    hits,
+  });
+
+  it("unions hits across retrievals and de-dups by id, keeping the highest score", () => {
+    const r1 = retrieval([
+      hit({ id: "a", ref_id: "A", score: 1, content: "A v1" }),
+      hit({ id: "b", ref_id: "B", score: 2 }),
+    ]);
+    const r2 = retrieval([
+      hit({ id: "a", ref_id: "A", score: 5, content: "A v2" }), // higher score wins
+      hit({ id: "c", ref_id: "C", score: 3 }),
+    ]);
+    const merged = mergeRetrievals([r1, r2]);
+    expect(merged.found).toBe(true);
+    // All three distinct sources surface — an overlap retrieved only by a later window is kept.
+    expect(merged.sources.map((s) => s.id).sort()).toEqual(["A", "B", "C"]);
+    // The higher-scoring copy of the duplicated hit is the one used.
+    expect(merged.context).toContain("A v2");
+    expect(merged.context).not.toContain("A v1");
+  });
+
+  it("is not found when no retrieval produced a hit", () => {
+    expect(mergeRetrievals([retrieval([]), retrieval([])]).found).toBe(false);
   });
 });
