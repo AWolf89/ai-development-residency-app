@@ -168,7 +168,7 @@ function ProjectCard({ card }: { card: ProjectCardData }) {
                 ) : null}
                 <Typography
                   variant="body2"
-                  sx={{ color: brand.accent, fontWeight: 600 }}
+                  sx={{ color: brand.accentText, fontWeight: 600 }}
                 >
                   Open →
                 </Typography>

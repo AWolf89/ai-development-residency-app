@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import { visuallyHidden } from "@mui/utils";
 import { useFormStatus } from "react-dom";
 import { brand } from "@/theme-tokens";
 import { submitAnswerAction, skipAction, pauseAction } from "./actions";
@@ -12,6 +13,11 @@ function Actions() {
   const { pending } = useFormStatus();
   return (
     <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+      {/* The pending label sits on a disabled button, which isn't announced;
+          mirror it in a live region so screen readers hear it (WCAG 4.1.3). */}
+      <Box component="span" role="status" sx={visuallyHidden}>
+        {pending ? "Working…" : ""}
+      </Box>
       <Button
         type="submit"
         formAction={submitAnswerAction}

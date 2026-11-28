@@ -351,7 +351,7 @@ function EvidenceCellView({
   });
   if (cell.kind === "next_step") {
     return cell.href ? (
-      <Link href={cell.href} sx={{ color: brand.accent, fontWeight: 500 }}>
+      <Link href={cell.href} sx={{ color: brand.accentText, fontWeight: 500 }}>
         {cell.text} →
       </Link>
     ) : (

@@ -15,7 +15,10 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#d9632b", // terracotta
+      // Terracotta used as text (e.g. selected-tab labels) must meet WCAG AA 4.5:1
+      // on the cream canvas; the bright accent is only ~3.3:1, so use the darker
+      // accentText token. Filled buttons keep their own AA background below.
+      main: brand.accentText, // #a94a1a
       contrastText: "#ffffff",
     },
     secondary: {
