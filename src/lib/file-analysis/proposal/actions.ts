@@ -4,6 +4,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { StructuredOutputError } from "@/lib/llm/structured";
 import { proposeFromFile, approveProposal } from "./orchestrator";
 import { ProposalPersistError } from "./persist";
 import {
@@ -48,11 +49,15 @@ export async function proposeRecordsAction(
     return { ok: true, ...proposal };
   } catch (err) {
     console.error("file proposal failed", err);
-    // AC5: a model/parse failure leaves the file untouched; the user can retry.
-    return {
-      ok: false,
-      error: "Couldn't propose records for this file. Please try again.",
-    };
+    // AC5: a model/parse failure leaves the file untouched; the user can retry. When the model's
+    // reply couldn't be validated (typically a very detailed file overrunning the output budget),
+    // say so specifically and point to "Skip", which reviews what was already found without a
+    // second pass — rather than a bare "try again" that would just repeat the same failure.
+    const error =
+      err instanceof StructuredOutputError
+        ? "This file produced more detail than we could draft in one pass. Use “Skip” to review what was already found, or try a shorter or more focused file."
+        : "Couldn't propose records for this file. Please try again.";
+    return { ok: false, error };
   }
 }
 

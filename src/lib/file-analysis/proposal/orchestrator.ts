@@ -10,7 +10,7 @@ import { createSupabaseDecisionRecordRepository } from "@/lib/decision-records/r
 import { resolveFileText } from "../orchestrator";
 import { groundProposal } from "./validate";
 import { persistProposal } from "./persist";
-import { proposalOutputSchema } from "./types";
+import { proposalOutputSchema, PROPOSAL_MAX_OUTPUT_TOKENS } from "./types";
 import type {
   FileProposal,
   ProposalResult,
@@ -51,6 +51,9 @@ export async function proposeFromFile(
     input: { fileText: text, priorAnswers },
     schema: proposalOutputSchema,
     sink: supabaseSink,
+    // A confident proposal (project + many records) is far larger than the default cap allows;
+    // without this the answered path truncates and fails to parse (GF1). See PROPOSAL_MAX_OUTPUT_TOKENS.
+    maxOutputTokens: PROPOSAL_MAX_OUTPUT_TOKENS,
   });
 
   const grounded = groundProposal(data);

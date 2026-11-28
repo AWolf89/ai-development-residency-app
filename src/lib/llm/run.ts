@@ -20,6 +20,10 @@ type RunOpts<I, O> = {
   userId?: string;
   appendUserText?: string; // extra user-turn text (used by the self-correction loop)
   images?: { data: Uint8Array; mediaType: string }[]; // multimodal input (ADR-0020 vision read)
+  // Per-call output-token cap. Defaults to LLM_CONFIG.maxOutputTokens; a larger structured output
+  // (e.g. a full project + many evidence records) raises it so the reply isn't truncated mid-JSON.
+  // R3 §1 still holds: every call is explicitly bounded, just not all at the same bound.
+  maxOutputTokens?: number;
   fetch?: typeof fetch; // tests only
 };
 
@@ -40,6 +44,7 @@ export async function runLLM<I, O = string>({
   userId,
   appendUserText,
   images,
+  maxOutputTokens,
   fetch,
 }: RunOpts<I, O>): Promise<RunResult<O>> {
   const started = Date.now();
@@ -74,7 +79,7 @@ export async function runLLM<I, O = string>({
       model: getModel(prompt.purpose, { userId, fetch }),
       system: prompt.system,
       ...(messages ? { messages } : { prompt: userText }),
-      maxOutputTokens: LLM_CONFIG.maxOutputTokens,
+      maxOutputTokens: maxOutputTokens ?? LLM_CONFIG.maxOutputTokens,
       maxRetries: LLM_CONFIG.maxRetries,
       timeout: LLM_CONFIG.timeoutMs,
       ...(schema ? { output: Output.object({ schema }) } : {}),
@@ -122,6 +127,8 @@ type StructuredOpts<I, T> = {
   sink: LogSink;
   userId?: string;
   maxCorrections?: number;
+  // Per-call output-token cap for the structured reply; see RunOpts.maxOutputTokens.
+  maxOutputTokens?: number;
   fetch?: typeof fetch; // tests only
 };
 
@@ -143,6 +150,7 @@ export async function runStructured<I, T>({
   sink,
   userId,
   maxCorrections = LLM_CONFIG.maxCorrectionTurns,
+  maxOutputTokens,
   fetch,
 }: StructuredOpts<I, T>): Promise<StructuredResult<T>> {
   let appendUserText: string | undefined;
@@ -155,6 +163,7 @@ export async function runStructured<I, T>({
       sink,
       userId,
       appendUserText,
+      maxOutputTokens,
       fetch,
     });
     const truncated = isTruncated(finishReason);
