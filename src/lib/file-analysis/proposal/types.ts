@@ -19,6 +19,15 @@
 import { z } from "zod";
 import { CONTRIBUTIONS } from "@/lib/provenance/types";
 
+/**
+ * Output-token budget for one proposal call. A confident proposal is the app's largest structured
+ * output — a full project plus several multi-field evidence records — so the default 1,500-token
+ * cap truncates the reply mid-JSON and the parse fails (this was GF1: answering the clarification
+ * questions errored out while "Skip", which makes no second call, worked). 4,000 is the ceiling the
+ * LLM_CONFIG runtime-cap test enforces, so this stays within the mandated bound (R3 §1).
+ */
+export const PROPOSAL_MAX_OUTPUT_TOKENS = 4_000;
+
 /** The model's self-reported confidence for a proposed record (display only, never a gate). */
 export const PROPOSAL_CONFIDENCE = ["low", "medium", "high"] as const;
 export const proposalConfidenceSchema = z.enum(PROPOSAL_CONFIDENCE);
