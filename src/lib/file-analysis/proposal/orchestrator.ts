@@ -7,6 +7,7 @@ import { saveProject } from "@/lib/projects/save";
 import { createSupabaseProjectRepository } from "@/lib/projects/repository";
 import { saveDecisionRecord } from "@/lib/decision-records/save";
 import { createSupabaseDecisionRecordRepository } from "@/lib/decision-records/repository";
+import { indexDecisionRecordEvidence } from "@/lib/decision-records/index-evidence";
 import { resolveFileText } from "../orchestrator";
 import { groundProposal } from "./validate";
 import { persistProposal } from "./persist";
@@ -86,6 +87,9 @@ export async function approveProposal(params: {
     {
       saveProject: (p) => saveProject(projectRepo, p),
       saveDecisionRecord: (p) => saveDecisionRecord(recordRepo, p),
+      // GF4: make each saved record searchable, mirroring the manual-form and interview saves,
+      // so new evidence reaches the Gap Check / Investigation requirement↔claim matching.
+      indexEvidence: (args) => indexDecisionRecordEvidence(args),
     },
     {
       userId,
