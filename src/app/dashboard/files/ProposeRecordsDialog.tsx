@@ -266,19 +266,30 @@ export default function ProposeRecordsDialog({
                 few answers would help — or skip to review what was found.
               </Typography>
               {questions.map((q, i) => (
-                <TextField
-                  key={i}
-                  label={q.text}
-                  value={answers[i]}
-                  onChange={(e) =>
-                    setAnswers((prev) =>
-                      prev.map((a, j) => (j === i ? e.target.value : a))
-                    )
-                  }
-                  fullWidth
-                  multiline
-                  minRows={1}
-                />
+                <Stack key={i} spacing={0.75}>
+                  <Typography
+                    id={`${titleId}-q${i}`}
+                    variant="body2"
+                    sx={{ fontWeight: 600 }}
+                  >
+                    {q.text}
+                  </Typography>
+                  <TextField
+                    value={answers[i]}
+                    onChange={(e) =>
+                      setAnswers((prev) =>
+                        prev.map((a, j) => (j === i ? e.target.value : a))
+                      )
+                    }
+                    placeholder="Your answer"
+                    slotProps={{
+                      htmlInput: { "aria-labelledby": `${titleId}-q${i}` },
+                    }}
+                    fullWidth
+                    multiline
+                    minRows={1}
+                  />
+                </Stack>
               ))}
             </Stack>
           ) : phase === "review" ? (
