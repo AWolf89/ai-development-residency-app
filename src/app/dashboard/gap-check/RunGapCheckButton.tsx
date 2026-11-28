@@ -2,15 +2,23 @@
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { visuallyHidden } from "@mui/utils";
 import { useFormStatus } from "react-dom";
 import { runGapCheck } from "./actions";
 
 function SubmitButton({ label }: { label: string }) {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" variant="contained" disabled={pending}>
-      {pending ? "Checking your evidence…" : label}
-    </Button>
+    <>
+      <Button type="submit" variant="contained" disabled={pending}>
+        {pending ? "Checking your evidence…" : label}
+      </Button>
+      {/* A disabled button's label change isn't announced; mirror it in a live
+          region so screen readers hear the gap check start (WCAG 4.1.3). */}
+      <Box component="span" role="status" sx={visuallyHidden}>
+        {pending ? "Checking your evidence…" : ""}
+      </Box>
+    </>
   );
 }
 

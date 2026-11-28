@@ -176,7 +176,7 @@ export default function InvestigateDialog({
               sx={{ alignItems: "center", py: 2 }}
             >
               <CircularProgress size={20} aria-hidden="true" />
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.secondary" role="status">
                 Searching your evidence…
               </Typography>
             </Stack>

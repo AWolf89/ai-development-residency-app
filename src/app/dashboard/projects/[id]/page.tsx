@@ -284,7 +284,7 @@ export default async function ProjectHubPage({
                     <Link
                       href={`/dashboard/files/${f.id}`}
                       sx={{
-                        color: brand.accent,
+                        color: brand.accentText,
                         fontWeight: 600,
                         flexShrink: 0,
                       }}
@@ -434,7 +434,7 @@ export default async function ProjectHubPage({
                     <Link
                       href={q.href}
                       sx={{
-                        color: brand.accent,
+                        color: brand.accentText,
                         fontWeight: 600,
                         flexShrink: 0,
                       }}

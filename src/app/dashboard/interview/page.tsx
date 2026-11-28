@@ -175,7 +175,7 @@ function LearningMomentCard({ turn }: { turn: InterviewTurnRow }) {
     >
       <CardContent>
         <Stack spacing={1.5}>
-          <Typography sx={{ ...UPPER_LABEL_SX, color: brand.accent }}>
+          <Typography sx={{ ...UPPER_LABEL_SX, color: brand.accentText }}>
             I also noticed a learning moment
           </Typography>
           <Typography sx={{ fontFamily: serifStack, fontSize: 18 }}>
