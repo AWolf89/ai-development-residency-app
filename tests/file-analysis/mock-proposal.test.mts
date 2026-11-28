@@ -63,14 +63,19 @@ const RECORDS: ProposedRecord[] = [
   },
 ];
 
+type IndexArg = { recordId: string; fields: { title: string } };
 type Counters = {
   projectSaves: number;
   recordSaves: number;
   projectArgs: SaveProjectParams[];
   recordArgs: SaveDecisionRecordParams[];
+  indexCalls: number;
+  indexArgs: IndexArg[];
 };
 
-function makeDeps(opts: { projectOk?: boolean; recordOk?: boolean } = {}): {
+function makeDeps(
+  opts: { projectOk?: boolean; recordOk?: boolean; indexOk?: boolean } = {}
+): {
   deps: ProposalPersistDeps;
   counters: Counters;
 } {
@@ -79,6 +84,8 @@ function makeDeps(opts: { projectOk?: boolean; recordOk?: boolean } = {}): {
     recordSaves: 0,
     projectArgs: [],
     recordArgs: [],
+    indexCalls: 0,
+    indexArgs: [],
   };
   const deps: ProposalPersistDeps = {
     async saveProject(params) {
@@ -94,6 +101,11 @@ function makeDeps(opts: { projectOk?: boolean; recordOk?: boolean } = {}): {
       return opts.recordOk === false
         ? { ok: false, error: "record failed" }
         : { ok: true, recordId: `rec-${counters.recordSaves}` };
+    },
+    async indexEvidence(params) {
+      counters.indexCalls++;
+      counters.indexArgs.push(params);
+      if (opts.indexOk === false) throw new Error("index failed");
     },
   };
   return { deps, counters };
@@ -148,6 +160,32 @@ async function main() {
     ok(
       result?.projectId === "proj-1" && result.recordIds.length === 2,
       "approve: returns the created project + record ids"
+    );
+    // GF4: every saved record is indexed as searchable evidence, with its own saved id + title.
+    ok(
+      counters.indexCalls === RECORDS.length,
+      "approve: each saved record is indexed as evidence"
+    );
+    ok(
+      counters.indexArgs[0].recordId === result?.recordIds[0] &&
+        counters.indexArgs[0].fields.title === RECORDS[0].title,
+      "approve: a record is indexed under its own saved id and title"
+    );
+  }
+
+  // 1b) GF4 best-effort: an indexing failure does not fail the proposal — records still save and
+  //     the result still comes back (the record is already written; indexing is a follow-on).
+  {
+    const { deps, counters } = makeDeps({ indexOk: false });
+    const persisting = reduce(review(), { type: "approve" });
+    const result = await runSideEffects(persisting, deps);
+    ok(
+      counters.recordSaves === RECORDS.length,
+      "index failure: records are still saved"
+    );
+    ok(
+      result?.recordIds.length === RECORDS.length,
+      "index failure: approve still returns the saved record ids"
     );
   }
 

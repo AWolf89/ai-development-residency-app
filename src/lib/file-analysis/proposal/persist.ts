@@ -16,6 +16,7 @@ import type {
   SaveDecisionRecordParams,
   SaveResult,
 } from "@/lib/decision-records/save";
+import type { DecisionRecordFields } from "@/lib/decision-records/evidence-text";
 import type { ProposalResult, ProposedProject, ProposedRecord } from "./types";
 
 /** A persist failure (validation or a repository error). Commands throw; they don't return codes. */
@@ -30,6 +31,16 @@ export class ProposalPersistError extends Error {
 export type ProposalPersistDeps = {
   saveProject(params: SaveProjectParams): Promise<SaveProjectResult>;
   saveDecisionRecord(params: SaveDecisionRecordParams): Promise<SaveResult>;
+  /**
+   * Index a saved record as searchable evidence so the Gap Check and Investigation can retrieve it
+   * (GF4). Injected like the save seams; the orchestrator binds the real per-user indexer. Called
+   * best-effort — the record is already written, so an indexing failure never fails the proposal,
+   * mirroring the manual-form and interview save paths.
+   */
+  indexEvidence(params: {
+    recordId: string;
+    fields: DecisionRecordFields;
+  }): Promise<void>;
 };
 
 export type PersistProposalParams = {
@@ -48,6 +59,18 @@ function projectInput(project: ProposedProject) {
     startedOn: project.startedOn,
     endedOn: project.endedOn,
     status: "active" as const,
+  };
+}
+
+/** The evidence-text fields for a proposed record (cue/why are blank-as-undefined, not null). */
+function evidenceFields(record: ProposedRecord): DecisionRecordFields {
+  return {
+    title: record.title,
+    situation: record.situation,
+    cue: record.cue ?? undefined,
+    decision: record.decision,
+    why: record.why ?? undefined,
+    outcome: record.outcome,
   };
 }
 
@@ -102,6 +125,18 @@ export async function persistProposal(
       throw new ProposalPersistError(result.error);
     }
     recordIds.push(result.recordId);
+
+    // GF4: index the saved record as searchable evidence, so a newly proposed claim is found by
+    // the Gap Check and Investigation instead of still reading "no evidence". Best-effort: the
+    // record is already written, so an indexing failure must not fail (or roll back) the proposal.
+    try {
+      await deps.indexEvidence({
+        recordId: result.recordId,
+        fields: evidenceFields(record),
+      });
+    } catch (err) {
+      console.error("evidence indexing failed for proposed record", err);
+    }
   }
 
   return { projectId, recordIds };
