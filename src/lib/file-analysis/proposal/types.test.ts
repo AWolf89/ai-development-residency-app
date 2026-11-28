@@ -8,7 +8,9 @@ import { PROPOSAL_MAX_OUTPUT_TOKENS } from "./types";
 // one, within the ceiling the LLM_CONFIG runtime-cap test enforces (R3 §1).
 describe("PROPOSAL_MAX_OUTPUT_TOKENS", () => {
   it("is larger than the default output cap so a full proposal is not truncated", () => {
-    expect(PROPOSAL_MAX_OUTPUT_TOKENS).toBeGreaterThan(LLM_CONFIG.maxOutputTokens);
+    expect(PROPOSAL_MAX_OUTPUT_TOKENS).toBeGreaterThan(
+      LLM_CONFIG.maxOutputTokens
+    );
   });
 
   it("stays within the mandated 4,000-token ceiling (still explicitly bounded)", () => {
