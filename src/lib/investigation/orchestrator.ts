@@ -71,6 +71,29 @@ export type InvestigationResult = {
 export const EXHAUSTED_RATIONALE =
   "No substantiating evidence was found after exhausting the search budget.";
 
+/** Rank verdicts so the strongest cited interim finding wins (gap is never recorded as "best"). */
+const VERDICT_RANK: Record<Finding["verdict"], number> = {
+  met: 2,
+  partial: 1,
+  gap: 0,
+};
+
+/**
+ * Keep the stronger of two cited findings seen during the search (prefer met over partial; a tie
+ * keeps the incumbent). Used so an exhausted investigation surfaces the best evidence it actually
+ * found instead of reporting "no evidence" — which would contradict the Gap Check, which keeps the
+ * same cited partial (F5).
+ */
+function pickBetterFinding(
+  current: Finding | null,
+  candidate: Finding
+): Finding {
+  if (!current) return candidate;
+  return VERDICT_RANK[candidate.verdict] > VERDICT_RANK[current.verdict]
+    ? candidate
+    : current;
+}
+
 // A loop larger than this cannot happen under the budget + breaker; it is the R3/R1 force-stop.
 const MAX_STEPS = SEARCH_HARD_CAP * 4;
 
@@ -112,6 +135,10 @@ async function advance(
   let lastRetrieval: Retrieval | null = null;
   const priorQueries: string[] = [];
   let lastConfidence: Finding["confidence"] = "low";
+  // The best cited (met/partial) finding seen across the search loop. When the budget is spent
+  // without a clearly-sufficient verdict, we surface this instead of a blanket "no evidence" — the
+  // Gap Check keeps the same cited partial, so the two must not contradict (F5).
+  let bestFinding: Finding | null = null;
 
   for (let steps = 0; steps < MAX_STEPS; steps++) {
     if (state.status === "searching") {
@@ -147,6 +174,18 @@ async function advance(
           };
           state = reduce(state, { type: "substantiated", finding });
         } else {
+          // Not clearly sufficient, but if this pass found cited met/partial evidence, remember it
+          // as the best interim finding so exhaustion surfaces it rather than "no evidence" (F5).
+          if (resolved !== "gap" && validCitations.length > 0) {
+            bestFinding = pickBetterFinding(bestFinding, {
+              requirementId: requirement.id,
+              verdict: resolved as Finding["verdict"],
+              rationale: out.rationale,
+              citations: validCitations,
+              confidence: out.confidence,
+              searchCount: state.searchCount,
+            });
+          }
           priorQueries.push(query);
           state = reduce(state, {
             type: "insufficient",
@@ -159,14 +198,19 @@ async function advance(
       continue;
     }
     if (state.status === "exhausted") {
-      const finding: Finding = {
-        requirementId: requirement.id,
-        verdict: "gap",
-        rationale: EXHAUSTED_RATIONALE,
-        citations: [],
-        confidence: lastConfidence,
-        searchCount: state.searchCount,
-      };
+      // Surface the best cited evidence found during the search, if any; only fall back to a
+      // confirmed gap when nothing citable was ever found (so we never claim "no evidence" for a
+      // requirement the search actually substantiated in part — F5).
+      const finding: Finding = bestFinding
+        ? { ...bestFinding, searchCount: state.searchCount }
+        : {
+            requirementId: requirement.id,
+            verdict: "gap",
+            rationale: EXHAUSTED_RATIONALE,
+            citations: [],
+            confidence: lastConfidence,
+            searchCount: state.searchCount,
+          };
       state = reduce(state, { type: "finding_ready", finding });
       continue;
     }

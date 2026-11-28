@@ -57,6 +57,16 @@ const insufficientOut: ReflectOutput = {
   citations: [],
   confidence: "low",
 };
+// Not "clearly sufficient", but it DOES cite real retrieved evidence as a partial match — exactly
+// the case the Gap Check keeps as a development opportunity (F5).
+const partialCitedOut: ReflectOutput = {
+  sufficient: false,
+  nextQuery: "cross-team coordination",
+  verdict: "partial",
+  rationale: "Shows leading teams, but not cross-functional scope.",
+  citations: [{ source: "file", id: "resume.pdf" }],
+  confidence: "medium",
+};
 
 type Counters = { retrievals: number; reflects: number; saves: number };
 
@@ -269,6 +279,41 @@ function makeDeps(
     "no retrieved sources → no valid citation → gap"
   );
   ok(counters.saves === 0, "still nothing saved");
+}
+
+// 10. F5: budget exhausted with a cited partial each pass → surface that partial finding (with its
+//     citation), NOT a blanket "no evidence" that would contradict the Gap Check.
+{
+  const { deps, counters } = makeDeps({
+    reflect: async () => partialCitedOut,
+  });
+  const r = await startInvestigation(deps, {
+    requirement: REQ,
+    searchBudget: 2,
+  });
+  ok(
+    counters.retrievals === 2,
+    "runs the full budget looking for better evidence"
+  );
+  ok(
+    r.state.status === "awaiting_review",
+    "exhausted-with-partial routes through review"
+  );
+  ok(
+    r.finding!.verdict === "partial",
+    "surfaces the partial verdict instead of a confirmed gap"
+  );
+  ok(
+    r.finding!.citations.length === 1 &&
+      r.finding!.citations[0].id === "resume.pdf",
+    "keeps the cited evidence the Gap Check also shows (no contradiction)"
+  );
+  ok(
+    r.finding!.rationale !== undefined &&
+      !r.finding!.rationale.startsWith("No substantiating evidence"),
+    "does not claim no evidence was found"
+  );
+  ok(counters.saves === 0, "still nothing saved without accept");
 }
 
 console.log(`\n${pass} checks passed`);
